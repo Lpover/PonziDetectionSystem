@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <properties resource="connection.yml"/>
+    <context id="context" targetRuntime="MyBatis3DynamicSql">
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.FluentBuilderMethodsPlugin"/>
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="addRemarkComments" value="true"/>
+        </commentGenerator>
+        <jdbcConnection connectionURL="${url}" driverClass="${driver}" userId="${user}"
+                        password="${password}">
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+        <javaModelGenerator targetPackage="cn.qkl.common.repository.model"
+                            targetProject="src/main/java"/>
+        <javaClientGenerator targetPackage="cn.qkl.common.repository.mapper"
+                             targetProject="src/main/java"/>
+        <table tableName="user" domainObjectName="User">
+        </table>
+
+
+    </context>
+</generatorConfiguration>

@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/webserver/app.iml" filepath="$PROJECT_DIR$/webserver/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/common-framework/common-framework.iml" filepath="$PROJECT_DIR$/common-framework/common-framework.iml" />
       <module fileurl="file://$PROJECT_DIR$/common-repository/common-repository.iml" filepath="$PROJECT_DIR$/common-repository/common-repository.iml" />
-      <module fileurl="file://$PROJECT_DIR$/gateway/gateway.iml" filepath="$PROJECT_DIR$/gateway/gateway.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/sa-backend.iml" filepath="$PROJECT_DIR$/.idea/sa-backend.iml" />
-      <module fileurl="file://$PROJECT_DIR$/webserver/webserver.iml" filepath="$PROJECT_DIR$/webserver/webserver.iml" />
-      <module fileurl="file://$PROJECT_DIR$/webserver-customer/webserver-customer.iml" filepath="$PROJECT_DIR$/webserver-customer/webserver-customer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/mindlax.iml" filepath="$PROJECT_DIR$/.idea/mindlax.iml" />
     </modules>
   </component>
 </project>
