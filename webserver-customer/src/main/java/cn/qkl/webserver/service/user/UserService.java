@@ -6,7 +6,6 @@ import cn.qkl.common.framework.exception.BusinessException;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.User;
 import cn.qkl.webserver.common.BusinessStatus;
-import cn.qkl.webserver.common.ServerConfig;
 import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dao.UserDao;
 import cn.qkl.webserver.dto.user.LoginDTO;
@@ -42,12 +41,11 @@ public class UserService {
 
     @Resource
     Environment environment;
-
-    @Resource
-    ServerConfig serverConfig;
-
     @Autowired
     private UserDao userDao;
+
+    @Resource
+    OutUserService outUserService;
 
     /**
      * 邮箱登录
@@ -70,6 +68,12 @@ public class UserService {
     public void test() {
         System.out.println(""+webServerAge+webServerAlias);
     }
+
+    public User getRemoteUserInfo() {
+        User user =  outUserService.getUserInfo();
+        System.out.println(user);
+        return user;
+    }
     /**
      * 获取个人信息
      *
@@ -81,10 +85,8 @@ public class UserService {
 //                .where(Tables.user.userId, isEqualTo((int) TokenHandler.getUserId()))
 //        ).orElseThrow(() -> new BusinessException(BusinessStatus.User_Not_EXISTS));
         User user = new User();
-//        user.setUserNum(environment.getProperty("server.port")); # VM启动不行
-        user.setUserNum(serverConfig.getIp());
-        log.info(""+serverConfig.getIp());
-        log.info(user.toString());
+        user.setUserNum(environment.getProperty("server.port"));
+
         return user;
     }
 }

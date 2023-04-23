@@ -1,0 +1,42 @@
+server:
+  port: 8080
+qkl:
+  framework:
+    show-exception-detail: true
+    jackson:
+      enable-long-to-string: true
+    auth:
+      secret: secret
+      # 90天
+      expiration: 90
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/yuedu?characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: 251859
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+#  redis:
+#    host:
+#    port: 6379
+#    password:
+#    database:
+#    timeout:
+
+mybatis:
+  configuration:
+    # 自动转驼峰
+    map-underscore-to-camel-case: true
+
+logging:
+  config: classpath:logback-spring-dev.xml
+
+

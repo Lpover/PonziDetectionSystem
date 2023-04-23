@@ -10,7 +10,7 @@ qkl:
 
 spring:
   application:
-    name: webserver-provider
+    name: webserver-customer
   cloud:
     nacos:
       discovery:

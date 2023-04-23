@@ -16,6 +16,7 @@
     <modules>
         <!--webserver业务层-->
         <module>webserver</module>
+        <module>webserver-customer</module>
         <!--公共数据库访问层-->
         <module>common-repository</module>
         <!--公共框架处理层-->
@@ -24,6 +25,8 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <spring-cloud-alibaba.version>2021.0.5.0</spring-cloud-alibaba.version>
+        <spring-cloud.version>2021.0.5</spring-cloud.version>
         <mybatis-spring-boot-starter.version>2.2.0</mybatis-spring-boot-starter.version>
         <mybatis-dynamic-sql.version>1.3.0</mybatis-dynamic-sql.version>
         <mybatis-generator-maven-plugin.vesrion>1.4.0</mybatis-generator-maven-plugin.vesrion>
@@ -36,6 +39,22 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <dependency>
                 <groupId>cn.qkl</groupId>
                 <artifactId>common-framework</artifactId>

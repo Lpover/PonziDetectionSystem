@@ -56,8 +56,15 @@ public class UserController {
     @ApiOperation("获取个人信息")
     @GetMapping("info")
     @Role
-    public User getUserInfo() {
-        return userService.getUserInfo();
+    public BaseResult<User> getUserInfo() {
+        return BaseResult.ok(userService.getUserInfo());
+    }
+
+    @ApiOperation("获取个人信息")
+    @GetMapping("remote/info")
+    @Role
+    public BaseResult<User> getRemoteInfo() {
+        return BaseResult.ok(userService.getRemoteUserInfo());
     }
 
 }
