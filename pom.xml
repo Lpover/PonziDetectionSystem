@@ -21,6 +21,7 @@
         <module>common-repository</module>
         <!--公共框架处理层-->
         <module>common-framework</module>
+        <module>gateway</module>
     </modules>
 
     <properties>
