@@ -1,5 +1,7 @@
 package cn.qkl.webserver.vo.user;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.qkl.common.repository.model.User;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -39,4 +41,10 @@ public class UserInfoVO {
 
     @ApiModelProperty("最后登录时间")
     private Long lastLogin;
+
+    public static UserInfoVO transform(User user) {
+        UserInfoVO vo = new UserInfoVO();
+        BeanUtil.copyProperties(user, vo);
+        return vo;
+    }
 }

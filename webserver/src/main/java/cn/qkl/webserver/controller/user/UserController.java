@@ -7,6 +7,7 @@ import cn.qkl.common.repository.model.User;
 import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dto.user.LoginDTO;
 import cn.qkl.webserver.service.user.UserService;
+import cn.qkl.webserver.vo.user.UserInfoVO;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,7 +34,7 @@ import org.springframework.web.bind.annotation.*;
 @Role(roles = RoleEnum.UserRole.class)
 public class UserController {
 
-//    @LoadBalanced
+    //    @LoadBalanced
     @Autowired
     private UserService userService;
 
@@ -46,6 +47,7 @@ public class UserController {
     public void testAge() {
         System.out.println(webServerAge);
     }
+
     @ApiOperation("登录")
     @PostMapping("login")
     @Role
@@ -56,8 +58,8 @@ public class UserController {
     @ApiOperation("获取个人信息")
     @GetMapping("info")
     @Role
-    public User getUserInfo() {
-        return userService.getUserInfo();
+    public BaseResult<UserInfoVO> getUserInfo() {
+        return BaseResult.ok(userService.getUserInfo());
     }
 
 }

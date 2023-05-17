@@ -18,9 +18,38 @@
                             targetProject="src/main/java"/>
         <javaClientGenerator targetPackage="cn.qkl.common.repository.mapper"
                              targetProject="src/main/java"/>
+        <table tableName="account" domainObjectName="Account">
+        </table>
+        <table tableName="account_check_history" domainObjectName="AccountCheckHistory">
+        </table>
+        <table tableName="account_content" domainObjectName="AccountContent">
+        </table>
+        <table tableName="account_tx_history" domainObjectName="AccountTxHistory">
+        </table>
+        <table tableName="algorithm" domainObjectName="Algorithm">
+        </table>
+        <table tableName="chain" domainObjectName="Chain">
+        </table>
+        <table tableName="content" domainObjectName="Content">
+        </table>
+        <table tableName="content_risk" domainObjectName="ContentRisk">
+        </table>
+        <table tableName="content_cross" domainObjectName="ContentCross">
+        </table>
+        <table tableName="content_tx_history" domainObjectName="ContentTxHistory">
+        </table>
+        <table tableName="dynamic_monitor" domainObjectName="DynamicMonitor">
+        </table>
+        <table tableName="platform" domainObjectName="Platform">
+        </table>
+        <table tableName="risk_content_statistics" domainObjectName="RiskContentStatistics">
+        </table>
+        <table tableName="risk_report" domainObjectName="RiskReport">
+        </table>
+        <table tableName="statistic" domainObjectName="Statistic">
+        </table>
         <table tableName="user" domainObjectName="User">
         </table>
-
 
     </context>
 </generatorConfiguration>

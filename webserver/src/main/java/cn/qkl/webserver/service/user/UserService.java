@@ -10,6 +10,7 @@ import cn.qkl.webserver.common.ServerConfig;
 import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dao.UserDao;
 import cn.qkl.webserver.dto.user.LoginDTO;
+import cn.qkl.webserver.vo.user.UserInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -68,23 +69,24 @@ public class UserService {
     }
 
     public void test() {
-        System.out.println(""+webServerAge+webServerAlias);
+        System.out.println("" + webServerAge + webServerAlias);
     }
+
     /**
      * 获取个人信息
      *
      * @return
      */
-    public User getUserInfo() {
+    public UserInfoVO getUserInfo() {
         //判断账号密码是否正确
-//        User user = userDao.selectOne(c -> c
-//                .where(Tables.user.userId, isEqualTo((int) TokenHandler.getUserId()))
-//        ).orElseThrow(() -> new BusinessException(BusinessStatus.User_Not_EXISTS));
-        User user = new User();
+        User user = userDao.selectOne(c -> c
+                .where(Tables.user.userId, isEqualTo((int) TokenHandler.getUserId()))
+        ).orElseThrow(() -> new BusinessException(BusinessStatus.User_Not_EXISTS));
+//        User user = new User();
 //        user.setUserNum(environment.getProperty("server.port")); # VM启动不行
-        user.setUserNum(serverConfig.getIp());
-        log.info(""+serverConfig.getIp());
-        log.info(user.toString());
-        return user;
+//        user.setUserNum(serverConfig.getIp());
+//        log.info("" + serverConfig.getIp());
+//        log.info(user.toString());
+        return UserInfoVO.transform(user);
     }
 }
