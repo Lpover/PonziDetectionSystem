@@ -16,7 +16,6 @@ public class CommonFrameworkProperties {
         if (this.apiPrefix.startsWith("/")) {
             return apiPrefix;
         }
-//        return "/" + apiPrefix;
-        return "";
+        return "/" + apiPrefix;
     }
 }

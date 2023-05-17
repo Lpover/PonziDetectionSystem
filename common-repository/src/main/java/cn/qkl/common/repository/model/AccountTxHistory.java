@@ -14,7 +14,7 @@ public class AccountTxHistory {
     private String method;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Integer block;
+    private Long block;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Date txTimestamp;
@@ -89,18 +89,18 @@ public class AccountTxHistory {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Integer getBlock() {
+    public Long getBlock() {
         return block;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountTxHistory withBlock(Integer block) {
+    public AccountTxHistory withBlock(Long block) {
         this.setBlock(block);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setBlock(Integer block) {
+    public void setBlock(Long block) {
         this.block = block;
     }
 

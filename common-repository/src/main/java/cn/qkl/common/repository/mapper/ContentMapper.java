@@ -75,7 +75,7 @@ public interface ContentMapper {
         @Result(column="listing_time", property="listingTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="description", property="description", jdbcType=JdbcType.VARCHAR),
         @Result(column="dynamic_type", property="dynamicType", jdbcType=JdbcType.INTEGER),
-        @Result(column="dynamic_algorithm", property="dynamicAlgorithm", jdbcType=JdbcType.BIGINT),
+        @Result(column="dynamic_algorithm", property="dynamicAlgorithm", jdbcType=JdbcType.INTEGER),
         @Result(column="dynamic_recognition", property="dynamicRecognition", jdbcType=JdbcType.INTEGER),
         @Result(column="revised", property="revised", jdbcType=JdbcType.INTEGER),
         @Result(column="risk_level", property="riskLevel", jdbcType=JdbcType.INTEGER),

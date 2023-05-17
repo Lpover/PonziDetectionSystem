@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface ContentCrossMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, name, image, chainId, address, hash, tokenId, accountId, startTime, dstChainId, dstAddress, dstHash, dstTokenId, dstAccountId, endTime, bridge, dynamicType, riskLevel, createTime, updateTime);
+    BasicColumn[] selectList = BasicColumn.columnList(id, name, metaurl, chainId, address, hash, tokenId, accountId, startTime, dstChainId, dstAddress, dstHash, dstTokenId, dstAccountId, endTime, bridge, dynamicType, riskLevel, createTime, updateTime);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -63,7 +63,7 @@ public interface ContentCrossMapper {
     @Results(id="ContentCrossResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
-        @Result(column="image", property="image", jdbcType=JdbcType.VARCHAR),
+        @Result(column="metaUrl", property="metaurl", jdbcType=JdbcType.VARCHAR),
         @Result(column="chain_id", property="chainId", jdbcType=JdbcType.BIGINT),
         @Result(column="address", property="address", jdbcType=JdbcType.VARCHAR),
         @Result(column="hash", property="hash", jdbcType=JdbcType.VARCHAR),
@@ -110,7 +110,7 @@ public interface ContentCrossMapper {
         return MyBatis3Utils.insert(this::insert, record, contentCross, c ->
             c.map(id).toProperty("id")
             .map(name).toProperty("name")
-            .map(image).toProperty("image")
+            .map(metaurl).toProperty("metaurl")
             .map(chainId).toProperty("chainId")
             .map(address).toProperty("address")
             .map(hash).toProperty("hash")
@@ -136,7 +136,7 @@ public interface ContentCrossMapper {
         return MyBatis3Utils.insertMultiple(this::insertMultiple, records, contentCross, c ->
             c.map(id).toProperty("id")
             .map(name).toProperty("name")
-            .map(image).toProperty("image")
+            .map(metaurl).toProperty("metaurl")
             .map(chainId).toProperty("chainId")
             .map(address).toProperty("address")
             .map(hash).toProperty("hash")
@@ -162,7 +162,7 @@ public interface ContentCrossMapper {
         return MyBatis3Utils.insert(this::insert, record, contentCross, c ->
             c.map(id).toPropertyWhenPresent("id", record::getId)
             .map(name).toPropertyWhenPresent("name", record::getName)
-            .map(image).toPropertyWhenPresent("image", record::getImage)
+            .map(metaurl).toPropertyWhenPresent("metaurl", record::getMetaurl)
             .map(chainId).toPropertyWhenPresent("chainId", record::getChainId)
             .map(address).toPropertyWhenPresent("address", record::getAddress)
             .map(hash).toPropertyWhenPresent("hash", record::getHash)
@@ -214,7 +214,7 @@ public interface ContentCrossMapper {
     static UpdateDSL<UpdateModel> updateAllColumns(ContentCross record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalTo(record::getId)
                 .set(name).equalTo(record::getName)
-                .set(image).equalTo(record::getImage)
+                .set(metaurl).equalTo(record::getMetaurl)
                 .set(chainId).equalTo(record::getChainId)
                 .set(address).equalTo(record::getAddress)
                 .set(hash).equalTo(record::getHash)
@@ -238,7 +238,7 @@ public interface ContentCrossMapper {
     static UpdateDSL<UpdateModel> updateSelectiveColumns(ContentCross record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalToWhenPresent(record::getId)
                 .set(name).equalToWhenPresent(record::getName)
-                .set(image).equalToWhenPresent(record::getImage)
+                .set(metaurl).equalToWhenPresent(record::getMetaurl)
                 .set(chainId).equalToWhenPresent(record::getChainId)
                 .set(address).equalToWhenPresent(record::getAddress)
                 .set(hash).equalToWhenPresent(record::getHash)
@@ -262,7 +262,7 @@ public interface ContentCrossMapper {
     default int updateByPrimaryKey(ContentCross record) {
         return update(c ->
             c.set(name).equalTo(record::getName)
-            .set(image).equalTo(record::getImage)
+            .set(metaurl).equalTo(record::getMetaurl)
             .set(chainId).equalTo(record::getChainId)
             .set(address).equalTo(record::getAddress)
             .set(hash).equalTo(record::getHash)
@@ -288,7 +288,7 @@ public interface ContentCrossMapper {
     default int updateByPrimaryKeySelective(ContentCross record) {
         return update(c ->
             c.set(name).equalToWhenPresent(record::getName)
-            .set(image).equalToWhenPresent(record::getImage)
+            .set(metaurl).equalToWhenPresent(record::getMetaurl)
             .set(chainId).equalToWhenPresent(record::getChainId)
             .set(address).equalToWhenPresent(record::getAddress)
             .set(hash).equalToWhenPresent(record::getHash)

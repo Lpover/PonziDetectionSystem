@@ -17,7 +17,7 @@ public final class ContentCrossDynamicSqlSupport {
     public static final SqlColumn<String> name = contentCross.name;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> image = contentCross.image;
+    public static final SqlColumn<String> metaurl = contentCross.metaurl;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Long> chainId = contentCross.chainId;
@@ -76,7 +76,7 @@ public final class ContentCrossDynamicSqlSupport {
 
         public final SqlColumn<String> name = column("name", JDBCType.VARCHAR);
 
-        public final SqlColumn<String> image = column("image", JDBCType.VARCHAR);
+        public final SqlColumn<String> metaurl = column("metaUrl", JDBCType.VARCHAR);
 
         public final SqlColumn<Long> chainId = column("chain_id", JDBCType.BIGINT);
 

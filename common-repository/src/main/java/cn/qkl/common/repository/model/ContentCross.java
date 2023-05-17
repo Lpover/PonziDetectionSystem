@@ -11,7 +11,7 @@ public class ContentCross {
     private String name;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String image;
+    private String metaurl;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long chainId;
@@ -97,19 +97,19 @@ public class ContentCross {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getImage() {
-        return image;
+    public String getMetaurl() {
+        return metaurl;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public ContentCross withImage(String image) {
-        this.setImage(image);
+    public ContentCross withMetaurl(String metaurl) {
+        this.setMetaurl(metaurl);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setImage(String image) {
-        this.image = image;
+    public void setMetaurl(String metaurl) {
+        this.metaurl = metaurl;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -393,7 +393,7 @@ public class ContentCross {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", name=").append(name);
-        sb.append(", image=").append(image);
+        sb.append(", metaurl=").append(metaurl);
         sb.append(", chainId=").append(chainId);
         sb.append(", address=").append(address);
         sb.append(", hash=").append(hash);

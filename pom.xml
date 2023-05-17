@@ -36,6 +36,7 @@
         <hutool-all.version>5.8.3</hutool-all.version>
         <lombok.version>1.18.22</lombok.version>
         <spring-boot-starter-mail.version>2.4.9</spring-boot-starter-mail.version>
+        <easyexcel.version>3.1.0</easyexcel.version>
     </properties>
 
     <dependencyManagement>

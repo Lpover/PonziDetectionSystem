@@ -53,7 +53,7 @@ public final class ContentDynamicSqlSupport {
     public static final SqlColumn<Integer> dynamicType = content.dynamicType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Long> dynamicAlgorithm = content.dynamicAlgorithm;
+    public static final SqlColumn<Integer> dynamicAlgorithm = content.dynamicAlgorithm;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Integer> dynamicRecognition = content.dynamicRecognition;
@@ -121,7 +121,7 @@ public final class ContentDynamicSqlSupport {
 
         public final SqlColumn<Integer> dynamicType = column("dynamic_type", JDBCType.INTEGER);
 
-        public final SqlColumn<Long> dynamicAlgorithm = column("dynamic_algorithm", JDBCType.BIGINT);
+        public final SqlColumn<Integer> dynamicAlgorithm = column("dynamic_algorithm", JDBCType.INTEGER);
 
         public final SqlColumn<Integer> dynamicRecognition = column("dynamic_recognition", JDBCType.INTEGER);
 

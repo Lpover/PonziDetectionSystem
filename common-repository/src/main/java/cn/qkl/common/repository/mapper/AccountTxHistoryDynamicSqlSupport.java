@@ -20,7 +20,7 @@ public final class AccountTxHistoryDynamicSqlSupport {
     public static final SqlColumn<String> method = accountTxHistory.method;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Integer> block = accountTxHistory.block;
+    public static final SqlColumn<Long> block = accountTxHistory.block;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Date> txTimestamp = accountTxHistory.txTimestamp;
@@ -54,7 +54,7 @@ public final class AccountTxHistoryDynamicSqlSupport {
 
         public final SqlColumn<String> method = column("method", JDBCType.VARCHAR);
 
-        public final SqlColumn<Integer> block = column("block", JDBCType.INTEGER);
+        public final SqlColumn<Long> block = column("block", JDBCType.BIGINT);
 
         public final SqlColumn<Date> txTimestamp = column("tx_timestamp", JDBCType.TIMESTAMP);
 

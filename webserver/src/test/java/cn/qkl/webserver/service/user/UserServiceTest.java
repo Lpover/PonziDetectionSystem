@@ -1,5 +1,6 @@
 package cn.qkl.webserver.service.user;
 
+import cn.qkl.webserver.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

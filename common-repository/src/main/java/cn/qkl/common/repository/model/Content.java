@@ -47,7 +47,7 @@ public class Content {
     private Integer dynamicType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long dynamicAlgorithm;
+    private Integer dynamicAlgorithm;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer dynamicRecognition;
@@ -310,18 +310,18 @@ public class Content {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getDynamicAlgorithm() {
+    public Integer getDynamicAlgorithm() {
         return dynamicAlgorithm;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Content withDynamicAlgorithm(Long dynamicAlgorithm) {
+    public Content withDynamicAlgorithm(Integer dynamicAlgorithm) {
         this.setDynamicAlgorithm(dynamicAlgorithm);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setDynamicAlgorithm(Long dynamicAlgorithm) {
+    public void setDynamicAlgorithm(Integer dynamicAlgorithm) {
         this.dynamicAlgorithm = dynamicAlgorithm;
     }
 

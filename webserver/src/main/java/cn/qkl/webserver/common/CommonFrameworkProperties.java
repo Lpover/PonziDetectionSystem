@@ -15,9 +15,7 @@ public class CommonFrameworkProperties {
     public String getApiPrefix() {
         if (this.apiPrefix.startsWith("/")) {
             return apiPrefix;
-
         }
-//        return "/" + apiPrefix;
-        return "";
+        return "/" + apiPrefix;
     }
 }

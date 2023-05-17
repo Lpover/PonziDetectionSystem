@@ -1,21 +1,7 @@
 package cn.qkl.common.repository.mapper;
 
-import static cn.qkl.common.repository.mapper.AccountTxHistoryDynamicSqlSupport.*;
-import static org.mybatis.dynamic.sql.SqlBuilder.*;
-
 import cn.qkl.common.repository.model.AccountTxHistory;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import javax.annotation.Generated;
-import org.apache.ibatis.annotations.DeleteProvider;
-import org.apache.ibatis.annotations.InsertProvider;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.ResultMap;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.SelectProvider;
-import org.apache.ibatis.annotations.UpdateProvider;
+import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 import org.mybatis.dynamic.sql.BasicColumn;
 import org.mybatis.dynamic.sql.delete.DeleteDSLCompleter;
@@ -31,6 +17,14 @@ import org.mybatis.dynamic.sql.update.UpdateModel;
 import org.mybatis.dynamic.sql.update.render.UpdateStatementProvider;
 import org.mybatis.dynamic.sql.util.SqlProviderAdapter;
 import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
+
+import javax.annotation.Generated;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+
+import static cn.qkl.common.repository.mapper.AccountTxHistoryDynamicSqlSupport.*;
+import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
 
 @Mapper
 public interface AccountTxHistoryMapper {
@@ -64,7 +58,7 @@ public interface AccountTxHistoryMapper {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="tx_hash", property="txHash", jdbcType=JdbcType.VARCHAR),
         @Result(column="method", property="method", jdbcType=JdbcType.VARCHAR),
-        @Result(column="block", property="block", jdbcType=JdbcType.INTEGER),
+        @Result(column="block", property="block", jdbcType=JdbcType.BIGINT),
         @Result(column="tx_timestamp", property="txTimestamp", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="from", property="from", jdbcType=JdbcType.VARCHAR),
         @Result(column="to", property="to", jdbcType=JdbcType.VARCHAR),
