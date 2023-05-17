@@ -1,4 +1,4 @@
-package cn.qkl.webserver.controller.user;
+package cn.qkl.webserver.controller;
 
 
 import cn.qkl.common.framework.auth.Role;

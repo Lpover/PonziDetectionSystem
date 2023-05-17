@@ -63,7 +63,7 @@ public interface DynamicMonitorMapper {
     @Results(id="DynamicMonitorResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="content_id", property="contentId", jdbcType=JdbcType.BIGINT),
-        @Result(column="risk_level", property="riskLevel", jdbcType=JdbcType.BIT),
+        @Result(column="risk_level", property="riskLevel", jdbcType=JdbcType.INTEGER),
         @Result(column="content_tag", property="contentTag", jdbcType=JdbcType.VARCHAR),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)

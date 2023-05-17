@@ -63,7 +63,7 @@ public interface AccountContentMapper {
     @Results(id="AccountContentResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="content_id", property="contentId", jdbcType=JdbcType.BIGINT),
-        @Result(column="type", property="type", jdbcType=JdbcType.BIT),
+        @Result(column="type", property="type", jdbcType=JdbcType.INTEGER),
         @Result(column="account_id", property="accountId", jdbcType=JdbcType.BIGINT),
         @Result(column="source_type", property="sourceType", jdbcType=JdbcType.INTEGER),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),

@@ -44,22 +44,22 @@ public class Content {
     private String description;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Boolean dynamicType;
+    private Integer dynamicType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long dynamicAlgorithm;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Boolean dynamicRecognition;
+    private Integer dynamicRecognition;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Boolean revised;
+    private Integer revised;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Boolean riskLevel;
+    private Integer riskLevel;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Boolean contentType;
+    private Integer contentType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String contentTag;
@@ -294,18 +294,18 @@ public class Content {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Boolean getDynamicType() {
+    public Integer getDynamicType() {
         return dynamicType;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Content withDynamicType(Boolean dynamicType) {
+    public Content withDynamicType(Integer dynamicType) {
         this.setDynamicType(dynamicType);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setDynamicType(Boolean dynamicType) {
+    public void setDynamicType(Integer dynamicType) {
         this.dynamicType = dynamicType;
     }
 
@@ -326,66 +326,66 @@ public class Content {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Boolean getDynamicRecognition() {
+    public Integer getDynamicRecognition() {
         return dynamicRecognition;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Content withDynamicRecognition(Boolean dynamicRecognition) {
+    public Content withDynamicRecognition(Integer dynamicRecognition) {
         this.setDynamicRecognition(dynamicRecognition);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setDynamicRecognition(Boolean dynamicRecognition) {
+    public void setDynamicRecognition(Integer dynamicRecognition) {
         this.dynamicRecognition = dynamicRecognition;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Boolean getRevised() {
+    public Integer getRevised() {
         return revised;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Content withRevised(Boolean revised) {
+    public Content withRevised(Integer revised) {
         this.setRevised(revised);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setRevised(Boolean revised) {
+    public void setRevised(Integer revised) {
         this.revised = revised;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Boolean getRiskLevel() {
+    public Integer getRiskLevel() {
         return riskLevel;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Content withRiskLevel(Boolean riskLevel) {
+    public Content withRiskLevel(Integer riskLevel) {
         this.setRiskLevel(riskLevel);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setRiskLevel(Boolean riskLevel) {
+    public void setRiskLevel(Integer riskLevel) {
         this.riskLevel = riskLevel;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Boolean getContentType() {
+    public Integer getContentType() {
         return contentType;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Content withContentType(Boolean contentType) {
+    public Content withContentType(Integer contentType) {
         this.setContentType(contentType);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setContentType(Boolean contentType) {
+    public void setContentType(Integer contentType) {
         this.contentType = contentType;
     }
 

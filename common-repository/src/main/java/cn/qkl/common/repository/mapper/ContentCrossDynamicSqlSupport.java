@@ -56,13 +56,13 @@ public final class ContentCrossDynamicSqlSupport {
     public static final SqlColumn<Date> endTime = contentCross.endTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Boolean> bridge = contentCross.bridge;
+    public static final SqlColumn<Integer> bridge = contentCross.bridge;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Boolean> dynamicType = contentCross.dynamicType;
+    public static final SqlColumn<Integer> dynamicType = contentCross.dynamicType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Boolean> riskLevel = contentCross.riskLevel;
+    public static final SqlColumn<Integer> riskLevel = contentCross.riskLevel;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Date> createTime = contentCross.createTime;
@@ -102,11 +102,11 @@ public final class ContentCrossDynamicSqlSupport {
 
         public final SqlColumn<Date> endTime = column("end_time", JDBCType.TIMESTAMP);
 
-        public final SqlColumn<Boolean> bridge = column("bridge", JDBCType.BIT);
+        public final SqlColumn<Integer> bridge = column("bridge", JDBCType.INTEGER);
 
-        public final SqlColumn<Boolean> dynamicType = column("dynamic_type", JDBCType.BIT);
+        public final SqlColumn<Integer> dynamicType = column("dynamic_type", JDBCType.INTEGER);
 
-        public final SqlColumn<Boolean> riskLevel = column("risk_level", JDBCType.BIT);
+        public final SqlColumn<Integer> riskLevel = column("risk_level", JDBCType.INTEGER);
 
         public final SqlColumn<Date> createTime = column("create_time", JDBCType.TIMESTAMP);
 

@@ -61,7 +61,7 @@ public interface UserMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
     @Results(id="UserResult", value = {
-        @Result(column="user_id", property="userId", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="user_id", property="userId", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="user_num", property="userNum", jdbcType=JdbcType.VARCHAR),
         @Result(column="user_pwd", property="userPwd", jdbcType=JdbcType.VARCHAR),
         @Result(column="user_name", property="userName", jdbcType=JdbcType.VARCHAR),
@@ -90,7 +90,7 @@ public interface UserMapper {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int deleteByPrimaryKey(Integer userId_) {
+    default int deleteByPrimaryKey(Long userId_) {
         return delete(c -> 
             c.where(userId, isEqualTo(userId_))
         );
@@ -163,7 +163,7 @@ public interface UserMapper {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default Optional<User> selectByPrimaryKey(Integer userId_) {
+    default Optional<User> selectByPrimaryKey(Long userId_) {
         return selectOne(c ->
             c.where(userId, isEqualTo(userId_))
         );

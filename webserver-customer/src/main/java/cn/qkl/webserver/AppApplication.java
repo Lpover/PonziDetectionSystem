@@ -1,7 +1,8 @@
 package cn.qkl.webserver;
 
 import cn.qkl.common.framework.config.UniqueNameGenerator;
-import cn.qkl.webserver.service.user.OutUserService;
+
+import cn.qkl.webserver.service.OutUserService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

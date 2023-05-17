@@ -64,7 +64,7 @@ public interface AccountCheckHistoryMapper {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="account_id", property="accountId", jdbcType=JdbcType.BIGINT),
         @Result(column="account_check_time", property="accountCheckTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="risk_level", property="riskLevel", jdbcType=JdbcType.BIT),
+        @Result(column="risk_level", property="riskLevel", jdbcType=JdbcType.INTEGER),
         @Result(column="related_num", property="relatedNum", jdbcType=JdbcType.INTEGER),
         @Result(column="release_num", property="releaseNum", jdbcType=JdbcType.INTEGER),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),

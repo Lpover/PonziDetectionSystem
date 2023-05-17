@@ -15,13 +15,13 @@ public final class AlgorithmDynamicSqlSupport {
     public static final SqlColumn<Long> id = algorithm.id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Boolean> version = algorithm.version;
+    public static final SqlColumn<Integer> version = algorithm.version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<BigDecimal> recognitionRate = algorithm.recognitionRate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Boolean> type = algorithm.type;
+    public static final SqlColumn<Integer> type = algorithm.type;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Date> createTime = algorithm.createTime;
@@ -33,11 +33,11 @@ public final class AlgorithmDynamicSqlSupport {
     public static final class Algorithm extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
-        public final SqlColumn<Boolean> version = column("version", JDBCType.BIT);
+        public final SqlColumn<Integer> version = column("version", JDBCType.INTEGER);
 
         public final SqlColumn<BigDecimal> recognitionRate = column("recognition_rate", JDBCType.DECIMAL);
 
-        public final SqlColumn<Boolean> type = column("type", JDBCType.BIT);
+        public final SqlColumn<Integer> type = column("type", JDBCType.INTEGER);
 
         public final SqlColumn<Date> createTime = column("create_time", JDBCType.TIMESTAMP);
 

@@ -50,22 +50,22 @@ public final class ContentDynamicSqlSupport {
     public static final SqlColumn<String> description = content.description;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Boolean> dynamicType = content.dynamicType;
+    public static final SqlColumn<Integer> dynamicType = content.dynamicType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Long> dynamicAlgorithm = content.dynamicAlgorithm;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Boolean> dynamicRecognition = content.dynamicRecognition;
+    public static final SqlColumn<Integer> dynamicRecognition = content.dynamicRecognition;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Boolean> revised = content.revised;
+    public static final SqlColumn<Integer> revised = content.revised;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Boolean> riskLevel = content.riskLevel;
+    public static final SqlColumn<Integer> riskLevel = content.riskLevel;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Boolean> contentType = content.contentType;
+    public static final SqlColumn<Integer> contentType = content.contentType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> contentTag = content.contentTag;
@@ -119,17 +119,17 @@ public final class ContentDynamicSqlSupport {
 
         public final SqlColumn<String> description = column("description", JDBCType.VARCHAR);
 
-        public final SqlColumn<Boolean> dynamicType = column("dynamic_type", JDBCType.BIT);
+        public final SqlColumn<Integer> dynamicType = column("dynamic_type", JDBCType.INTEGER);
 
         public final SqlColumn<Long> dynamicAlgorithm = column("dynamic_algorithm", JDBCType.BIGINT);
 
-        public final SqlColumn<Boolean> dynamicRecognition = column("dynamic_recognition", JDBCType.BIT);
+        public final SqlColumn<Integer> dynamicRecognition = column("dynamic_recognition", JDBCType.INTEGER);
 
-        public final SqlColumn<Boolean> revised = column("revised", JDBCType.BIT);
+        public final SqlColumn<Integer> revised = column("revised", JDBCType.INTEGER);
 
-        public final SqlColumn<Boolean> riskLevel = column("risk_level", JDBCType.BIT);
+        public final SqlColumn<Integer> riskLevel = column("risk_level", JDBCType.INTEGER);
 
-        public final SqlColumn<Boolean> contentType = column("content_type", JDBCType.BIT);
+        public final SqlColumn<Integer> contentType = column("content_type", JDBCType.INTEGER);
 
         public final SqlColumn<String> contentTag = column("content_tag", JDBCType.VARCHAR);
 

@@ -76,9 +76,9 @@ public interface ContentCrossMapper {
         @Result(column="dst_token_id", property="dstTokenId", jdbcType=JdbcType.VARCHAR),
         @Result(column="dst_account_id", property="dstAccountId", jdbcType=JdbcType.BIGINT),
         @Result(column="end_time", property="endTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="bridge", property="bridge", jdbcType=JdbcType.BIT),
-        @Result(column="dynamic_type", property="dynamicType", jdbcType=JdbcType.BIT),
-        @Result(column="risk_level", property="riskLevel", jdbcType=JdbcType.BIT),
+        @Result(column="bridge", property="bridge", jdbcType=JdbcType.INTEGER),
+        @Result(column="dynamic_type", property="dynamicType", jdbcType=JdbcType.INTEGER),
+        @Result(column="risk_level", property="riskLevel", jdbcType=JdbcType.INTEGER),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
     })

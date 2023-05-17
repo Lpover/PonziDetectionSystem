@@ -1,4 +1,4 @@
-package cn.qkl.webserver.service.user;
+package cn.qkl.webserver.service;
 
 import cn.qkl.common.framework.auth.TokenBean;
 import cn.qkl.common.framework.auth.TokenHandler;
@@ -80,7 +80,7 @@ public class UserService {
     public UserInfoVO getUserInfo() {
         //判断账号密码是否正确
         User user = userDao.selectOne(c -> c
-                .where(Tables.user.userId, isEqualTo((int) TokenHandler.getUserId()))
+                .where(Tables.user.userId, isEqualTo(TokenHandler.getUserId()))
         ).orElseThrow(() -> new BusinessException(BusinessStatus.User_Not_EXISTS));
 //        User user = new User();
 //        user.setUserNum(environment.getProperty("server.port")); # VM启动不行

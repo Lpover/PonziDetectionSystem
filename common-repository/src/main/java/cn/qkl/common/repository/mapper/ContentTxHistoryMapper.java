@@ -63,7 +63,7 @@ public interface ContentTxHistoryMapper {
     @Results(id="ContentTxHistoryResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="content_id", property="contentId", jdbcType=JdbcType.BIGINT),
-        @Result(column="event", property="event", jdbcType=JdbcType.BIT),
+        @Result(column="event", property="event", jdbcType=JdbcType.INTEGER),
         @Result(column="price", property="price", jdbcType=JdbcType.VARCHAR),
         @Result(column="from", property="from", jdbcType=JdbcType.VARCHAR),
         @Result(column="to", property="to", jdbcType=JdbcType.VARCHAR),

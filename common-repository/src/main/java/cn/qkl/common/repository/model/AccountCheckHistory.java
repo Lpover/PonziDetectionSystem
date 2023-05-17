@@ -14,7 +14,7 @@ public class AccountCheckHistory {
     private Date accountCheckTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Boolean riskLevel;
+    private Integer riskLevel;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer relatedNum;
@@ -77,18 +77,18 @@ public class AccountCheckHistory {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Boolean getRiskLevel() {
+    public Integer getRiskLevel() {
         return riskLevel;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountCheckHistory withRiskLevel(Boolean riskLevel) {
+    public AccountCheckHistory withRiskLevel(Integer riskLevel) {
         this.setRiskLevel(riskLevel);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setRiskLevel(Boolean riskLevel) {
+    public void setRiskLevel(Integer riskLevel) {
         this.riskLevel = riskLevel;
     }
 

@@ -11,7 +11,7 @@ public class AccountContent {
     private Long contentId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Boolean type;
+    private Integer type;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long accountId;
@@ -58,18 +58,18 @@ public class AccountContent {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Boolean getType() {
+    public Integer getType() {
         return type;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountContent withType(Boolean type) {
+    public AccountContent withType(Integer type) {
         this.setType(type);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setType(Boolean type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 

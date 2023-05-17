@@ -9,13 +9,13 @@ public class Algorithm {
     private Long id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Boolean version;
+    private Integer version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private BigDecimal recognitionRate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Boolean type;
+    private Integer type;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Date createTime;
@@ -40,18 +40,18 @@ public class Algorithm {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Boolean getVersion() {
+    public Integer getVersion() {
         return version;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Algorithm withVersion(Boolean version) {
+    public Algorithm withVersion(Integer version) {
         this.setVersion(version);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setVersion(Boolean version) {
+    public void setVersion(Integer version) {
         this.version = version;
     }
 
@@ -72,18 +72,18 @@ public class Algorithm {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Boolean getType() {
+    public Integer getType() {
         return type;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Algorithm withType(Boolean type) {
+    public Algorithm withType(Integer type) {
         this.setType(type);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setType(Boolean type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 

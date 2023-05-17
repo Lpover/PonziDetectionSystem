@@ -14,37 +14,37 @@ public class Platform {
     private String url;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Boolean monitor;
+    private Integer monitor;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long riskContentNum;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Boolean activation;
+    private Integer activation;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Boolean riskLevel;
+    private Integer riskLevel;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Boolean platformType;
+    private Integer platformType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String logo;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Boolean location;
+    private Integer location;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Boolean frequency;
+    private Integer frequency;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String crawlerFile;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Byte web3Type;
+    private Integer web3Type;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long contentNum;
@@ -122,18 +122,18 @@ public class Platform {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Boolean getMonitor() {
+    public Integer getMonitor() {
         return monitor;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Platform withMonitor(Boolean monitor) {
+    public Platform withMonitor(Integer monitor) {
         this.setMonitor(monitor);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setMonitor(Boolean monitor) {
+    public void setMonitor(Integer monitor) {
         this.monitor = monitor;
     }
 
@@ -154,34 +154,34 @@ public class Platform {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Boolean getActivation() {
+    public Integer getActivation() {
         return activation;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Platform withActivation(Boolean activation) {
+    public Platform withActivation(Integer activation) {
         this.setActivation(activation);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setActivation(Boolean activation) {
+    public void setActivation(Integer activation) {
         this.activation = activation;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Boolean getRiskLevel() {
+    public Integer getRiskLevel() {
         return riskLevel;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Platform withRiskLevel(Boolean riskLevel) {
+    public Platform withRiskLevel(Integer riskLevel) {
         this.setRiskLevel(riskLevel);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setRiskLevel(Boolean riskLevel) {
+    public void setRiskLevel(Integer riskLevel) {
         this.riskLevel = riskLevel;
     }
 
@@ -202,18 +202,18 @@ public class Platform {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Boolean getPlatformType() {
+    public Integer getPlatformType() {
         return platformType;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Platform withPlatformType(Boolean platformType) {
+    public Platform withPlatformType(Integer platformType) {
         this.setPlatformType(platformType);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setPlatformType(Boolean platformType) {
+    public void setPlatformType(Integer platformType) {
         this.platformType = platformType;
     }
 
@@ -234,34 +234,34 @@ public class Platform {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Boolean getLocation() {
+    public Integer getLocation() {
         return location;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Platform withLocation(Boolean location) {
+    public Platform withLocation(Integer location) {
         this.setLocation(location);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setLocation(Boolean location) {
+    public void setLocation(Integer location) {
         this.location = location;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Boolean getFrequency() {
+    public Integer getFrequency() {
         return frequency;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Platform withFrequency(Boolean frequency) {
+    public Platform withFrequency(Integer frequency) {
         this.setFrequency(frequency);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setFrequency(Boolean frequency) {
+    public void setFrequency(Integer frequency) {
         this.frequency = frequency;
     }
 
@@ -282,18 +282,18 @@ public class Platform {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Byte getWeb3Type() {
+    public Integer getWeb3Type() {
         return web3Type;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Platform withWeb3Type(Byte web3Type) {
+    public Platform withWeb3Type(Integer web3Type) {
         this.setWeb3Type(web3Type);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setWeb3Type(Byte web3Type) {
+    public void setWeb3Type(Integer web3Type) {
         this.web3Type = web3Type;
     }
 

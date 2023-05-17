@@ -11,7 +11,7 @@ public class DynamicMonitor {
     private Long contentId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Boolean riskLevel;
+    private Integer riskLevel;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String contentTag;
@@ -55,18 +55,18 @@ public class DynamicMonitor {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Boolean getRiskLevel() {
+    public Integer getRiskLevel() {
         return riskLevel;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public DynamicMonitor withRiskLevel(Boolean riskLevel) {
+    public DynamicMonitor withRiskLevel(Integer riskLevel) {
         this.setRiskLevel(riskLevel);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setRiskLevel(Boolean riskLevel) {
+    public void setRiskLevel(Integer riskLevel) {
         this.riskLevel = riskLevel;
     }
 

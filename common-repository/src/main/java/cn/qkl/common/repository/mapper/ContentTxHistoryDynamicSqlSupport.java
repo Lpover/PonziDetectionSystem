@@ -17,7 +17,7 @@ public final class ContentTxHistoryDynamicSqlSupport {
     public static final SqlColumn<Long> contentId = contentTxHistory.contentId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Boolean> event = contentTxHistory.event;
+    public static final SqlColumn<Integer> event = contentTxHistory.event;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> price = contentTxHistory.price;
@@ -43,7 +43,7 @@ public final class ContentTxHistoryDynamicSqlSupport {
 
         public final SqlColumn<Long> contentId = column("content_id", JDBCType.BIGINT);
 
-        public final SqlColumn<Boolean> event = column("event", JDBCType.BIT);
+        public final SqlColumn<Integer> event = column("event", JDBCType.INTEGER);
 
         public final SqlColumn<String> price = column("price", JDBCType.VARCHAR);
 

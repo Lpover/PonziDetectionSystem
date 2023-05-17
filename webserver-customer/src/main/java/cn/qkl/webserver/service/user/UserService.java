@@ -9,6 +9,7 @@ import cn.qkl.webserver.common.BusinessStatus;
 import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dao.UserDao;
 import cn.qkl.webserver.dto.user.LoginDTO;
+import cn.qkl.webserver.service.OutUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -20,7 +20,7 @@ public final class AccountCheckHistoryDynamicSqlSupport {
     public static final SqlColumn<Date> accountCheckTime = accountCheckHistory.accountCheckTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Boolean> riskLevel = accountCheckHistory.riskLevel;
+    public static final SqlColumn<Integer> riskLevel = accountCheckHistory.riskLevel;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Integer> relatedNum = accountCheckHistory.relatedNum;
@@ -42,7 +42,7 @@ public final class AccountCheckHistoryDynamicSqlSupport {
 
         public final SqlColumn<Date> accountCheckTime = column("account_check_time", JDBCType.TIMESTAMP);
 
-        public final SqlColumn<Boolean> riskLevel = column("risk_level", JDBCType.BIT);
+        public final SqlColumn<Integer> riskLevel = column("risk_level", JDBCType.INTEGER);
 
         public final SqlColumn<Integer> relatedNum = column("related_num", JDBCType.INTEGER);
 

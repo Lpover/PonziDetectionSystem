@@ -17,7 +17,7 @@ public final class AccountContentDynamicSqlSupport {
     public static final SqlColumn<Long> contentId = accountContent.contentId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Boolean> type = accountContent.type;
+    public static final SqlColumn<Integer> type = accountContent.type;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Long> accountId = accountContent.accountId;
@@ -37,7 +37,7 @@ public final class AccountContentDynamicSqlSupport {
 
         public final SqlColumn<Long> contentId = column("content_id", JDBCType.BIGINT);
 
-        public final SqlColumn<Boolean> type = column("type", JDBCType.BIT);
+        public final SqlColumn<Integer> type = column("type", JDBCType.INTEGER);
 
         public final SqlColumn<Long> accountId = column("account_id", JDBCType.BIGINT);
 

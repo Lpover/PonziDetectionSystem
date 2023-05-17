@@ -1,4 +1,4 @@
-package cn.qkl.webserver.service.user;
+package cn.qkl.webserver.service;
 
 import cn.qkl.common.repository.model.User;
 import org.springframework.cloud.openfeign.FeignClient;

@@ -50,13 +50,13 @@ public class ContentCross {
     private Date endTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Boolean bridge;
+    private Integer bridge;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Boolean dynamicType;
+    private Integer dynamicType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Boolean riskLevel;
+    private Integer riskLevel;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Date createTime;
@@ -305,50 +305,50 @@ public class ContentCross {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Boolean getBridge() {
+    public Integer getBridge() {
         return bridge;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public ContentCross withBridge(Boolean bridge) {
+    public ContentCross withBridge(Integer bridge) {
         this.setBridge(bridge);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setBridge(Boolean bridge) {
+    public void setBridge(Integer bridge) {
         this.bridge = bridge;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Boolean getDynamicType() {
+    public Integer getDynamicType() {
         return dynamicType;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public ContentCross withDynamicType(Boolean dynamicType) {
+    public ContentCross withDynamicType(Integer dynamicType) {
         this.setDynamicType(dynamicType);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setDynamicType(Boolean dynamicType) {
+    public void setDynamicType(Integer dynamicType) {
         this.dynamicType = dynamicType;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Boolean getRiskLevel() {
+    public Integer getRiskLevel() {
         return riskLevel;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public ContentCross withRiskLevel(Boolean riskLevel) {
+    public ContentCross withRiskLevel(Integer riskLevel) {
         this.setRiskLevel(riskLevel);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setRiskLevel(Boolean riskLevel) {
+    public void setRiskLevel(Integer riskLevel) {
         this.riskLevel = riskLevel;
     }
 

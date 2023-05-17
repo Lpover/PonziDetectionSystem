@@ -11,7 +11,7 @@ public class ContentTxHistory {
     private Long contentId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Boolean event;
+    private Integer event;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String price;
@@ -64,18 +64,18 @@ public class ContentTxHistory {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Boolean getEvent() {
+    public Integer getEvent() {
         return event;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public ContentTxHistory withEvent(Boolean event) {
+    public ContentTxHistory withEvent(Integer event) {
         this.setEvent(event);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setEvent(Boolean event) {
+    public void setEvent(Integer event) {
         this.event = event;
     }
 

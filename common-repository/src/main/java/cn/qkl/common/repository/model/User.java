@@ -5,7 +5,7 @@ import javax.annotation.Generated;
 
 public class User {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Integer userId;
+    private Long userId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String userNum;
@@ -38,18 +38,18 @@ public class User {
     private String email;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public User withUserId(Integer userId) {
+    public User withUserId(Long userId) {
         this.setUserId(userId);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

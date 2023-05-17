@@ -20,37 +20,37 @@ public final class PlatformDynamicSqlSupport {
     public static final SqlColumn<String> url = platform.url;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Boolean> monitor = platform.monitor;
+    public static final SqlColumn<Integer> monitor = platform.monitor;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Long> riskContentNum = platform.riskContentNum;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Boolean> activation = platform.activation;
+    public static final SqlColumn<Integer> activation = platform.activation;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Boolean> riskLevel = platform.riskLevel;
+    public static final SqlColumn<Integer> riskLevel = platform.riskLevel;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Long> updateTime = platform.updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Boolean> platformType = platform.platformType;
+    public static final SqlColumn<Integer> platformType = platform.platformType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> logo = platform.logo;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Boolean> location = platform.location;
+    public static final SqlColumn<Integer> location = platform.location;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Boolean> frequency = platform.frequency;
+    public static final SqlColumn<Integer> frequency = platform.frequency;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> crawlerFile = platform.crawlerFile;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Byte> web3Type = platform.web3Type;
+    public static final SqlColumn<Integer> web3Type = platform.web3Type;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Long> contentNum = platform.contentNum;
@@ -87,27 +87,27 @@ public final class PlatformDynamicSqlSupport {
 
         public final SqlColumn<String> url = column("url", JDBCType.VARCHAR);
 
-        public final SqlColumn<Boolean> monitor = column("monitor", JDBCType.BIT);
+        public final SqlColumn<Integer> monitor = column("monitor", JDBCType.INTEGER);
 
         public final SqlColumn<Long> riskContentNum = column("risk_content_num", JDBCType.BIGINT);
 
-        public final SqlColumn<Boolean> activation = column("activation", JDBCType.BIT);
+        public final SqlColumn<Integer> activation = column("activation", JDBCType.INTEGER);
 
-        public final SqlColumn<Boolean> riskLevel = column("risk_level", JDBCType.BIT);
+        public final SqlColumn<Integer> riskLevel = column("risk_level", JDBCType.INTEGER);
 
         public final SqlColumn<Long> updateTime = column("update_time", JDBCType.BIGINT);
 
-        public final SqlColumn<Boolean> platformType = column("platform_type", JDBCType.BIT);
+        public final SqlColumn<Integer> platformType = column("platform_type", JDBCType.INTEGER);
 
         public final SqlColumn<String> logo = column("logo", JDBCType.VARCHAR);
 
-        public final SqlColumn<Boolean> location = column("location", JDBCType.BIT);
+        public final SqlColumn<Integer> location = column("location", JDBCType.INTEGER);
 
-        public final SqlColumn<Boolean> frequency = column("frequency", JDBCType.BIT);
+        public final SqlColumn<Integer> frequency = column("frequency", JDBCType.INTEGER);
 
         public final SqlColumn<String> crawlerFile = column("crawler_file", JDBCType.VARCHAR);
 
-        public final SqlColumn<Byte> web3Type = column("web3_type", JDBCType.TINYINT);
+        public final SqlColumn<Integer> web3Type = column("web3_type", JDBCType.INTEGER);
 
         public final SqlColumn<Long> contentNum = column("content_num", JDBCType.BIGINT);
 

@@ -11,7 +11,7 @@ public final class UserDynamicSqlSupport {
     public static final User user = new User();
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Integer> userId = user.userId;
+    public static final SqlColumn<Long> userId = user.userId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> userNum = user.userNum;
@@ -45,7 +45,7 @@ public final class UserDynamicSqlSupport {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class User extends SqlTable {
-        public final SqlColumn<Integer> userId = column("user_id", JDBCType.INTEGER);
+        public final SqlColumn<Long> userId = column("user_id", JDBCType.BIGINT);
 
         public final SqlColumn<String> userNum = column("user_num", JDBCType.VARCHAR);
 

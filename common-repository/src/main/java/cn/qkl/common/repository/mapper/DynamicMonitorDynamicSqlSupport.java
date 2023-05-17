@@ -17,7 +17,7 @@ public final class DynamicMonitorDynamicSqlSupport {
     public static final SqlColumn<Long> contentId = dynamicMonitor.contentId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Boolean> riskLevel = dynamicMonitor.riskLevel;
+    public static final SqlColumn<Integer> riskLevel = dynamicMonitor.riskLevel;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> contentTag = dynamicMonitor.contentTag;
@@ -34,7 +34,7 @@ public final class DynamicMonitorDynamicSqlSupport {
 
         public final SqlColumn<Long> contentId = column("content_id", JDBCType.BIGINT);
 
-        public final SqlColumn<Boolean> riskLevel = column("risk_level", JDBCType.BIT);
+        public final SqlColumn<Integer> riskLevel = column("risk_level", JDBCType.INTEGER);
 
         public final SqlColumn<String> contentTag = column("content_tag", JDBCType.VARCHAR);
 

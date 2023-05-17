@@ -62,9 +62,9 @@ public interface AlgorithmMapper {
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
     @Results(id="AlgorithmResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
-        @Result(column="version", property="version", jdbcType=JdbcType.BIT),
+        @Result(column="version", property="version", jdbcType=JdbcType.INTEGER),
         @Result(column="recognition_rate", property="recognitionRate", jdbcType=JdbcType.DECIMAL),
-        @Result(column="type", property="type", jdbcType=JdbcType.BIT),
+        @Result(column="type", property="type", jdbcType=JdbcType.INTEGER),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
     })

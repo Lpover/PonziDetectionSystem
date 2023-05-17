@@ -17,6 +17,7 @@ public class CommonFrameworkProperties {
             return apiPrefix;
 
         }
-        return "/" + apiPrefix;
+//        return "/" + apiPrefix;
+        return "";
     }
 }
