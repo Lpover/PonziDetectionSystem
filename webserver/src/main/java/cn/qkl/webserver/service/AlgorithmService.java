@@ -27,7 +27,6 @@ import static org.mybatis.dynamic.sql.SqlBuilder.isIn;
 @RefreshScope
 public class AlgorithmService {
 
-
     @Autowired
     private AlgorithmDao algorithmDao;
 

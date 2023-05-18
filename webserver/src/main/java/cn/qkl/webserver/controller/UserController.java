@@ -3,7 +3,6 @@ package cn.qkl.webserver.controller;
 
 import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
-import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dto.user.LoginDTO;
 import cn.qkl.webserver.service.UserService;
 import cn.qkl.webserver.vo.user.UserInfoVO;
@@ -30,7 +29,7 @@ import org.springframework.web.bind.annotation.*;
 @ApiSupport(author = "wx")
 @RequestMapping("user")
 @RefreshScope
-@Role(roles = RoleEnum.UserRole.class)
+@Role
 public class UserController {
 
     //    @LoadBalanced
@@ -49,14 +48,12 @@ public class UserController {
 
     @ApiOperation("登录")
     @PostMapping("login")
-    @Role
     public BaseResult<String> emailLogin(@RequestBody @Validated LoginDTO dto) {
         return BaseResult.ok(userService.emailLogin(dto));
     }
 
     @ApiOperation("获取个人信息")
     @GetMapping("info")
-    @Role
     public BaseResult<UserInfoVO> getUserInfo() {
         return BaseResult.ok(userService.getUserInfo());
     }

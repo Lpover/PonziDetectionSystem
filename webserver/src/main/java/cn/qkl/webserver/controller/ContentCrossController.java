@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("cross")
 @RefreshScope
 @Role
-public class CrossContentController {
+public class ContentCrossController {
     @ApiOperation("跨链风险数字内容列表")
     @GetMapping("content/list")
     public BaseResult<PageVO<CrossContentVO>> getCrossContentList(@Validated CrossContentListQueryDTO dto) {
