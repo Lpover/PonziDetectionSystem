@@ -17,14 +17,8 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="app" target="1.8" />
-      <module name="common-framework" target="1.8" />
       <module name="common-redis" target="1.8" />
-      <module name="common-repository" target="1.8" />
-      <module name="gateway" target="1.8" />
       <module name="mindlax" target="1.8" />
-      <module name="qkl" target="1.8" />
-      <module name="webserver" target="1.8" />
-      <module name="webserver-customer" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
