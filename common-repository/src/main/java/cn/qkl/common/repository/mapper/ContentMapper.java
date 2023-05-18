@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface ContentMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, name, address, tokenid, metaUrl, cryptoPrice, currencyPrice, creator, platformId, standard, chainId, listingTime, description, dynamicType, dynamicAlgorithm, dynamicRecognition, revised, riskLevel, contentType, contentTag, riskType, owner, mintTime, accountId, thingType, createTime, updateTime);
+    BasicColumn[] selectList = BasicColumn.columnList(id, name, address, tokenid, metaUrl, cryptoPrice, currencyPrice, creator, platformId, standard, chainId, listingTime, description, dynamicType, dynamicAlgorithmId, dynamicRecognition, revised, riskLevel, contentType, contentTag, riskType, owner, mintTime, accountId, thingType, createTime, updateTime);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -75,7 +75,7 @@ public interface ContentMapper {
         @Result(column="listing_time", property="listingTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="description", property="description", jdbcType=JdbcType.VARCHAR),
         @Result(column="dynamic_type", property="dynamicType", jdbcType=JdbcType.INTEGER),
-        @Result(column="dynamic_algorithm", property="dynamicAlgorithm", jdbcType=JdbcType.INTEGER),
+        @Result(column="dynamic_algorithm_id", property="dynamicAlgorithmId", jdbcType=JdbcType.BIGINT),
         @Result(column="dynamic_recognition", property="dynamicRecognition", jdbcType=JdbcType.INTEGER),
         @Result(column="revised", property="revised", jdbcType=JdbcType.INTEGER),
         @Result(column="risk_level", property="riskLevel", jdbcType=JdbcType.INTEGER),
@@ -129,7 +129,7 @@ public interface ContentMapper {
             .map(listingTime).toProperty("listingTime")
             .map(description).toProperty("description")
             .map(dynamicType).toProperty("dynamicType")
-            .map(dynamicAlgorithm).toProperty("dynamicAlgorithm")
+            .map(dynamicAlgorithmId).toProperty("dynamicAlgorithmId")
             .map(dynamicRecognition).toProperty("dynamicRecognition")
             .map(revised).toProperty("revised")
             .map(riskLevel).toProperty("riskLevel")
@@ -162,7 +162,7 @@ public interface ContentMapper {
             .map(listingTime).toProperty("listingTime")
             .map(description).toProperty("description")
             .map(dynamicType).toProperty("dynamicType")
-            .map(dynamicAlgorithm).toProperty("dynamicAlgorithm")
+            .map(dynamicAlgorithmId).toProperty("dynamicAlgorithmId")
             .map(dynamicRecognition).toProperty("dynamicRecognition")
             .map(revised).toProperty("revised")
             .map(riskLevel).toProperty("riskLevel")
@@ -195,7 +195,7 @@ public interface ContentMapper {
             .map(listingTime).toPropertyWhenPresent("listingTime", record::getListingTime)
             .map(description).toPropertyWhenPresent("description", record::getDescription)
             .map(dynamicType).toPropertyWhenPresent("dynamicType", record::getDynamicType)
-            .map(dynamicAlgorithm).toPropertyWhenPresent("dynamicAlgorithm", record::getDynamicAlgorithm)
+            .map(dynamicAlgorithmId).toPropertyWhenPresent("dynamicAlgorithmId", record::getDynamicAlgorithmId)
             .map(dynamicRecognition).toPropertyWhenPresent("dynamicRecognition", record::getDynamicRecognition)
             .map(revised).toPropertyWhenPresent("revised", record::getRevised)
             .map(riskLevel).toPropertyWhenPresent("riskLevel", record::getRiskLevel)
@@ -254,7 +254,7 @@ public interface ContentMapper {
                 .set(listingTime).equalTo(record::getListingTime)
                 .set(description).equalTo(record::getDescription)
                 .set(dynamicType).equalTo(record::getDynamicType)
-                .set(dynamicAlgorithm).equalTo(record::getDynamicAlgorithm)
+                .set(dynamicAlgorithmId).equalTo(record::getDynamicAlgorithmId)
                 .set(dynamicRecognition).equalTo(record::getDynamicRecognition)
                 .set(revised).equalTo(record::getRevised)
                 .set(riskLevel).equalTo(record::getRiskLevel)
@@ -285,7 +285,7 @@ public interface ContentMapper {
                 .set(listingTime).equalToWhenPresent(record::getListingTime)
                 .set(description).equalToWhenPresent(record::getDescription)
                 .set(dynamicType).equalToWhenPresent(record::getDynamicType)
-                .set(dynamicAlgorithm).equalToWhenPresent(record::getDynamicAlgorithm)
+                .set(dynamicAlgorithmId).equalToWhenPresent(record::getDynamicAlgorithmId)
                 .set(dynamicRecognition).equalToWhenPresent(record::getDynamicRecognition)
                 .set(revised).equalToWhenPresent(record::getRevised)
                 .set(riskLevel).equalToWhenPresent(record::getRiskLevel)
@@ -316,7 +316,7 @@ public interface ContentMapper {
             .set(listingTime).equalTo(record::getListingTime)
             .set(description).equalTo(record::getDescription)
             .set(dynamicType).equalTo(record::getDynamicType)
-            .set(dynamicAlgorithm).equalTo(record::getDynamicAlgorithm)
+            .set(dynamicAlgorithmId).equalTo(record::getDynamicAlgorithmId)
             .set(dynamicRecognition).equalTo(record::getDynamicRecognition)
             .set(revised).equalTo(record::getRevised)
             .set(riskLevel).equalTo(record::getRiskLevel)
@@ -349,7 +349,7 @@ public interface ContentMapper {
             .set(listingTime).equalToWhenPresent(record::getListingTime)
             .set(description).equalToWhenPresent(record::getDescription)
             .set(dynamicType).equalToWhenPresent(record::getDynamicType)
-            .set(dynamicAlgorithm).equalToWhenPresent(record::getDynamicAlgorithm)
+            .set(dynamicAlgorithmId).equalToWhenPresent(record::getDynamicAlgorithmId)
             .set(dynamicRecognition).equalToWhenPresent(record::getDynamicRecognition)
             .set(revised).equalToWhenPresent(record::getRevised)
             .set(riskLevel).equalToWhenPresent(record::getRiskLevel)
