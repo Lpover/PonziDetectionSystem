@@ -94,6 +94,16 @@ public class PageVO<T> {
         return new PageVO<T>(pageId, pageSize, (int) pageInfo.getTotal(), pageInfo.getList());
     }
 
+    public static <T> PageVO<T> getPageData(int pageId, int pageSize, Supplier<List<T>> supplier) {
+        if (pageId > 0 && pageSize > 0) {
+            PageHelper.startPage(pageId, pageSize);
+        }
+        List<T> list = supplier.get();
+        PageHelper.clearPage();
+        PageInfo<T> pageRes = new PageInfo<>(list);
+        return new PageVO<>(pageId, pageSize, (int) pageRes.getTotal(), pageRes.getList());
+    }
+
 
     public static <T, R> PageVO<R> getPageData(int pageId, int pageSize, Supplier<List<T>> supplier, Function<T, R> transfer) {
         if (pageId > 0 && pageSize > 0) {
