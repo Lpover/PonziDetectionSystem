@@ -3,7 +3,7 @@ package cn.qkl.webserver.vo.dynamic;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.util.List;
+import java.util.Date;
 
 @Data
 public class DynamicContentVO {
@@ -22,5 +22,7 @@ public class DynamicContentVO {
     @ApiModelProperty("风险评级：1低风险 2中风险 3高风险")
     private Integer riskLevel;
     @ApiModelProperty("内容标签")
-    private List<String> tagList;
+    private String contentTag;
+    @ApiModelProperty("更新时间")
+    private Date updateTime;
 }
