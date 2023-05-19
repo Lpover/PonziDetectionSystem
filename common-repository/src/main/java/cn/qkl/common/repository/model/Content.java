@@ -47,7 +47,7 @@ public class Content {
     private Integer dynamicType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Integer dynamicAlgorithm;
+    private Long dynamicAlgorithmId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer dynamicRecognition;
@@ -310,19 +310,19 @@ public class Content {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Integer getDynamicAlgorithm() {
-        return dynamicAlgorithm;
+    public Long getDynamicAlgorithmId() {
+        return dynamicAlgorithmId;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Content withDynamicAlgorithm(Integer dynamicAlgorithm) {
-        this.setDynamicAlgorithm(dynamicAlgorithm);
+    public Content withDynamicAlgorithmId(Long dynamicAlgorithmId) {
+        this.setDynamicAlgorithmId(dynamicAlgorithmId);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setDynamicAlgorithm(Integer dynamicAlgorithm) {
-        this.dynamicAlgorithm = dynamicAlgorithm;
+    public void setDynamicAlgorithmId(Long dynamicAlgorithmId) {
+        this.dynamicAlgorithmId = dynamicAlgorithmId;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -538,7 +538,7 @@ public class Content {
         sb.append(", listingTime=").append(listingTime);
         sb.append(", description=").append(description);
         sb.append(", dynamicType=").append(dynamicType);
-        sb.append(", dynamicAlgorithm=").append(dynamicAlgorithm);
+        sb.append(", dynamicAlgorithmId=").append(dynamicAlgorithmId);
         sb.append(", dynamicRecognition=").append(dynamicRecognition);
         sb.append(", revised=").append(revised);
         sb.append(", riskLevel=").append(riskLevel);

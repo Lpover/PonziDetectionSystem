@@ -34,7 +34,7 @@ public class AuthCheckerConfig implements AuthChecker {
             return user;
         } else if (RoleEnum.RoleTypeEnum.ADMIN.getRoleType().equals(tokenBean.getRoleType())) {
             User user = userDao.selectOne(c -> c
-                    .where(Tables.user.userId, isEqualTo((int) tokenBean.getRoleId()))
+                    .where(Tables.user.userId, isEqualTo( tokenBean.getRoleId()))
             ).orElseThrow(() -> new BusinessException(BusinessStatus.User_Not_EXISTS));
             if (user == null) {
                 throw new UnauthorizedException(BusinessStatus.ACCOUNT_EXCEPTION.getCode());

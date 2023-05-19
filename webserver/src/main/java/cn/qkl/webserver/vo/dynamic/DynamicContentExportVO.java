@@ -26,6 +26,4 @@ public class DynamicContentExportVO {
     private String metaUrl;
     @ExcelProperty("风险评级")
     private String riskLevel;
-    @ExcelProperty("内容标签")
-    private String tag;
 }

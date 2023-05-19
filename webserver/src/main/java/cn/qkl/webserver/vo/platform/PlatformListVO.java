@@ -1,5 +1,9 @@
 package cn.qkl.webserver.vo.platform;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.qkl.common.repository.model.Algorithm;
+import cn.qkl.common.repository.model.Platform;
+import cn.qkl.webserver.vo.algorithm.AlgorithmVO;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.xml.crypto.Data;
@@ -29,4 +33,9 @@ public class PlatformListVO {
     private Data updateTime;
     @ApiModelProperty("上次抓取时间")
     private Data createTime;
+    public static PlatformListVO transform(Platform platform) {
+        PlatformListVO vo = new PlatformListVO();
+        BeanUtil.copyProperties(platform, vo);
+        return vo;
+    }
 }

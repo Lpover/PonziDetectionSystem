@@ -2,6 +2,7 @@ package cn.qkl.webserver.controller;
 
 
 import cn.qkl.common.framework.auth.Role;
+import cn.qkl.common.framework.request.PageDTO;
 import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.common.auth.RoleEnum;
@@ -9,6 +10,8 @@ import cn.qkl.webserver.dto.dynamic.DynamicContentListQueryDTO;
 import cn.qkl.webserver.dto.dynamic.ReCheckDynamicTypeDTO;
 import cn.qkl.webserver.dto.platform.*;
 import cn.qkl.webserver.dto.user.LoginDTO;
+import cn.qkl.webserver.service.DynamicContentService;
+import cn.qkl.webserver.service.PlatformService;
 import cn.qkl.webserver.service.user.UserService;
 import cn.qkl.webserver.vo.platform.PlatformContentVO;
 import cn.qkl.webserver.vo.platform.PlatformListVO;
@@ -41,6 +44,9 @@ import java.util.List;
 @RefreshScope
 @Role
 public class  PlatformController {
+
+    @Autowired
+    private PlatformService platformService;
     @ApiOperation("查询热门nft或web3平台")
     @GetMapping("list/type")
     public BaseResult<List<PlatformContentVO>> getPopularPlatform(@Validated PopularPlatformQueryDTO dto) {
@@ -48,7 +54,7 @@ public class  PlatformController {
     }
     @ApiOperation("平台列表展示")
     @GetMapping("list/show")
-    public BaseResult<PageVO<PlatformListVO>> getPlatformList() {
+    public BaseResult<PageVO<PlatformListVO>> getPlatformList(PageDTO dto) {
         return BaseResult.ok(new PageVO<>());
     }
     @ApiOperation("添加平台")

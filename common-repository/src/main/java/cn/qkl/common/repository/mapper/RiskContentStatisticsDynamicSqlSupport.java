@@ -46,7 +46,7 @@ public final class RiskContentStatisticsDynamicSqlSupport {
         public final SqlColumn<Long> platformId = column("platform_id", JDBCType.BIGINT);
 
         public final SqlColumn<Date> updateTime = column("update_time", JDBCType.TIMESTAMP);
-
+        public final SqlColumn<Integer> contentSum = column("content_sum", JDBCType.INTEGER);
         public RiskContentStatistics() {
             super("risk_content_statistics");
         }
