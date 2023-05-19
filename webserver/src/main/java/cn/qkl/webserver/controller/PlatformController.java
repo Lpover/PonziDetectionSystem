@@ -51,7 +51,7 @@ public class  PlatformController {
     @GetMapping("list/type")
     public BaseResult<List<PlatformContentVO>> getPopularPlatform(@Validated PopularPlatformQueryDTO dto) {
         return BaseResult.ok(new ArrayList<>());
-    }123
+    }
     @ApiOperation("平台列表展示")
     @GetMapping("list/show")
     public BaseResult<PageVO<PlatformListVO>> getPlatformList(PageDTO dto) {
