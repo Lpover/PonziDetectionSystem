@@ -6,11 +6,11 @@ import lombok.Data;
 @Data
 public class ContentInfoVO {
     @ApiModelProperty("数字内容项目名称")
-    private String contentName;
+    private String name;
     @ApiModelProperty("合约地址")
-    private String contractAddress;
+    private String address;
     @ApiModelProperty("Token ID")
-    private Integer tokenID;
+    private Integer tokenid;
     @ApiModelProperty("加密货币价格")
     private String cryptoPrice;
     @ApiModelProperty("法定货币价格")
@@ -18,7 +18,7 @@ public class ContentInfoVO {
     @ApiModelProperty("创作者")
     private String creator;
     @ApiModelProperty("平台名称")
-    private String platformName;
+    private String platformName;    //不同名
     @ApiModelProperty("认证标准")
     private String standard;
     @ApiModelProperty("所在链名称")
@@ -28,5 +28,5 @@ public class ContentInfoVO {
     @ApiModelProperty("描述")
     private String description;
     @ApiModelProperty("元数据(图片/视频/音频)url")
-    private String metaURL;
+    private String metaUrl;
 }
