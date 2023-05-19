@@ -2,6 +2,7 @@ package cn.qkl.webserver.vo.cross;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -24,6 +25,7 @@ public class CrossContentVO {
     @ApiModelProperty("源链用户地址")
     private String accountAddress;
     @ApiModelProperty("源链开始时间")
+//    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
     @ApiModelProperty("目标链名称")
     private String dstChainName;
@@ -36,6 +38,7 @@ public class CrossContentVO {
     @ApiModelProperty("目标链用户地址")
     private String dstAccountAddress;
     @ApiModelProperty("目标链结束时间")
+//    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
     @ApiModelProperty("跨链桥： 1 Zkbridge 2 protalTokenBridge")
     private Integer bridge;
@@ -43,4 +46,8 @@ public class CrossContentVO {
     private Integer dynamicType;
     @ApiModelProperty("风险评级：1低风险 2中风险 3高风险")
     private Integer riskLevel;
+
+    @ApiModelProperty("创建时间")
+//    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
 }
