@@ -1,4 +1,4 @@
-package cn.qkl.webserver.dao;
+ackage cn.qkl.webserver.dao;
 
 import cn.qkl.common.framework.util.mybatis.DateTypeHandler;
 import cn.qkl.common.repository.mapper.ContentMapper;
