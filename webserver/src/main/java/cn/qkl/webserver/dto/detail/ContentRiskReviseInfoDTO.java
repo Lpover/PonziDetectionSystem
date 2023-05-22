@@ -5,12 +5,12 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * @param
+ * @return
+ */
 @Data
-public class ContentRiskReviseDTO {
-    @ApiModelProperty("是否人工修正，0否 1是")
-    private Integer peopleRevise;
-    @ApiModelProperty("人工修正结果，0否 1是")
-    private Integer resultRevise;
+public class ContentRiskReviseInfoDTO {
     @ApiModelProperty("数字内容id")
     @NotNull
     private Long contentID;
