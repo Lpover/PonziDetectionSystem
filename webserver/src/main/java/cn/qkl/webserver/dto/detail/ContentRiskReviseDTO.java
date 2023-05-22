@@ -14,5 +14,4 @@ public class ContentRiskReviseDTO {
     private Integer resultRevise;
     @ApiModelProperty("数字内容id")
     private Long contentID;
-
 }

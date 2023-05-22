@@ -1,5 +1,9 @@
 package cn.qkl.webserver.vo.detail;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.qkl.common.repository.model.Algorithm;
+import cn.qkl.common.repository.model.Content;
+import cn.qkl.webserver.vo.algorithm.AlgorithmVO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -18,7 +22,7 @@ public class ContentInfoVO {
     @ApiModelProperty("创作者")
     private String creator;
     @ApiModelProperty("平台名称")
-    private String platformName;    //不同名
+    private String named;
     @ApiModelProperty("认证标准")
     private String standard;
     @ApiModelProperty("所在链名称")
@@ -29,4 +33,10 @@ public class ContentInfoVO {
     private String description;
     @ApiModelProperty("元数据(图片/视频/音频)url")
     private String metaUrl;
+
+    public static ContentInfoVO transform(Content content) {
+        ContentInfoVO vo = new ContentInfoVO();
+        BeanUtil.copyProperties(content, vo);
+        return vo;
+    }
 }

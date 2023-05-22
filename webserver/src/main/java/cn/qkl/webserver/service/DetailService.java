@@ -1,17 +1,17 @@
 package cn.qkl.webserver.service;
 
-import cn.qkl.webserver.common.ServerConfig;
+import cn.qkl.common.repository.Tables;
+import cn.qkl.common.repository.model.Content;
 import cn.qkl.webserver.dao.ContentDao;
-import cn.qkl.webserver.dao.UserDao;
+import cn.qkl.webserver.dto.detail.ContentInfoDTO;
 import cn.qkl.webserver.vo.detail.ContentInfoVO;
 import lombok.extern.slf4j.Slf4j;
+import org.mybatis.dynamic.sql.render.RenderingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
 /**
  * @title:
@@ -23,24 +23,23 @@ import javax.annotation.Resource;
 @Slf4j
 @RefreshScope
 public class DetailService {
-    @Value("${webserver.alias:none}")
-    public String webServerAlias;
-
-    @Value("${webserver.age:10}")
-    public int webServerAge;
-
-    @Resource
-    Environment environment;
-
-    @Resource
-    ServerConfig serverConfig;
-
     @Autowired
     private ContentDao contentDao;
 
-    public ContentInfoVO getContentInfo() {
+    public ContentInfoVO getContentInfo(ContentInfoDTO dto) {
+        ContentInfoVO contentInfo = contentDao.getContentDetail(
+                select(Tables.content.name, Tables.content.address, Tables.content.tokenid,
+                        Tables.content.cryptoPrice, Tables.content.currencyPrice, Tables.content.creator, Tables.platform.named,
+                        Tables.content.standard, Tables.chain.chainName, Tables.content.listingTime, Tables.content.description,Tables.content.metaUrl)
+                .from(Tables.content)
+                .leftJoin(Tables.platform).on(Tables.content.platformId, equalTo(Tables.platform.id))
+                .leftJoin(Tables.chain).on(Tables.content.chainId, equalTo(Tables.chain.id))
+                .where(Tables.content.id, isEqualTo(dto.getContentID()))
+                .build()
+                .render(RenderingStrategies.MYBATIS3)
+        );
 
-        return new ContentInfoVO();
+        return contentInfo;
     }
 
 }

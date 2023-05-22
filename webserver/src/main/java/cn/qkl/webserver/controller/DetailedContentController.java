@@ -7,6 +7,7 @@ import cn.qkl.webserver.dto.detail.ContentDynamicMonitorDTO;
 import cn.qkl.webserver.dto.detail.ContentHistoryDTO;
 import cn.qkl.webserver.dto.detail.ContentInfoDTO;
 import cn.qkl.webserver.dto.detail.ContentRiskReviseDTO;
+import cn.qkl.webserver.service.DetailService;
 import cn.qkl.webserver.vo.detail.ContentDynamicMonitorVO;
 import cn.qkl.webserver.vo.detail.ContentHistoryVO;
 import cn.qkl.webserver.vo.detail.ContentInfoVO;
@@ -15,6 +16,7 @@ import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,11 +40,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RefreshScope
 @Role
 public class DetailedContentController {
+    @Autowired
+    DetailService detailService;
 
     @ApiOperation("数字内容详情信息展示")
     @GetMapping("content/info")
     public BaseResult<ContentInfoVO> getInfo(@Validated ContentInfoDTO dto) {
-        return BaseResult.ok(new ContentInfoVO());
+        return BaseResult.ok(detailService.getContentInfo(dto));
     }
 
     @ApiOperation("数字内容交易记录展示")
