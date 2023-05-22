@@ -63,7 +63,7 @@ public final class UserDynamicSqlSupport {
 
         public final SqlColumn<String> randomnum = column("randomNum", JDBCType.VARCHAR);
 
-        public final SqlColumn<Integer> state = column("state", JDBCType.INTEGER);
+        public final SqlColumn<Integer> state = column("`state`", JDBCType.INTEGER);
 
         public final SqlColumn<String> email = column("email", JDBCType.VARCHAR);
 

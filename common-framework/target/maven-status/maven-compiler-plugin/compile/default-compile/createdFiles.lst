@@ -1,4 +1,5 @@
 cn\qkl\common\framework\response\BaseResult.class
+cn\qkl\common\framework\util\EasyExcelUtil.class
 cn\qkl\common\framework\exception\BusinessException.class
 cn\qkl\common\framework\response\BaseCode.class
 cn\qkl\common\framework\config\Knife4jConfiguration.class

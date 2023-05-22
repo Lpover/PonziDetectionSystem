@@ -47,9 +47,9 @@ public final class ContentTxHistoryDynamicSqlSupport {
 
         public final SqlColumn<String> price = column("price", JDBCType.VARCHAR);
 
-        public final SqlColumn<String> from = column("from", JDBCType.VARCHAR);
+        public final SqlColumn<String> from = column("`from`", JDBCType.VARCHAR);
 
-        public final SqlColumn<String> to = column("to", JDBCType.VARCHAR);
+        public final SqlColumn<String> to = column("`to`", JDBCType.VARCHAR);
 
         public final SqlColumn<String> ownerLogo = column("owner_logo", JDBCType.VARCHAR);
 
