@@ -1,4 +1,4 @@
-package cn.qkl.webserver.dao;
+ackage cn.qkl.webserver.dao;
 
 import cn.qkl.common.repository.mapper.ContentMapper;
 import cn.qkl.webserver.vo.detail.ContentDynamicMonitorVO;
