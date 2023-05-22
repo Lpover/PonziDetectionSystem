@@ -1,9 +1,7 @@
 package cn.qkl.webserver.vo.detail;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.qkl.common.repository.model.Algorithm;
 import cn.qkl.common.repository.model.Content;
-import cn.qkl.webserver.vo.algorithm.AlgorithmVO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

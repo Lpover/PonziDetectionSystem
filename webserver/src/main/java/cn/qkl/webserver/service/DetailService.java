@@ -1,7 +1,6 @@
 package cn.qkl.webserver.service;
 
 import cn.qkl.common.repository.Tables;
-import cn.qkl.common.repository.model.Content;
 import cn.qkl.webserver.dao.ContentDao;
 import cn.qkl.webserver.dto.detail.ContentInfoDTO;
 import cn.qkl.webserver.vo.detail.ContentInfoVO;
@@ -16,7 +15,7 @@ import static org.mybatis.dynamic.sql.SqlBuilder.*;
 /**
  * @title:
  * @Author zouzh
- * @Date: 2023/5/18 15:18
+ * @Date: 2023/5/22 10:38
  * @wiki
  */
 @Service
@@ -27,7 +26,7 @@ public class DetailService {
     private ContentDao contentDao;
 
     public ContentInfoVO getContentInfo(ContentInfoDTO dto) {
-        ContentInfoVO contentInfo = contentDao.getContentDetail(
+        return contentDao.getContentDetail(
                 select(Tables.content.name, Tables.content.address, Tables.content.tokenid,
                         Tables.content.cryptoPrice, Tables.content.currencyPrice, Tables.content.creator, Tables.platform.named,
                         Tables.content.standard, Tables.chain.chainName, Tables.content.listingTime, Tables.content.description,Tables.content.metaUrl)
@@ -38,8 +37,6 @@ public class DetailService {
                 .build()
                 .render(RenderingStrategies.MYBATIS3)
         );
-
-        return contentInfo;
     }
 
 }
