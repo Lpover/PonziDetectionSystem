@@ -59,7 +59,7 @@ public class PlatformService {
         //全部
         DateTime start = DateUtil.offsetDay(end, -7);
         List<PlatformContentVO> platforms = platformDao.getPlatformContent(
-                select(Tables.platform.id, Tables.platform.platformType ,Tables.platform.named,sum(Tables.riskContentStatistics.contentSum).as("sumContentNumber"))
+                select(Tables.platform.id, Tables.platform.platformType ,Tables.platform.name,sum(Tables.riskContentStatistics.contentSum).as("sumContentNumber"))
                         .from(Tables.platform)
                         .leftJoin(Tables.riskContentStatistics).on(Tables.platform.id, equalTo(Tables.riskContentStatistics.platformId))
                         .where(Tables.platform.platformType, isEqualTo(PlatformTypeEnum.NFT.getCode()))
@@ -81,7 +81,7 @@ public class PlatformService {
     }
     public void addPlatform(AddPlatformDTO dto){
         Platform platform=new Platform();
-        platform.setNamed(dto.getName());
+        platform.setName(dto.getName());
         platform.setUrl(dto.getUrl());
         platform.setCrawlerFile(dto.getCrawlerUrl());
         platformDao.insert(platform);
@@ -93,7 +93,7 @@ public class PlatformService {
     }
     public void modifyPlatform(ModifyPlatformDTO dto){
         platformDao.update(c -> c
-                .set(Tables.platform.named).equalTo(dto.getName())
+                .set(Tables.platform.name).equalTo(dto.getName())
                 .set(Tables.platform.url).equalTo(dto.getUrl())
                 .set(Tables.platform.crawlerFile).equalTo(dto.getCrawlerUrl())
         );

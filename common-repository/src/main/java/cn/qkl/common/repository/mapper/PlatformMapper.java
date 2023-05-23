@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface PlatformMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, named, url, monitor, riskContentNum, activation, riskLevel, updateTime, platformType, logo, location, frequency, crawlerFile, web3Type, contentNum, highAccountNum, midAccountNum, lowAccountNum, highContentNum, midContentNum, lowContentNum, createTime, updataTime);
+    BasicColumn[] selectList = BasicColumn.columnList(id, name, url, monitor, riskContentNum, activation, riskLevel, updateTime, platformType, logo, location, frequency, crawlerFile, web3Type, contentNum, highAccountNum, midAccountNum, lowAccountNum, highContentNum, midContentNum, lowContentNum, createTime, updataTime);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -62,7 +62,7 @@ public interface PlatformMapper {
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
     @Results(id="PlatformResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
-        @Result(column="named", property="named", jdbcType=JdbcType.VARCHAR),
+        @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
         @Result(column="url", property="url", jdbcType=JdbcType.VARCHAR),
         @Result(column="monitor", property="monitor", jdbcType=JdbcType.INTEGER),
         @Result(column="risk_content_num", property="riskContentNum", jdbcType=JdbcType.BIGINT),
@@ -112,7 +112,7 @@ public interface PlatformMapper {
     default int insert(Platform record) {
         return MyBatis3Utils.insert(this::insert, record, platform, c ->
             c.map(id).toProperty("id")
-            .map(named).toProperty("named")
+            .map(name).toProperty("name")
             .map(url).toProperty("url")
             .map(monitor).toProperty("monitor")
             .map(riskContentNum).toProperty("riskContentNum")
@@ -141,7 +141,7 @@ public interface PlatformMapper {
     default int insertMultiple(Collection<Platform> records) {
         return MyBatis3Utils.insertMultiple(this::insertMultiple, records, platform, c ->
             c.map(id).toProperty("id")
-            .map(named).toProperty("named")
+            .map(name).toProperty("name")
             .map(url).toProperty("url")
             .map(monitor).toProperty("monitor")
             .map(riskContentNum).toProperty("riskContentNum")
@@ -170,7 +170,7 @@ public interface PlatformMapper {
     default int insertSelective(Platform record) {
         return MyBatis3Utils.insert(this::insert, record, platform, c ->
             c.map(id).toPropertyWhenPresent("id", record::getId)
-            .map(named).toPropertyWhenPresent("named", record::getNamed)
+            .map(name).toPropertyWhenPresent("name", record::getName)
             .map(url).toPropertyWhenPresent("url", record::getUrl)
             .map(monitor).toPropertyWhenPresent("monitor", record::getMonitor)
             .map(riskContentNum).toPropertyWhenPresent("riskContentNum", record::getRiskContentNum)
@@ -225,7 +225,7 @@ public interface PlatformMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     static UpdateDSL<UpdateModel> updateAllColumns(Platform record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalTo(record::getId)
-                .set(named).equalTo(record::getNamed)
+                .set(name).equalTo(record::getName)
                 .set(url).equalTo(record::getUrl)
                 .set(monitor).equalTo(record::getMonitor)
                 .set(riskContentNum).equalTo(record::getRiskContentNum)
@@ -252,7 +252,7 @@ public interface PlatformMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     static UpdateDSL<UpdateModel> updateSelectiveColumns(Platform record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalToWhenPresent(record::getId)
-                .set(named).equalToWhenPresent(record::getNamed)
+                .set(name).equalToWhenPresent(record::getName)
                 .set(url).equalToWhenPresent(record::getUrl)
                 .set(monitor).equalToWhenPresent(record::getMonitor)
                 .set(riskContentNum).equalToWhenPresent(record::getRiskContentNum)
@@ -279,7 +279,7 @@ public interface PlatformMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int updateByPrimaryKey(Platform record) {
         return update(c ->
-            c.set(named).equalTo(record::getNamed)
+            c.set(name).equalTo(record::getName)
             .set(url).equalTo(record::getUrl)
             .set(monitor).equalTo(record::getMonitor)
             .set(riskContentNum).equalTo(record::getRiskContentNum)
@@ -308,7 +308,7 @@ public interface PlatformMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int updateByPrimaryKeySelective(Platform record) {
         return update(c ->
-            c.set(named).equalToWhenPresent(record::getNamed)
+            c.set(name).equalToWhenPresent(record::getName)
             .set(url).equalToWhenPresent(record::getUrl)
             .set(monitor).equalToWhenPresent(record::getMonitor)
             .set(riskContentNum).equalToWhenPresent(record::getRiskContentNum)

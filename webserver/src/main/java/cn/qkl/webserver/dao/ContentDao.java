@@ -2,6 +2,10 @@ package cn.qkl.webserver.dao;
 
 import cn.qkl.common.framework.util.mybatis.DateTypeHandler;
 import cn.qkl.common.repository.mapper.ContentMapper;
+import cn.qkl.webserver.vo.detail.ContentDynamicMonitorVO;
+import cn.qkl.webserver.vo.detail.ContentHistoryVO;
+import cn.qkl.webserver.vo.detail.ContentInfoVO;
+import cn.qkl.webserver.vo.detail.ContentRiskReviseVO;
 import cn.qkl.webserver.vo.dynamic.DynamicContentExportVO;
 import cn.qkl.webserver.vo.dynamic.DynamicContentVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -34,4 +38,32 @@ public interface ContentDao extends ContentMapper {
 //    @Result(column = "end_time", property = "endTime", jdbcType = JdbcType.TIMESTAMP)
     @Result(column = "end_time", property = "endTime", typeHandler = DateTypeHandler.class)
     List<DynamicContentExportVO> dynamicContentListExport(SelectStatementProvider selectStatementProvider);
+
+    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
+//    @Result(column = "start_time", property = "startTime", jdbcType = JdbcType.DATE)
+    @Result(column = "start_time", property = "startTime", typeHandler = DateTypeHandler.class)
+//    @Result(column = "end_time", property = "endTime", jdbcType = JdbcType.TIMESTAMP)
+    @Result(column = "end_time", property = "endTime", typeHandler = DateTypeHandler.class)
+    ContentInfoVO getContentDetail(SelectStatementProvider selectStatementProvider);
+
+    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
+//    @Result(column = "start_time", property = "startTime", jdbcType = JdbcType.DATE)
+    @Result(column = "start_time", property = "startTime", typeHandler = DateTypeHandler.class)
+//    @Result(column = "end_time", property = "endTime", jdbcType = JdbcType.TIMESTAMP)
+    @Result(column = "end_time", property = "endTime", typeHandler = DateTypeHandler.class)
+    List<ContentHistoryVO> getContentTxHistoryList(SelectStatementProvider selectStatementProvider);
+
+    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
+//    @Result(column = "start_time", property = "startTime", jdbcType = JdbcType.DATE)
+    @Result(column = "start_time", property = "startTime", typeHandler = DateTypeHandler.class)
+//    @Result(column = "end_time", property = "endTime", jdbcType = JdbcType.TIMESTAMP)
+    @Result(column = "end_time", property = "endTime", typeHandler = DateTypeHandler.class)
+    ContentRiskReviseVO getCotentRiskRevise(SelectStatementProvider selectStatementProvider);
+
+    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
+//    @Result(column = "start_time", property = "startTime", jdbcType = JdbcType.DATE)
+    @Result(column = "start_time", property = "startTime", typeHandler = DateTypeHandler.class)
+//    @Result(column = "end_time", property = "endTime", jdbcType = JdbcType.TIMESTAMP)
+    @Result(column = "end_time", property = "endTime", typeHandler = DateTypeHandler.class)
+    List<ContentDynamicMonitorVO> getDynamicMonitor(SelectStatementProvider selectStatementProvider);
 }

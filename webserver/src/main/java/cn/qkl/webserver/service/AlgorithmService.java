@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.mybatis.dynamic.sql.SqlBuilder.isIn;
+import static org.mybatis.dynamic.sql.SqlBuilder.isInWhenPresent;
 
 
 /**
@@ -32,12 +32,13 @@ public class AlgorithmService {
 
     /**
      * 获取算法配置列表
+     *
      * @param dto
      * @return
      */
     public List<AlgorithmVO> getAlgorithmList(AlgorithmListQueryDTO dto) {
         List<Algorithm> algorithmList = algorithmDao.select(c -> c
-                .where(Tables.algorithm.type, isIn(dto.getType())));
+                .where(Tables.algorithm.type, isInWhenPresent(dto.getType())));
         return algorithmList.stream().map(AlgorithmVO::transform).collect(Collectors.toList());
     }
 

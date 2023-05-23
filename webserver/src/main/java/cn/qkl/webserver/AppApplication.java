@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 //解决swagger升级2.6x之后和springboot不兼容情况
 @EnableWebMvc
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@SpringBootApplication(scanBasePackages = {"cn.qkl"})
 @MapperScan(nameGenerator = UniqueNameGenerator.class, basePackages = {"cn.qkl.webserver.*"})
 public class AppApplication implements WebMvcConfigurer {
 

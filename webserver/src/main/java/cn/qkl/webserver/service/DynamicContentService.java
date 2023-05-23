@@ -44,7 +44,7 @@ public class DynamicContentService {
     private ContentDao contentDao;
 
     public PageVO<DynamicContentVO> getDynamicContentList(DynamicContentListQueryDTO dto) {
-        WhereApplier contentTagWhereApplier = c -> c.and(Tables.content.contentTag, isEqualToWhenPresent((String) null));
+        WhereApplier contentTagWhereApplier;
         if (dto.getContentRiskTypeList() != null && dto.getContentRiskTypeList().size() == 1) {
             //有风险,contentTag!=0
             if (dto.getDynamicAlgorithmIdList().get(0) == 1) {
@@ -52,9 +52,11 @@ public class DynamicContentService {
             } else {
                 contentTagWhereApplier = c -> c.and(Tables.content.contentTag, isEqualTo(ContentRiskCategoryEnum.NO_RISK.getCode() + ""));
             }
+        } else {
+            contentTagWhereApplier = c -> c.and(Tables.content.contentTag, isEqualToWhenPresent((String) null));
         }
 
-        return PageVO.getPageData(dto.getPageId(), dto.getPageSize(), contentDao.getDynamicContentList(
+        return PageVO.getPageData(dto.getPageId(), dto.getPageSize(), () -> contentDao.getDynamicContentList(
                 select(Tables.content.id, Tables.content.name, Tables.content.address, Tables.content.metaUrl, Tables.content.dynamicAlgorithmId, Tables.content.dynamicRecognition, Tables.content.riskLevel, Tables.content.contentTag, Tables.content.updateTime)
                         .from(Tables.content)
                         .leftJoin(Tables.algorithm).on(Tables.content.dynamicAlgorithmId, equalTo(Tables.algorithm.id))

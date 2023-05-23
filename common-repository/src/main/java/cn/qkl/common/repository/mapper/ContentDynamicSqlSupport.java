@@ -80,9 +80,6 @@ public final class ContentDynamicSqlSupport {
     public static final SqlColumn<Date> mintTime = content.mintTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Long> accountId = content.accountId;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> thingType = content.thingType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -95,7 +92,7 @@ public final class ContentDynamicSqlSupport {
     public static final class Content extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
-        public final SqlColumn<String> name = column("name", JDBCType.VARCHAR);
+        public final SqlColumn<String> name = column("`name`", JDBCType.VARCHAR);
 
         public final SqlColumn<String> address = column("address", JDBCType.VARCHAR);
 
@@ -111,7 +108,7 @@ public final class ContentDynamicSqlSupport {
 
         public final SqlColumn<Long> platformId = column("platform_id", JDBCType.BIGINT);
 
-        public final SqlColumn<String> standard = column("standard", JDBCType.VARCHAR);
+        public final SqlColumn<String> standard = column("`standard`", JDBCType.VARCHAR);
 
         public final SqlColumn<Long> chainId = column("chain_id", JDBCType.BIGINT);
 
@@ -135,11 +132,9 @@ public final class ContentDynamicSqlSupport {
 
         public final SqlColumn<String> riskType = column("risk_type", JDBCType.VARCHAR);
 
-        public final SqlColumn<String> owner = column("owner", JDBCType.VARCHAR);
+        public final SqlColumn<String> owner = column("`owner`", JDBCType.VARCHAR);
 
         public final SqlColumn<Date> mintTime = column("mint_time", JDBCType.TIMESTAMP);
-
-        public final SqlColumn<Long> accountId = column("account_id", JDBCType.BIGINT);
 
         public final SqlColumn<String> thingType = column("thing_type", JDBCType.VARCHAR);
 

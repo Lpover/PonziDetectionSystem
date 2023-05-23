@@ -12,7 +12,7 @@ import cn.qkl.webserver.dto.platform.*;
 import cn.qkl.webserver.dto.user.LoginDTO;
 import cn.qkl.webserver.service.DynamicContentService;
 import cn.qkl.webserver.service.PlatformService;
-import cn.qkl.webserver.service.user.UserService;
+import cn.qkl.webserver.service.UserService;
 import cn.qkl.webserver.vo.platform.PlatformContentVO;
 import cn.qkl.webserver.vo.platform.PlatformListVO;
 import cn.qkl.webserver.vo.user.UserInfoVO;

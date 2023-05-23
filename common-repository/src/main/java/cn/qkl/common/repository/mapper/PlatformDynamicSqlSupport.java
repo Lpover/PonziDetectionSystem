@@ -14,7 +14,7 @@ public final class PlatformDynamicSqlSupport {
     public static final SqlColumn<Long> id = platform.id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> named = platform.named;
+    public static final SqlColumn<String> name = platform.name;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> url = platform.url;
@@ -83,7 +83,7 @@ public final class PlatformDynamicSqlSupport {
     public static final class Platform extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
-        public final SqlColumn<String> named = column("named", JDBCType.VARCHAR);
+        public final SqlColumn<String> name = column("`name`", JDBCType.VARCHAR);
 
         public final SqlColumn<String> url = column("url", JDBCType.VARCHAR);
 
@@ -101,7 +101,7 @@ public final class PlatformDynamicSqlSupport {
 
         public final SqlColumn<String> logo = column("logo", JDBCType.VARCHAR);
 
-        public final SqlColumn<Integer> location = column("location", JDBCType.INTEGER);
+        public final SqlColumn<Integer> location = column("`location`", JDBCType.INTEGER);
 
         public final SqlColumn<Integer> frequency = column("frequency", JDBCType.INTEGER);
 

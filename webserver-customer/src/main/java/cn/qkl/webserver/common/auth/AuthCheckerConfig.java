@@ -2,7 +2,6 @@ package cn.qkl.webserver.common.auth;
 
 import cn.qkl.common.framework.auth.AuthChecker;
 import cn.qkl.common.framework.auth.TokenBean;
-import cn.qkl.common.framework.auth.TokenHandler;
 import cn.qkl.common.framework.auth.RoleType;
 import cn.qkl.common.framework.exception.BusinessException;
 import cn.qkl.common.framework.exception.UnauthorizedException;
@@ -26,7 +25,7 @@ public class AuthCheckerConfig implements AuthChecker {
         if (RoleEnum.RoleTypeEnum.USER.getRoleType().equals(tokenBean.getRoleType())) {
 
             User user = userDao.selectOne(c -> c
-                    .where()
+                    .where(Tables.user.userId, isEqualTo(tokenBean.getRoleId()))
             ).orElseThrow(() -> new BusinessException(BusinessStatus.User_Not_EXISTS));
             if (user == null) {
                 throw new UnauthorizedException(BusinessStatus.ACCOUNT_EXCEPTION.getCode());
@@ -34,7 +33,7 @@ public class AuthCheckerConfig implements AuthChecker {
             return user;
         } else if (RoleEnum.RoleTypeEnum.ADMIN.getRoleType().equals(tokenBean.getRoleType())) {
             User user = userDao.selectOne(c -> c
-                    .where(Tables.user.userId, isEqualTo( tokenBean.getRoleId()))
+                    .where(Tables.user.userId, isEqualTo(tokenBean.getRoleId()))
             ).orElseThrow(() -> new BusinessException(BusinessStatus.User_Not_EXISTS));
             if (user == null) {
                 throw new UnauthorizedException(BusinessStatus.ACCOUNT_EXCEPTION.getCode());

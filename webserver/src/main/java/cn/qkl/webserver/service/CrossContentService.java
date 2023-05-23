@@ -32,7 +32,7 @@ public class CrossContentService {
     private ContentCrossDao contentCrossDao;
 
     public PageVO<CrossContentVO> getCrossContentList(CrossContentListQueryDTO dto) {
-        return PageVO.getPageData(dto.getPageId(), dto.getPageSize(), contentCrossDao.getCrossContentList(
+        return PageVO.getPageData(dto.getPageId(), dto.getPageSize(), () -> contentCrossDao.getCrossContentList(
                 select(Tables.contentCross.id, Tables.contentCross.name, Tables.contentCross.metaurl, constant("lc.chain_name"), Tables.contentCross.address, Tables.contentCross.hash, Tables.contentCross.tokenId,
                         constant("la.account_address"), Tables.contentCross.startTime, constant("rc.chain_name as dstChainName"), Tables.contentCross.dstAddress, Tables.contentCross.dstHash, Tables.contentCross.dstTokenId,
                         constant("ra.account_address as dstAccountAddress"), Tables.contentCross.endTime, Tables.contentCross.bridge, Tables.contentCross.dynamicType, Tables.contentCross.riskLevel, Tables.contentCross.createTime)
