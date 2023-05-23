@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 //解决swagger升级2.6x之后和springboot不兼容情况
-@EnableWebMvc
+@EnableWebMvc //会覆盖@EnableAutoConfiguration关于WebMvcAutoConfiguration的配置！从而导致所有的Date返回都变成时间戳。
 @SpringBootApplication(scanBasePackages = {"cn.qkl"})
 @MapperScan(nameGenerator = UniqueNameGenerator.class, basePackages = {"cn.qkl.webserver.*"})
 public class AppApplication implements WebMvcConfigurer {
