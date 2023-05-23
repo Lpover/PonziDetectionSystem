@@ -33,7 +33,7 @@ public class DetailService {
     public ContentInfoVO getContentInfo(ContentInfoDTO dto) {
         return contentDao.getContentDetail(
                 select(Tables.content.name, Tables.content.address, Tables.content.tokenid,
-                        Tables.content.cryptoPrice, Tables.content.currencyPrice, Tables.content.creator, Tables.platform.named,
+                        Tables.content.cryptoPrice, Tables.content.currencyPrice, Tables.content.creator, Tables.platform.name,
                         Tables.content.standard, Tables.chain.chainName, Tables.content.listingTime, Tables.content.description,Tables.content.metaUrl)
                 .from(Tables.content)
                 .leftJoin(Tables.platform).on(Tables.content.platformId, equalTo(Tables.platform.id))
