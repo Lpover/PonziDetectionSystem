@@ -3,11 +3,13 @@ package cn.qkl.common.framework.util.mybatis;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.Date;
 
 @Slf4j
+@Component
 public class DateTypeHandler implements TypeHandler<Date> {
     @Override
     public void setParameter(PreparedStatement ps, int i, Date parameter, JdbcType jdbcType) throws SQLException {
