@@ -8,7 +8,7 @@ public class Platform {
     private Long id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String named;
+    private String name;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String url;
@@ -90,19 +90,19 @@ public class Platform {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getNamed() {
-        return named;
+    public String getName() {
+        return name;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Platform withNamed(String named) {
-        this.setNamed(named);
+    public Platform withName(String name) {
+        this.setName(name);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setNamed(String named) {
-        this.named = named;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -449,7 +449,7 @@ public class Platform {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", named=").append(named);
+        sb.append(", name=").append(name);
         sb.append(", url=").append(url);
         sb.append(", monitor=").append(monitor);
         sb.append(", riskContentNum=").append(riskContentNum);

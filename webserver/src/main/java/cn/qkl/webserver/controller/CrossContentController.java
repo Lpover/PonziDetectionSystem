@@ -36,6 +36,7 @@ public class CrossContentController {
 
     @Autowired
     private CrossContentService crossContentService;
+
     @ApiOperation("跨链风险数字内容列表")
     @GetMapping("content/list")
     public BaseResult<PageVO<CrossContentVO>> getCrossContentList(@Validated CrossContentListQueryDTO dto) {
