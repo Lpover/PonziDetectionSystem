@@ -17,10 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.sql.SQLException;
@@ -57,13 +54,13 @@ public class AccountController {
 
     @ApiOperation("账户关联的链上交易记录")
     @GetMapping("tx")
-    public BaseResult<PageVO<AccountTxHistoryVO>> getAccountTxHistory(@Validated @RequestParam AccountTxHistoryQueryDTO dto) {
+    public BaseResult<PageVO<AccountTxHistoryVO>> getAccountTxHistory(@Validated AccountTxHistoryQueryDTO dto) {
         return BaseResult.ok(accountService.getAccountTxHistory(dto));
     }
 
     @ApiOperation("账户 关联/发布 的数字内容")
     @GetMapping("content")
-    public BaseResult<PageVO<AccountContentVO>> getAccountContent(@Validated @RequestParam AccountContentQueryDTO dto) throws SQLException {
+    public BaseResult<PageVO<AccountContentVO>> getAccountContent(@Validated AccountContentQueryDTO dto) throws SQLException {
         return BaseResult.ok(accountService.getAccountContent(dto));
     }
 }
