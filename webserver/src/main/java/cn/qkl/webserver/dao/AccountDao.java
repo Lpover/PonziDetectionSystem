@@ -1,14 +1,8 @@
 package cn.qkl.webserver.dao;
 
 import cn.qkl.common.repository.mapper.AccountMapper;
-import cn.qkl.webserver.vo.account.AccountBasicVO;
-import cn.qkl.webserver.vo.account.AccountCheckHistoryVO;
-import cn.qkl.webserver.vo.account.AccountContentVO;
-import cn.qkl.webserver.vo.account.AccountTxHistoryVO;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.SelectProvider;
+import cn.qkl.webserver.vo.account.*;
+import org.apache.ibatis.annotations.*;
 import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
 import org.mybatis.dynamic.sql.util.SqlProviderAdapter;
 
@@ -31,9 +25,7 @@ public interface AccountDao extends AccountMapper{
     List<AccountTxHistoryVO> getAccountTxHistory(SelectStatementProvider selectStatementProvider);
 
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
-    @Results(id="AnimalDataResult",value = {
-            @Result(column="id", property="contentId", id=true),
-            @Result(column = "content_id", property = "contentId",id = true)
-    })
+    @ResultMap(value = "AccountContentResultMap")
+//    Mybatis结果集映射 对象嵌套对象 数据库查出的部分字段需要包装成"tags":{},对应TagVO
     List<AccountContentVO> getAccountContent(SelectStatementProvider selectStatementProvider);
 }

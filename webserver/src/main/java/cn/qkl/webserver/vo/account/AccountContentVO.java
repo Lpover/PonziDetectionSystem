@@ -3,6 +3,7 @@ package cn.qkl.webserver.vo.account;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
 import java.util.Date;
 
 /**
@@ -14,6 +15,9 @@ import java.util.Date;
 public class AccountContentVO {
     @ApiModelProperty("数字内容ID-主键  拼Schema跳转到数字内容详情页")
     private Long contentId;
+
+    @ApiModelProperty("数字内容名称")
+    private String contentName;
 
     @ApiModelProperty("数字内容合约地址")
     private String address;
@@ -33,4 +37,6 @@ public class AccountContentVO {
     @ApiModelProperty("前端用一个小图标来进行来源区分 0-数字内容 1-跨链内容")
     private Integer sourceType;
 
+    @ApiModelProperty("标签组合")
+    private TagVO tags;
 }

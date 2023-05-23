@@ -92,32 +92,41 @@ public class AccountService {
                     Tables.accountContent.contentId,
                     Tables.accountContent.sourceType,
                     Tables.content.address,
+                    Tables.content.name.as("content_name"),
                     Tables.content.owner,
                     Tables.content.metaUrl,
                     Tables.content.mintTime,
+                    Tables.content.dynamicType,
+                    Tables.platform.name.as("platform_name"),
                     Tables.chain.chainName
             ).from(Tables.accountContent)
                     .join(Tables.content)
                     .on(Tables.accountContent.contentId, equalTo(Tables.content.id))
                     .join(Tables.chain)
                     .on(Tables.content.chainId, equalTo(Tables.chain.id))
+                    .join(Tables.platform)
+                    .on(Tables.content.platformId,equalTo(Tables.platform.id))
                     .where(Tables.accountContent.accountId, isEqualTo(dto.getAccountId()));
 
         }
 
         if (dto.getType() == AccountContentTypeEnum.CREATOR.getCode()){
             builder = select(
-                    Tables.content.id,
+                    Tables.content.id.as("content_id"),
                     Tables.content.address,
+                    Tables.content.name.as("content_name"),
                     Tables.content.owner,
                     Tables.content.metaUrl,
                     Tables.content.mintTime,
+                    Tables.content.dynamicType,
+                    Tables.platform.name.as("platform_name"),
                     Tables.chain.chainName
             ).from(Tables.content)
                     .join(Tables.chain)
                     .on(Tables.content.chainId,equalTo(Tables.chain.id))
-                    .where(Tables.content.chainId,isEqualTo(Tables.chain.id))
-                    .and(Tables.content.creator,isEqualTo(
+                    .join(Tables.platform)
+                    .on(Tables.content.platformId,equalTo(Tables.platform.id))
+                    .where(Tables.content.creator,isEqualTo(
                             select(Tables.account.accountAddress).from(Tables.account).where(Tables.account.id,isEqualTo(dto.getAccountId()))
                     ));
         }
@@ -126,7 +135,7 @@ public class AccountService {
 
         SelectStatementProvider provider = builder.build().render(RenderingStrategies.MYBATIS3);
         return PageVO.getPageData(dto.getPageId(), dto.getPageSize(),
-                accountDao.getAccountContent(provider)
+                () -> accountDao.getAccountContent(provider)
         );
 
     }

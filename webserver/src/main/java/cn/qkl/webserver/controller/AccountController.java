@@ -45,25 +45,25 @@ public class AccountController {
 
     @ApiOperation("账户基本信息")
     @GetMapping("info")
-    public BaseResult<List<AccountBasicVO>> getAccountBasic(@Validated long accountId) {
+    public BaseResult<List<AccountBasicVO>> getAccountBasic(@Validated @RequestParam long accountId) {
         return BaseResult.ok(accountService.getAccountBasic(accountId));
     }
 
     @ApiOperation("账户检测记录")
     @GetMapping("check/history")
-    public BaseResult<List<AccountCheckHistoryVO>> getAccountCheckHistory(@Validated long accountId, @RequestParam(required = false,defaultValue = "20") @Validated @Range(min = 1, max = 20) long num) {
+    public BaseResult<List<AccountCheckHistoryVO>> getAccountCheckHistory(@Validated @RequestParam long accountId, @RequestParam(required = false,defaultValue = "20") @Validated @Range(min = 1, max = 20) long num) {
         return BaseResult.ok(accountService.getAccountCheckHistory(accountId,num));
     }
 
     @ApiOperation("账户关联的链上交易记录")
     @GetMapping("tx")
-    public BaseResult<PageVO<AccountTxHistoryVO>> getAccountTxHistory(@Validated AccountTxHistoryQueryDTO dto) {
+    public BaseResult<PageVO<AccountTxHistoryVO>> getAccountTxHistory(@Validated @RequestParam AccountTxHistoryQueryDTO dto) {
         return BaseResult.ok(accountService.getAccountTxHistory(dto));
     }
 
-    @ApiOperation("账户关联的链上交易记录")
+    @ApiOperation("账户 关联/发布 的数字内容")
     @GetMapping("content")
-    public BaseResult<PageVO<AccountContentVO>> getAccountContent(@Validated AccountContentQueryDTO dto) throws SQLException {
+    public BaseResult<PageVO<AccountContentVO>> getAccountContent(@Validated @RequestParam AccountContentQueryDTO dto) throws SQLException {
         return BaseResult.ok(accountService.getAccountContent(dto));
     }
 }
