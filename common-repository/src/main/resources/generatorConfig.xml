@@ -4,6 +4,9 @@
 <generatorConfiguration>
     <properties resource="connection.yml"/>
     <context id="context" targetRuntime="MyBatis3DynamicSql">
+        <property name="autoDelimitKeywords" value="true" />
+        <property name="beginningDelimiter" value="`" />
+        <property name="endingDelimiter" value="`" />
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
         <plugin type="org.mybatis.generator.plugins.FluentBuilderMethodsPlugin"/>
         <commentGenerator>

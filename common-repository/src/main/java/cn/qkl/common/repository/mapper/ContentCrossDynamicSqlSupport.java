@@ -74,7 +74,7 @@ public final class ContentCrossDynamicSqlSupport {
     public static final class ContentCross extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
-        public final SqlColumn<String> name = column("name", JDBCType.VARCHAR);
+        public final SqlColumn<String> name = column("`name`", JDBCType.VARCHAR);
 
         public final SqlColumn<String> metaurl = column("metaUrl", JDBCType.VARCHAR);
 

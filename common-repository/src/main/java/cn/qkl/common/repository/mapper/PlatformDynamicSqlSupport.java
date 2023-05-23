@@ -101,7 +101,7 @@ public final class PlatformDynamicSqlSupport {
 
         public final SqlColumn<String> logo = column("logo", JDBCType.VARCHAR);
 
-        public final SqlColumn<Integer> location = column("location", JDBCType.INTEGER);
+        public final SqlColumn<Integer> location = column("`location`", JDBCType.INTEGER);
 
         public final SqlColumn<Integer> frequency = column("frequency", JDBCType.INTEGER);
 

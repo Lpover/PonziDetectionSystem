@@ -37,7 +37,7 @@ public final class AlgorithmDynamicSqlSupport {
 
         public final SqlColumn<BigDecimal> recognitionRate = column("recognition_rate", JDBCType.DECIMAL);
 
-        public final SqlColumn<Integer> type = column("type", JDBCType.INTEGER);
+        public final SqlColumn<Integer> type = column("`type`", JDBCType.INTEGER);
 
         public final SqlColumn<Date> createTime = column("create_time", JDBCType.TIMESTAMP);
 

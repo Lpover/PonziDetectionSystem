@@ -74,9 +74,6 @@ public class Content {
     private Date mintTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long accountId;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String thingType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -454,22 +451,6 @@ public class Content {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getAccountId() {
-        return accountId;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Content withAccountId(Long accountId) {
-        this.setAccountId(accountId);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setAccountId(Long accountId) {
-        this.accountId = accountId;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String getThingType() {
         return thingType;
     }
@@ -547,7 +528,6 @@ public class Content {
         sb.append(", riskType=").append(riskType);
         sb.append(", owner=").append(owner);
         sb.append(", mintTime=").append(mintTime);
-        sb.append(", accountId=").append(accountId);
         sb.append(", thingType=").append(thingType);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);

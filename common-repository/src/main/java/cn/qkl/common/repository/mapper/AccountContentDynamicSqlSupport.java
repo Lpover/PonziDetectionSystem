@@ -37,7 +37,7 @@ public final class AccountContentDynamicSqlSupport {
 
         public final SqlColumn<Long> contentId = column("content_id", JDBCType.BIGINT);
 
-        public final SqlColumn<Integer> type = column("type", JDBCType.INTEGER);
+        public final SqlColumn<Integer> type = column("`type`", JDBCType.INTEGER);
 
         public final SqlColumn<Long> accountId = column("account_id", JDBCType.BIGINT);
 

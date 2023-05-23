@@ -52,17 +52,17 @@ public final class AccountTxHistoryDynamicSqlSupport {
 
         public final SqlColumn<String> txHash = column("tx_hash", JDBCType.VARCHAR);
 
-        public final SqlColumn<String> method = column("method", JDBCType.VARCHAR);
+        public final SqlColumn<String> method = column("`method`", JDBCType.VARCHAR);
 
         public final SqlColumn<Long> block = column("block", JDBCType.BIGINT);
 
         public final SqlColumn<Date> txTimestamp = column("tx_timestamp", JDBCType.TIMESTAMP);
 
-        public final SqlColumn<String> from = column("from", JDBCType.VARCHAR);
+        public final SqlColumn<String> from = column("`from`", JDBCType.VARCHAR);
 
-        public final SqlColumn<String> to = column("to", JDBCType.VARCHAR);
+        public final SqlColumn<String> to = column("`to`", JDBCType.VARCHAR);
 
-        public final SqlColumn<String> value = column("value", JDBCType.VARCHAR);
+        public final SqlColumn<String> value = column("`value`", JDBCType.VARCHAR);
 
         public final SqlColumn<String> txFee = column("tx_fee", JDBCType.VARCHAR);
 
