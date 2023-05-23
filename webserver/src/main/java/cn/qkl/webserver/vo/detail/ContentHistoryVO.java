@@ -7,6 +7,8 @@ import java.util.Date;
 
 @Data
 public class ContentHistoryVO {
+    @ApiModelProperty("单条记录的id")
+    private Long id;
     @ApiModelProperty("事件类型，0铸造/发布 5买入")
     private Integer event;
 //    @ApiModelProperty("交易价格")

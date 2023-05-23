@@ -6,6 +6,8 @@ import lombok.Data;
 import java.util.Date;
 @Data
 public class ContentDynamicMonitorVO {
+    @ApiModelProperty("单条记录的id")
+    private Long id;
     @ApiModelProperty("数字内容风险评级：0低 1中 2高风险")
     private Integer riskLevel;
     @ApiModelProperty("内容标签，用逗号隔开每个标签")

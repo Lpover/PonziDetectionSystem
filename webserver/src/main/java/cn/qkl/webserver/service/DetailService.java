@@ -46,7 +46,7 @@ public class DetailService {
 
     public PageVO<ContentHistoryVO> getContentTxHistory(ContentHistoryDTO dto) {
         return PageVO.getPageData(dto.getPageId(), dto.getPageSize(), () -> contentDao.getContentTxHistoryList(
-                select(Tables.contentTxHistory.event, Tables.contentTxHistory.from, Tables.contentTxHistory.to,
+                select(Tables.contentTxHistory.id, Tables.contentTxHistory.event, Tables.contentTxHistory.from, Tables.contentTxHistory.to,
                         Tables.contentTxHistory.ownerLogo, Tables.contentTxHistory.createTime)
                         .from(Tables.contentTxHistory)
                         .where(Tables.contentTxHistory.contentId, isEqualTo(dto.getContentID()))
@@ -77,7 +77,7 @@ public class DetailService {
 
     public PageVO<ContentDynamicMonitorVO> getDynamicMonitor(ContentDynamicMonitorDTO dto) {
         return PageVO.getPageData(dto.getPageId(), dto.getPageSize(), () -> contentDao.getDynamicMonitor(
-                select(Tables.dynamicMonitor.riskLevel, Tables.dynamicMonitor.contentTag, Tables.dynamicMonitor.createTime)
+                select(Tables.dynamicMonitor.id, Tables.dynamicMonitor.riskLevel, Tables.dynamicMonitor.contentTag, Tables.dynamicMonitor.createTime)
                         .from(Tables.dynamicMonitor)
                         .where(Tables.dynamicMonitor.contentId, isEqualTo(dto.getContentID()))
                         .build()
