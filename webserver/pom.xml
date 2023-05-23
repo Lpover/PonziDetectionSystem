@@ -98,12 +98,6 @@
             <artifactId>easyexcel</artifactId>
             <version>${easyexcel.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>cn.qkl</groupId>-->
-<!--            <artifactId>webserver-customer</artifactId>-->
-<!--            <version>1.0.0-SNAPSHOT</version>-->
-<!--            <scope>compile</scope>-->
-<!--        </dependency>-->
     </dependencies>
 
     <build>

@@ -52,6 +52,6 @@ public class RiskCategoryTrendService  {
                         .build()
                         .render(RenderingStrategies.MYBATIS3)
         );
-        return risks.stream().collect(Collectors.toList());
+        return risks;
     }
 }

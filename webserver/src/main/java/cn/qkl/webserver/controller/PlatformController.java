@@ -50,26 +50,29 @@ public class  PlatformController {
     @ApiOperation("查询热门nft或web3平台")
     @GetMapping("list/type")
     public BaseResult<List<PlatformContentVO>> getPopularPlatform(@Validated PopularPlatformQueryDTO dto) {
-        return BaseResult.ok(new ArrayList<>());
+        return BaseResult.ok(platformService.getPopularPlatform(dto));
     }
     @ApiOperation("平台列表展示")
     @GetMapping("list/show")
     public BaseResult<PageVO<PlatformListVO>> getPlatformList(PageDTO dto) {
-        return BaseResult.ok(new PageVO<>());
+        return BaseResult.ok(platformService.getPlatformList(dto));
     }
     @ApiOperation("添加平台")
     @GetMapping("add")
     public BaseResult<Void> addPlatform(@Validated AddPlatformDTO dto) {
+        platformService.addPlatform(dto);
         return BaseResult.ok();
     }
     @ApiOperation("修改监管状态")
     @GetMapping("modify/supervise")
     public BaseResult<Void> modifySupervise(@Validated ModifySuperviseDTO dto) {
+        platformService.modifySupervise(dto);
         return BaseResult.ok();
     }
     @ApiOperation("修改平台信息")
     @GetMapping("modify/platform")
     public BaseResult<Void> modifyPlatform(@Validated ModifyPlatformDTO dto) {
+        platformService.modifyPlatform(dto);
         return BaseResult.ok();
     }
 }

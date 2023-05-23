@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.qkl.common.framework.request.PageDTO;
 import cn.qkl.common.framework.response.PageVO;
+import cn.qkl.common.framework.util.SnowflakeIdUtil;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.mapper.PlatformDynamicSqlSupport;
 import cn.qkl.common.repository.model.Algorithm;
@@ -62,7 +63,7 @@ public class PlatformService {
                 select(Tables.platform.id, Tables.platform.platformType ,Tables.platform.name,sum(Tables.riskContentStatistics.contentSum).as("sumContentNumber"))
                         .from(Tables.platform)
                         .leftJoin(Tables.riskContentStatistics).on(Tables.platform.id, equalTo(Tables.riskContentStatistics.platformId))
-                        .where(Tables.platform.platformType, isEqualTo(PlatformTypeEnum.NFT.getCode()))
+                        .where(Tables.platform.platformType, isEqualTo(dto.getType()))
                         .and(Tables.platform.updataTime, isGreaterThanOrEqualToWhenPresent(start))
                         .and(Tables.platform.updataTime, isLessThanOrEqualToWhenPresent(end))
                         .groupBy(Tables.platform.id)
@@ -70,17 +71,15 @@ public class PlatformService {
                         .build()
                         .render(RenderingStrategies.MYBATIS3)
         );
-        return platforms.stream().collect(Collectors.toList());
+        return platforms;
     }
     public PageVO<PlatformListVO> getPlatformList(PageDTO dto){
-//        List<Platform> platformlist = platformDao.select(c -> c
-//                );
-//        return platformlist.stream().map(PlatformListVO::transform).collect(Collectors.toList());
         return PageVO.getPageData(dto.getPageId(), dto.getPageSize(),()->platformDao.select(c -> c
         ),PlatformListVO::transform);
     }
     public void addPlatform(AddPlatformDTO dto){
         Platform platform=new Platform();
+        platform.setId(SnowflakeIdUtil.generateId());
         platform.setName(dto.getName());
         platform.setUrl(dto.getUrl());
         platform.setCrawlerFile(dto.getCrawlerUrl());
@@ -88,7 +87,7 @@ public class PlatformService {
     }
     public void modifySupervise(ModifySuperviseDTO dto){
         platformDao.update(c -> c
-                .set(Tables.platform.monitor).equalTo(SuperviseTypeEnum.NOT_SUPERVISE.getCode())
+                .set(Tables.platform.monitor).equalTo(dto.getMonitor())
         );
     }
     public void modifyPlatform(ModifyPlatformDTO dto){
@@ -96,6 +95,7 @@ public class PlatformService {
                 .set(Tables.platform.name).equalTo(dto.getName())
                 .set(Tables.platform.url).equalTo(dto.getUrl())
                 .set(Tables.platform.crawlerFile).equalTo(dto.getCrawlerUrl())
+                .where(Tables.platform.id,isEqualTo(dto.getId()))
         );
     }
 }
