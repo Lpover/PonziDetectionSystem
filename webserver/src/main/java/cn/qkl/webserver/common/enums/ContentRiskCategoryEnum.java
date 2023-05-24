@@ -1,13 +1,13 @@
 package cn.qkl.webserver.common.enums;
 
 import java.util.Arrays;
-import java.util.List;
 
 public enum ContentRiskCategoryEnum {
     NO_RISK(0, "无风险"),
     POLITICS(1, "政治"),
     VIOLENCE(2, "暴力"),
-    EROTICISM(3, "涉黄"),
+    EROTICISM(3, "低俗"),
+    CRIME(4, "犯罪"),
 
     ;
 
