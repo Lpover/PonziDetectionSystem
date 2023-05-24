@@ -16,7 +16,7 @@ import java.util.List;
 public interface AccountDao extends AccountMapper{
 
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
-    List<AccountBasicVO> getAccountBasic(SelectStatementProvider selectStatementProvider);
+    AccountBasicVO getAccountBasic(SelectStatementProvider selectStatementProvider);
 
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     List<AccountCheckHistoryVO> getAccountCheckHistory(SelectStatementProvider selectStatementProvider);
