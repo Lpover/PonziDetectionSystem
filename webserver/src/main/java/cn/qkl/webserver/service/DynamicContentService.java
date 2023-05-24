@@ -57,7 +57,7 @@ public class DynamicContentService {
         }
 
         return PageVO.getPageData(dto.getPageId(), dto.getPageSize(), () -> contentDao.getDynamicContentList(
-                select(Tables.content.id, Tables.content.name, Tables.content.address, Tables.content.metaUrl, Tables.content.dynamicAlgorithmId, Tables.content.dynamicRecognition, Tables.content.riskLevel, Tables.content.contentTag, Tables.content.updateTime)
+                select(Tables.content.id, Tables.content.name, Tables.content.address, Tables.content.metaUrl, Tables.algorithm.version.as("dynamicAlgorithm"), Tables.content.dynamicRecognition, Tables.content.riskLevel, Tables.content.contentTag, Tables.content.updateTime)
                         .from(Tables.content)
                         .leftJoin(Tables.algorithm).on(Tables.content.dynamicAlgorithmId, equalTo(Tables.algorithm.id))
                         .where(Tables.content.riskLevel, isInWhenPresent(dto.getRiskLevelList()))
