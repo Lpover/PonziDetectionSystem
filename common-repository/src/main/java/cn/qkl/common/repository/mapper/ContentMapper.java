@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface ContentMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, name, address, tokenid, metaUrl, cryptoPrice, currencyPrice, creator, platformId, standard, chainId, listingTime, description, dynamicType, dynamicAlgorithmId, dynamicRecognition, revised, riskLevel, contentType, contentTag, riskType, owner, mintTime, thingType, createTime, updateTime);
+    BasicColumn[] selectList = BasicColumn.columnList(id, name, address, tokenid, metaUrl, cryptoPrice, currencyPrice, creator, platformId, standard, chainId, listingTime, description, dynamicType, dynamicAlgorithmId, dynamicRecognition, revised, riskLevel, contentType, contentTag, owner, mintTime, thingType, createTime, updateTime, riskType);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -81,12 +81,12 @@ public interface ContentMapper {
         @Result(column="risk_level", property="riskLevel", jdbcType=JdbcType.INTEGER),
         @Result(column="content_type", property="contentType", jdbcType=JdbcType.INTEGER),
         @Result(column="content_tag", property="contentTag", jdbcType=JdbcType.VARCHAR),
-        @Result(column="risk_type", property="riskType", jdbcType=JdbcType.VARCHAR),
         @Result(column="owner", property="owner", jdbcType=JdbcType.VARCHAR),
         @Result(column="mint_time", property="mintTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="thing_type", property="thingType", jdbcType=JdbcType.VARCHAR),
+        @Result(column="thing_type", property="thingType", jdbcType=JdbcType.INTEGER),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
+        @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="risk_type", property="riskType", jdbcType=JdbcType.INTEGER)
     })
     List<Content> selectMany(SelectStatementProvider selectStatement);
 
@@ -134,12 +134,12 @@ public interface ContentMapper {
             .map(riskLevel).toProperty("riskLevel")
             .map(contentType).toProperty("contentType")
             .map(contentTag).toProperty("contentTag")
-            .map(riskType).toProperty("riskType")
             .map(owner).toProperty("owner")
             .map(mintTime).toProperty("mintTime")
             .map(thingType).toProperty("thingType")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
+            .map(riskType).toProperty("riskType")
         );
     }
 
@@ -166,12 +166,12 @@ public interface ContentMapper {
             .map(riskLevel).toProperty("riskLevel")
             .map(contentType).toProperty("contentType")
             .map(contentTag).toProperty("contentTag")
-            .map(riskType).toProperty("riskType")
             .map(owner).toProperty("owner")
             .map(mintTime).toProperty("mintTime")
             .map(thingType).toProperty("thingType")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
+            .map(riskType).toProperty("riskType")
         );
     }
 
@@ -198,12 +198,12 @@ public interface ContentMapper {
             .map(riskLevel).toPropertyWhenPresent("riskLevel", record::getRiskLevel)
             .map(contentType).toPropertyWhenPresent("contentType", record::getContentType)
             .map(contentTag).toPropertyWhenPresent("contentTag", record::getContentTag)
-            .map(riskType).toPropertyWhenPresent("riskType", record::getRiskType)
             .map(owner).toPropertyWhenPresent("owner", record::getOwner)
             .map(mintTime).toPropertyWhenPresent("mintTime", record::getMintTime)
             .map(thingType).toPropertyWhenPresent("thingType", record::getThingType)
             .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
             .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
+            .map(riskType).toPropertyWhenPresent("riskType", record::getRiskType)
         );
     }
 
@@ -256,12 +256,12 @@ public interface ContentMapper {
                 .set(riskLevel).equalTo(record::getRiskLevel)
                 .set(contentType).equalTo(record::getContentType)
                 .set(contentTag).equalTo(record::getContentTag)
-                .set(riskType).equalTo(record::getRiskType)
                 .set(owner).equalTo(record::getOwner)
                 .set(mintTime).equalTo(record::getMintTime)
                 .set(thingType).equalTo(record::getThingType)
                 .set(createTime).equalTo(record::getCreateTime)
-                .set(updateTime).equalTo(record::getUpdateTime);
+                .set(updateTime).equalTo(record::getUpdateTime)
+                .set(riskType).equalTo(record::getRiskType);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -286,12 +286,12 @@ public interface ContentMapper {
                 .set(riskLevel).equalToWhenPresent(record::getRiskLevel)
                 .set(contentType).equalToWhenPresent(record::getContentType)
                 .set(contentTag).equalToWhenPresent(record::getContentTag)
-                .set(riskType).equalToWhenPresent(record::getRiskType)
                 .set(owner).equalToWhenPresent(record::getOwner)
                 .set(mintTime).equalToWhenPresent(record::getMintTime)
                 .set(thingType).equalToWhenPresent(record::getThingType)
                 .set(createTime).equalToWhenPresent(record::getCreateTime)
-                .set(updateTime).equalToWhenPresent(record::getUpdateTime);
+                .set(updateTime).equalToWhenPresent(record::getUpdateTime)
+                .set(riskType).equalToWhenPresent(record::getRiskType);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -316,12 +316,12 @@ public interface ContentMapper {
             .set(riskLevel).equalTo(record::getRiskLevel)
             .set(contentType).equalTo(record::getContentType)
             .set(contentTag).equalTo(record::getContentTag)
-            .set(riskType).equalTo(record::getRiskType)
             .set(owner).equalTo(record::getOwner)
             .set(mintTime).equalTo(record::getMintTime)
             .set(thingType).equalTo(record::getThingType)
             .set(createTime).equalTo(record::getCreateTime)
             .set(updateTime).equalTo(record::getUpdateTime)
+            .set(riskType).equalTo(record::getRiskType)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -348,12 +348,12 @@ public interface ContentMapper {
             .set(riskLevel).equalToWhenPresent(record::getRiskLevel)
             .set(contentType).equalToWhenPresent(record::getContentType)
             .set(contentTag).equalToWhenPresent(record::getContentTag)
-            .set(riskType).equalToWhenPresent(record::getRiskType)
             .set(owner).equalToWhenPresent(record::getOwner)
             .set(mintTime).equalToWhenPresent(record::getMintTime)
             .set(thingType).equalToWhenPresent(record::getThingType)
             .set(createTime).equalToWhenPresent(record::getCreateTime)
             .set(updateTime).equalToWhenPresent(record::getUpdateTime)
+            .set(riskType).equalToWhenPresent(record::getRiskType)
             .where(id, isEqualTo(record::getId))
         );
     }

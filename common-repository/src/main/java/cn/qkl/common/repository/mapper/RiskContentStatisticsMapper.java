@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface RiskContentStatisticsMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, createTime, lowRiskNum, middleRiskNum, highRiskNum, platformId, updateTime);
+    BasicColumn[] selectList = BasicColumn.columnList(id, createTime, lowRiskNum, middleRiskNum, highRiskNum, platformId, updateTime, contentSum);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -67,7 +67,8 @@ public interface RiskContentStatisticsMapper {
         @Result(column="middle_risk_num", property="middleRiskNum", jdbcType=JdbcType.INTEGER),
         @Result(column="high_risk_num", property="highRiskNum", jdbcType=JdbcType.INTEGER),
         @Result(column="platform_id", property="platformId", jdbcType=JdbcType.BIGINT),
-        @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
+        @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="content_sum", property="contentSum", jdbcType=JdbcType.INTEGER)
     })
     List<RiskContentStatistics> selectMany(SelectStatementProvider selectStatement);
 
@@ -102,6 +103,7 @@ public interface RiskContentStatisticsMapper {
             .map(highRiskNum).toProperty("highRiskNum")
             .map(platformId).toProperty("platformId")
             .map(updateTime).toProperty("updateTime")
+            .map(contentSum).toProperty("contentSum")
         );
     }
 
@@ -115,6 +117,7 @@ public interface RiskContentStatisticsMapper {
             .map(highRiskNum).toProperty("highRiskNum")
             .map(platformId).toProperty("platformId")
             .map(updateTime).toProperty("updateTime")
+            .map(contentSum).toProperty("contentSum")
         );
     }
 
@@ -128,6 +131,7 @@ public interface RiskContentStatisticsMapper {
             .map(highRiskNum).toPropertyWhenPresent("highRiskNum", record::getHighRiskNum)
             .map(platformId).toPropertyWhenPresent("platformId", record::getPlatformId)
             .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
+            .map(contentSum).toPropertyWhenPresent("contentSum", record::getContentSum)
         );
     }
 
@@ -166,7 +170,8 @@ public interface RiskContentStatisticsMapper {
                 .set(middleRiskNum).equalTo(record::getMiddleRiskNum)
                 .set(highRiskNum).equalTo(record::getHighRiskNum)
                 .set(platformId).equalTo(record::getPlatformId)
-                .set(updateTime).equalTo(record::getUpdateTime);
+                .set(updateTime).equalTo(record::getUpdateTime)
+                .set(contentSum).equalTo(record::getContentSum);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -177,7 +182,8 @@ public interface RiskContentStatisticsMapper {
                 .set(middleRiskNum).equalToWhenPresent(record::getMiddleRiskNum)
                 .set(highRiskNum).equalToWhenPresent(record::getHighRiskNum)
                 .set(platformId).equalToWhenPresent(record::getPlatformId)
-                .set(updateTime).equalToWhenPresent(record::getUpdateTime);
+                .set(updateTime).equalToWhenPresent(record::getUpdateTime)
+                .set(contentSum).equalToWhenPresent(record::getContentSum);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -189,6 +195,7 @@ public interface RiskContentStatisticsMapper {
             .set(highRiskNum).equalTo(record::getHighRiskNum)
             .set(platformId).equalTo(record::getPlatformId)
             .set(updateTime).equalTo(record::getUpdateTime)
+            .set(contentSum).equalTo(record::getContentSum)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -202,6 +209,7 @@ public interface RiskContentStatisticsMapper {
             .set(highRiskNum).equalToWhenPresent(record::getHighRiskNum)
             .set(platformId).equalToWhenPresent(record::getPlatformId)
             .set(updateTime).equalToWhenPresent(record::getUpdateTime)
+            .set(contentSum).equalToWhenPresent(record::getContentSum)
             .where(id, isEqualTo(record::getId))
         );
     }
