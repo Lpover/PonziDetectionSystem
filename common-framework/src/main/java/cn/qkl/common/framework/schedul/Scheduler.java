@@ -1,4 +1,4 @@
-package cn.qkl.webserver.schedul;
+package cn.qkl.common.framework.schedul;
 
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;

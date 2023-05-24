@@ -1,4 +1,4 @@
-package cn.qkl.webserver.schedul;
+package cn.qkl.common.framework.schedul;
 
 import lombok.extern.slf4j.Slf4j;
 
