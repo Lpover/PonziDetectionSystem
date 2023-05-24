@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.qkl.webserver.dao.AccountDao">
+    <resultMap id="AccountContentResultMap" type="cn.qkl.webserver.vo.account.AccountContentVO" autoMapping="true">
+        <association property="tags" javaType="cn.qkl.webserver.vo.account.TagVO" resultMap="TagResultMap"/>
+    </resultMap>
+    <resultMap id="TagResultMap" type="cn.qkl.webserver.vo.account.TagVO">
+        <id column="platform_name" property="platform"/>
+        <id column="chain_name" property="chain"/>
+        <id column="dynamic_type" property="dynamic"/>
+    </resultMap>
+</mapper>

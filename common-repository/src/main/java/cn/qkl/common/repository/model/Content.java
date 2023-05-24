@@ -65,22 +65,22 @@ public class Content {
     private String contentTag;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String riskType;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String owner;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Date mintTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String thingType;
+    private Integer thingType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Date createTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Date updateTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer riskType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
@@ -403,22 +403,6 @@ public class Content {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getRiskType() {
-        return riskType;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Content withRiskType(String riskType) {
-        this.setRiskType(riskType);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setRiskType(String riskType) {
-        this.riskType = riskType;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String getOwner() {
         return owner;
     }
@@ -451,18 +435,18 @@ public class Content {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getThingType() {
+    public Integer getThingType() {
         return thingType;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Content withThingType(String thingType) {
+    public Content withThingType(Integer thingType) {
         this.setThingType(thingType);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setThingType(String thingType) {
+    public void setThingType(Integer thingType) {
         this.thingType = thingType;
     }
 
@@ -498,6 +482,22 @@ public class Content {
         this.updateTime = updateTime;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getRiskType() {
+        return riskType;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Content withRiskType(Integer riskType) {
+        this.setRiskType(riskType);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setRiskType(Integer riskType) {
+        this.riskType = riskType;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -525,12 +525,12 @@ public class Content {
         sb.append(", riskLevel=").append(riskLevel);
         sb.append(", contentType=").append(contentType);
         sb.append(", contentTag=").append(contentTag);
-        sb.append(", riskType=").append(riskType);
         sb.append(", owner=").append(owner);
         sb.append(", mintTime=").append(mintTime);
         sb.append(", thingType=").append(thingType);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", riskType=").append(riskType);
         sb.append("]");
         return sb.toString();
     }
