@@ -71,22 +71,22 @@ public final class ContentDynamicSqlSupport {
     public static final SqlColumn<String> contentTag = content.contentTag;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> riskType = content.riskType;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> owner = content.owner;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Date> mintTime = content.mintTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> thingType = content.thingType;
+    public static final SqlColumn<Integer> thingType = content.thingType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Date> createTime = content.createTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Date> updateTime = content.updateTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Integer> riskType = content.riskType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class Content extends SqlTable {
@@ -130,17 +130,17 @@ public final class ContentDynamicSqlSupport {
 
         public final SqlColumn<String> contentTag = column("content_tag", JDBCType.VARCHAR);
 
-        public final SqlColumn<String> riskType = column("risk_type", JDBCType.VARCHAR);
-
         public final SqlColumn<String> owner = column("`owner`", JDBCType.VARCHAR);
 
         public final SqlColumn<Date> mintTime = column("mint_time", JDBCType.TIMESTAMP);
 
-        public final SqlColumn<String> thingType = column("thing_type", JDBCType.VARCHAR);
+        public final SqlColumn<Integer> thingType = column("thing_type", JDBCType.INTEGER);
 
         public final SqlColumn<Date> createTime = column("create_time", JDBCType.TIMESTAMP);
 
         public final SqlColumn<Date> updateTime = column("update_time", JDBCType.TIMESTAMP);
+
+        public final SqlColumn<Integer> riskType = column("risk_type", JDBCType.INTEGER);
 
         public Content() {
             super("content");

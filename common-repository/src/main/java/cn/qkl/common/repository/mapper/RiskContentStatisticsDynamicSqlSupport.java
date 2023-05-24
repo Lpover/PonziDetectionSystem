@@ -32,6 +32,9 @@ public final class RiskContentStatisticsDynamicSqlSupport {
     public static final SqlColumn<Date> updateTime = riskContentStatistics.updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Integer> contentSum = riskContentStatistics.contentSum;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class RiskContentStatistics extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -46,7 +49,9 @@ public final class RiskContentStatisticsDynamicSqlSupport {
         public final SqlColumn<Long> platformId = column("platform_id", JDBCType.BIGINT);
 
         public final SqlColumn<Date> updateTime = column("update_time", JDBCType.TIMESTAMP);
+
         public final SqlColumn<Integer> contentSum = column("content_sum", JDBCType.INTEGER);
+
         public RiskContentStatistics() {
             super("risk_content_statistics");
         }

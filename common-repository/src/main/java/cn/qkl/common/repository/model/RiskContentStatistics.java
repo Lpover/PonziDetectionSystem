@@ -26,6 +26,9 @@ public class RiskContentStatistics {
     private Date updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer contentSum;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
@@ -137,6 +140,22 @@ public class RiskContentStatistics {
         this.updateTime = updateTime;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getContentSum() {
+        return contentSum;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public RiskContentStatistics withContentSum(Integer contentSum) {
+        this.setContentSum(contentSum);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setContentSum(Integer contentSum) {
+        this.contentSum = contentSum;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -151,6 +170,7 @@ public class RiskContentStatistics {
         sb.append(", highRiskNum=").append(highRiskNum);
         sb.append(", platformId=").append(platformId);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", contentSum=").append(contentSum);
         sb.append("]");
         return sb.toString();
     }

@@ -27,6 +27,8 @@ import java.util.List;
 @Mapper
 public interface PlatformDao extends PlatformMapper {
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
+    @Result(column = "start_time", property = "startTime", typeHandler = DateTypeHandler.class)
+    @Result(column = "end_time", property = "endTime", typeHandler = DateTypeHandler.class)
     List<PlatformContentVO> getPlatformContent(SelectStatementProvider selectStatementProvider);
 
 }
