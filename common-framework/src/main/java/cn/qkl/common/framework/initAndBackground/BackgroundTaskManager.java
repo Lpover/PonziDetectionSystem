@@ -22,11 +22,8 @@ public class BackgroundTaskManager implements CommandLineRunner {
     @Autowired
     BackgroundProperties backgroundProperties;
     private Scheduler backgroundScheduler;
-    private final List<BackgroundTask> backgroundTaskList;
-
-    public BackgroundTaskManager(List<BackgroundTask> backgroundTaskList) {
-        this.backgroundTaskList = backgroundTaskList;
-    }
+    @Autowired
+    private  List<BackgroundTask> backgroundTaskList;
 
     public void run(String... args) {
         if (this.backgroundTaskList.isEmpty()) {
