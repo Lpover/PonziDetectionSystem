@@ -57,7 +57,7 @@ public class DynamicContentService {
         }
 
         return PageVO.getPageData(dto.getPageId(), dto.getPageSize(), () -> contentDao.getDynamicContentList(
-                select(Tables.content.id, Tables.content.name, Tables.content.address, Tables.content.metaUrl, Tables.content.dynamicAlgorithmId, Tables.content.dynamicRecognition, Tables.content.riskLevel, Tables.content.contentTag, Tables.content.updateTime)
+                select(Tables.content.id, Tables.content.name, Tables.content.address, Tables.content.metaUrl, Tables.algorithm.version.as("dynamicAlgorithm"), Tables.content.dynamicRecognition, Tables.content.riskLevel, Tables.content.contentTag, Tables.content.updateTime)
                         .from(Tables.content)
                         .leftJoin(Tables.algorithm).on(Tables.content.dynamicAlgorithmId, equalTo(Tables.algorithm.id))
                         .where(Tables.content.riskLevel, isInWhenPresent(dto.getRiskLevelList()))
@@ -94,12 +94,13 @@ public class DynamicContentService {
         if (dto.getTime() == 1) {
             //近七天
             start = DateUtil.offsetDay(end, -7);
-        } else //近七天
-            if (dto.getTime() == 2) start = DateUtil.offsetMonth(end, -1);
-            else if (dto.getTime() == 3) {
-                //近七天
-                start = DateUtil.offsetMonth(end, -6);
-            }
+        } else if (dto.getTime() == 2) {
+            //近七天
+            start = DateUtil.offsetMonth(end, -1);
+        } else if (dto.getTime() == 3) {
+            //近七天
+            start = DateUtil.offsetMonth(end, -6);
+        }
 
         List<DynamicContentExportVO> dynamicContentExportVOList = contentDao.dynamicContentListExport(
                 select(Tables.content.name, Tables.content.address, Tables.content.metaUrl, Tables.content.riskLevel, Tables.content.updateTime)
@@ -123,4 +124,3 @@ public class DynamicContentService {
 
 
 }
-
