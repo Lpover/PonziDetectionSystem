@@ -74,8 +74,7 @@ public class DynamicContentService {
                         .applyWhere(contentTagWhereApplier)
                         .orderBy(Tables.content.updateTime)
                         .build()
-                        .render(RenderingStrategies.MYBATIS3)
-        ));
+                        .render(RenderingStrategies.MYBATIS3)), DynamicContentVO::transform);
     }
 
     public void manualReviseDynamicType(ManualReviseDynamicTypeDTO dto) {
