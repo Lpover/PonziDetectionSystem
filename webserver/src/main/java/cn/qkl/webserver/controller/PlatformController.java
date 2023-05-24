@@ -15,6 +15,8 @@ import cn.qkl.webserver.service.PlatformService;
 import cn.qkl.webserver.service.UserService;
 import cn.qkl.webserver.vo.platform.PlatformContentVO;
 import cn.qkl.webserver.vo.platform.PlatformListVO;
+import cn.qkl.webserver.vo.platform.PlatformNameListVO;
+import cn.qkl.webserver.vo.platform.PlatformSuperviseListVO;
 import cn.qkl.webserver.vo.user.UserInfoVO;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
@@ -52,25 +54,35 @@ public class  PlatformController {
     public BaseResult<List<PlatformContentVO>> getPopularPlatform(@Validated PopularPlatformQueryDTO dto) {
         return BaseResult.ok(platformService.getPopularPlatform(dto));
     }
+    @ApiOperation("平台名称获取")
+    @GetMapping("name/show")
+    public BaseResult<PageVO<PlatformNameListVO>> getNameList(@Validated PageDTO dto) {
+        return BaseResult.ok(platformService.getNameList(dto));
+    }
+    @ApiOperation("平台监测展示")
+    @GetMapping("supervise/show")
+    public BaseResult<PageVO<PlatformSuperviseListVO>> getSuperviseList(@Validated PageDTO dto) {
+        return BaseResult.ok(platformService.getSuperviseList(dto));
+    }
     @ApiOperation("平台列表展示")
     @GetMapping("list/show")
-    public BaseResult<PageVO<PlatformListVO>> getPlatformList(PageDTO dto) {
+    public BaseResult<PageVO<PlatformListVO>> getPlatformList(@Validated PageDTO dto) {
         return BaseResult.ok(platformService.getPlatformList(dto));
     }
     @ApiOperation("添加平台")
-    @GetMapping("add")
+    @PostMapping("add")
     public BaseResult<Void> addPlatform(@Validated AddPlatformDTO dto) {
         platformService.addPlatform(dto);
         return BaseResult.ok();
     }
     @ApiOperation("修改监管状态")
-    @GetMapping("modify/supervise")
+    @PutMapping("modify/supervise")
     public BaseResult<Void> modifySupervise(@Validated ModifySuperviseDTO dto) {
         platformService.modifySupervise(dto);
         return BaseResult.ok();
     }
     @ApiOperation("修改平台信息")
-    @GetMapping("modify/platform")
+    @PutMapping("modify/platform")
     public BaseResult<Void> modifyPlatform(@Validated ModifyPlatformDTO dto) {
         platformService.modifyPlatform(dto);
         return BaseResult.ok();

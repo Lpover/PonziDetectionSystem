@@ -22,6 +22,8 @@ import cn.qkl.webserver.vo.algorithm.AlgorithmVO;
 import cn.qkl.webserver.vo.dynamic.DynamicContentVO;
 import cn.qkl.webserver.vo.platform.PlatformContentVO;
 import cn.qkl.webserver.vo.platform.PlatformListVO;
+import cn.qkl.webserver.vo.platform.PlatformNameListVO;
+import cn.qkl.webserver.vo.platform.PlatformSuperviseListVO;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.dynamic.sql.SortSpecification;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
@@ -72,6 +74,14 @@ public class PlatformService {
                         .render(RenderingStrategies.MYBATIS3)
         );
         return platforms;
+    }
+    public PageVO<PlatformSuperviseListVO> getSuperviseList(PageDTO dto){
+        return PageVO.getPageData(dto.getPageId(), dto.getPageSize(),()->platformDao.select(c -> c
+        ),PlatformSuperviseListVO::transform);
+    }
+    public PageVO<PlatformNameListVO> getNameList(PageDTO dto){
+        return PageVO.getPageData(dto.getPageId(), dto.getPageSize(),()->platformDao.select(c -> c
+        ),PlatformNameListVO::transform);
     }
     public PageVO<PlatformListVO> getPlatformList(PageDTO dto){
         return PageVO.getPageData(dto.getPageId(), dto.getPageSize(),()->platformDao.select(c -> c
