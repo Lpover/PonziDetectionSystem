@@ -51,7 +51,7 @@
         </table>
         <table tableName="statistic" domainObjectName="Statistic">
         </table>
-        <table tableName="content_risk_statistics" domainObjectName="contentRiskStatistics">
+        <table tableName="content_risk_statistics" domainObjectName="ContentRiskStatistics">
         </table>
         <table tableName="user" domainObjectName="User">
         </table>

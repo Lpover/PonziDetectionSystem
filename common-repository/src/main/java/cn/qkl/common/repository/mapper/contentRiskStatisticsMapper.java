@@ -1,9 +1,9 @@
 package cn.qkl.common.repository.mapper;
 
-import static cn.qkl.common.repository.mapper.contentRiskStatisticsDynamicSqlSupport.*;
+import static cn.qkl.common.repository.mapper.ContentRiskStatisticsDynamicSqlSupport.*;
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
-import cn.qkl.common.repository.model.contentRiskStatistics;
+import cn.qkl.common.repository.model.ContentRiskStatistics;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +33,7 @@ import org.mybatis.dynamic.sql.util.SqlProviderAdapter;
 import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 
 @Mapper
-public interface contentRiskStatisticsMapper {
+public interface ContentRiskStatisticsMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     BasicColumn[] selectList = BasicColumn.columnList(id, categoryId, num, createTime, updateTime);
 
@@ -47,27 +47,27 @@ public interface contentRiskStatisticsMapper {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @InsertProvider(type=SqlProviderAdapter.class, method="insert")
-    int insert(InsertStatementProvider<contentRiskStatistics> insertStatement);
+    int insert(InsertStatementProvider<ContentRiskStatistics> insertStatement);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @InsertProvider(type=SqlProviderAdapter.class, method="insertMultiple")
-    int insertMultiple(MultiRowInsertStatementProvider<contentRiskStatistics> multipleInsertStatement);
+    int insertMultiple(MultiRowInsertStatementProvider<ContentRiskStatistics> multipleInsertStatement);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
-    @ResultMap("contentRiskStatisticsResult")
-    Optional<contentRiskStatistics> selectOne(SelectStatementProvider selectStatement);
+    @ResultMap("ContentRiskStatisticsResult")
+    Optional<ContentRiskStatistics> selectOne(SelectStatementProvider selectStatement);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
-    @Results(id="contentRiskStatisticsResult", value = {
+    @Results(id="ContentRiskStatisticsResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="category_id", property="categoryId", jdbcType=JdbcType.BIGINT),
         @Result(column="num", property="num", jdbcType=JdbcType.BIGINT),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
     })
-    List<contentRiskStatistics> selectMany(SelectStatementProvider selectStatement);
+    List<ContentRiskStatistics> selectMany(SelectStatementProvider selectStatement);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @UpdateProvider(type=SqlProviderAdapter.class, method="update")
@@ -91,7 +91,7 @@ public interface contentRiskStatisticsMapper {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int insert(contentRiskStatistics record) {
+    default int insert(ContentRiskStatistics record) {
         return MyBatis3Utils.insert(this::insert, record, contentRiskStatistics, c ->
             c.map(id).toProperty("id")
             .map(categoryId).toProperty("categoryId")
@@ -102,7 +102,7 @@ public interface contentRiskStatisticsMapper {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int insertMultiple(Collection<contentRiskStatistics> records) {
+    default int insertMultiple(Collection<ContentRiskStatistics> records) {
         return MyBatis3Utils.insertMultiple(this::insertMultiple, records, contentRiskStatistics, c ->
             c.map(id).toProperty("id")
             .map(categoryId).toProperty("categoryId")
@@ -113,7 +113,7 @@ public interface contentRiskStatisticsMapper {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int insertSelective(contentRiskStatistics record) {
+    default int insertSelective(ContentRiskStatistics record) {
         return MyBatis3Utils.insert(this::insert, record, contentRiskStatistics, c ->
             c.map(id).toPropertyWhenPresent("id", record::getId)
             .map(categoryId).toPropertyWhenPresent("categoryId", record::getCategoryId)
@@ -124,22 +124,22 @@ public interface contentRiskStatisticsMapper {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default Optional<contentRiskStatistics> selectOne(SelectDSLCompleter completer) {
+    default Optional<ContentRiskStatistics> selectOne(SelectDSLCompleter completer) {
         return MyBatis3Utils.selectOne(this::selectOne, selectList, contentRiskStatistics, completer);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default List<contentRiskStatistics> select(SelectDSLCompleter completer) {
+    default List<ContentRiskStatistics> select(SelectDSLCompleter completer) {
         return MyBatis3Utils.selectList(this::selectMany, selectList, contentRiskStatistics, completer);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default List<contentRiskStatistics> selectDistinct(SelectDSLCompleter completer) {
+    default List<ContentRiskStatistics> selectDistinct(SelectDSLCompleter completer) {
         return MyBatis3Utils.selectDistinct(this::selectMany, selectList, contentRiskStatistics, completer);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default Optional<contentRiskStatistics> selectByPrimaryKey(Long id_) {
+    default Optional<ContentRiskStatistics> selectByPrimaryKey(Long id_) {
         return selectOne(c ->
             c.where(id, isEqualTo(id_))
         );
@@ -151,7 +151,7 @@ public interface contentRiskStatisticsMapper {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    static UpdateDSL<UpdateModel> updateAllColumns(contentRiskStatistics record, UpdateDSL<UpdateModel> dsl) {
+    static UpdateDSL<UpdateModel> updateAllColumns(ContentRiskStatistics record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalTo(record::getId)
                 .set(categoryId).equalTo(record::getCategoryId)
                 .set(num).equalTo(record::getNum)
@@ -160,7 +160,7 @@ public interface contentRiskStatisticsMapper {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    static UpdateDSL<UpdateModel> updateSelectiveColumns(contentRiskStatistics record, UpdateDSL<UpdateModel> dsl) {
+    static UpdateDSL<UpdateModel> updateSelectiveColumns(ContentRiskStatistics record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalToWhenPresent(record::getId)
                 .set(categoryId).equalToWhenPresent(record::getCategoryId)
                 .set(num).equalToWhenPresent(record::getNum)
@@ -169,7 +169,7 @@ public interface contentRiskStatisticsMapper {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int updateByPrimaryKey(contentRiskStatistics record) {
+    default int updateByPrimaryKey(ContentRiskStatistics record) {
         return update(c ->
             c.set(categoryId).equalTo(record::getCategoryId)
             .set(num).equalTo(record::getNum)
@@ -180,7 +180,7 @@ public interface contentRiskStatisticsMapper {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int updateByPrimaryKeySelective(contentRiskStatistics record) {
+    default int updateByPrimaryKeySelective(ContentRiskStatistics record) {
         return update(c ->
             c.set(categoryId).equalToWhenPresent(record::getCategoryId)
             .set(num).equalToWhenPresent(record::getNum)

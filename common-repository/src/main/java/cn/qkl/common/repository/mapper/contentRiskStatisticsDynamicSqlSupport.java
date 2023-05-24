@@ -6,9 +6,9 @@ import javax.annotation.Generated;
 import org.mybatis.dynamic.sql.SqlColumn;
 import org.mybatis.dynamic.sql.SqlTable;
 
-public final class contentRiskStatisticsDynamicSqlSupport {
+public final class ContentRiskStatisticsDynamicSqlSupport {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final contentRiskStatistics contentRiskStatistics = new contentRiskStatistics();
+    public static final ContentRiskStatistics contentRiskStatistics = new ContentRiskStatistics();
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Long> id = contentRiskStatistics.id;
@@ -26,7 +26,7 @@ public final class contentRiskStatisticsDynamicSqlSupport {
     public static final SqlColumn<Date> updateTime = contentRiskStatistics.updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final class contentRiskStatistics extends SqlTable {
+    public static final class ContentRiskStatistics extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
         public final SqlColumn<Long> categoryId = column("category_id", JDBCType.BIGINT);
@@ -37,7 +37,7 @@ public final class contentRiskStatisticsDynamicSqlSupport {
 
         public final SqlColumn<Date> updateTime = column("update_time", JDBCType.TIMESTAMP);
 
-        public contentRiskStatistics() {
+        public ContentRiskStatistics() {
             super("content_risk_statistics");
         }
     }

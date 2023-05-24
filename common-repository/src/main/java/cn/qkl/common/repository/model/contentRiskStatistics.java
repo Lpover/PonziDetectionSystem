@@ -3,7 +3,7 @@ package cn.qkl.common.repository.model;
 import java.util.Date;
 import javax.annotation.Generated;
 
-public class contentRiskStatistics {
+public class ContentRiskStatistics {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
 
@@ -25,7 +25,7 @@ public class contentRiskStatistics {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public contentRiskStatistics withId(Long id) {
+    public ContentRiskStatistics withId(Long id) {
         this.setId(id);
         return this;
     }
@@ -41,7 +41,7 @@ public class contentRiskStatistics {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public contentRiskStatistics withCategoryId(Long categoryId) {
+    public ContentRiskStatistics withCategoryId(Long categoryId) {
         this.setCategoryId(categoryId);
         return this;
     }
@@ -57,7 +57,7 @@ public class contentRiskStatistics {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public contentRiskStatistics withNum(Long num) {
+    public ContentRiskStatistics withNum(Long num) {
         this.setNum(num);
         return this;
     }
@@ -73,7 +73,7 @@ public class contentRiskStatistics {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public contentRiskStatistics withCreateTime(Date createTime) {
+    public ContentRiskStatistics withCreateTime(Date createTime) {
         this.setCreateTime(createTime);
         return this;
     }
@@ -89,7 +89,7 @@ public class contentRiskStatistics {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public contentRiskStatistics withUpdateTime(Date updateTime) {
+    public ContentRiskStatistics withUpdateTime(Date updateTime) {
         this.setUpdateTime(updateTime);
         return this;
     }
