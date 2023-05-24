@@ -25,9 +25,5 @@ import java.util.List;
 public interface RiskContentStatisticsDao extends RiskContentStatisticsMapper {
 
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
-//    @Result(column = "start_time", property = "startTime", jdbcType = JdbcType.DATE)
-    @Result(column = "start_time", property = "startTime", typeHandler = DateTypeHandler.class)
-//    @Result(column = "end_time", property = "endTime", jdbcType = JdbcType.TIMESTAMP)
-    @Result(column = "end_time", property = "endTime", typeHandler = DateTypeHandler.class)
     List<RiskContentStatisticsVO> getRiskContentStatistics(SelectStatementProvider selectStatementProvider);
 }

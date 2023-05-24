@@ -1,14 +1,12 @@
 package cn.qkl.webserver.vo.platform;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.qkl.common.repository.model.Algorithm;
 import cn.qkl.common.repository.model.Platform;
-import cn.qkl.webserver.vo.algorithm.AlgorithmVO;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.xml.crypto.Data;
 @lombok.Data
-public class PlatformListVO {
+public class PlatformSuperviseListVO {
     @ApiModelProperty("平台主键id")
     private Long id;
     @ApiModelProperty("平台名称")
@@ -17,18 +15,18 @@ public class PlatformListVO {
     private String url;
     @ApiModelProperty("平台logo")
     private String logo;
-    @ApiModelProperty("是否监管 0表示不监管 1表示监管")
-    private Integer monitor;
-    @ApiModelProperty("监测频率")
-    private Integer frequency;
+    @ApiModelProperty("平台位置")
+    private Integer location;
+    @ApiModelProperty("风险内容数量")
+    private Integer riskContentNum;
+    @ApiModelProperty("24小时活跃度")
+    private Integer activation;
     @ApiModelProperty("风险评级：1低风险 2中风险 3高风险")
     private Integer riskLevel;
-    @ApiModelProperty("添加时间")
+    @ApiModelProperty("更新时间")
     private Data updateTime;
-    @ApiModelProperty("上次抓取时间")
-    private Data createTime;
-    public static PlatformListVO transform(Platform platform) {
-        PlatformListVO vo = new PlatformListVO();
+    public static PlatformSuperviseListVO transform(Platform platform) {
+        PlatformSuperviseListVO vo = new PlatformSuperviseListVO();
         BeanUtil.copyProperties(platform, vo);
         return vo;
     }

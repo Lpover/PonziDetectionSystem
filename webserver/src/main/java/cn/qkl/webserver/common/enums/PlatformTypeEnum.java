@@ -1,7 +1,7 @@
 package cn.qkl.webserver.common.enums;
 
 public enum PlatformTypeEnum {
-    NOT_NFT(0, "web3平台"),
+    WEB3(0, "web3平台"),
     NFT(1, "nft平台"),
 
     ;
