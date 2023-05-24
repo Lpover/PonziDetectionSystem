@@ -87,6 +87,8 @@ public class DynamicContentService {
     public void dynamicContentListExport(DynamicContentExportDTO dto, HttpServletResponse response) {
         //当前服务器时间
         Date end = new Date();
+        //一天的开始，结果：2023-05-24 00:00:00
+        end = DateUtil.beginOfDay(end);
         //全部
         DateTime start = null;
         if (dto.getTime() == 1) {
