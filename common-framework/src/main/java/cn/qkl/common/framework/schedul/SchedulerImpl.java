@@ -66,6 +66,7 @@ public class SchedulerImpl implements Scheduler {
                 cachedExecutor.shutdown();
                 this.executor = null;
             }
+            //不关掉就得block住，绝对不能return
             cachedExecutor.awaitTermination(1, TimeUnit.DAYS);
         }
     }

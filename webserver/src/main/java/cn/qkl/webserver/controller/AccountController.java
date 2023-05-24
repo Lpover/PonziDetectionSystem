@@ -42,7 +42,7 @@ public class AccountController {
 
     @ApiOperation("账户基本信息")
     @GetMapping("info")
-    public BaseResult<List<AccountBasicVO>> getAccountBasic(@Validated @RequestParam long accountId) {
+    public BaseResult<AccountBasicVO> getAccountBasic(@Validated @RequestParam long accountId) {
         return BaseResult.ok(accountService.getAccountBasic(accountId));
     }
 
