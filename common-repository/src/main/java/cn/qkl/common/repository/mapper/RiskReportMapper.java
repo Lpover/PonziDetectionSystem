@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface RiskReportMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, riskContentNum, evolutionNum, highAccountNum, midAccountNum, lowAccountNum, nftId, nftNum, web3Id, web3Num, highContentNum, midContentNum, lowContentNum, riskTypeHighestId, largestPer, riskTypeLowstId, lowstPer, dynNum, monitorNum, highRiskPlat, midRiskPlat, lowRiskPlat, highRiskPlatPer, midRiskPlatPer, lowRiskPlatPer, highNamePlat, highNumPlat, createTime, updateTime);
+    BasicColumn[] selectList = BasicColumn.columnList(id, riskContentNum, evolutionNum, highAccountNum, midAccountNum, lowAccountNum, nftId, nftNum, web3Id, web3Num, highContentNum, midContentNum, lowContentNum, dynNum, monitorNum, highRiskPlat, midRiskPlat, lowRiskPlat, highRiskPlatPer, midRiskPlatPer, lowRiskPlatPer, highNamePlat, highNumPlat, createTime, updateTime);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -74,10 +74,6 @@ public interface RiskReportMapper {
         @Result(column="high_content_num", property="highContentNum", jdbcType=JdbcType.INTEGER),
         @Result(column="mid_content_num", property="midContentNum", jdbcType=JdbcType.INTEGER),
         @Result(column="low_content_num", property="lowContentNum", jdbcType=JdbcType.INTEGER),
-        @Result(column="risk_type_highest_id", property="riskTypeHighestId", jdbcType=JdbcType.BIGINT),
-        @Result(column="largest_per", property="largestPer", jdbcType=JdbcType.DECIMAL),
-        @Result(column="risk_type_lowst_id", property="riskTypeLowstId", jdbcType=JdbcType.BIGINT),
-        @Result(column="lowst_per", property="lowstPer", jdbcType=JdbcType.DECIMAL),
         @Result(column="dyn_num", property="dynNum", jdbcType=JdbcType.INTEGER),
         @Result(column="monitor_num", property="monitorNum", jdbcType=JdbcType.INTEGER),
         @Result(column="high_risk_plat", property="highRiskPlat", jdbcType=JdbcType.VARCHAR),
@@ -130,10 +126,6 @@ public interface RiskReportMapper {
             .map(highContentNum).toProperty("highContentNum")
             .map(midContentNum).toProperty("midContentNum")
             .map(lowContentNum).toProperty("lowContentNum")
-            .map(riskTypeHighestId).toProperty("riskTypeHighestId")
-            .map(largestPer).toProperty("largestPer")
-            .map(riskTypeLowstId).toProperty("riskTypeLowstId")
-            .map(lowstPer).toProperty("lowstPer")
             .map(dynNum).toProperty("dynNum")
             .map(monitorNum).toProperty("monitorNum")
             .map(highRiskPlat).toProperty("highRiskPlat")
@@ -165,10 +157,6 @@ public interface RiskReportMapper {
             .map(highContentNum).toProperty("highContentNum")
             .map(midContentNum).toProperty("midContentNum")
             .map(lowContentNum).toProperty("lowContentNum")
-            .map(riskTypeHighestId).toProperty("riskTypeHighestId")
-            .map(largestPer).toProperty("largestPer")
-            .map(riskTypeLowstId).toProperty("riskTypeLowstId")
-            .map(lowstPer).toProperty("lowstPer")
             .map(dynNum).toProperty("dynNum")
             .map(monitorNum).toProperty("monitorNum")
             .map(highRiskPlat).toProperty("highRiskPlat")
@@ -200,10 +188,6 @@ public interface RiskReportMapper {
             .map(highContentNum).toPropertyWhenPresent("highContentNum", record::getHighContentNum)
             .map(midContentNum).toPropertyWhenPresent("midContentNum", record::getMidContentNum)
             .map(lowContentNum).toPropertyWhenPresent("lowContentNum", record::getLowContentNum)
-            .map(riskTypeHighestId).toPropertyWhenPresent("riskTypeHighestId", record::getRiskTypeHighestId)
-            .map(largestPer).toPropertyWhenPresent("largestPer", record::getLargestPer)
-            .map(riskTypeLowstId).toPropertyWhenPresent("riskTypeLowstId", record::getRiskTypeLowstId)
-            .map(lowstPer).toPropertyWhenPresent("lowstPer", record::getLowstPer)
             .map(dynNum).toPropertyWhenPresent("dynNum", record::getDynNum)
             .map(monitorNum).toPropertyWhenPresent("monitorNum", record::getMonitorNum)
             .map(highRiskPlat).toPropertyWhenPresent("highRiskPlat", record::getHighRiskPlat)
@@ -261,10 +245,6 @@ public interface RiskReportMapper {
                 .set(highContentNum).equalTo(record::getHighContentNum)
                 .set(midContentNum).equalTo(record::getMidContentNum)
                 .set(lowContentNum).equalTo(record::getLowContentNum)
-                .set(riskTypeHighestId).equalTo(record::getRiskTypeHighestId)
-                .set(largestPer).equalTo(record::getLargestPer)
-                .set(riskTypeLowstId).equalTo(record::getRiskTypeLowstId)
-                .set(lowstPer).equalTo(record::getLowstPer)
                 .set(dynNum).equalTo(record::getDynNum)
                 .set(monitorNum).equalTo(record::getMonitorNum)
                 .set(highRiskPlat).equalTo(record::getHighRiskPlat)
@@ -294,10 +274,6 @@ public interface RiskReportMapper {
                 .set(highContentNum).equalToWhenPresent(record::getHighContentNum)
                 .set(midContentNum).equalToWhenPresent(record::getMidContentNum)
                 .set(lowContentNum).equalToWhenPresent(record::getLowContentNum)
-                .set(riskTypeHighestId).equalToWhenPresent(record::getRiskTypeHighestId)
-                .set(largestPer).equalToWhenPresent(record::getLargestPer)
-                .set(riskTypeLowstId).equalToWhenPresent(record::getRiskTypeLowstId)
-                .set(lowstPer).equalToWhenPresent(record::getLowstPer)
                 .set(dynNum).equalToWhenPresent(record::getDynNum)
                 .set(monitorNum).equalToWhenPresent(record::getMonitorNum)
                 .set(highRiskPlat).equalToWhenPresent(record::getHighRiskPlat)
@@ -327,10 +303,6 @@ public interface RiskReportMapper {
             .set(highContentNum).equalTo(record::getHighContentNum)
             .set(midContentNum).equalTo(record::getMidContentNum)
             .set(lowContentNum).equalTo(record::getLowContentNum)
-            .set(riskTypeHighestId).equalTo(record::getRiskTypeHighestId)
-            .set(largestPer).equalTo(record::getLargestPer)
-            .set(riskTypeLowstId).equalTo(record::getRiskTypeLowstId)
-            .set(lowstPer).equalTo(record::getLowstPer)
             .set(dynNum).equalTo(record::getDynNum)
             .set(monitorNum).equalTo(record::getMonitorNum)
             .set(highRiskPlat).equalTo(record::getHighRiskPlat)
@@ -362,10 +334,6 @@ public interface RiskReportMapper {
             .set(highContentNum).equalToWhenPresent(record::getHighContentNum)
             .set(midContentNum).equalToWhenPresent(record::getMidContentNum)
             .set(lowContentNum).equalToWhenPresent(record::getLowContentNum)
-            .set(riskTypeHighestId).equalToWhenPresent(record::getRiskTypeHighestId)
-            .set(largestPer).equalToWhenPresent(record::getLargestPer)
-            .set(riskTypeLowstId).equalToWhenPresent(record::getRiskTypeLowstId)
-            .set(lowstPer).equalToWhenPresent(record::getLowstPer)
             .set(dynNum).equalToWhenPresent(record::getDynNum)
             .set(monitorNum).equalToWhenPresent(record::getMonitorNum)
             .set(highRiskPlat).equalToWhenPresent(record::getHighRiskPlat)

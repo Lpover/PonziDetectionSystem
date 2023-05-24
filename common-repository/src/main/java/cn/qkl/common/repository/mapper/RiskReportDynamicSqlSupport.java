@@ -51,18 +51,6 @@ public final class RiskReportDynamicSqlSupport {
     public static final SqlColumn<Integer> lowContentNum = riskReport.lowContentNum;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Long> riskTypeHighestId = riskReport.riskTypeHighestId;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<BigDecimal> largestPer = riskReport.largestPer;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Long> riskTypeLowstId = riskReport.riskTypeLowstId;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<BigDecimal> lowstPer = riskReport.lowstPer;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Integer> dynNum = riskReport.dynNum;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -125,14 +113,6 @@ public final class RiskReportDynamicSqlSupport {
         public final SqlColumn<Integer> midContentNum = column("mid_content_num", JDBCType.INTEGER);
 
         public final SqlColumn<Integer> lowContentNum = column("low_content_num", JDBCType.INTEGER);
-
-        public final SqlColumn<Long> riskTypeHighestId = column("risk_type_highest_id", JDBCType.BIGINT);
-
-        public final SqlColumn<BigDecimal> largestPer = column("largest_per", JDBCType.DECIMAL);
-
-        public final SqlColumn<Long> riskTypeLowstId = column("risk_type_lowst_id", JDBCType.BIGINT);
-
-        public final SqlColumn<BigDecimal> lowstPer = column("lowst_per", JDBCType.DECIMAL);
 
         public final SqlColumn<Integer> dynNum = column("dyn_num", JDBCType.INTEGER);
 

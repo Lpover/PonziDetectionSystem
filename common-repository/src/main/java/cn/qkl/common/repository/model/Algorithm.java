@@ -12,6 +12,9 @@ public class Algorithm {
     private Integer version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String name;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private BigDecimal recognitionRate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -53,6 +56,22 @@ public class Algorithm {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getName() {
+        return name;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Algorithm withName(String name) {
+        this.setName(name);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -128,6 +147,7 @@ public class Algorithm {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", version=").append(version);
+        sb.append(", name=").append(name);
         sb.append(", recognitionRate=").append(recognitionRate);
         sb.append(", type=").append(type);
         sb.append(", createTime=").append(createTime);

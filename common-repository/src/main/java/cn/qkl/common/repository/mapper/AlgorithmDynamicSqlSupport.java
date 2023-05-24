@@ -18,6 +18,9 @@ public final class AlgorithmDynamicSqlSupport {
     public static final SqlColumn<Integer> version = algorithm.version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> name = algorithm.name;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<BigDecimal> recognitionRate = algorithm.recognitionRate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -34,6 +37,8 @@ public final class AlgorithmDynamicSqlSupport {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
         public final SqlColumn<Integer> version = column("version", JDBCType.INTEGER);
+
+        public final SqlColumn<String> name = column("`name`", JDBCType.VARCHAR);
 
         public final SqlColumn<BigDecimal> recognitionRate = column("recognition_rate", JDBCType.DECIMAL);
 

@@ -45,18 +45,6 @@ public class RiskReport {
     private Integer lowContentNum;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long riskTypeHighestId;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private BigDecimal largestPer;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long riskTypeLowstId;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private BigDecimal lowstPer;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer dynNum;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -301,70 +289,6 @@ public class RiskReport {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getRiskTypeHighestId() {
-        return riskTypeHighestId;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public RiskReport withRiskTypeHighestId(Long riskTypeHighestId) {
-        this.setRiskTypeHighestId(riskTypeHighestId);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setRiskTypeHighestId(Long riskTypeHighestId) {
-        this.riskTypeHighestId = riskTypeHighestId;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public BigDecimal getLargestPer() {
-        return largestPer;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public RiskReport withLargestPer(BigDecimal largestPer) {
-        this.setLargestPer(largestPer);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setLargestPer(BigDecimal largestPer) {
-        this.largestPer = largestPer;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getRiskTypeLowstId() {
-        return riskTypeLowstId;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public RiskReport withRiskTypeLowstId(Long riskTypeLowstId) {
-        this.setRiskTypeLowstId(riskTypeLowstId);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setRiskTypeLowstId(Long riskTypeLowstId) {
-        this.riskTypeLowstId = riskTypeLowstId;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public BigDecimal getLowstPer() {
-        return lowstPer;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public RiskReport withLowstPer(BigDecimal lowstPer) {
-        this.setLowstPer(lowstPer);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setLowstPer(BigDecimal lowstPer) {
-        this.lowstPer = lowstPer;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Integer getDynNum() {
         return dynNum;
     }
@@ -576,10 +500,6 @@ public class RiskReport {
         sb.append(", highContentNum=").append(highContentNum);
         sb.append(", midContentNum=").append(midContentNum);
         sb.append(", lowContentNum=").append(lowContentNum);
-        sb.append(", riskTypeHighestId=").append(riskTypeHighestId);
-        sb.append(", largestPer=").append(largestPer);
-        sb.append(", riskTypeLowstId=").append(riskTypeLowstId);
-        sb.append(", lowstPer=").append(lowstPer);
         sb.append(", dynNum=").append(dynNum);
         sb.append(", monitorNum=").append(monitorNum);
         sb.append(", highRiskPlat=").append(highRiskPlat);
