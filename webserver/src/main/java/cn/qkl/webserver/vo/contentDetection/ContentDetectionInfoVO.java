@@ -2,10 +2,12 @@ package cn.qkl.webserver.vo.contentDetection;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.qkl.common.repository.model.Content;
+import cn.qkl.webserver.common.enums.ContentRiskCategoryEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.annotation.Generated;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,8 +43,11 @@ public class ContentDetectionInfoVO {
     @ApiModelProperty("合约地址")
     private String address;
 
-    @ApiModelProperty("风险标签: 0 无风险 1 政治风险,2, '恐怖风险',3, '暴力风险 ,4, '低俗风险,5, '犯罪风险,6, '赌博风险',7, '毒品风险',不传表示都选")
+    @ApiModelProperty("风险标签: 0 无风险 1 政治风险,2, '恐怖风险',3, '暴力风险 ,4, '低俗风险,5, '犯罪风险,6, '赌博风险',7, '毒品风险'")
     private String contentTag;
+
+    @ApiModelProperty("风险标签列表: 0 无风险 1 政治风险,2, '恐怖风险',3, '暴力风险 ,4, '低俗风险,5, '犯罪风险,6, '赌博风险',7, '毒品风险'")
+    private List<Integer> contentTagList;
 
     @ApiModelProperty("动态风险属性：0静态 5读动态 10写动态")
     private Integer dynamicType;
@@ -53,9 +58,15 @@ public class ContentDetectionInfoVO {
     @ApiModelProperty("更新时间")
     private Date updateTime;
 
-    public static ContentDetectionInfoVO transform(Content contentDetection) {
-        ContentDetectionInfoVO vo = new ContentDetectionInfoVO();
-        BeanUtil.copyProperties(contentDetection, vo);
+    public static ContentDetectionInfoVO transform(ContentDetectionInfoVO vo) {
+        //string contentTag转化为List<Integer>
+        String[] split = vo.getContentTag().split(",");
+        ArrayList<Integer> list = new ArrayList<>();
+        for (String s : split) {
+            list.add(Integer.parseInt(s));
+        }
+
+        vo.setContentTagList(list);
         return vo;
     }
 }

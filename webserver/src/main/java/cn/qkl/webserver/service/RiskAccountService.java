@@ -40,7 +40,7 @@ public class RiskAccountService {
         return PageVO.getPageData(dto.getPageId(), dto.getPageSize(),
                 () -> accountCheckHistoryDao.getAccountInfo(
                         select(Tables.accountCheckHistory.id, Tables.account.accountAddress,Tables.accountCheckHistory.relatedNum,Tables.accountCheckHistory.releaseNum,Tables.accountCheckHistory.riskLevel,
-                                Tables.accountCheckHistory.createTime)
+                                Tables.accountCheckHistory.updateTime,Tables.accountCheckHistory.accountId)
                                 .from(Tables.accountCheckHistory)
                                 .leftJoin(Tables.account).on(Tables.accountCheckHistory.accountId,equalTo(Tables.account.id))
                                 .where(Tables.accountCheckHistory.riskLevel, isInWhenPresent(dto.getRiskLevelList()))

@@ -77,9 +77,9 @@ public class RiskReportService {
         ).get();
         //当前服务器时间
         Date end = new Date();
-        end = DateUtil.beginOfDay(end);
-        //昨天
-        DateTime start =  DateUtil.offsetDay(end, -1);
+        end = DateUtil.endOfDay(end);
+        //昨天,设定的是7天以前，以免没有数据
+        DateTime start =  DateUtil.offsetDay(end, -7);
         //每日标签新增
         List<RiskCategoryVO> riskContentStatistics = contentRiskStatisticsDao.getContentRiskStatistic(
                 select(Tables.contentRisk.category.as("riskName"), Tables.contentRiskStatistics.num.as("riskNum"))
