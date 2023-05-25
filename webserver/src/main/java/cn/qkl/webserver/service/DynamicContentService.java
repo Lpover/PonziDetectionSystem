@@ -17,7 +17,8 @@ import cn.qkl.webserver.vo.dynamic.DynamicContentExportVO;
 import cn.qkl.webserver.vo.dynamic.DynamicContentVO;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
-import org.mybatis.dynamic.sql.where.WhereApplier;
+import org.mybatis.dynamic.sql.select.QueryExpressionDSL;
+import org.mybatis.dynamic.sql.select.SelectModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
@@ -44,34 +45,32 @@ public class DynamicContentService {
     private ContentDao contentDao;
 
     public PageVO<DynamicContentVO> getDynamicContentList(DynamicContentListQueryDTO dto) {
-        WhereApplier contentTagWhereApplier;
+        QueryExpressionDSL<SelectModel>.QueryExpressionWhereBuilder builder = select(Tables.content.id, Tables.content.name, Tables.content.address, Tables.content.metaUrl, Tables.algorithm.version.as("dynamicAlgorithm"), Tables.content.dynamicRecognition, Tables.content.riskLevel, Tables.content.contentTag, Tables.content.updateTime)
+                .from(Tables.content)
+                .leftJoin(Tables.algorithm).on(Tables.content.dynamicAlgorithmId, equalTo(Tables.algorithm.id))
+                .where(Tables.content.riskLevel, isInWhenPresent(dto.getRiskLevelList()))
+                //不包括无风险
+                .and(Tables.content.riskLevel, isNotEqualTo(ContentRiskLevelEnum.NO_RISK.getCode()))
+                .and(Tables.content.dynamicAlgorithmId, isInWhenPresent(dto.getDynamicAlgorithmIdList()))
+                //必须是动态识别算法
+                .and(Tables.content.riskLevel, isNotEqualTo(AlgorithmTypeEnum.DYNAMIC_ALGORITHM.getCode()))
+                .and(Tables.content.platformId, isInWhenPresent(dto.getPlatformIdList()))
+                //必须是动态数字内容
+                .and(Tables.content.dynamicType, isEqualTo(DynamicTypeEnum.DYNAMIC.getCode()))
+                .and(Tables.content.createTime, isGreaterThanOrEqualToWhenPresent(dto.getStartTime()))
+                .and(Tables.content.createTime, isLessThanOrEqualToWhenPresent(dto.getEndTime()));
+
         if (dto.getContentRiskTypeList() != null && dto.getContentRiskTypeList().size() == 1) {
             //有风险,contentTag!=0
-            if (dto.getDynamicAlgorithmIdList().get(0) == 1) {
-                contentTagWhereApplier = c -> c.and(Tables.content.contentTag, isNotEqualTo(ContentRiskCategoryEnum.NO_RISK.getCode() + ""));
+            if (dto.getContentRiskTypeList().get(0) == 1) {
+                builder.and(Tables.content.contentTag, isNotEqualTo(ContentRiskCategoryEnum.NO_RISK.getCode() + ""));
             } else {
-                contentTagWhereApplier = c -> c.and(Tables.content.contentTag, isEqualTo(ContentRiskCategoryEnum.NO_RISK.getCode() + ""));
+                builder.and(Tables.content.contentTag, isEqualTo(ContentRiskCategoryEnum.NO_RISK.getCode() + ""));
             }
-        } else {
-            contentTagWhereApplier = c -> c.and(Tables.content.contentTag, isEqualToWhenPresent((String) null));
         }
 
         return PageVO.getPageData(dto.getPageId(), dto.getPageSize(), () -> contentDao.getDynamicContentList(
-                select(Tables.content.id, Tables.content.name, Tables.content.address, Tables.content.metaUrl, Tables.algorithm.version.as("dynamicAlgorithm"), Tables.content.dynamicRecognition, Tables.content.riskLevel, Tables.content.contentTag, Tables.content.updateTime)
-                        .from(Tables.content)
-                        .leftJoin(Tables.algorithm).on(Tables.content.dynamicAlgorithmId, equalTo(Tables.algorithm.id))
-                        .where(Tables.content.riskLevel, isInWhenPresent(dto.getRiskLevelList()))
-                        //不包括无风险
-                        .and(Tables.content.riskLevel, isNotEqualTo(ContentRiskLevelEnum.NO_RISK.getCode()))
-                        .and(Tables.content.dynamicAlgorithmId, isInWhenPresent(dto.getDynamicAlgorithmIdList()))
-                        //必须是动态识别算法
-                        .and(Tables.content.riskLevel, isNotEqualTo(AlgorithmTypeEnum.DYNAMIC_ALGORITHM.getCode()))
-                        .and(Tables.content.platformId, isInWhenPresent(dto.getPlatformIdList()))
-                        //必须是动态数字内容
-                        .and(Tables.content.dynamicType, isEqualTo(DynamicTypeEnum.DYNAMIC.getCode()))
-                        .and(Tables.content.createTime, isGreaterThanOrEqualToWhenPresent(dto.getStartTime()))
-                        .and(Tables.content.createTime, isLessThanOrEqualToWhenPresent(dto.getEndTime()))
-                        .applyWhere(contentTagWhereApplier)
+                builder
                         .orderBy(Tables.content.updateTime)
                         .build()
                         .render(RenderingStrategies.MYBATIS3)), DynamicContentVO::transform);
