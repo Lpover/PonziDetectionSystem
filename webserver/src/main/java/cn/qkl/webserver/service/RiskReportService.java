@@ -23,7 +23,30 @@ import java.util.Date;
 import java.util.List;
 
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
+import cn.qkl.common.repository.model.RiskReport;
+import cn.qkl.common.repository.Tables;
+import cn.qkl.common.repository.model.Algorithm;
+import cn.qkl.webserver.common.ServerConfig;
+import cn.qkl.webserver.dao.UserDao;
+import cn.qkl.webserver.dao.RiskReportDao;
+import cn.qkl.webserver.dto.algorithm.AlgorithmListQueryDTO;
+import cn.qkl.webserver.dto.riskreport.RiskReportListQueryDTO;
+import cn.qkl.webserver.vo.algorithm.AlgorithmVO;
+import cn.qkl.webserver.vo.riskReport.RiskReportInfoVO;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Service;
+import static org.mybatis.dynamic.sql.SqlBuilder.*;
+import javax.annotation.Resource;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
+import static org.mybatis.dynamic.sql.SqlBuilder.isInWhenPresent;
 
 /**
  * @title:
@@ -35,6 +58,7 @@ import static org.mybatis.dynamic.sql.SqlBuilder.*;
 @Slf4j
 @RefreshScope
 public class RiskReportService {
+
     @Autowired
     private RiskReportDao reportDao;
 
@@ -73,11 +97,12 @@ public class RiskReportService {
                 select(Tables.riskContentStatistics.contentSum,Tables.platform.name.as("platformName"))
                         .from(Tables.riskContentStatistics)
                         .leftJoin(Tables.platform).on(Tables.riskContentStatistics.platformId,equalTo(Tables.platform.id))
-                        .orderBy(Tables.riskContentStatistics.contentSum)
+                        .orderBy(Tables.riskContentStatistics.contentSum.descending())
                         .build()
                         .render(RenderingStrategies.MYBATIS3)
         );
         return RiskReportInfoVO.transform(riskReport,riskContentStatistics,contentRiskStatistics);
+
 
     }
 

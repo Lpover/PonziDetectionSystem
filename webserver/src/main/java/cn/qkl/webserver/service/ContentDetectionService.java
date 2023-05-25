@@ -62,7 +62,7 @@ public class ContentDetectionService {
     //数字内容平台分布视图
     public List<PlatformDistributionVO> getPlatformDistribution(PlatformDistributionDTO dto) {
         List<Platform> platformDistributionList = platformDao.select(c -> c
-                .orderBy(Tables.platform.riskContentNum
+                .orderBy(Tables.platform.riskContentNum.descending()
                 ));
         return platformDistributionList.stream().map(PlatformDistributionVO::transform).collect(Collectors.toList());
     }
@@ -70,7 +70,7 @@ public class ContentDetectionService {
     //数字内容标签分布视图
     public List<ContentTagsVO> getContentTags(ContentTagsDTO dto) {
         List<ContentRisk> contentTagsList = contentRiskDao.select(c -> c
-                .orderBy(Tables.contentRisk.num
+                .orderBy(Tables.contentRisk.num.descending()
                 ));
         return contentTagsList.stream().map(ContentTagsVO::transform).collect(Collectors.toList());
     }

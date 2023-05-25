@@ -4,11 +4,13 @@ import java.util.Arrays;
 
 public enum ContentRiskCategoryEnum {
     NO_RISK(0, "无风险"),
-    POLITICS(1, "政治"),
-    VIOLENCE(2, "暴力"),
-    EROTICISM(3, "低俗"),
-    CRIME(4, "犯罪"),
-
+    POLITICS(1, "政治风险"),
+    TERROR(2, "恐怖风险"),
+    VIOLENCE(3, "暴力风险"),
+    CRIME(4, "犯罪风险"),
+    VULGAR(5, "低俗风险"),
+    GAMBLING(6, "赌博风险"),
+    DRUGS(7, "毒品风险"),
     ;
 
 

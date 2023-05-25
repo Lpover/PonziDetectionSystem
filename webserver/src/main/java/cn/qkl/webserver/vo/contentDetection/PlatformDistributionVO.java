@@ -17,7 +17,7 @@ public class PlatformDistributionVO {
     private Long id;
 
     @ApiModelProperty("平台名字")
-    private String named;
+    private String name;
 
     @ApiModelProperty("平台内容数量")
     private Long riskContentNum;
