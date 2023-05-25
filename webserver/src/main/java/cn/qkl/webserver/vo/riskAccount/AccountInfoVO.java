@@ -19,9 +19,6 @@ public class AccountInfoVO {
     @ApiModelProperty("外键，账户主键Id")
     private Long accountId;
 
-    @ApiModelProperty("快照时间")
-    private Date accountCheckTime;
-
     @ApiModelProperty("快照 账户风险等级 0-低风险 1-中风险 2-高风险")
     private Integer riskLevel;
 
@@ -30,9 +27,6 @@ public class AccountInfoVO {
 
     @ApiModelProperty("快照 账户发布数字内容数量")
     private Integer releaseNum;
-
-    @ApiModelProperty("数据库表创建时间")
-    private Date createTime;
 
     @ApiModelProperty("数据库表更新时间")
     private Date updateTime;
