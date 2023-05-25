@@ -6,7 +6,6 @@ import cn.qkl.webserver.common.enums.AccountContentTypeEnum;
 import cn.qkl.webserver.dao.AccountDao;
 import cn.qkl.webserver.dto.account.AccountContentQueryDTO;
 import cn.qkl.webserver.dto.account.AccountTxHistoryQueryDTO;
-import cn.qkl.webserver.schedul.Scheduler;
 import cn.qkl.webserver.vo.account.AccountBasicVO;
 import cn.qkl.webserver.vo.account.AccountCheckHistoryVO;
 import cn.qkl.webserver.vo.account.AccountContentVO;
