@@ -2,8 +2,8 @@ package cn.qkl.webserver.service;
 
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.repository.Tables;
-import cn.qkl.webserver.common.enums.ContentRiskLevelEnum;
-import cn.qkl.webserver.dao.*;
+import cn.qkl.webserver.dao.AccountCheckHistoryDao;
+import cn.qkl.webserver.dao.PlatformDao;
 import cn.qkl.webserver.dto.riskaccount.AccountInfoListQueryDTO;
 import cn.qkl.webserver.dto.riskaccount.AccountNumDTO;
 import cn.qkl.webserver.vo.riskAccount.AccountInfoVO;
@@ -13,8 +13,6 @@ import org.mybatis.dynamic.sql.render.RenderingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
@@ -58,9 +56,9 @@ public class RiskAccountService {
 
     //    高中低风险账户信息
     // 定义一个 AccountNumVO 类用于存储总的风险账号数量
-    public List<AccountNumVO> getAccountNum(AccountNumDTO dto) {
+    public AccountNumVO getAccountNum(AccountNumDTO dto) {
 
-        List<AccountNumVO> accountNumList = platformDao.getAccountNum(
+        AccountNumVO accountNumList = platformDao.getAccountNum(
                 select(
                         sum(Tables.platform.highAccountNum).as("totalHighAccount"),
                         sum(Tables.platform.midAccountNum).as("totalMiddleAccount"),
