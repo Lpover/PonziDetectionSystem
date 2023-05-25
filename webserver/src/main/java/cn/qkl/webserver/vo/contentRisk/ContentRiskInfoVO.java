@@ -33,7 +33,6 @@ public class ContentRiskInfoVO {
     @ApiModelProperty("铸造时间")
     private Date mintTime;
 
-
     @ApiModelProperty("平台类别： 0 nft  1 web ")
     private Integer platformType;
 
@@ -48,6 +47,9 @@ public class ContentRiskInfoVO {
 
     @ApiModelProperty("链的名字")
     private String chainName;
+
+    @ApiModelProperty("风险评级：0无风险 1低风险 2中风险 3高风险")
+    private Integer riskLevel;
 
     public static ContentRiskInfoVO transform(ContentRisk contentRisk) {
         ContentRiskInfoVO vo = new ContentRiskInfoVO();

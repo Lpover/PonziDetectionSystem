@@ -28,7 +28,7 @@ public class ContentRiskInfoDTO extends PageDTO {
     private List<Integer> thingType;
 
     @ApiModelProperty("风险标签: 0 无风险 1 政治风险,2, '恐怖风险',3, '暴力风险 ,4, '低俗风险,5, '犯罪风险,6, '赌博风险',7, '毒品风险',不传表示都选")
-    private List<Integer> contentRisk;
+    private Long contentRisk;
 
     @ApiModelProperty("风险属性:1 可嵌套，2可编程，不传表示都选")
     private List<Integer> riskType;

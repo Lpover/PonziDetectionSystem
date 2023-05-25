@@ -48,8 +48,8 @@ public class ContentDetectionService {
         return PageVO.getPageData(dto.getPageId(),dto.getPageSize(),
                 ()->contentDetectionDao.getContentDetectionList(
                         select(Tables.content.name,Tables.platform.logo,Tables.platform.name.as("platformName"),Tables.platform.url,
-                                Tables.content.owner,Tables.platform.platformType,Tables.content.contentTag,
-                                Tables.content.riskLevel,Tables.content.updateTime)
+                                Tables.content.owner,Tables.platform.platformType,Tables.content.contentTag,Tables.content.dynamicType,
+                                Tables.content.riskLevel,Tables.content.updateTime,Tables.content.address)
                                 .from(Tables.content)
                                 .leftJoin(Tables.platform).on(Tables.content.platformId,equalTo(Tables.platform.id))
                                 .orderBy(Tables.content.updateTime)

@@ -87,7 +87,6 @@ public class RiskReportService {
                         .leftJoin(Tables.contentRisk).on(Tables.contentRiskStatistics.categoryId, equalTo(Tables.contentRisk.id))
                         .where(Tables.contentRiskStatistics.createTime, isGreaterThanOrEqualToWhenPresent(start))
                         .and(Tables.contentRiskStatistics.createTime, isLessThanOrEqualToWhenPresent(end))
-//                        .orderBy(Tables.contentRiskStatistics.num.descending())
                         .orderBy(SimpleSortSpecification.of("riskNum").descending())
                         .build()
                         .render(RenderingStrategies.MYBATIS3)

@@ -24,13 +24,13 @@ public class RiskReport {
     private Integer lowAccountNum;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long nftId;
+    private String nftName;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer nftNum;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long web3Id;
+    private String web3Name;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer web3Num;
@@ -177,19 +177,19 @@ public class RiskReport {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getNftId() {
-        return nftId;
+    public String getNftName() {
+        return nftName;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public RiskReport withNftId(Long nftId) {
-        this.setNftId(nftId);
+    public RiskReport withNftName(String nftName) {
+        this.setNftName(nftName);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setNftId(Long nftId) {
-        this.nftId = nftId;
+    public void setNftName(String nftName) {
+        this.nftName = nftName;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -209,19 +209,19 @@ public class RiskReport {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getWeb3Id() {
-        return web3Id;
+    public String getWeb3Name() {
+        return web3Name;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public RiskReport withWeb3Id(Long web3Id) {
-        this.setWeb3Id(web3Id);
+    public RiskReport withWeb3Name(String web3Name) {
+        this.setWeb3Name(web3Name);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setWeb3Id(Long web3Id) {
-        this.web3Id = web3Id;
+    public void setWeb3Name(String web3Name) {
+        this.web3Name = web3Name;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -493,9 +493,9 @@ public class RiskReport {
         sb.append(", highAccountNum=").append(highAccountNum);
         sb.append(", midAccountNum=").append(midAccountNum);
         sb.append(", lowAccountNum=").append(lowAccountNum);
-        sb.append(", nftId=").append(nftId);
+        sb.append(", nftName=").append(nftName);
         sb.append(", nftNum=").append(nftNum);
-        sb.append(", web3Id=").append(web3Id);
+        sb.append(", web3Name=").append(web3Name);
         sb.append(", web3Num=").append(web3Num);
         sb.append(", highContentNum=").append(highContentNum);
         sb.append(", midContentNum=").append(midContentNum);

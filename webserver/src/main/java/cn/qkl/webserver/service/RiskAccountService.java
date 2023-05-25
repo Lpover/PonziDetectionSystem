@@ -44,8 +44,7 @@ public class RiskAccountService {
                                 .from(Tables.accountCheckHistory)
                                 .leftJoin(Tables.account).on(Tables.accountCheckHistory.accountId,equalTo(Tables.account.id))
                                 .where(Tables.accountCheckHistory.riskLevel, isInWhenPresent(dto.getRiskLevelList()))
-                                //不包括无风险
-                                .and(Tables.accountCheckHistory.riskLevel, isNotEqualTo(ContentRiskLevelEnum.NO_RISK.getCode()))
+                                //数字筛选
                                 .and(Tables.accountCheckHistory.relatedNum, isGreaterThanOrEqualToWhenPresent(dto.getRelatedNumMin()))
                                 .and(Tables.accountCheckHistory.relatedNum, isLessThanOrEqualToWhenPresent(dto.getRelatedNumMax()))
                                 .and(Tables.accountCheckHistory.releaseNum, isGreaterThanOrEqualToWhenPresent(dto.getReleaseNumMin()))
@@ -56,15 +55,17 @@ public class RiskAccountService {
                 ));
     }
 
+
     //    高中低风险账户信息
+    // 定义一个 AccountNumVO 类用于存储总的风险账号数量
     public List<AccountNumVO> getAccountNum(AccountNumDTO dto) {
+
         List<AccountNumVO> accountNumList = platformDao.getAccountNum(
-                select(Tables.platform.id,
+                select(
                         sum(Tables.platform.highAccountNum).as("totalHighAccount"),
                         sum(Tables.platform.midAccountNum).as("totalMiddleAccount"),
                         sum(Tables.platform.lowAccountNum).as("totalLowAccount"))
                         .from(Tables.platform)
-                        .groupBy(Tables.platform.id)
                         .build()
                         .render(RenderingStrategies.MYBATIS3)
         );

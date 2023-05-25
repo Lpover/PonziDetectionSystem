@@ -21,7 +21,7 @@ public class ContentDetectionInfoVO {
     private Long id;
 
     @ApiModelProperty("数字内容项目名称")
-    private String contentName;
+    private String name;
 
     @ApiModelProperty("平台URL")
     private String url;
@@ -39,16 +39,16 @@ public class ContentDetectionInfoVO {
     private String owner;
 
     @ApiModelProperty("合约地址")
-    private String contractAddress;
+    private String address;
 
     @ApiModelProperty("风险标签: 0 无风险 1 政治风险,2, '恐怖风险',3, '暴力风险 ,4, '低俗风险,5, '犯罪风险,6, '赌博风险',7, '毒品风险',不传表示都选")
-    private List<Integer> contentRisk;
+    private String contentTag;
 
     @ApiModelProperty("动态风险属性：0静态 5读动态 10写动态")
     private Integer dynamicType;
 
     @ApiModelProperty("风险评级：1低风险 2中风险 3高风险")
-    private Integer riskLevelList;
+    private Integer riskLevel;
 
     @ApiModelProperty("更新时间")
     private Date updateTime;

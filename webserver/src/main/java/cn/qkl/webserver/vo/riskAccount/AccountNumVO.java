@@ -16,14 +16,14 @@ public class AccountNumVO {
     @ApiModelProperty("主键uuid，不要手动设置")
     private Long id;
 
-    @ApiModelProperty("低风险账号数量")
-    private Integer lowRiskNum;
+    @ApiModelProperty("总高风险账号数量")
+    private Integer totalHighAccount;
 
-    @ApiModelProperty("中风险账号数量")
-    private Integer middleRiskNum;
+    @ApiModelProperty("总中风险账号数量")
+    private Integer totalMiddleAccount;
 
-    @ApiModelProperty("高风险账号数量")
-    private Integer highRiskNum;
+    @ApiModelProperty("总低风险账号数量")
+    private Integer totalLowAccount;
 
     public static AccountNumVO transform(RiskContentStatistics numStatistics) {
         AccountNumVO vo = new AccountNumVO();

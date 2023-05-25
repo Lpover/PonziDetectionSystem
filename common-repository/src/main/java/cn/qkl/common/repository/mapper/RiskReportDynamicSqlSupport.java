@@ -30,13 +30,13 @@ public final class RiskReportDynamicSqlSupport {
     public static final SqlColumn<Integer> lowAccountNum = riskReport.lowAccountNum;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Long> nftId = riskReport.nftId;
+    public static final SqlColumn<String> nftName = riskReport.nftName;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Integer> nftNum = riskReport.nftNum;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Long> web3Id = riskReport.web3Id;
+    public static final SqlColumn<String> web3Name = riskReport.web3Name;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Integer> web3Num = riskReport.web3Num;
@@ -100,11 +100,11 @@ public final class RiskReportDynamicSqlSupport {
 
         public final SqlColumn<Integer> lowAccountNum = column("low_account_num", JDBCType.INTEGER);
 
-        public final SqlColumn<Long> nftId = column("nft_id", JDBCType.BIGINT);
+        public final SqlColumn<String> nftName = column("nft_name", JDBCType.VARCHAR);
 
         public final SqlColumn<Integer> nftNum = column("nft_num", JDBCType.INTEGER);
 
-        public final SqlColumn<Long> web3Id = column("web3_id", JDBCType.BIGINT);
+        public final SqlColumn<String> web3Name = column("web3_name", JDBCType.VARCHAR);
 
         public final SqlColumn<Integer> web3Num = column("web3_num", JDBCType.INTEGER);
 

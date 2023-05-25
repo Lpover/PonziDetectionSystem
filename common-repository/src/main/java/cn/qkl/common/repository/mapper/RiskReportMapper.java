@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface RiskReportMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, riskContentNum, evolutionNum, highAccountNum, midAccountNum, lowAccountNum, nftId, nftNum, web3Id, web3Num, highContentNum, midContentNum, lowContentNum, dynNum, monitorNum, highRiskPlat, midRiskPlat, lowRiskPlat, highRiskPlatPer, midRiskPlatPer, lowRiskPlatPer, highNamePlat, highNumPlat, createTime, updateTime);
+    BasicColumn[] selectList = BasicColumn.columnList(id, riskContentNum, evolutionNum, highAccountNum, midAccountNum, lowAccountNum, nftName, nftNum, web3Name, web3Num, highContentNum, midContentNum, lowContentNum, dynNum, monitorNum, highRiskPlat, midRiskPlat, lowRiskPlat, highRiskPlatPer, midRiskPlatPer, lowRiskPlatPer, highNamePlat, highNumPlat, createTime, updateTime);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -67,9 +67,9 @@ public interface RiskReportMapper {
         @Result(column="high_account_num", property="highAccountNum", jdbcType=JdbcType.INTEGER),
         @Result(column="mid_account_num", property="midAccountNum", jdbcType=JdbcType.INTEGER),
         @Result(column="low_account_num", property="lowAccountNum", jdbcType=JdbcType.INTEGER),
-        @Result(column="nft_id", property="nftId", jdbcType=JdbcType.BIGINT),
+        @Result(column="nft_name", property="nftName", jdbcType=JdbcType.VARCHAR),
         @Result(column="nft_num", property="nftNum", jdbcType=JdbcType.INTEGER),
-        @Result(column="web3_id", property="web3Id", jdbcType=JdbcType.BIGINT),
+        @Result(column="web3_name", property="web3Name", jdbcType=JdbcType.VARCHAR),
         @Result(column="web3_num", property="web3Num", jdbcType=JdbcType.INTEGER),
         @Result(column="high_content_num", property="highContentNum", jdbcType=JdbcType.INTEGER),
         @Result(column="mid_content_num", property="midContentNum", jdbcType=JdbcType.INTEGER),
@@ -119,9 +119,9 @@ public interface RiskReportMapper {
             .map(highAccountNum).toProperty("highAccountNum")
             .map(midAccountNum).toProperty("midAccountNum")
             .map(lowAccountNum).toProperty("lowAccountNum")
-            .map(nftId).toProperty("nftId")
+            .map(nftName).toProperty("nftName")
             .map(nftNum).toProperty("nftNum")
-            .map(web3Id).toProperty("web3Id")
+            .map(web3Name).toProperty("web3Name")
             .map(web3Num).toProperty("web3Num")
             .map(highContentNum).toProperty("highContentNum")
             .map(midContentNum).toProperty("midContentNum")
@@ -150,9 +150,9 @@ public interface RiskReportMapper {
             .map(highAccountNum).toProperty("highAccountNum")
             .map(midAccountNum).toProperty("midAccountNum")
             .map(lowAccountNum).toProperty("lowAccountNum")
-            .map(nftId).toProperty("nftId")
+            .map(nftName).toProperty("nftName")
             .map(nftNum).toProperty("nftNum")
-            .map(web3Id).toProperty("web3Id")
+            .map(web3Name).toProperty("web3Name")
             .map(web3Num).toProperty("web3Num")
             .map(highContentNum).toProperty("highContentNum")
             .map(midContentNum).toProperty("midContentNum")
@@ -181,9 +181,9 @@ public interface RiskReportMapper {
             .map(highAccountNum).toPropertyWhenPresent("highAccountNum", record::getHighAccountNum)
             .map(midAccountNum).toPropertyWhenPresent("midAccountNum", record::getMidAccountNum)
             .map(lowAccountNum).toPropertyWhenPresent("lowAccountNum", record::getLowAccountNum)
-            .map(nftId).toPropertyWhenPresent("nftId", record::getNftId)
+            .map(nftName).toPropertyWhenPresent("nftName", record::getNftName)
             .map(nftNum).toPropertyWhenPresent("nftNum", record::getNftNum)
-            .map(web3Id).toPropertyWhenPresent("web3Id", record::getWeb3Id)
+            .map(web3Name).toPropertyWhenPresent("web3Name", record::getWeb3Name)
             .map(web3Num).toPropertyWhenPresent("web3Num", record::getWeb3Num)
             .map(highContentNum).toPropertyWhenPresent("highContentNum", record::getHighContentNum)
             .map(midContentNum).toPropertyWhenPresent("midContentNum", record::getMidContentNum)
@@ -238,9 +238,9 @@ public interface RiskReportMapper {
                 .set(highAccountNum).equalTo(record::getHighAccountNum)
                 .set(midAccountNum).equalTo(record::getMidAccountNum)
                 .set(lowAccountNum).equalTo(record::getLowAccountNum)
-                .set(nftId).equalTo(record::getNftId)
+                .set(nftName).equalTo(record::getNftName)
                 .set(nftNum).equalTo(record::getNftNum)
-                .set(web3Id).equalTo(record::getWeb3Id)
+                .set(web3Name).equalTo(record::getWeb3Name)
                 .set(web3Num).equalTo(record::getWeb3Num)
                 .set(highContentNum).equalTo(record::getHighContentNum)
                 .set(midContentNum).equalTo(record::getMidContentNum)
@@ -267,9 +267,9 @@ public interface RiskReportMapper {
                 .set(highAccountNum).equalToWhenPresent(record::getHighAccountNum)
                 .set(midAccountNum).equalToWhenPresent(record::getMidAccountNum)
                 .set(lowAccountNum).equalToWhenPresent(record::getLowAccountNum)
-                .set(nftId).equalToWhenPresent(record::getNftId)
+                .set(nftName).equalToWhenPresent(record::getNftName)
                 .set(nftNum).equalToWhenPresent(record::getNftNum)
-                .set(web3Id).equalToWhenPresent(record::getWeb3Id)
+                .set(web3Name).equalToWhenPresent(record::getWeb3Name)
                 .set(web3Num).equalToWhenPresent(record::getWeb3Num)
                 .set(highContentNum).equalToWhenPresent(record::getHighContentNum)
                 .set(midContentNum).equalToWhenPresent(record::getMidContentNum)
@@ -296,9 +296,9 @@ public interface RiskReportMapper {
             .set(highAccountNum).equalTo(record::getHighAccountNum)
             .set(midAccountNum).equalTo(record::getMidAccountNum)
             .set(lowAccountNum).equalTo(record::getLowAccountNum)
-            .set(nftId).equalTo(record::getNftId)
+            .set(nftName).equalTo(record::getNftName)
             .set(nftNum).equalTo(record::getNftNum)
-            .set(web3Id).equalTo(record::getWeb3Id)
+            .set(web3Name).equalTo(record::getWeb3Name)
             .set(web3Num).equalTo(record::getWeb3Num)
             .set(highContentNum).equalTo(record::getHighContentNum)
             .set(midContentNum).equalTo(record::getMidContentNum)
@@ -327,9 +327,9 @@ public interface RiskReportMapper {
             .set(highAccountNum).equalToWhenPresent(record::getHighAccountNum)
             .set(midAccountNum).equalToWhenPresent(record::getMidAccountNum)
             .set(lowAccountNum).equalToWhenPresent(record::getLowAccountNum)
-            .set(nftId).equalToWhenPresent(record::getNftId)
+            .set(nftName).equalToWhenPresent(record::getNftName)
             .set(nftNum).equalToWhenPresent(record::getNftNum)
-            .set(web3Id).equalToWhenPresent(record::getWeb3Id)
+            .set(web3Name).equalToWhenPresent(record::getWeb3Name)
             .set(web3Num).equalToWhenPresent(record::getWeb3Num)
             .set(highContentNum).equalToWhenPresent(record::getHighContentNum)
             .set(midContentNum).equalToWhenPresent(record::getMidContentNum)

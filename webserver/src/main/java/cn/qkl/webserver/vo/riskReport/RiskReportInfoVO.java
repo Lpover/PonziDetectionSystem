@@ -37,14 +37,14 @@ public class RiskReportInfoVO {
     @ApiModelProperty("新增低风险账户数量")
     private Integer lowAccountNum;
 
-    @ApiModelProperty("热度第一的NFT平台")
-    private Long nftId;
+    @ApiModelProperty("热度第一的NFT名字")
+    private String nftName;
 
     @ApiModelProperty("热度第一的NFT平台，感知到风险数字内容的数量")
     private Integer nftNum;
 
-    @ApiModelProperty("热度第一的WEB3平台id")
-    private Long web3Id;
+    @ApiModelProperty("热度第一的WEB3平台名字")
+    private String web3Name;
 
     @ApiModelProperty("热度第一的WEB3平台，感知到风险数字内容的数量")
     private Integer web3Num;
@@ -88,11 +88,8 @@ public class RiskReportInfoVO {
     @ApiModelProperty("感知到最多风险的平台的数量")
     private Integer highNumPlat;
 
-    @ApiModelProperty("创建时间")
+    @ApiModelProperty("报表创建时间")
     private Date createTime;
-
-    @ApiModelProperty("数据库表更新时间")
-    private Date updateTime;
 
     @ApiModelProperty("每日风险类别数据")
     private List<RiskCategoryVO> riskCategoryVOList;

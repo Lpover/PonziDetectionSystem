@@ -3,6 +3,7 @@ package cn.qkl.webserver.service;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.qkl.common.framework.response.PageVO;
+import cn.qkl.common.framework.util.SqlUtil;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.webserver.common.enums.ContentRiskLevelEnum;
 import cn.qkl.webserver.dao.ContentRiskDao;
@@ -58,13 +59,14 @@ public class ContentRiskService {
         return PageVO.getPageData(dto.getPageId(),dto.getPageSize(),
                 () -> contentRiskDao.getContentRiskInfo(
                         select(Tables.content.id,Tables.content.name,Tables.content.metaUrl,Tables.content.address,Tables.content.dynamicType,
-                                Tables.content.owner,Tables.content.mintTime, Tables.content.description,Tables.chain.chainName,
+                                Tables.content.owner,Tables.content.mintTime, Tables.content.description,Tables.chain.chainName,Tables.content.riskLevel,
                                 Tables.platform.name.as("platformname"),Tables.platform.platformType)
                                 .from(Tables.content)
                                 .leftJoin(Tables.platform).on(Tables.content.platformId,equalTo(Tables.platform.id))
                                 .leftJoin(Tables.chain).on(Tables.content.chainId,equalTo(Tables.chain.id))
                                 .where(Tables.platform.platformType, isEqualToWhenPresent((dto.getPlatformType())))
                                 .and(Tables.content.riskLevel, isEqualToWhenPresent(dto.getRiskLevelList()))
+                                .and(Tables.content.contentTag,isLikeWhenPresent(SqlUtil.allLike(dto.getContentRisk().toString())))
                                 .and(Tables.content.mintTime,isGreaterThanOrEqualToWhenPresent(finalstart))
                                 .and(Tables.content.mintTime,isLessThanOrEqualToWhenPresent(finalEnd))
                                 .and(Tables.content.thingType, isInWhenPresent(dto.getThingType()))
