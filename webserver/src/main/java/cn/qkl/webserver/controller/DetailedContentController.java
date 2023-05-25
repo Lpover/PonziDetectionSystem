@@ -3,6 +3,7 @@ package cn.qkl.webserver.controller;
 import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.common.framework.response.PageVO;
+import cn.qkl.common.framework.util.OssUtil;
 import cn.qkl.webserver.dto.detail.*;
 import cn.qkl.webserver.service.DetailService;
 import cn.qkl.webserver.vo.detail.ContentDynamicMonitorVO;
@@ -17,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 
 /**
  * @title:
@@ -51,7 +51,7 @@ public class DetailedContentController {
 
     @ApiOperation("数字内容风险人工修订信息展示")
     @GetMapping("content/revise/info")
-    public  BaseResult<ContentRiskReviseVO> getRiskReviseInfo(@Validated ContentRiskReviseInfoDTO dto) {
+    public BaseResult<ContentRiskReviseVO> getRiskReviseInfo(@Validated ContentRiskReviseInfoDTO dto) {
         return BaseResult.ok(detailService.getReviseRiskInfo(dto));
     }
 
