@@ -19,4 +19,11 @@ import java.util.List;
 public interface AccountCheckHistoryDao extends AccountCheckHistoryMapper {
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     List<AccountInfoVO> getAccountInfo(SelectStatementProvider selectStatementProvider);
+
+    //select获取统计数据 relatedNum releaseNum  然后insert存下来
+    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
+    Long getAccountCheckOnceRelease(SelectStatementProvider selectStatementProvider);
+
+    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
+    Long getAccountCheckOnceRelated(SelectStatementProvider selectStatementProvider);
 }

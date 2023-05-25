@@ -2,6 +2,7 @@ package cn.qkl.webserver.service;
 
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.repository.Tables;
+import cn.qkl.common.repository.model.Account;
 import cn.qkl.webserver.common.enums.AccountContentTypeEnum;
 import cn.qkl.webserver.dao.AccountDao;
 import cn.qkl.webserver.dto.account.AccountContentQueryDTO;
@@ -57,7 +58,7 @@ public class AccountService {
                         Tables.accountCheckHistory.relatedNum,
                         Tables.accountCheckHistory.releaseNum
                 ).from(Tables.accountCheckHistory)
-                        .where(Tables.accountCheckHistory.id,isEqualTo(accountId))
+                        .where(Tables.accountCheckHistory.accountId,isEqualTo(accountId))
                         .orderBy(Tables.accountCheckHistory.accountCheckTime.descending())
                         .limit(num)
                         .build()
@@ -85,6 +86,7 @@ public class AccountService {
     }
 
     public PageVO<AccountContentVO> getAccountContent(AccountContentQueryDTO dto) throws SQLException {
+        Account account = accountDao.selectOne(c -> c.where(Tables.account.id,isEqualTo(dto.getAccountId()))).orElseThrow(() -> new SQLException("没有这个Account"));
         QueryExpressionDSL<SelectModel>.QueryExpressionWhereBuilder builder = null;
 
         if (dto.getType() == AccountContentTypeEnum.INTERACT.getCode()) {
@@ -126,9 +128,8 @@ public class AccountService {
                     .on(Tables.content.chainId,equalTo(Tables.chain.id))
                     .join(Tables.platform)
                     .on(Tables.content.platformId,equalTo(Tables.platform.id))
-                    .where(Tables.content.creator,isEqualTo(
-                            select(Tables.account.accountAddress).from(Tables.account).where(Tables.account.id,isEqualTo(dto.getAccountId()))
-                    ));
+                    .where(Tables.content.creator,isEqualTo(account.getAccountAddress()))
+                    .and(Tables.content.chainId,isEqualTo(account.getChainId()));
         }
 
         if (builder == null) throw new SQLException();
