@@ -1,9 +1,10 @@
 package cn.qkl.webserver.controller;
+
+import cn.qkl.common.framework.auth.Role;
+import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.dto.riskaccount.AccountInfoListQueryDTO;
 import cn.qkl.webserver.dto.riskaccount.AccountNumDTO;
-import cn.qkl.common.framework.auth.Role;
-import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.webserver.service.RiskAccountService;
 import cn.qkl.webserver.vo.riskAccount.AccountInfoVO;
 import cn.qkl.webserver.vo.riskAccount.AccountNumVO;
@@ -14,9 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @title:
@@ -45,7 +46,7 @@ public class RiskAccountController {
     }//获得报表信息
     @ApiOperation("高中低风险账户信息")
     @GetMapping("riskaccount/accountnum")
-    public BaseResult<List<AccountNumVO>> accountNum(@Validated AccountNumDTO dto) {
+    public BaseResult<AccountNumVO> accountNum(@Validated AccountNumDTO dto) {
         return BaseResult.ok(riskAccountService.getAccountNum(dto));
     }
 
