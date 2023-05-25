@@ -20,7 +20,7 @@ public class ContentInfoVO {
     @ApiModelProperty("创作者")
     private String creator;
     @ApiModelProperty("平台名称")
-    private String named;
+    private String platformName;
     @ApiModelProperty("认证标准")
     private String standard;
     @ApiModelProperty("所在链名称")

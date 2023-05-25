@@ -7,6 +7,12 @@ qkl:
       secret: secret
       # 90天
       expiration: 90
+    ossutil:
+      endpoint: https://obs.cn-east-3.myhuaweicloud.com
+      ak: MUIBG1CQ5TLHIF5NHER2
+      sk: BMNCoYbF4vd9Pv5LCHFCgz0xnFHLp8oUu8mmJXXV
+
+
 
 spring:
   application:

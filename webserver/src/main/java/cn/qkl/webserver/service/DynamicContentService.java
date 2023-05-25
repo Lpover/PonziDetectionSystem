@@ -95,10 +95,10 @@ public class DynamicContentService {
             //近七天
             start = DateUtil.offsetDay(end, -7);
         } else if (dto.getTime() == 2) {
-            //近七天
+            //近一个月
             start = DateUtil.offsetMonth(end, -1);
         } else if (dto.getTime() == 3) {
-            //近七天
+            //近半年
             start = DateUtil.offsetMonth(end, -6);
         }
 

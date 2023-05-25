@@ -33,7 +33,7 @@ public class DetailService {
     public ContentInfoVO getContentInfo(ContentInfoDTO dto) {
         return contentDao.getContentDetail(
                 select(Tables.content.name, Tables.content.address, Tables.content.tokenid,
-                        Tables.content.cryptoPrice, Tables.content.currencyPrice, Tables.content.creator, Tables.platform.name,
+                        Tables.content.cryptoPrice, Tables.content.currencyPrice, Tables.content.creator, Tables.platform.name.as("platformName"),
                         Tables.content.standard, Tables.chain.chainName, Tables.content.listingTime, Tables.content.description,Tables.content.metaUrl)
                 .from(Tables.content)
                 .leftJoin(Tables.platform).on(Tables.content.platformId, equalTo(Tables.platform.id))
@@ -57,20 +57,21 @@ public class DetailService {
     }
 
     public ContentRiskReviseVO getReviseRiskInfo(ContentRiskReviseInfoDTO dto) {
-        return contentDao.getCotentRiskRevise(
+//        ContentRiskReviseVO contentRiskReviseVO;
+        return ContentRiskReviseVO.transform(contentDao.getCotentRiskRevise(
                 select(Tables.content.riskLevel, Tables.content.contentType, Tables.content.contentTag,
-                        Tables.algorithm.version, Tables.algorithm.recognitionRate, Tables.content.dynamicType)
+                        Tables.algorithm.name.as("algorithmName"), Tables.algorithm.recognitionRate, Tables.content.dynamicType)
                         .from(Tables.content)
                         .leftJoin(Tables.algorithm).on(Tables.content.dynamicAlgorithmId, equalTo(Tables.algorithm.id))
                         .where(Tables.content.id, isEqualTo(dto.getContentID()))
                         .build()
-                        .render(RenderingStrategies.MYBATIS3)
-        );
+                        .render(RenderingStrategies.MYBATIS3)));
+
     }
 
     public void manualReviseRisk(ContentRiskReviseDTO dto) {
         contentDao.update(c -> c
-                .set(Tables.content.dynamicType).equalTo(dto.getResultRevise())
+                .set(Tables.content.dynamicType).equalTo(0)
                 .where(Tables.content.id, isEqualTo(dto.getContentID()))
         );
     }
@@ -81,7 +82,6 @@ public class DetailService {
                         .from(Tables.dynamicMonitor)
                         .where(Tables.dynamicMonitor.contentId, isEqualTo(dto.getContentID()))
                         .build()
-                        .render(RenderingStrategies.MYBATIS3)
-        ));
+                        .render(RenderingStrategies.MYBATIS3)), ContentDynamicMonitorVO::transform);
     }
 }

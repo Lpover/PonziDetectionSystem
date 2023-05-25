@@ -1,9 +1,12 @@
 package cn.qkl.webserver.vo.detail;
 
+import cn.qkl.webserver.common.enums.ContentRiskCategoryEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class ContentRiskReviseVO {
@@ -13,10 +16,22 @@ public class ContentRiskReviseVO {
     private Integer contentType;
     @ApiModelProperty("内容标签，用逗号隔开每个标签")
     private String contentTag;
+    @ApiModelProperty("内容标签列表")
+    private List<String> contentTagList;
     @ApiModelProperty("自动识别模型算法")
-    private String dynamicAlgorithm;
+    private String algorithmName;
     @ApiModelProperty("算法准确率")
     private BigDecimal recognitionRate;
     @ApiModelProperty("识别结果：0静态 1动态")
     private String dynamicType;
+
+    public static ContentRiskReviseVO transform(ContentRiskReviseVO vo) {
+        String[] split = vo.getContentTag().split(",");
+        ArrayList<String> list = new ArrayList<>();
+        for (String s : split) {
+            list.add(ContentRiskCategoryEnum.valueOf(Integer.parseInt(s)).getDescription());
+        }
+        vo.setContentTagList(list);
+        return vo;
+    }
 }
