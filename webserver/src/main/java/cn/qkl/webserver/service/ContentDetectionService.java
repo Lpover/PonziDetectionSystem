@@ -56,7 +56,8 @@ public class ContentDetectionService {
                                 .build()
                                 .render(RenderingStrategies.MYBATIS3)
 
-                ));
+                ),ContentDetectionInfoVO::transform
+        );
     }
 
     //数字内容平台分布视图

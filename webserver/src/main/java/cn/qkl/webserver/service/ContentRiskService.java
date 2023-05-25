@@ -66,7 +66,7 @@ public class ContentRiskService {
                                 .leftJoin(Tables.chain).on(Tables.content.chainId,equalTo(Tables.chain.id))
                                 .where(Tables.platform.platformType, isEqualToWhenPresent((dto.getPlatformType())))
                                 .and(Tables.content.riskLevel, isEqualToWhenPresent(dto.getRiskLevelList()))
-                                .and(Tables.content.contentTag,isLikeWhenPresent(SqlUtil.allLike(dto.getContentRisk().toString())))
+                                .and(Tables.content.contentTag,isLikeWhenPresent(SqlUtil.allLike(dto.getContentRisk())))
                                 .and(Tables.content.mintTime,isGreaterThanOrEqualToWhenPresent(finalstart))
                                 .and(Tables.content.mintTime,isLessThanOrEqualToWhenPresent(finalEnd))
                                 .and(Tables.content.thingType, isInWhenPresent(dto.getThingType()))
