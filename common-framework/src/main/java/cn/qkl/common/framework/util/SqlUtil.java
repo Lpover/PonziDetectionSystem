@@ -99,6 +99,10 @@ public class SqlUtil {
         return columnValue == null || columnValue.equals("") ? null : "%" + likeValueFilter(columnValue) + "%";
     }
 
+    public static String allLike(Long columnValue) {
+        return columnValue == null ? null : "%" + columnValue + "%";
+    }
+
     /**
      * 根据目标字符串，返回模糊匹配字符串表达式(左模糊)
      * <pre>
