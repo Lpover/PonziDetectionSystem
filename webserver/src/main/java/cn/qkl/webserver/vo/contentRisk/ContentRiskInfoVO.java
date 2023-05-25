@@ -25,16 +25,13 @@ public class ContentRiskInfoVO {
     private String metaUrl;
 
     @ApiModelProperty("合约地址")
-    private String contractAddress;
+    private String address;
 
     @ApiModelProperty("拥有者：数字内容当前的拥有者账户地址")
     private String owner;
 
     @ApiModelProperty("铸造时间")
     private Date mintTime;
-
-    @ApiModelProperty("平台ID-来源")
-    private Long platformId;
 
 
     @ApiModelProperty("平台类别： 0 nft  1 web ")
@@ -45,12 +42,6 @@ public class ContentRiskInfoVO {
 
     @ApiModelProperty("动态风险类别：0静态 5读动态 10写动态")
     private Integer dynamicType;
-
-    @ApiModelProperty("创建时间")
-    private Date create_time;
-
-    @ApiModelProperty("更新时间")
-    private Date update_time;
 
     @ApiModelProperty("简介")
     private String description;

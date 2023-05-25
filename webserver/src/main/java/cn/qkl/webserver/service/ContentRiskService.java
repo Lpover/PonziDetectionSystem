@@ -57,7 +57,7 @@ public class ContentRiskService {
         Date finalstart = start;
         return PageVO.getPageData(dto.getPageId(),dto.getPageSize(),
                 () -> contentRiskDao.getContentRiskInfo(
-                        select(Tables.content.name,Tables.content.metaUrl,Tables.content.address,
+                        select(Tables.content.id,Tables.content.name,Tables.content.metaUrl,Tables.content.address,Tables.content.dynamicType,
                                 Tables.content.owner,Tables.content.mintTime, Tables.content.description,Tables.chain.chainName,
                                 Tables.platform.name.as("platformname"),Tables.platform.platformType)
                                 .from(Tables.content)
