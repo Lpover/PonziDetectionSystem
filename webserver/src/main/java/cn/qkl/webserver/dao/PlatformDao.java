@@ -2,6 +2,9 @@ package cn.qkl.webserver.dao;
 
 import cn.qkl.common.repository.mapper.PlatformMapper;
 import cn.qkl.webserver.vo.platform.PlatformContentVO;
+import cn.qkl.common.repository.mapper.RiskReportMapper;
+import cn.qkl.common.repository.model.Platform;
+import cn.qkl.webserver.vo.riskAccount.AccountNumVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
@@ -11,7 +14,7 @@ import java.util.List;
 
 /**
  * @title:
- * @Author ly yang
+ * @Author Wang Xin
  * @Date: 2022/7/23 17:37
  * @wiki
  */
@@ -20,4 +23,6 @@ public interface PlatformDao extends PlatformMapper {
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     List<PlatformContentVO> getPlatformContent(SelectStatementProvider selectStatementProvider);
 
+    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
+    List<AccountNumVO> getAccountNum(SelectStatementProvider selectStatementProvider);
 }

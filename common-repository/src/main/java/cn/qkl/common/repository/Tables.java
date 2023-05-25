@@ -21,5 +21,6 @@ public class Tables {
     public static final RiskContentStatisticsDynamicSqlSupport.RiskContentStatistics riskContentStatistics = RiskContentStatisticsDynamicSqlSupport.riskContentStatistics;
     public static final RiskReportDynamicSqlSupport.RiskReport riskReport = RiskReportDynamicSqlSupport.riskReport;
     public static final StatisticDynamicSqlSupport.Statistic statistic = StatisticDynamicSqlSupport.statistic;
+    public static final ContentRiskStatisticsDynamicSqlSupport.ContentRiskStatistics contentRiskStatistics = ContentRiskStatisticsDynamicSqlSupport.contentRiskStatistics;
 
 }
