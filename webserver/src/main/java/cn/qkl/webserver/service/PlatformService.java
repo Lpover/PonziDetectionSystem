@@ -80,9 +80,9 @@ public class PlatformService {
         return PageVO.getPageData(dto.getPageId(), dto.getPageSize(),()->platformDao.select(c -> c
         ),PlatformSuperviseListVO::transform);
     }
-    public PageVO<PlatformNameListVO> getNameList(PageDTO dto){
-        return PageVO.getPageData(dto.getPageId(), dto.getPageSize(),()->platformDao.select(c -> c
-        ),PlatformNameListVO::transform);
+    public List<PlatformNameListVO> getNameList(){
+        List<Platform> platforms = platformDao.select(c -> c);
+        return platforms.stream().map(PlatformNameListVO::transform).collect(Collectors.toList());
     }
     public PageVO<PlatformListVO> getPlatformList(PageDTO dto){
         return PageVO.getPageData(dto.getPageId(), dto.getPageSize(),()->platformDao.select(c -> c

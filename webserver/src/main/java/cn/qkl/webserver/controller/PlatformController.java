@@ -56,8 +56,8 @@ public class  PlatformController {
     }
     @ApiOperation("平台名称获取")
     @GetMapping("name/show")
-    public BaseResult<PageVO<PlatformNameListVO>> getNameList(@Validated PageDTO dto) {
-        return BaseResult.ok(platformService.getNameList(dto));
+    public BaseResult<List<PlatformNameListVO>> getNameList() {
+        return BaseResult.ok(platformService.getNameList());
     }
     @ApiOperation("平台监测展示")
     @GetMapping("supervise/show")
