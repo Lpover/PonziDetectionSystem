@@ -3,8 +3,9 @@ package cn.qkl.webserver.vo.platform;
 import cn.hutool.core.bean.BeanUtil;
 import cn.qkl.common.repository.model.Platform;
 import io.swagger.annotations.ApiModelProperty;
-@lombok.Data
+import lombok.Data;
 
+@Data
 public class PlatformNameListVO {
     @ApiModelProperty("平台主键id")
     private Long id;

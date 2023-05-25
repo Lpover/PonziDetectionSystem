@@ -43,13 +43,16 @@ public class RiskCategoryTrendService  {
         //当前服务器时间
         Date end = new Date();
         //全部
-        end=DateUtil.beginOfDay(end);
+        end = DateUtil.beginOfDay(end);
         DateTime start = DateUtil.offsetDay(end, -7);
         List<RiskContentStatisticsVO> risks = riskDao.getRiskContentStatistics(
-                select(Tables.riskContentStatistics.id, sum(Tables.riskContentStatistics.lowRiskNum), sum(Tables.riskContentStatistics.middleRiskNum), sum(Tables.riskContentStatistics.highRiskNum), Tables.riskContentStatistics.updateTime)
+                select(sum(Tables.riskContentStatistics.lowRiskNum).as("lowRiskNumber"),
+                        sum(Tables.riskContentStatistics.middleRiskNum).as("middleRiskNumber"),
+                        sum(Tables.riskContentStatistics.highRiskNum).as("highRiskNumber")
+                        )
                         .from(Tables.riskContentStatistics)
-                        .where(Tables.platform.updataTime, isGreaterThanOrEqualToWhenPresent(start))
-                        .and(Tables.platform.updataTime, isLessThanOrEqualToWhenPresent(end))
+                        .where(Tables.platform.updateTime, isGreaterThanOrEqualToWhenPresent(start))
+                        .and(Tables.platform.updateTime, isLessThanOrEqualToWhenPresent(end))
                         .groupBy(Tables.riskContentStatistics.updateTime)
                         .orderBy(Tables.riskContentStatistics.updateTime)
                         .build()

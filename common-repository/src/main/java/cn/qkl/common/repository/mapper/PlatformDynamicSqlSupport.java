@@ -32,9 +32,6 @@ public final class PlatformDynamicSqlSupport {
     public static final SqlColumn<Integer> riskLevel = platform.riskLevel;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Long> updateTime = platform.updateTime;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Integer> platformType = platform.platformType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -77,7 +74,7 @@ public final class PlatformDynamicSqlSupport {
     public static final SqlColumn<Date> createTime = platform.createTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Date> updataTime = platform.updataTime;
+    public static final SqlColumn<Date> updateTime = platform.updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class Platform extends SqlTable {
@@ -94,8 +91,6 @@ public final class PlatformDynamicSqlSupport {
         public final SqlColumn<Integer> activation = column("activation", JDBCType.INTEGER);
 
         public final SqlColumn<Integer> riskLevel = column("risk_level", JDBCType.INTEGER);
-
-        public final SqlColumn<Long> updateTime = column("update_time", JDBCType.BIGINT);
 
         public final SqlColumn<Integer> platformType = column("platform_type", JDBCType.INTEGER);
 
@@ -125,7 +120,7 @@ public final class PlatformDynamicSqlSupport {
 
         public final SqlColumn<Date> createTime = column("create_time", JDBCType.TIMESTAMP);
 
-        public final SqlColumn<Date> updataTime = column("updata_time", JDBCType.TIMESTAMP);
+        public final SqlColumn<Date> updateTime = column("update_time", JDBCType.TIMESTAMP);
 
         public Platform() {
             super("platform");

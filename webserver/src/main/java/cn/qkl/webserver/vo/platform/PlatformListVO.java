@@ -5,9 +5,12 @@ import cn.qkl.common.repository.model.Algorithm;
 import cn.qkl.common.repository.model.Platform;
 import cn.qkl.webserver.vo.algorithm.AlgorithmVO;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
-import javax.xml.crypto.Data;
-@lombok.Data
+import java.util.Date;
+
+
+@Data
 public class PlatformListVO {
     @ApiModelProperty("平台主键id")
     private Long id;
@@ -24,9 +27,9 @@ public class PlatformListVO {
     @ApiModelProperty("风险评级：1低风险 2中风险 3高风险")
     private Integer riskLevel;
     @ApiModelProperty("添加时间")
-    private Data updateTime;
+    private Date updateTime;
     @ApiModelProperty("上次抓取时间")
-    private Data createTime;
+    private Date createTime;
     public static PlatformListVO transform(Platform platform) {
         PlatformListVO vo = new PlatformListVO();
         BeanUtil.copyProperties(platform, vo);

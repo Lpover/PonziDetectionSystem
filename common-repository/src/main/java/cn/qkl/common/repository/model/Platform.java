@@ -26,9 +26,6 @@ public class Platform {
     private Integer riskLevel;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long updateTime;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer platformType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -71,7 +68,7 @@ public class Platform {
     private Date createTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Date updataTime;
+    private Date updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
@@ -183,22 +180,6 @@ public class Platform {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setRiskLevel(Integer riskLevel) {
         this.riskLevel = riskLevel;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getUpdateTime() {
-        return updateTime;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Platform withUpdateTime(Long updateTime) {
-        this.setUpdateTime(updateTime);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setUpdateTime(Long updateTime) {
-        this.updateTime = updateTime;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -426,19 +407,19 @@ public class Platform {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Date getUpdataTime() {
-        return updataTime;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Platform withUpdataTime(Date updataTime) {
-        this.setUpdataTime(updataTime);
+    public Platform withUpdateTime(Date updateTime) {
+        this.setUpdateTime(updateTime);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setUpdataTime(Date updataTime) {
-        this.updataTime = updataTime;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     @Override
@@ -455,7 +436,6 @@ public class Platform {
         sb.append(", riskContentNum=").append(riskContentNum);
         sb.append(", activation=").append(activation);
         sb.append(", riskLevel=").append(riskLevel);
-        sb.append(", updateTime=").append(updateTime);
         sb.append(", platformType=").append(platformType);
         sb.append(", logo=").append(logo);
         sb.append(", location=").append(location);
@@ -470,7 +450,7 @@ public class Platform {
         sb.append(", midContentNum=").append(midContentNum);
         sb.append(", lowContentNum=").append(lowContentNum);
         sb.append(", createTime=").append(createTime);
-        sb.append(", updataTime=").append(updataTime);
+        sb.append(", updateTime=").append(updateTime);
         sb.append("]");
         return sb.toString();
     }

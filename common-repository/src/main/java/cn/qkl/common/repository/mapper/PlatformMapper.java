@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface PlatformMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, name, url, monitor, riskContentNum, activation, riskLevel, updateTime, platformType, logo, location, frequency, crawlerFile, web3Type, contentNum, highAccountNum, midAccountNum, lowAccountNum, highContentNum, midContentNum, lowContentNum, createTime, updataTime);
+    BasicColumn[] selectList = BasicColumn.columnList(id, name, url, monitor, riskContentNum, activation, riskLevel, platformType, logo, location, frequency, crawlerFile, web3Type, contentNum, highAccountNum, midAccountNum, lowAccountNum, highContentNum, midContentNum, lowContentNum, createTime, updateTime);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -68,7 +68,6 @@ public interface PlatformMapper {
         @Result(column="risk_content_num", property="riskContentNum", jdbcType=JdbcType.BIGINT),
         @Result(column="activation", property="activation", jdbcType=JdbcType.INTEGER),
         @Result(column="risk_level", property="riskLevel", jdbcType=JdbcType.INTEGER),
-        @Result(column="update_time", property="updateTime", jdbcType=JdbcType.BIGINT),
         @Result(column="platform_type", property="platformType", jdbcType=JdbcType.INTEGER),
         @Result(column="logo", property="logo", jdbcType=JdbcType.VARCHAR),
         @Result(column="location", property="location", jdbcType=JdbcType.INTEGER),
@@ -83,7 +82,7 @@ public interface PlatformMapper {
         @Result(column="mid_content_num", property="midContentNum", jdbcType=JdbcType.INTEGER),
         @Result(column="low_content_num", property="lowContentNum", jdbcType=JdbcType.INTEGER),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="updata_time", property="updataTime", jdbcType=JdbcType.TIMESTAMP)
+        @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
     })
     List<Platform> selectMany(SelectStatementProvider selectStatement);
 
@@ -118,7 +117,6 @@ public interface PlatformMapper {
             .map(riskContentNum).toProperty("riskContentNum")
             .map(activation).toProperty("activation")
             .map(riskLevel).toProperty("riskLevel")
-            .map(updateTime).toProperty("updateTime")
             .map(platformType).toProperty("platformType")
             .map(logo).toProperty("logo")
             .map(location).toProperty("location")
@@ -133,7 +131,7 @@ public interface PlatformMapper {
             .map(midContentNum).toProperty("midContentNum")
             .map(lowContentNum).toProperty("lowContentNum")
             .map(createTime).toProperty("createTime")
-            .map(updataTime).toProperty("updataTime")
+            .map(updateTime).toProperty("updateTime")
         );
     }
 
@@ -147,7 +145,6 @@ public interface PlatformMapper {
             .map(riskContentNum).toProperty("riskContentNum")
             .map(activation).toProperty("activation")
             .map(riskLevel).toProperty("riskLevel")
-            .map(updateTime).toProperty("updateTime")
             .map(platformType).toProperty("platformType")
             .map(logo).toProperty("logo")
             .map(location).toProperty("location")
@@ -162,7 +159,7 @@ public interface PlatformMapper {
             .map(midContentNum).toProperty("midContentNum")
             .map(lowContentNum).toProperty("lowContentNum")
             .map(createTime).toProperty("createTime")
-            .map(updataTime).toProperty("updataTime")
+            .map(updateTime).toProperty("updateTime")
         );
     }
 
@@ -176,7 +173,6 @@ public interface PlatformMapper {
             .map(riskContentNum).toPropertyWhenPresent("riskContentNum", record::getRiskContentNum)
             .map(activation).toPropertyWhenPresent("activation", record::getActivation)
             .map(riskLevel).toPropertyWhenPresent("riskLevel", record::getRiskLevel)
-            .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
             .map(platformType).toPropertyWhenPresent("platformType", record::getPlatformType)
             .map(logo).toPropertyWhenPresent("logo", record::getLogo)
             .map(location).toPropertyWhenPresent("location", record::getLocation)
@@ -191,7 +187,7 @@ public interface PlatformMapper {
             .map(midContentNum).toPropertyWhenPresent("midContentNum", record::getMidContentNum)
             .map(lowContentNum).toPropertyWhenPresent("lowContentNum", record::getLowContentNum)
             .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
-            .map(updataTime).toPropertyWhenPresent("updataTime", record::getUpdataTime)
+            .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
         );
     }
 
@@ -231,7 +227,6 @@ public interface PlatformMapper {
                 .set(riskContentNum).equalTo(record::getRiskContentNum)
                 .set(activation).equalTo(record::getActivation)
                 .set(riskLevel).equalTo(record::getRiskLevel)
-                .set(updateTime).equalTo(record::getUpdateTime)
                 .set(platformType).equalTo(record::getPlatformType)
                 .set(logo).equalTo(record::getLogo)
                 .set(location).equalTo(record::getLocation)
@@ -246,7 +241,7 @@ public interface PlatformMapper {
                 .set(midContentNum).equalTo(record::getMidContentNum)
                 .set(lowContentNum).equalTo(record::getLowContentNum)
                 .set(createTime).equalTo(record::getCreateTime)
-                .set(updataTime).equalTo(record::getUpdataTime);
+                .set(updateTime).equalTo(record::getUpdateTime);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -258,7 +253,6 @@ public interface PlatformMapper {
                 .set(riskContentNum).equalToWhenPresent(record::getRiskContentNum)
                 .set(activation).equalToWhenPresent(record::getActivation)
                 .set(riskLevel).equalToWhenPresent(record::getRiskLevel)
-                .set(updateTime).equalToWhenPresent(record::getUpdateTime)
                 .set(platformType).equalToWhenPresent(record::getPlatformType)
                 .set(logo).equalToWhenPresent(record::getLogo)
                 .set(location).equalToWhenPresent(record::getLocation)
@@ -273,7 +267,7 @@ public interface PlatformMapper {
                 .set(midContentNum).equalToWhenPresent(record::getMidContentNum)
                 .set(lowContentNum).equalToWhenPresent(record::getLowContentNum)
                 .set(createTime).equalToWhenPresent(record::getCreateTime)
-                .set(updataTime).equalToWhenPresent(record::getUpdataTime);
+                .set(updateTime).equalToWhenPresent(record::getUpdateTime);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -285,7 +279,6 @@ public interface PlatformMapper {
             .set(riskContentNum).equalTo(record::getRiskContentNum)
             .set(activation).equalTo(record::getActivation)
             .set(riskLevel).equalTo(record::getRiskLevel)
-            .set(updateTime).equalTo(record::getUpdateTime)
             .set(platformType).equalTo(record::getPlatformType)
             .set(logo).equalTo(record::getLogo)
             .set(location).equalTo(record::getLocation)
@@ -300,7 +293,7 @@ public interface PlatformMapper {
             .set(midContentNum).equalTo(record::getMidContentNum)
             .set(lowContentNum).equalTo(record::getLowContentNum)
             .set(createTime).equalTo(record::getCreateTime)
-            .set(updataTime).equalTo(record::getUpdataTime)
+            .set(updateTime).equalTo(record::getUpdateTime)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -314,7 +307,6 @@ public interface PlatformMapper {
             .set(riskContentNum).equalToWhenPresent(record::getRiskContentNum)
             .set(activation).equalToWhenPresent(record::getActivation)
             .set(riskLevel).equalToWhenPresent(record::getRiskLevel)
-            .set(updateTime).equalToWhenPresent(record::getUpdateTime)
             .set(platformType).equalToWhenPresent(record::getPlatformType)
             .set(logo).equalToWhenPresent(record::getLogo)
             .set(location).equalToWhenPresent(record::getLocation)
@@ -329,7 +321,7 @@ public interface PlatformMapper {
             .set(midContentNum).equalToWhenPresent(record::getMidContentNum)
             .set(lowContentNum).equalToWhenPresent(record::getLowContentNum)
             .set(createTime).equalToWhenPresent(record::getCreateTime)
-            .set(updataTime).equalToWhenPresent(record::getUpdataTime)
+            .set(updateTime).equalToWhenPresent(record::getUpdateTime)
             .where(id, isEqualTo(record::getId))
         );
     }

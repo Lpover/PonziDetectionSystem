@@ -3,9 +3,12 @@ package cn.qkl.webserver.vo.platform;
 import cn.hutool.core.bean.BeanUtil;
 import cn.qkl.common.repository.model.Platform;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
-import javax.xml.crypto.Data;
-@lombok.Data
+import java.util.Date;
+
+
+@Data
 public class PlatformSuperviseListVO {
     @ApiModelProperty("平台主键id")
     private Long id;
@@ -24,7 +27,7 @@ public class PlatformSuperviseListVO {
     @ApiModelProperty("风险评级：1低风险 2中风险 3高风险")
     private Integer riskLevel;
     @ApiModelProperty("更新时间")
-    private Data updateTime;
+    private Date updateTime;
     public static PlatformSuperviseListVO transform(Platform platform) {
         PlatformSuperviseListVO vo = new PlatformSuperviseListVO();
         BeanUtil.copyProperties(platform, vo);

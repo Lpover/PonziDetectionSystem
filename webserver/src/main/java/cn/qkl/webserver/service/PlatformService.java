@@ -10,7 +10,6 @@ import cn.qkl.common.repository.mapper.PlatformDynamicSqlSupport;
 import cn.qkl.common.repository.model.Algorithm;
 import cn.qkl.common.repository.model.Platform;
 import cn.qkl.webserver.common.enums.*;
-import cn.qkl.webserver.dao.AlgorithmDao;
 import cn.qkl.webserver.dao.PlatformDao;
 import cn.qkl.webserver.dto.algorithm.AlgorithmListQueryDTO;
 import cn.qkl.webserver.dto.dynamic.DynamicContentListQueryDTO;
@@ -27,6 +26,7 @@ import cn.qkl.webserver.vo.platform.PlatformSuperviseListVO;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.dynamic.sql.SortSpecification;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
+import org.mybatis.dynamic.sql.select.SimpleSortSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
@@ -67,10 +67,10 @@ public class PlatformService {
                         .from(Tables.platform)
                         .leftJoin(Tables.riskContentStatistics).on(Tables.platform.id, equalTo(Tables.riskContentStatistics.platformId))
                         .where(Tables.platform.platformType, isEqualTo(dto.getType()))
-                        .and(Tables.platform.updataTime, isGreaterThanOrEqualToWhenPresent(start))
-                        .and(Tables.platform.updataTime, isLessThanOrEqualToWhenPresent(end))
+                        .and(Tables.platform.updateTime, isGreaterThanOrEqualToWhenPresent(start))
+                        .and(Tables.platform.updateTime, isLessThanOrEqualToWhenPresent(end))
                         .groupBy(Tables.platform.id)
-                        .orderBy((SortSpecification) constant("sumContentNumber"))
+                        .orderBy(SimpleSortSpecification.of("sumContentNumber").descending())
                         .build()
                         .render(RenderingStrategies.MYBATIS3)
         );
@@ -99,6 +99,7 @@ public class PlatformService {
     public void modifySupervise(ModifySuperviseDTO dto){
         platformDao.update(c -> c
                 .set(Tables.platform.monitor).equalTo(dto.getMonitor())
+                .where(Tables.platform.id, isEqualTo(dto.getId()))
         );
     }
     public void modifyPlatform(ModifyPlatformDTO dto){
