@@ -32,7 +32,7 @@ public class RiskCategoryTrendController {
     private RiskCategoryTrendService riskService;
     @ApiOperation("查询风险类别走势")
     @GetMapping("riskCategory")
-    public BaseResult<List<RiskContentStatisticsVO>> getRiskCategoryTrend() {
+    public BaseResult<RiskContentStatisticsVO> getRiskCategoryTrend() {
         return BaseResult.ok(riskService.getRiskTrend());
     }
 }
