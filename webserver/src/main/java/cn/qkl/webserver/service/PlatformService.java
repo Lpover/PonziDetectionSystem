@@ -4,34 +4,25 @@ import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.qkl.common.framework.request.PageDTO;
 import cn.qkl.common.framework.response.PageVO;
-import cn.qkl.common.framework.util.SnowflakeIdUtil;
 import cn.qkl.common.repository.Tables;
-import cn.qkl.common.repository.mapper.PlatformDynamicSqlSupport;
-import cn.qkl.common.repository.model.Algorithm;
 import cn.qkl.common.repository.model.Platform;
-import cn.qkl.webserver.common.enums.*;
 import cn.qkl.webserver.dao.PlatformDao;
-import cn.qkl.webserver.dto.algorithm.AlgorithmListQueryDTO;
-import cn.qkl.webserver.dto.dynamic.DynamicContentListQueryDTO;
 import cn.qkl.webserver.dto.platform.AddPlatformDTO;
 import cn.qkl.webserver.dto.platform.ModifyPlatformDTO;
 import cn.qkl.webserver.dto.platform.ModifySuperviseDTO;
 import cn.qkl.webserver.dto.platform.PopularPlatformQueryDTO;
-import cn.qkl.webserver.vo.algorithm.AlgorithmVO;
-import cn.qkl.webserver.vo.dynamic.DynamicContentVO;
 import cn.qkl.webserver.vo.platform.PlatformContentVO;
 import cn.qkl.webserver.vo.platform.PlatformListVO;
 import cn.qkl.webserver.vo.platform.PlatformNameListVO;
 import cn.qkl.webserver.vo.platform.PlatformSuperviseListVO;
 import lombok.extern.slf4j.Slf4j;
-import org.mybatis.dynamic.sql.SortSpecification;
+import org.apache.logging.log4j.core.util.UuidUtil;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
 import org.mybatis.dynamic.sql.select.SimpleSortSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -90,7 +81,8 @@ public class PlatformService {
     }
     public void addPlatform(AddPlatformDTO dto){
         Platform platform=new Platform();
-        platform.setId(SnowflakeIdUtil.generateId());
+//        platform.setId(SnowflakeIdUtil.generateId());
+        platform.setId(UuidUtil.getTimeBasedUuid().node());
         platform.setName(dto.getName());
         platform.setUrl(dto.getUrl());
         platform.setCrawlerFile(dto.getCrawlerUrl());
