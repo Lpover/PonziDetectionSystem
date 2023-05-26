@@ -47,7 +47,7 @@ public class RiskAccountService {
                                 .and(Tables.accountCheckHistory.relatedNum, isLessThanOrEqualToWhenPresent(dto.getRelatedNumMax()))
                                 .and(Tables.accountCheckHistory.releaseNum, isGreaterThanOrEqualToWhenPresent(dto.getReleaseNumMin()))
                                 .and(Tables.accountCheckHistory.releaseNum, isLessThanOrEqualToWhenPresent(dto.getReleaseNumMax()))
-                                .orderBy(Tables.accountCheckHistory.id.descending())
+                                .orderBy(Tables.accountCheckHistory.updateTime.descending())
                                 .build()
                                 .render(RenderingStrategies.MYBATIS3)
                 ));
