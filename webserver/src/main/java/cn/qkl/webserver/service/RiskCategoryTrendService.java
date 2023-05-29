@@ -3,33 +3,21 @@ package cn.qkl.webserver.service;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.qkl.common.repository.Tables;
-import cn.qkl.common.repository.mapper.RiskContentStatisticsMapper;
-import cn.qkl.common.repository.model.Algorithm;
-import cn.qkl.webserver.common.enums.PlatformTypeEnum;
-import cn.qkl.webserver.dao.PlatformDao;
 import cn.qkl.webserver.dao.RiskContentStatisticsDao;
-import cn.qkl.webserver.dto.algorithm.AlgorithmListQueryDTO;
-import cn.qkl.webserver.dto.platform.PopularPlatformQueryDTO;
-import cn.qkl.webserver.vo.algorithm.AlgorithmVO;
-import cn.qkl.webserver.vo.platform.PlatformContentVO;
+import cn.qkl.webserver.vo.riskcontentstatistics.RiskContentStatisticDataVO;
 import cn.qkl.webserver.vo.riskcontentstatistics.RiskContentStatisticsVO;
-import lombok.extern.slf4j.Slf4j;
-import org.mybatis.dynamic.sql.SortSpecification;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
-import static org.mybatis.dynamic.sql.SqlBuilder.constant;
 
 @Service
-@Slf4j
+//@Slf4j
 @RefreshScope
 
 public class RiskCategoryTrendService  {
@@ -39,13 +27,13 @@ public class RiskCategoryTrendService  {
      * 获取风险走势图
      * @return
      */
-    public List<RiskContentStatisticsVO> getRiskTrend() {
+    public RiskContentStatisticsVO getRiskTrend() {
         //当前服务器时间
         Date end = new Date();
         //全部
         end = DateUtil.beginOfDay(end);
         DateTime start = DateUtil.offsetDay(end, -7);
-        List<RiskContentStatisticsVO> risks = riskDao.getRiskContentStatistics(
+        List<RiskContentStatisticDataVO> risks = riskDao.getRiskContentStatistics(
                 select(sum(Tables.riskContentStatistics.lowRiskNum).as("lowRiskNumber"),
                         sum(Tables.riskContentStatistics.middleRiskNum).as("middleRiskNumber"),
                         sum(Tables.riskContentStatistics.highRiskNum).as("highRiskNumber")
@@ -58,6 +46,6 @@ public class RiskCategoryTrendService  {
                         .build()
                         .render(RenderingStrategies.MYBATIS3)
         );
-        return risks;
+        return RiskContentStatisticsVO.transform(risks);
     }
 }

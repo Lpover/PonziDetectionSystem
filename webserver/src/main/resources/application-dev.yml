@@ -3,27 +3,52 @@ server:
 qkl:
   framework:
     show-exception-detail: true
-    jackson:
-      enable-long-to-string: true
     auth:
       secret: secret
       # 90天
       expiration: 90
+    ossutil:
+      endpoint: https://obs.cn-east-3.myhuaweicloud.com
+      ak: MUIBG1CQ5TLHIF5NHER2
+      sk: BMNCoYbF4vd9Pv5LCHFCgz0xnFHLp8oUu8mmJXXV
+
+
 
 spring:
+  application:
+    name: webserver-provider
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://192.168.1.102:8848
+        fail-fast: true
+        enabled: false
+      config:
+        server-addr: http://192.168.1.102:8848
+        #指定文件名，没有则默认${spring.application.name}
+        #指定文件后缀
+        file-extension: yml
+        refresh-enabled: true
+  config:
+    import: optional:nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+  # optional:nacos:${spring.application.name}.${spring.cloud.nacos.config.file-extension} 启动出错非中断
+  #    import: nacos:${spring.application.name}.${spring.cloud.nacos.config.file-extension} #启动出错直接中断
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   servlet:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://localhost:3306/yuedu?characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+#    url: jdbc:mysql://sh-cynosdbmysql-grp-6y5peoca.sql.tencentcdb.com:21798/tsgz?characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://172.17.0.7:3306/tsgz?characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: root
-    password: 251859
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
+    password: Lianshang@N404
+
 #  redis:
 #    host:
 #    port: 6379
@@ -35,8 +60,10 @@ mybatis:
   configuration:
     # 自动转驼峰
     map-underscore-to-camel-case: true
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
 
 logging:
-  config: classpath:logback-spring-dev.xml
+  config: classpath:logback-spring-aut.xml
 
 
