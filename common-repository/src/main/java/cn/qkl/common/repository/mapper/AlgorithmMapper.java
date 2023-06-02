@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface AlgorithmMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, version, name, recognitionRate, type, createTime, updateTime);
+    BasicColumn[] selectList = BasicColumn.columnList(id, version, state, describe, name, recognitionRate, type, createTime, updateTime);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -63,6 +63,8 @@ public interface AlgorithmMapper {
     @Results(id="AlgorithmResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="version", property="version", jdbcType=JdbcType.INTEGER),
+        @Result(column="state", property="state", jdbcType=JdbcType.INTEGER),
+        @Result(column="describe", property="describe", jdbcType=JdbcType.VARCHAR),
         @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
         @Result(column="recognition_rate", property="recognitionRate", jdbcType=JdbcType.DECIMAL),
         @Result(column="type", property="type", jdbcType=JdbcType.INTEGER),
@@ -97,6 +99,8 @@ public interface AlgorithmMapper {
         return MyBatis3Utils.insert(this::insert, record, algorithm, c ->
             c.map(id).toProperty("id")
             .map(version).toProperty("version")
+            .map(state).toProperty("state")
+            .map(describe).toProperty("describe")
             .map(name).toProperty("name")
             .map(recognitionRate).toProperty("recognitionRate")
             .map(type).toProperty("type")
@@ -110,6 +114,8 @@ public interface AlgorithmMapper {
         return MyBatis3Utils.insertMultiple(this::insertMultiple, records, algorithm, c ->
             c.map(id).toProperty("id")
             .map(version).toProperty("version")
+            .map(state).toProperty("state")
+            .map(describe).toProperty("describe")
             .map(name).toProperty("name")
             .map(recognitionRate).toProperty("recognitionRate")
             .map(type).toProperty("type")
@@ -123,6 +129,8 @@ public interface AlgorithmMapper {
         return MyBatis3Utils.insert(this::insert, record, algorithm, c ->
             c.map(id).toPropertyWhenPresent("id", record::getId)
             .map(version).toPropertyWhenPresent("version", record::getVersion)
+            .map(state).toPropertyWhenPresent("state", record::getState)
+            .map(describe).toPropertyWhenPresent("describe", record::getDescribe)
             .map(name).toPropertyWhenPresent("name", record::getName)
             .map(recognitionRate).toPropertyWhenPresent("recognitionRate", record::getRecognitionRate)
             .map(type).toPropertyWhenPresent("type", record::getType)
@@ -162,6 +170,8 @@ public interface AlgorithmMapper {
     static UpdateDSL<UpdateModel> updateAllColumns(Algorithm record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalTo(record::getId)
                 .set(version).equalTo(record::getVersion)
+                .set(state).equalTo(record::getState)
+                .set(describe).equalTo(record::getDescribe)
                 .set(name).equalTo(record::getName)
                 .set(recognitionRate).equalTo(record::getRecognitionRate)
                 .set(type).equalTo(record::getType)
@@ -173,6 +183,8 @@ public interface AlgorithmMapper {
     static UpdateDSL<UpdateModel> updateSelectiveColumns(Algorithm record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalToWhenPresent(record::getId)
                 .set(version).equalToWhenPresent(record::getVersion)
+                .set(state).equalToWhenPresent(record::getState)
+                .set(describe).equalToWhenPresent(record::getDescribe)
                 .set(name).equalToWhenPresent(record::getName)
                 .set(recognitionRate).equalToWhenPresent(record::getRecognitionRate)
                 .set(type).equalToWhenPresent(record::getType)
@@ -184,6 +196,8 @@ public interface AlgorithmMapper {
     default int updateByPrimaryKey(Algorithm record) {
         return update(c ->
             c.set(version).equalTo(record::getVersion)
+            .set(state).equalTo(record::getState)
+            .set(describe).equalTo(record::getDescribe)
             .set(name).equalTo(record::getName)
             .set(recognitionRate).equalTo(record::getRecognitionRate)
             .set(type).equalTo(record::getType)
@@ -197,6 +211,8 @@ public interface AlgorithmMapper {
     default int updateByPrimaryKeySelective(Algorithm record) {
         return update(c ->
             c.set(version).equalToWhenPresent(record::getVersion)
+            .set(state).equalToWhenPresent(record::getState)
+            .set(describe).equalToWhenPresent(record::getDescribe)
             .set(name).equalToWhenPresent(record::getName)
             .set(recognitionRate).equalToWhenPresent(record::getRecognitionRate)
             .set(type).equalToWhenPresent(record::getType)

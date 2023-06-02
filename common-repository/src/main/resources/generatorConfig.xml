@@ -45,16 +45,15 @@
         </table>
         <table tableName="platform" domainObjectName="Platform">
         </table>
-        <table tableName="risk_content_statistics" domainObjectName="RiskContentStatistics">
-        </table>
         <table tableName="risk_report" domainObjectName="RiskReport">
-        </table>
-        <table tableName="statistic" domainObjectName="Statistic">
         </table>
         <table tableName="content_risk_statistics" domainObjectName="ContentRiskStatistics">
         </table>
         <table tableName="user" domainObjectName="User">
         </table>
-
+        <table tableName="platform_daily_statistics" domainObjectName="PlatformDailyStatistics">
+        </table>
+        <table tableName="content_cross_daily_statistics" domainObjectName="ContentCrossDailyStatistics">
+        </table>
     </context>
 </generatorConfiguration>

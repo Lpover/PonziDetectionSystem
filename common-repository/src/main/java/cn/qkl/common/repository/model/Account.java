@@ -35,6 +35,12 @@ public class Account {
     private Date updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer platformId;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer releaseNum;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
@@ -194,6 +200,38 @@ public class Account {
         this.updateTime = updateTime;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getPlatformId() {
+        return platformId;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Account withPlatformId(Integer platformId) {
+        this.setPlatformId(platformId);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setPlatformId(Integer platformId) {
+        this.platformId = platformId;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getReleaseNum() {
+        return releaseNum;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Account withReleaseNum(Integer releaseNum) {
+        this.setReleaseNum(releaseNum);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setReleaseNum(Integer releaseNum) {
+        this.releaseNum = releaseNum;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -211,6 +249,8 @@ public class Account {
         sb.append(", exchangeRate=").append(exchangeRate);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", platformId=").append(platformId);
+        sb.append(", releaseNum=").append(releaseNum);
         sb.append("]");
         return sb.toString();
     }

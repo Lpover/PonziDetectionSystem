@@ -20,6 +20,12 @@ public final class UserDynamicSqlSupport {
     public static final SqlColumn<String> userPwd = user.userPwd;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> userPhone = user.userPhone;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> userRole = user.userRole;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> userName = user.userName;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -50,6 +56,10 @@ public final class UserDynamicSqlSupport {
         public final SqlColumn<String> userNum = column("user_num", JDBCType.VARCHAR);
 
         public final SqlColumn<String> userPwd = column("user_pwd", JDBCType.VARCHAR);
+
+        public final SqlColumn<String> userPhone = column("user_phone", JDBCType.VARCHAR);
+
+        public final SqlColumn<String> userRole = column("user_role", JDBCType.VARCHAR);
 
         public final SqlColumn<String> userName = column("user_name", JDBCType.VARCHAR);
 

@@ -12,6 +12,12 @@ public class Algorithm {
     private Integer version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer state;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String describe;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String name;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -56,6 +62,38 @@ public class Algorithm {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getState() {
+        return state;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Algorithm withState(Integer state) {
+        this.setState(state);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getDescribe() {
+        return describe;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Algorithm withDescribe(String describe) {
+        this.setDescribe(describe);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setDescribe(String describe) {
+        this.describe = describe;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -147,6 +185,8 @@ public class Algorithm {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", version=").append(version);
+        sb.append(", state=").append(state);
+        sb.append(", describe=").append(describe);
         sb.append(", name=").append(name);
         sb.append(", recognitionRate=").append(recognitionRate);
         sb.append(", type=").append(type);

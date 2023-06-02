@@ -5,14 +5,13 @@ import cn.hutool.core.date.DateUtil;
 import cn.qkl.common.repository.model.RiskReport;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.webserver.dao.ContentRiskStatisticsDao;
-import cn.qkl.webserver.dao.RiskContentStatisticsDao;
+import cn.qkl.webserver.dao.PlatformDailyStatisticsDao;
 import cn.qkl.webserver.dao.RiskReportDao;
 import cn.qkl.webserver.dto.riskreport.RiskReportListQueryDTO;
 import cn.qkl.webserver.vo.contentRiskStatictics.RiskCategoryVO;
 import cn.qkl.webserver.vo.riskContentStatictics.PlatformReportVO;
 import cn.qkl.webserver.vo.riskReport.RiskReportInfoVO;
 import lombok.extern.slf4j.Slf4j;
-import org.mybatis.dynamic.sql.SortSpecification;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
 import org.mybatis.dynamic.sql.select.SimpleSortSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,27 +22,6 @@ import java.util.Date;
 import java.util.List;
 
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
-import cn.qkl.common.repository.model.RiskReport;
-import cn.qkl.common.repository.Tables;
-import cn.qkl.common.repository.model.Algorithm;
-import cn.qkl.webserver.common.ServerConfig;
-import cn.qkl.webserver.dao.UserDao;
-import cn.qkl.webserver.dao.RiskReportDao;
-import cn.qkl.webserver.dto.algorithm.AlgorithmListQueryDTO;
-import cn.qkl.webserver.dto.riskreport.RiskReportListQueryDTO;
-import cn.qkl.webserver.vo.algorithm.AlgorithmVO;
-import cn.qkl.webserver.vo.riskReport.RiskReportInfoVO;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Service;
-import static org.mybatis.dynamic.sql.SqlBuilder.*;
-import javax.annotation.Resource;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
 import static org.mybatis.dynamic.sql.SqlBuilder.isInWhenPresent;
@@ -66,7 +44,7 @@ public class RiskReportService {
     private ContentRiskStatisticsDao contentRiskStatisticsDao;
 
     @Autowired
-    private RiskContentStatisticsDao riskContentStatisticsDao;
+    private PlatformDailyStatisticsDao riskContentStatisticsDao;
 
 
     //报表信息
@@ -93,10 +71,10 @@ public class RiskReportService {
         );
         //每日平台新增
         List<PlatformReportVO> contentRiskStatistics =riskContentStatisticsDao.getPlatformReport(
-                select(Tables.riskContentStatistics.contentSum,Tables.platform.name.as("platformName"))
-                        .from(Tables.riskContentStatistics)
-                        .leftJoin(Tables.platform).on(Tables.riskContentStatistics.platformId,equalTo(Tables.platform.id))
-                        .orderBy(Tables.riskContentStatistics.contentSum.descending())
+                select(Tables.platformDailyStatistics.contentSum,Tables.platform.name.as("platformName"))
+                        .from(Tables.platformDailyStatistics)
+                        .leftJoin(Tables.platform).on(Tables.platformDailyStatistics.platformId,equalTo(Tables.platform.id))
+                        .orderBy(Tables.platformDailyStatistics.contentSum.descending())
                         .build()
                         .render(RenderingStrategies.MYBATIS3)
         );

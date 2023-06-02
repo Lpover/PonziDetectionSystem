@@ -54,9 +54,9 @@ public class PlatformService {
         end=DateUtil.beginOfDay(end);
         DateTime start = DateUtil.offsetDay(end, -7);
         List<PlatformContentVO> platforms = platformDao.getPlatformContent(
-                select(Tables.platform.id, Tables.platform.platformType ,Tables.platform.name,sum(Tables.riskContentStatistics.contentSum).as("sumContentNumber"))
+                select(Tables.platform.id, Tables.platform.platformType ,Tables.platform.name,sum(Tables.platformDailyStatistics.contentSum).as("sumContentNumber"))
                         .from(Tables.platform)
-                        .leftJoin(Tables.riskContentStatistics).on(Tables.platform.id, equalTo(Tables.riskContentStatistics.platformId))
+                        .leftJoin(Tables.platformDailyStatistics).on(Tables.platform.id, equalTo(Tables.platformDailyStatistics.platformId))
                         .where(Tables.platform.platformType, isEqualTo(dto.getType()))
                         .and(Tables.platform.updateTime, isGreaterThanOrEqualToWhenPresent(start))
                         .and(Tables.platform.updateTime, isLessThanOrEqualToWhenPresent(end))

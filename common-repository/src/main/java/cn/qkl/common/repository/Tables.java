@@ -2,7 +2,6 @@ package cn.qkl.common.repository;
 
 
 import cn.qkl.common.repository.mapper.*;
-import cn.qkl.common.repository.model.Chain;
 
 public class Tables {
     public static final UserDynamicSqlSupport.User user = UserDynamicSqlSupport.user;
@@ -18,9 +17,8 @@ public class Tables {
     public static final ContentTxHistoryDynamicSqlSupport.ContentTxHistory contentTxHistory = ContentTxHistoryDynamicSqlSupport.contentTxHistory;
     public static final DynamicMonitorDynamicSqlSupport.DynamicMonitor dynamicMonitor = DynamicMonitorDynamicSqlSupport.dynamicMonitor;
     public static final PlatformDynamicSqlSupport.Platform platform = PlatformDynamicSqlSupport.platform;
-    public static final RiskContentStatisticsDynamicSqlSupport.RiskContentStatistics riskContentStatistics = RiskContentStatisticsDynamicSqlSupport.riskContentStatistics;
+    public static final PlatformDailyStatisticsDynamicSqlSupport.PlatformDailyStatistics platformDailyStatistics = PlatformDailyStatisticsDynamicSqlSupport.platformDailyStatistics;
     public static final RiskReportDynamicSqlSupport.RiskReport riskReport = RiskReportDynamicSqlSupport.riskReport;
-    public static final StatisticDynamicSqlSupport.Statistic statistic = StatisticDynamicSqlSupport.statistic;
     public static final ContentRiskStatisticsDynamicSqlSupport.ContentRiskStatistics contentRiskStatistics = ContentRiskStatisticsDynamicSqlSupport.contentRiskStatistics;
 
 }

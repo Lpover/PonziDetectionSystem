@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface UserMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(userId, userNum, userPwd, userName, userImgUrl, userSex, userRegdate, userIntro, randomnum, state, email);
+    BasicColumn[] selectList = BasicColumn.columnList(userId, userNum, userPwd, userPhone, userRole, userName, userImgUrl, userSex, userRegdate, userIntro, randomnum, state, email);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -64,6 +64,8 @@ public interface UserMapper {
         @Result(column="user_id", property="userId", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="user_num", property="userNum", jdbcType=JdbcType.VARCHAR),
         @Result(column="user_pwd", property="userPwd", jdbcType=JdbcType.VARCHAR),
+        @Result(column="user_phone", property="userPhone", jdbcType=JdbcType.VARCHAR),
+        @Result(column="user_role", property="userRole", jdbcType=JdbcType.VARCHAR),
         @Result(column="user_name", property="userName", jdbcType=JdbcType.VARCHAR),
         @Result(column="user_img_url", property="userImgUrl", jdbcType=JdbcType.VARCHAR),
         @Result(column="user_sex", property="userSex", jdbcType=JdbcType.VARCHAR),
@@ -102,6 +104,8 @@ public interface UserMapper {
             c.map(userId).toProperty("userId")
             .map(userNum).toProperty("userNum")
             .map(userPwd).toProperty("userPwd")
+            .map(userPhone).toProperty("userPhone")
+            .map(userRole).toProperty("userRole")
             .map(userName).toProperty("userName")
             .map(userImgUrl).toProperty("userImgUrl")
             .map(userSex).toProperty("userSex")
@@ -119,6 +123,8 @@ public interface UserMapper {
             c.map(userId).toProperty("userId")
             .map(userNum).toProperty("userNum")
             .map(userPwd).toProperty("userPwd")
+            .map(userPhone).toProperty("userPhone")
+            .map(userRole).toProperty("userRole")
             .map(userName).toProperty("userName")
             .map(userImgUrl).toProperty("userImgUrl")
             .map(userSex).toProperty("userSex")
@@ -136,6 +142,8 @@ public interface UserMapper {
             c.map(userId).toPropertyWhenPresent("userId", record::getUserId)
             .map(userNum).toPropertyWhenPresent("userNum", record::getUserNum)
             .map(userPwd).toPropertyWhenPresent("userPwd", record::getUserPwd)
+            .map(userPhone).toPropertyWhenPresent("userPhone", record::getUserPhone)
+            .map(userRole).toPropertyWhenPresent("userRole", record::getUserRole)
             .map(userName).toPropertyWhenPresent("userName", record::getUserName)
             .map(userImgUrl).toPropertyWhenPresent("userImgUrl", record::getUserImgUrl)
             .map(userSex).toPropertyWhenPresent("userSex", record::getUserSex)
@@ -179,6 +187,8 @@ public interface UserMapper {
         return dsl.set(userId).equalTo(record::getUserId)
                 .set(userNum).equalTo(record::getUserNum)
                 .set(userPwd).equalTo(record::getUserPwd)
+                .set(userPhone).equalTo(record::getUserPhone)
+                .set(userRole).equalTo(record::getUserRole)
                 .set(userName).equalTo(record::getUserName)
                 .set(userImgUrl).equalTo(record::getUserImgUrl)
                 .set(userSex).equalTo(record::getUserSex)
@@ -194,6 +204,8 @@ public interface UserMapper {
         return dsl.set(userId).equalToWhenPresent(record::getUserId)
                 .set(userNum).equalToWhenPresent(record::getUserNum)
                 .set(userPwd).equalToWhenPresent(record::getUserPwd)
+                .set(userPhone).equalToWhenPresent(record::getUserPhone)
+                .set(userRole).equalToWhenPresent(record::getUserRole)
                 .set(userName).equalToWhenPresent(record::getUserName)
                 .set(userImgUrl).equalToWhenPresent(record::getUserImgUrl)
                 .set(userSex).equalToWhenPresent(record::getUserSex)
@@ -209,6 +221,8 @@ public interface UserMapper {
         return update(c ->
             c.set(userNum).equalTo(record::getUserNum)
             .set(userPwd).equalTo(record::getUserPwd)
+            .set(userPhone).equalTo(record::getUserPhone)
+            .set(userRole).equalTo(record::getUserRole)
             .set(userName).equalTo(record::getUserName)
             .set(userImgUrl).equalTo(record::getUserImgUrl)
             .set(userSex).equalTo(record::getUserSex)
@@ -226,6 +240,8 @@ public interface UserMapper {
         return update(c ->
             c.set(userNum).equalToWhenPresent(record::getUserNum)
             .set(userPwd).equalToWhenPresent(record::getUserPwd)
+            .set(userPhone).equalToWhenPresent(record::getUserPhone)
+            .set(userRole).equalToWhenPresent(record::getUserRole)
             .set(userName).equalToWhenPresent(record::getUserName)
             .set(userImgUrl).equalToWhenPresent(record::getUserImgUrl)
             .set(userSex).equalToWhenPresent(record::getUserSex)

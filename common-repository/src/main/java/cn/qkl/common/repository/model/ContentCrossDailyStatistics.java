@@ -3,18 +3,18 @@ package cn.qkl.common.repository.model;
 import java.util.Date;
 import javax.annotation.Generated;
 
-public class Statistic {
+public class ContentCrossDailyStatistics {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Integer highNum;
+    private Long chainId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Integer midNum;
+    private Integer riskAccountNum;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Integer lowNum;
+    private Integer txNum;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Date createTime;
@@ -28,7 +28,7 @@ public class Statistic {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Statistic withId(Long id) {
+    public ContentCrossDailyStatistics withId(Long id) {
         this.setId(id);
         return this;
     }
@@ -39,51 +39,51 @@ public class Statistic {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Integer getHighNum() {
-        return highNum;
+    public Long getChainId() {
+        return chainId;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Statistic withHighNum(Integer highNum) {
-        this.setHighNum(highNum);
+    public ContentCrossDailyStatistics withChainId(Long chainId) {
+        this.setChainId(chainId);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setHighNum(Integer highNum) {
-        this.highNum = highNum;
+    public void setChainId(Long chainId) {
+        this.chainId = chainId;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Integer getMidNum() {
-        return midNum;
+    public Integer getRiskAccountNum() {
+        return riskAccountNum;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Statistic withMidNum(Integer midNum) {
-        this.setMidNum(midNum);
+    public ContentCrossDailyStatistics withRiskAccountNum(Integer riskAccountNum) {
+        this.setRiskAccountNum(riskAccountNum);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setMidNum(Integer midNum) {
-        this.midNum = midNum;
+    public void setRiskAccountNum(Integer riskAccountNum) {
+        this.riskAccountNum = riskAccountNum;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Integer getLowNum() {
-        return lowNum;
+    public Integer getTxNum() {
+        return txNum;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Statistic withLowNum(Integer lowNum) {
-        this.setLowNum(lowNum);
+    public ContentCrossDailyStatistics withTxNum(Integer txNum) {
+        this.setTxNum(txNum);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setLowNum(Integer lowNum) {
-        this.lowNum = lowNum;
+    public void setTxNum(Integer txNum) {
+        this.txNum = txNum;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -92,7 +92,7 @@ public class Statistic {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Statistic withCreateTime(Date createTime) {
+    public ContentCrossDailyStatistics withCreateTime(Date createTime) {
         this.setCreateTime(createTime);
         return this;
     }
@@ -108,7 +108,7 @@ public class Statistic {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Statistic withUpdateTime(Date updateTime) {
+    public ContentCrossDailyStatistics withUpdateTime(Date updateTime) {
         this.setUpdateTime(updateTime);
         return this;
     }
@@ -126,9 +126,9 @@ public class Statistic {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", highNum=").append(highNum);
-        sb.append(", midNum=").append(midNum);
-        sb.append(", lowNum=").append(lowNum);
+        sb.append(", chainId=").append(chainId);
+        sb.append(", riskAccountNum=").append(riskAccountNum);
+        sb.append(", txNum=").append(txNum);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append("]");

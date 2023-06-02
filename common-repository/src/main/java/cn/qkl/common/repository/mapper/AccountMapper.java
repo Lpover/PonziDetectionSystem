@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface AccountMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, accountAddress, chainId, accountAlias, image, cryptoBalance, currencyBalance, exchangeRate, createTime, updateTime);
+    BasicColumn[] selectList = BasicColumn.columnList(id, accountAddress, chainId, accountAlias, image, cryptoBalance, currencyBalance, exchangeRate, createTime, updateTime, platformId, releaseNum);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -70,7 +70,9 @@ public interface AccountMapper {
         @Result(column="currency_balance", property="currencyBalance", jdbcType=JdbcType.VARCHAR),
         @Result(column="exchange_rate", property="exchangeRate", jdbcType=JdbcType.VARCHAR),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
+        @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="platform_id", property="platformId", jdbcType=JdbcType.INTEGER),
+        @Result(column="release_num", property="releaseNum", jdbcType=JdbcType.INTEGER)
     })
     List<Account> selectMany(SelectStatementProvider selectStatement);
 
@@ -108,6 +110,8 @@ public interface AccountMapper {
             .map(exchangeRate).toProperty("exchangeRate")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
+            .map(platformId).toProperty("platformId")
+            .map(releaseNum).toProperty("releaseNum")
         );
     }
 
@@ -124,6 +128,8 @@ public interface AccountMapper {
             .map(exchangeRate).toProperty("exchangeRate")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
+            .map(platformId).toProperty("platformId")
+            .map(releaseNum).toProperty("releaseNum")
         );
     }
 
@@ -140,6 +146,8 @@ public interface AccountMapper {
             .map(exchangeRate).toPropertyWhenPresent("exchangeRate", record::getExchangeRate)
             .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
             .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
+            .map(platformId).toPropertyWhenPresent("platformId", record::getPlatformId)
+            .map(releaseNum).toPropertyWhenPresent("releaseNum", record::getReleaseNum)
         );
     }
 
@@ -181,7 +189,9 @@ public interface AccountMapper {
                 .set(currencyBalance).equalTo(record::getCurrencyBalance)
                 .set(exchangeRate).equalTo(record::getExchangeRate)
                 .set(createTime).equalTo(record::getCreateTime)
-                .set(updateTime).equalTo(record::getUpdateTime);
+                .set(updateTime).equalTo(record::getUpdateTime)
+                .set(platformId).equalTo(record::getPlatformId)
+                .set(releaseNum).equalTo(record::getReleaseNum);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -195,7 +205,9 @@ public interface AccountMapper {
                 .set(currencyBalance).equalToWhenPresent(record::getCurrencyBalance)
                 .set(exchangeRate).equalToWhenPresent(record::getExchangeRate)
                 .set(createTime).equalToWhenPresent(record::getCreateTime)
-                .set(updateTime).equalToWhenPresent(record::getUpdateTime);
+                .set(updateTime).equalToWhenPresent(record::getUpdateTime)
+                .set(platformId).equalToWhenPresent(record::getPlatformId)
+                .set(releaseNum).equalToWhenPresent(record::getReleaseNum);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -210,6 +222,8 @@ public interface AccountMapper {
             .set(exchangeRate).equalTo(record::getExchangeRate)
             .set(createTime).equalTo(record::getCreateTime)
             .set(updateTime).equalTo(record::getUpdateTime)
+            .set(platformId).equalTo(record::getPlatformId)
+            .set(releaseNum).equalTo(record::getReleaseNum)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -226,6 +240,8 @@ public interface AccountMapper {
             .set(exchangeRate).equalToWhenPresent(record::getExchangeRate)
             .set(createTime).equalToWhenPresent(record::getCreateTime)
             .set(updateTime).equalToWhenPresent(record::getUpdateTime)
+            .set(platformId).equalToWhenPresent(record::getPlatformId)
+            .set(releaseNum).equalToWhenPresent(record::getReleaseNum)
             .where(id, isEqualTo(record::getId))
         );
     }

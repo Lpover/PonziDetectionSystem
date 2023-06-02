@@ -64,6 +64,6 @@ mybatis:
 
 
 logging:
-  config: classpath:logback-spring-aut.xml
+  config: classpath:logback-spring-dev.xml
 
 

@@ -14,6 +14,12 @@ public class User {
     private String userPwd;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String userPhone;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String userRole;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String userName;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -83,6 +89,38 @@ public class User {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setUserPwd(String userPwd) {
         this.userPwd = userPwd;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public User withUserPhone(String userPhone) {
+        this.setUserPhone(userPhone);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getUserRole() {
+        return userRole;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public User withUserRole(String userRole) {
+        this.setUserRole(userRole);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -223,6 +261,8 @@ public class User {
         sb.append(", userId=").append(userId);
         sb.append(", userNum=").append(userNum);
         sb.append(", userPwd=").append(userPwd);
+        sb.append(", userPhone=").append(userPhone);
+        sb.append(", userRole=").append(userRole);
         sb.append(", userName=").append(userName);
         sb.append(", userImgUrl=").append(userImgUrl);
         sb.append(", userSex=").append(userSex);

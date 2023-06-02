@@ -1,7 +1,7 @@
 package cn.qkl.webserver.vo.riskAccount;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.qkl.common.repository.model.RiskContentStatistics;
+import cn.qkl.common.repository.model.PlatformDailyStatistics;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -25,7 +25,7 @@ public class AccountNumVO {
     @ApiModelProperty("总低风险账号数量")
     private Integer totalLowAccount;
 
-    public static AccountNumVO transform(RiskContentStatistics numStatistics) {
+    public static AccountNumVO transform(PlatformDailyStatistics numStatistics) {
         AccountNumVO vo = new AccountNumVO();
         BeanUtil.copyProperties(numStatistics, vo);
         return vo;

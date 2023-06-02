@@ -1,6 +1,6 @@
 package cn.qkl.webserver.dao;
 
-import cn.qkl.common.repository.mapper.RiskContentStatisticsMapper;
+import cn.qkl.common.repository.mapper.PlatformDailyStatisticsMapper;
 import cn.qkl.webserver.vo.riskAccount.AccountNumVO;
 import cn.qkl.webserver.vo.riskContentStatictics.PlatformReportVO;
 import cn.qkl.webserver.vo.riskcontentstatistics.RiskContentStatisticDataVO;
@@ -18,7 +18,7 @@ import java.util.List;
  * @wiki
  */
 @Mapper
-public interface RiskContentStatisticsDao extends RiskContentStatisticsMapper {
+public interface PlatformDailyStatisticsDao extends PlatformDailyStatisticsMapper {
 
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     List<PlatformReportVO> getPlatformReport(SelectStatementProvider selectStatementProvider);
