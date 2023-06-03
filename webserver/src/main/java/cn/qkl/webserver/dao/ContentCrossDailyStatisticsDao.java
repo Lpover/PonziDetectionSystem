@@ -1,7 +1,13 @@
 package cn.qkl.webserver.dao;
 
 import cn.qkl.common.repository.mapper.ContentCrossDailyStatisticsMapper;
+import cn.qkl.webserver.vo.cross.CrossContentRiskViewVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.SelectProvider;
+import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
+import org.mybatis.dynamic.sql.util.SqlProviderAdapter;
+
+import java.util.List;
 
 /**
  * @title:
@@ -11,5 +17,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ContentCrossDailyStatisticsDao extends ContentCrossDailyStatisticsMapper {
-
+    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
+    List<CrossContentRiskViewVO> getCrossContentRiskView(SelectStatementProvider selectStatementProvider);
 }

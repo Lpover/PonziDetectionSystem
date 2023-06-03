@@ -7,15 +7,18 @@ import cn.qkl.common.repository.model.ContentCross;
 import cn.qkl.common.repository.model.ContentCrossDailyStatistics;
 import cn.qkl.webserver.dao.ContentCrossDailyStatisticsDao;
 import cn.qkl.webserver.dao.ContentCrossDao;
+import cn.qkl.webserver.dto.cross.CrossContentRiskViewDTO;
+import cn.qkl.webserver.vo.cross.CrossContentRiskViewVO;
 import lombok.extern.slf4j.Slf4j;
+import org.mybatis.dynamic.sql.render.RenderingStrategies;
+import org.mybatis.dynamic.sql.select.QueryExpressionDSL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-import static org.mybatis.dynamic.sql.SqlBuilder.isGreaterThan;
-import static org.mybatis.dynamic.sql.SqlBuilder.isLessThan;
+import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
 
 /**
@@ -81,8 +84,25 @@ public class CrossContentDailyStatisticsService {
         if (list.size() > 0) {
             contentCrossDailyStatisticsDao.insertMultiple(list);
         }
-
     }
 
+    public List<CrossContentRiskViewVO> getCrossContentRiskView(CrossContentRiskViewDTO dto) {
+        QueryExpressionDSL<org.mybatis.dynamic.sql.select.SelectModel>.JoinSpecificationFinisher dsl = select(Tables.contentCrossDailyStatistics.chainId, Tables.chain.chainName, sum(Tables.contentCrossDailyStatistics.riskAccountNum).as("riskAccountNum"), sum(Tables.contentCrossDailyStatistics.txNum).as("txNum"))
+                .from(Tables.contentCrossDailyStatistics)
+                .leftJoin(Tables.chain).on(Tables.contentCrossDailyStatistics.chainId, equalTo(Tables.chain.id));
+        if (dto.getTime() == 1) {
+            dsl.where(Tables.contentCrossDailyStatistics.createTime, isGreaterThanOrEqualTo(DateUtil.offsetDay(new Date(), -7)))
+                    .and(Tables.contentCrossDailyStatistics.createTime, isLessThanOrEqualTo(new Date()));
+        } else {
+            dsl.where(Tables.contentCrossDailyStatistics.createTime, isGreaterThanOrEqualTo(DateUtil.offsetDay(new Date(), -30)))
+                    .and(Tables.contentCrossDailyStatistics.createTime, isLessThanOrEqualTo(new Date()));
+        }
+        return contentCrossDailyStatisticsDao.getCrossContentRiskView(
+                dsl
+                        .groupBy(Tables.contentCrossDailyStatistics.chainId)
+                        .build()
+                        .render(RenderingStrategies.MYBATIS3)
+        );
+    }
 
 }

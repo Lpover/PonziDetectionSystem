@@ -20,5 +20,6 @@ public class Tables {
     public static final PlatformDailyStatisticsDynamicSqlSupport.PlatformDailyStatistics platformDailyStatistics = PlatformDailyStatisticsDynamicSqlSupport.platformDailyStatistics;
     public static final RiskReportDynamicSqlSupport.RiskReport riskReport = RiskReportDynamicSqlSupport.riskReport;
     public static final ContentRiskStatisticsDynamicSqlSupport.ContentRiskStatistics contentRiskStatistics = ContentRiskStatisticsDynamicSqlSupport.contentRiskStatistics;
+    public static final ContentCrossDailyStatisticsDynamicSqlSupport.ContentCrossDailyStatistics contentCrossDailyStatistics = ContentCrossDailyStatisticsDynamicSqlSupport.contentCrossDailyStatistics;
 
 }

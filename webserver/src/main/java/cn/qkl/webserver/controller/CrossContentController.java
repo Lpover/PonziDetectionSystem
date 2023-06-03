@@ -5,7 +5,10 @@ import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.dto.cross.CrossContentListQueryDTO;
+import cn.qkl.webserver.dto.cross.CrossContentRiskViewDTO;
+import cn.qkl.webserver.service.CrossContentDailyStatisticsService;
 import cn.qkl.webserver.service.CrossContentService;
+import cn.qkl.webserver.vo.cross.CrossContentRiskViewVO;
 import cn.qkl.webserver.vo.cross.CrossContentVO;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
@@ -17,6 +20,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @title:
@@ -37,10 +42,19 @@ public class CrossContentController {
     @Autowired
     private CrossContentService crossContentService;
 
+    @Autowired
+    private CrossContentDailyStatisticsService crossContentDailyStatisticsService;
+
     @ApiOperation("跨链风险数字内容列表")
     @GetMapping("content/list")
     public BaseResult<PageVO<CrossContentVO>> getCrossContentList(@Validated CrossContentListQueryDTO dto) {
         return BaseResult.ok(crossContentService.getCrossContentList(dto));
+    }
+
+    @ApiOperation("跨链风险视图")
+    @GetMapping("content/risk/view")
+    public BaseResult<List<CrossContentRiskViewVO>> getCrossContentRiskView(@Validated CrossContentRiskViewDTO dto) {
+        return BaseResult.ok(crossContentDailyStatisticsService.getCrossContentRiskView(dto));
     }
 
 }
