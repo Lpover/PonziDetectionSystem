@@ -11,7 +11,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -32,19 +31,8 @@ import org.springframework.web.bind.annotation.*;
 @Role
 public class UserController {
 
-    //    @LoadBalanced
     @Autowired
     private UserService userService;
-
-    @Value("${webserver.alias:kknone}")
-    public String webServerAlias;
-
-    @Value("${webserver.ag:100}")
-    public int webServerAge;
-
-    public void testAge() {
-        System.out.println(webServerAge);
-    }
 
     @ApiOperation("登录")
     @PostMapping("login")
@@ -57,5 +45,4 @@ public class UserController {
     public BaseResult<UserInfoVO> getUserInfo() {
         return BaseResult.ok(userService.getUserInfo());
     }
-
 }

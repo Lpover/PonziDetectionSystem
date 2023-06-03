@@ -14,8 +14,6 @@ public class TokenBean {
     // 随机值
     private String uuid;
 
-//    private RoleEnum userRole;
-
     public TokenBean(long roleId) {
         this.roleId = roleId;
     }
