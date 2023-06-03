@@ -81,7 +81,6 @@ public class PlatformService {
     }
     public void addPlatform(AddPlatformDTO dto){
         Platform platform=new Platform();
-//        platform.setId(SnowflakeIdUtil.generateId());
         platform.setId(UuidUtil.getTimeBasedUuid().node());
         platform.setName(dto.getName());
         platform.setUrl(dto.getUrl());

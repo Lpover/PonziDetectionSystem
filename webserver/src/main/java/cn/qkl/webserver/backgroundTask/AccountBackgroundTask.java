@@ -43,7 +43,7 @@ public class AccountBackgroundTask implements BackgroundTask {
 
     @Override
     public String getName() {
-        return StatisticsBackgroundTask.class.getName();
+        return ContentCrossInsertBackgroundTask.class.getName();
     }
 
     @Override
