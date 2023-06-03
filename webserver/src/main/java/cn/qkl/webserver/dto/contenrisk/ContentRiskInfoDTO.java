@@ -32,4 +32,7 @@ public class ContentRiskInfoDTO extends PageDTO {
 
     @ApiModelProperty("风险属性:1 可嵌套，2可编程，不传表示都选")
     private List<Integer> riskType;
+
+    @ApiModelProperty("关键词")
+    private String keyWord;
 }

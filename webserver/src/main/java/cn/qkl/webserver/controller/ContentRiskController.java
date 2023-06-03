@@ -34,7 +34,7 @@ public class ContentRiskController {
 //    @LoadBalanced
     @Autowired
     private ContentRiskService contentRiskService;
-    @ApiOperation("获取分页列表信息")
+    @ApiOperation("最新风险列表")
     @GetMapping("contentrisk/info")
     public BaseResult<PageVO<ContentRiskInfoVO>> getContentRiskInfo(@Validated ContentRiskInfoDTO dto) {
         return BaseResult.ok(contentRiskService.getContentRiskInfo(dto));
