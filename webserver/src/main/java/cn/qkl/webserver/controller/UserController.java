@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.*;
 @ApiSupport(author = "wx")
 @RequestMapping("user")
 @RefreshScope
-@Role
 public class UserController {
 
     @Autowired
@@ -36,13 +35,14 @@ public class UserController {
 
     @ApiOperation("登录")
     @PostMapping("login")
+    @Role
     public BaseResult<String> emailLogin(@RequestBody @Validated LoginDTO dto) {
         return BaseResult.ok(userService.emailLogin(dto));
     }
 
-    @ApiOperation("获取个人信息")
-    @GetMapping("info")
-    public BaseResult<UserInfoVO> getUserInfo() {
-        return BaseResult.ok(userService.getUserInfo());
-    }
+//    @ApiOperation("获取个人信息")
+//    @GetMapping("info")
+//    public BaseResult<UserInfoVO> getUserInfo() {
+//        return BaseResult.ok(userService.getUserInfo());
+//    }
 }

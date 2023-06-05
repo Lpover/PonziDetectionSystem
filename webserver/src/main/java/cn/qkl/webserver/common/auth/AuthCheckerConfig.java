@@ -2,7 +2,7 @@ package cn.qkl.webserver.common.auth;
 
 import cn.qkl.common.framework.auth.AuthChecker;
 import cn.qkl.common.framework.auth.TokenBean;
-import cn.qkl.common.framework.auth.RoleType;
+import cn.qkl.common.framework.auth.BaseRole;
 import cn.qkl.common.framework.exception.BusinessException;
 import cn.qkl.common.framework.exception.UnauthorizedException;
 import cn.qkl.common.repository.Tables;
@@ -22,34 +22,19 @@ public class AuthCheckerConfig implements AuthChecker {
 
     @Override
     public Object getUser(TokenBean tokenBean) {
-        if (RoleEnum.RoleTypeEnum.USER.getRoleType().equals(tokenBean.getRoleType())) {
-            User user = userDao.selectOne(c -> c
-                    .where(Tables.user.userId, isEqualTo(tokenBean.getRoleId()))
-            ).orElseThrow(() -> new BusinessException(BusinessStatus.User_Not_EXISTS));
-            if (user == null) {
-                throw new UnauthorizedException(BusinessStatus.ACCOUNT_EXCEPTION.getCode());
-            }
-            return user;
-        } else if (RoleEnum.RoleTypeEnum.ADMIN.getRoleType().equals(tokenBean.getRoleType())) {
-            User user = userDao.selectOne(c -> c
-                    .where(Tables.user.userId, isEqualTo(tokenBean.getRoleId()))
-            ).orElseThrow(() -> new BusinessException(BusinessStatus.User_Not_EXISTS));
-            if (user == null) {
-                throw new UnauthorizedException(BusinessStatus.ACCOUNT_EXCEPTION.getCode());
-            }
-            return user;
-        } else {
-            throw new UnauthorizedException(BusinessStatus.UNAUTHORIZED.getCode());
-        }
+        User user = userDao.selectOne(c -> c
+                .where(Tables.user.id, isEqualTo(tokenBean.getRoleId()))
+        ).orElseThrow(() -> new BusinessException(BusinessStatus.UNAUTHORIZED));
+        return user;
     }
 
     @Override
-    public Class<? extends RoleType> getRole(Object roleModel, TokenBean tokenBean) {
+    public Class<? extends BaseRole> getRole(Object roleModel, TokenBean tokenBean) {
         // 表示从数据库中获取的用户角色(当前登录用户的实际角色)
         if (RoleEnum.RoleTypeEnum.USER.getRoleType().equals(tokenBean.getRoleType())) {
-            return RoleEnum.UserRole.class;
+            return RoleEnum.UserBaseRole.class;
         } else if (RoleEnum.RoleTypeEnum.ADMIN.getRoleType().equals(tokenBean.getRoleType())) {
-            return RoleEnum.AdminRole.class;
+            return RoleEnum.AdminBaseRole.class;
         } else {
             throw new UnauthorizedException(BusinessStatus.UNAUTHORIZED.getCode());
         }

@@ -44,7 +44,6 @@ public class ContentCrossStatisticsInsertBackgroundTask implements BackgroundTas
 
         //延迟至第二天凌晨1点开始执行
         return end.getTime() - start.getTime();
-//        return 10*1000;
     }
 
     @Override

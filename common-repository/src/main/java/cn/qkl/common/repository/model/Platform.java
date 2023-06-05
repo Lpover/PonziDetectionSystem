@@ -1,5 +1,6 @@
 package cn.qkl.common.repository.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.annotation.Generated;
 
@@ -69,6 +70,12 @@ public class Platform {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Date updateTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private BigDecimal riskIndex;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Long hotness;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
@@ -422,6 +429,38 @@ public class Platform {
         this.updateTime = updateTime;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public BigDecimal getRiskIndex() {
+        return riskIndex;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Platform withRiskIndex(BigDecimal riskIndex) {
+        this.setRiskIndex(riskIndex);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setRiskIndex(BigDecimal riskIndex) {
+        this.riskIndex = riskIndex;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Long getHotness() {
+        return hotness;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Platform withHotness(Long hotness) {
+        this.setHotness(hotness);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setHotness(Long hotness) {
+        this.hotness = hotness;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -451,6 +490,8 @@ public class Platform {
         sb.append(", lowContentNum=").append(lowContentNum);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", riskIndex=").append(riskIndex);
+        sb.append(", hotness=").append(hotness);
         sb.append("]");
         return sb.toString();
     }

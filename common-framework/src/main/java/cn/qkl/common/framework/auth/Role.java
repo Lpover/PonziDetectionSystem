@@ -14,5 +14,5 @@ import java.lang.annotation.*;
 @Inherited
 public @interface Role {
     // 默认空数组，表示不需要登录
-    Class<? extends RoleType>[] roles() default {};
+    Class<? extends BaseRole>[] roles() default {};
 }

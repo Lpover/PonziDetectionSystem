@@ -1,7 +1,7 @@
 package cn.qkl.webserver.common.auth;
 
 
-import cn.qkl.common.framework.auth.RoleType;
+import cn.qkl.common.framework.auth.BaseRole;
 
 /**
  * @title:
@@ -28,11 +28,11 @@ public class RoleEnum {
     }
 
     //所有用户
-    public interface UserRole extends RoleType {
+    public interface UserBaseRole extends BaseRole {
     }
 
     //所有管理员
-    public interface AdminRole extends RoleType {
+    public interface AdminBaseRole extends BaseRole {
     }
 
 }

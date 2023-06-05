@@ -8,5 +8,5 @@ package cn.qkl.common.framework.auth;
  *
  * @author zyl
  */
-public interface RoleType {
+public interface BaseRole {
 }

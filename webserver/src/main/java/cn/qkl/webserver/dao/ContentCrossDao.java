@@ -8,6 +8,7 @@ import cn.qkl.webserver.common.enums.ContentRiskLevelEnum;
 import cn.qkl.webserver.dto.cross.CrossContentListQueryDTO;
 import cn.qkl.webserver.vo.cross.CrossContentVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.mybatis.dynamic.sql.SqlBuilder;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
@@ -59,7 +60,8 @@ public interface ContentCrossDao extends ContentCrossMapper {
      * @param dto
      * @return
      */
-    default Long getCrossContentList_COUNT(CrossContentListQueryDTO dto) {
+    default Long getCrossContentListCount(CrossContentListQueryDTO dto) {
+
         return this.count(c -> c
                 .where(Tables.contentCross.riskLevel, isInWhenPresent(dto.getRiskLevelList()))
                 //不包括无风险

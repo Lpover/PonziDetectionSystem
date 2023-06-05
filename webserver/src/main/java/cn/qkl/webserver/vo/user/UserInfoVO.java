@@ -19,7 +19,7 @@ public class UserInfoVO {
     private Long userId;
 
     @ApiModelProperty("角色")
-    private Byte roleType;
+    private Integer roleType;
 
     @ApiModelProperty("昵称")
     private String nickName;

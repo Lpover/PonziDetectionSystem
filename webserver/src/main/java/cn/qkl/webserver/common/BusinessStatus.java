@@ -16,9 +16,9 @@ public enum BusinessStatus implements BaseCode {
 
     // 2xxx common
     STATUS_ERROR("2001", "Status error"),
-    ACCOUNT_EXCEPTION("2002", "Account exception"),
+    ACCOUNT_EXCEPTION("2002", "账号异常"),
     LOGIN_EXCEPTION("2003", "The account has been forced offline or multi-login"),
-    UNAUTHORIZED("2004", "Unauthorized"),
+    UNAUTHORIZED("2004", "未授权"),
 
     ;
     private static final String PREFIX = "USER";

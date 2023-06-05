@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface PlatformDailyStatisticsMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, platformId, highRiskNum, middleRiskNum, lowRiskNum, contentSum, contentRiskSum, createTime, updateTime, highRiskTx, middleRiskTx, lowRiskTx, storageRatio, carrierRatio, categoryRatio, storageProviderName, carrierName, categoryName, riskIndex);
+    BasicColumn[] selectList = BasicColumn.columnList(id, platformId, highRiskNum, middleRiskNum, lowRiskNum, contentSum, contentRiskSum, highRiskTx, middleRiskTx, lowRiskTx, riskIndex, updateTime, createTime, hotnessChange24h, hotnessChange7d, hotnessChange30d, hotness24h);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -68,18 +68,16 @@ public interface PlatformDailyStatisticsMapper {
         @Result(column="low_risk_num", property="lowRiskNum", jdbcType=JdbcType.INTEGER),
         @Result(column="content_sum", property="contentSum", jdbcType=JdbcType.INTEGER),
         @Result(column="content_risk_sum", property="contentRiskSum", jdbcType=JdbcType.INTEGER),
-        @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="high_risk_tx", property="highRiskTx", jdbcType=JdbcType.INTEGER),
         @Result(column="middle_risk_tx", property="middleRiskTx", jdbcType=JdbcType.INTEGER),
         @Result(column="low_risk_tx", property="lowRiskTx", jdbcType=JdbcType.INTEGER),
-        @Result(column="storage_ratio", property="storageRatio", jdbcType=JdbcType.INTEGER),
-        @Result(column="carrier_ratio", property="carrierRatio", jdbcType=JdbcType.INTEGER),
-        @Result(column="category_ratio", property="categoryRatio", jdbcType=JdbcType.INTEGER),
-        @Result(column="storage_ provider_name", property="storageProviderName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="carrier_name", property="carrierName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="category_name", property="categoryName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="risk_index", property="riskIndex", jdbcType=JdbcType.INTEGER)
+        @Result(column="risk_index", property="riskIndex", jdbcType=JdbcType.INTEGER),
+        @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="hotness_change_24h", property="hotnessChange24h", jdbcType=JdbcType.DECIMAL),
+        @Result(column="hotness_change_7d", property="hotnessChange7d", jdbcType=JdbcType.DECIMAL),
+        @Result(column="hotness_change_30d", property="hotnessChange30d", jdbcType=JdbcType.DECIMAL),
+        @Result(column="hotness_24h", property="hotness24h", jdbcType=JdbcType.BIGINT)
     })
     List<PlatformDailyStatistics> selectMany(SelectStatementProvider selectStatement);
 
@@ -114,18 +112,16 @@ public interface PlatformDailyStatisticsMapper {
             .map(lowRiskNum).toProperty("lowRiskNum")
             .map(contentSum).toProperty("contentSum")
             .map(contentRiskSum).toProperty("contentRiskSum")
-            .map(createTime).toProperty("createTime")
-            .map(updateTime).toProperty("updateTime")
             .map(highRiskTx).toProperty("highRiskTx")
             .map(middleRiskTx).toProperty("middleRiskTx")
             .map(lowRiskTx).toProperty("lowRiskTx")
-            .map(storageRatio).toProperty("storageRatio")
-            .map(carrierRatio).toProperty("carrierRatio")
-            .map(categoryRatio).toProperty("categoryRatio")
-            .map(storageProviderName).toProperty("storageProviderName")
-            .map(carrierName).toProperty("carrierName")
-            .map(categoryName).toProperty("categoryName")
             .map(riskIndex).toProperty("riskIndex")
+            .map(updateTime).toProperty("updateTime")
+            .map(createTime).toProperty("createTime")
+            .map(hotnessChange24h).toProperty("hotnessChange24h")
+            .map(hotnessChange7d).toProperty("hotnessChange7d")
+            .map(hotnessChange30d).toProperty("hotnessChange30d")
+            .map(hotness24h).toProperty("hotness24h")
         );
     }
 
@@ -139,18 +135,16 @@ public interface PlatformDailyStatisticsMapper {
             .map(lowRiskNum).toProperty("lowRiskNum")
             .map(contentSum).toProperty("contentSum")
             .map(contentRiskSum).toProperty("contentRiskSum")
-            .map(createTime).toProperty("createTime")
-            .map(updateTime).toProperty("updateTime")
             .map(highRiskTx).toProperty("highRiskTx")
             .map(middleRiskTx).toProperty("middleRiskTx")
             .map(lowRiskTx).toProperty("lowRiskTx")
-            .map(storageRatio).toProperty("storageRatio")
-            .map(carrierRatio).toProperty("carrierRatio")
-            .map(categoryRatio).toProperty("categoryRatio")
-            .map(storageProviderName).toProperty("storageProviderName")
-            .map(carrierName).toProperty("carrierName")
-            .map(categoryName).toProperty("categoryName")
             .map(riskIndex).toProperty("riskIndex")
+            .map(updateTime).toProperty("updateTime")
+            .map(createTime).toProperty("createTime")
+            .map(hotnessChange24h).toProperty("hotnessChange24h")
+            .map(hotnessChange7d).toProperty("hotnessChange7d")
+            .map(hotnessChange30d).toProperty("hotnessChange30d")
+            .map(hotness24h).toProperty("hotness24h")
         );
     }
 
@@ -164,18 +158,16 @@ public interface PlatformDailyStatisticsMapper {
             .map(lowRiskNum).toPropertyWhenPresent("lowRiskNum", record::getLowRiskNum)
             .map(contentSum).toPropertyWhenPresent("contentSum", record::getContentSum)
             .map(contentRiskSum).toPropertyWhenPresent("contentRiskSum", record::getContentRiskSum)
-            .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
-            .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
             .map(highRiskTx).toPropertyWhenPresent("highRiskTx", record::getHighRiskTx)
             .map(middleRiskTx).toPropertyWhenPresent("middleRiskTx", record::getMiddleRiskTx)
             .map(lowRiskTx).toPropertyWhenPresent("lowRiskTx", record::getLowRiskTx)
-            .map(storageRatio).toPropertyWhenPresent("storageRatio", record::getStorageRatio)
-            .map(carrierRatio).toPropertyWhenPresent("carrierRatio", record::getCarrierRatio)
-            .map(categoryRatio).toPropertyWhenPresent("categoryRatio", record::getCategoryRatio)
-            .map(storageProviderName).toPropertyWhenPresent("storageProviderName", record::getStorageProviderName)
-            .map(carrierName).toPropertyWhenPresent("carrierName", record::getCarrierName)
-            .map(categoryName).toPropertyWhenPresent("categoryName", record::getCategoryName)
             .map(riskIndex).toPropertyWhenPresent("riskIndex", record::getRiskIndex)
+            .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
+            .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
+            .map(hotnessChange24h).toPropertyWhenPresent("hotnessChange24h", record::getHotnessChange24h)
+            .map(hotnessChange7d).toPropertyWhenPresent("hotnessChange7d", record::getHotnessChange7d)
+            .map(hotnessChange30d).toPropertyWhenPresent("hotnessChange30d", record::getHotnessChange30d)
+            .map(hotness24h).toPropertyWhenPresent("hotness24h", record::getHotness24h)
         );
     }
 
@@ -215,18 +207,16 @@ public interface PlatformDailyStatisticsMapper {
                 .set(lowRiskNum).equalTo(record::getLowRiskNum)
                 .set(contentSum).equalTo(record::getContentSum)
                 .set(contentRiskSum).equalTo(record::getContentRiskSum)
-                .set(createTime).equalTo(record::getCreateTime)
-                .set(updateTime).equalTo(record::getUpdateTime)
                 .set(highRiskTx).equalTo(record::getHighRiskTx)
                 .set(middleRiskTx).equalTo(record::getMiddleRiskTx)
                 .set(lowRiskTx).equalTo(record::getLowRiskTx)
-                .set(storageRatio).equalTo(record::getStorageRatio)
-                .set(carrierRatio).equalTo(record::getCarrierRatio)
-                .set(categoryRatio).equalTo(record::getCategoryRatio)
-                .set(storageProviderName).equalTo(record::getStorageProviderName)
-                .set(carrierName).equalTo(record::getCarrierName)
-                .set(categoryName).equalTo(record::getCategoryName)
-                .set(riskIndex).equalTo(record::getRiskIndex);
+                .set(riskIndex).equalTo(record::getRiskIndex)
+                .set(updateTime).equalTo(record::getUpdateTime)
+                .set(createTime).equalTo(record::getCreateTime)
+                .set(hotnessChange24h).equalTo(record::getHotnessChange24h)
+                .set(hotnessChange7d).equalTo(record::getHotnessChange7d)
+                .set(hotnessChange30d).equalTo(record::getHotnessChange30d)
+                .set(hotness24h).equalTo(record::getHotness24h);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -238,18 +228,16 @@ public interface PlatformDailyStatisticsMapper {
                 .set(lowRiskNum).equalToWhenPresent(record::getLowRiskNum)
                 .set(contentSum).equalToWhenPresent(record::getContentSum)
                 .set(contentRiskSum).equalToWhenPresent(record::getContentRiskSum)
-                .set(createTime).equalToWhenPresent(record::getCreateTime)
-                .set(updateTime).equalToWhenPresent(record::getUpdateTime)
                 .set(highRiskTx).equalToWhenPresent(record::getHighRiskTx)
                 .set(middleRiskTx).equalToWhenPresent(record::getMiddleRiskTx)
                 .set(lowRiskTx).equalToWhenPresent(record::getLowRiskTx)
-                .set(storageRatio).equalToWhenPresent(record::getStorageRatio)
-                .set(carrierRatio).equalToWhenPresent(record::getCarrierRatio)
-                .set(categoryRatio).equalToWhenPresent(record::getCategoryRatio)
-                .set(storageProviderName).equalToWhenPresent(record::getStorageProviderName)
-                .set(carrierName).equalToWhenPresent(record::getCarrierName)
-                .set(categoryName).equalToWhenPresent(record::getCategoryName)
-                .set(riskIndex).equalToWhenPresent(record::getRiskIndex);
+                .set(riskIndex).equalToWhenPresent(record::getRiskIndex)
+                .set(updateTime).equalToWhenPresent(record::getUpdateTime)
+                .set(createTime).equalToWhenPresent(record::getCreateTime)
+                .set(hotnessChange24h).equalToWhenPresent(record::getHotnessChange24h)
+                .set(hotnessChange7d).equalToWhenPresent(record::getHotnessChange7d)
+                .set(hotnessChange30d).equalToWhenPresent(record::getHotnessChange30d)
+                .set(hotness24h).equalToWhenPresent(record::getHotness24h);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -261,18 +249,16 @@ public interface PlatformDailyStatisticsMapper {
             .set(lowRiskNum).equalTo(record::getLowRiskNum)
             .set(contentSum).equalTo(record::getContentSum)
             .set(contentRiskSum).equalTo(record::getContentRiskSum)
-            .set(createTime).equalTo(record::getCreateTime)
-            .set(updateTime).equalTo(record::getUpdateTime)
             .set(highRiskTx).equalTo(record::getHighRiskTx)
             .set(middleRiskTx).equalTo(record::getMiddleRiskTx)
             .set(lowRiskTx).equalTo(record::getLowRiskTx)
-            .set(storageRatio).equalTo(record::getStorageRatio)
-            .set(carrierRatio).equalTo(record::getCarrierRatio)
-            .set(categoryRatio).equalTo(record::getCategoryRatio)
-            .set(storageProviderName).equalTo(record::getStorageProviderName)
-            .set(carrierName).equalTo(record::getCarrierName)
-            .set(categoryName).equalTo(record::getCategoryName)
             .set(riskIndex).equalTo(record::getRiskIndex)
+            .set(updateTime).equalTo(record::getUpdateTime)
+            .set(createTime).equalTo(record::getCreateTime)
+            .set(hotnessChange24h).equalTo(record::getHotnessChange24h)
+            .set(hotnessChange7d).equalTo(record::getHotnessChange7d)
+            .set(hotnessChange30d).equalTo(record::getHotnessChange30d)
+            .set(hotness24h).equalTo(record::getHotness24h)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -286,18 +272,16 @@ public interface PlatformDailyStatisticsMapper {
             .set(lowRiskNum).equalToWhenPresent(record::getLowRiskNum)
             .set(contentSum).equalToWhenPresent(record::getContentSum)
             .set(contentRiskSum).equalToWhenPresent(record::getContentRiskSum)
-            .set(createTime).equalToWhenPresent(record::getCreateTime)
-            .set(updateTime).equalToWhenPresent(record::getUpdateTime)
             .set(highRiskTx).equalToWhenPresent(record::getHighRiskTx)
             .set(middleRiskTx).equalToWhenPresent(record::getMiddleRiskTx)
             .set(lowRiskTx).equalToWhenPresent(record::getLowRiskTx)
-            .set(storageRatio).equalToWhenPresent(record::getStorageRatio)
-            .set(carrierRatio).equalToWhenPresent(record::getCarrierRatio)
-            .set(categoryRatio).equalToWhenPresent(record::getCategoryRatio)
-            .set(storageProviderName).equalToWhenPresent(record::getStorageProviderName)
-            .set(carrierName).equalToWhenPresent(record::getCarrierName)
-            .set(categoryName).equalToWhenPresent(record::getCategoryName)
             .set(riskIndex).equalToWhenPresent(record::getRiskIndex)
+            .set(updateTime).equalToWhenPresent(record::getUpdateTime)
+            .set(createTime).equalToWhenPresent(record::getCreateTime)
+            .set(hotnessChange24h).equalToWhenPresent(record::getHotnessChange24h)
+            .set(hotnessChange7d).equalToWhenPresent(record::getHotnessChange7d)
+            .set(hotnessChange30d).equalToWhenPresent(record::getHotnessChange30d)
+            .set(hotness24h).equalToWhenPresent(record::getHotness24h)
             .where(id, isEqualTo(record::getId))
         );
     }
