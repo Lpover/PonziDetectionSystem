@@ -2,12 +2,12 @@ package cn.qkl.webserver.controller;
 
 import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
-import cn.qkl.common.framework.response.PageVO;
-import cn.qkl.webserver.dto.riskaccount.AccountInfoListQueryDTO;
+import cn.qkl.webserver.dto.platformcockpit.HotnessRankingViewDTO;
+import cn.qkl.webserver.dto.platformcockpit.PlatformAndTimeSelectionDTO;
+import cn.qkl.webserver.dto.platformcockpit.PlatformSelectionDTO;
 import cn.qkl.webserver.dto.riskaccount.AccountNumDTO;
-import cn.qkl.webserver.service.RiskAccountService;
-import cn.qkl.webserver.vo.riskAccount.AccountInfoVO;
-import cn.qkl.webserver.vo.riskAccount.AccountNumVO;
+import cn.qkl.webserver.service.PlatformCockpitService;
+import cn.qkl.webserver.vo.platformcockpit.*;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,17 +37,41 @@ public class PlatformCockpitController {
 
     //    @LoadBalanced
     @Autowired
-    RiskAccountService riskAccountService;
+    PlatformCockpitService platformCockpitService;
 
+    //平台风险内容数量变化趋势视图
     @ApiOperation("风险内容数量变化趋势视图")
     @GetMapping("volumetrends")
-    public BaseResult<AccountInfoVO> getVolumeTrends(@Validated AccountInfoListQueryDTO dto) {
-        return BaseResult.ok(riskAccountService.getAccountInfoList(dto));
-    }//获得报表信息
-    @ApiOperation("高中低风险账户信息")
-    @GetMapping("riskaccount/accountnum")
-    public BaseResult<AccountNumVO> accountNum(@Validated AccountNumDTO dto) {
-        return BaseResult.ok(riskAccountService.getAccountNum(dto));
+    public BaseResult<VolumeTrendsVO> getVolumeTrends(@Validated PlatformAndTimeSelectionDTO dto) {
+        return BaseResult.ok(new VolumeTrendsVO());
+    }
+
+    //平台风险指数变化趋势视图
+    @ApiOperation("平台风险指数变化趋势视图")
+    @GetMapping("indextrends")
+    public BaseResult<IndexTrendsVO> getIndexTrends(@Validated PlatformAndTimeSelectionDTO dto) {
+        return BaseResult.ok(new IndexTrendsVO());
+    }
+
+    //平台风险账户top10视图
+    @ApiOperation("平台风险账户top10视图")
+    @GetMapping("riskaccount")
+    public BaseResult<PlatformRiskAccountVO> getRiskAccount(@Validated PlatformSelectionDTO dto) {
+        return BaseResult.ok(new PlatformRiskAccountVO());
+    }
+
+    //平台风险内容top10视图
+    @ApiOperation("平台风险内容top10视图")
+    @GetMapping("riskcontent")
+    public BaseResult<PlatformRiskContentVO> getRiskContent(@Validated PlatformSelectionDTO dto) {
+        return BaseResult.ok(new PlatformRiskContentVO());
+    }
+
+    //NFT、WEB3热度排行视图
+    @ApiOperation("NFT、WEB3热度排行视图")
+    @GetMapping("hotnessrankingview")
+    public BaseResult<HotnessRankingViewVO> getHotnessRankingView(@Validated HotnessRankingViewDTO dto) {
+        return BaseResult.ok(new HotnessRankingViewVO());
     }
 
 }
