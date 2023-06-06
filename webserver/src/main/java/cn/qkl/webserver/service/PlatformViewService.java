@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 @RefreshScope
-public class PlatformCockpitService {
+public class PlatformViewService {
     @Autowired
     private PlatformDao platformDao;
 

@@ -2,12 +2,11 @@ package cn.qkl.webserver.controller;
 
 import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
-import cn.qkl.webserver.dto.platformcockpit.HotnessRankingViewDTO;
-import cn.qkl.webserver.dto.platformcockpit.PlatformAndTimeSelectionDTO;
-import cn.qkl.webserver.dto.platformcockpit.PlatformSelectionDTO;
-import cn.qkl.webserver.dto.riskaccount.AccountNumDTO;
-import cn.qkl.webserver.service.PlatformCockpitService;
-import cn.qkl.webserver.vo.platformcockpit.*;
+import cn.qkl.webserver.dto.platformview.HotnessRankingViewDTO;
+import cn.qkl.webserver.dto.platformview.PlatformAndTimeSelectionDTO;
+import cn.qkl.webserver.dto.platformview.PlatformSelectionDTO;
+import cn.qkl.webserver.service.PlatformViewService;
+import cn.qkl.webserver.vo.platformview.*;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,11 +32,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("platformcockpit")
 @RefreshScope
 @Role
-public class PlatformCockpitController {
+public class PlatformViewController {
 
     //    @LoadBalanced
     @Autowired
-    PlatformCockpitService platformCockpitService;
+    PlatformViewService platformViewService;
 
     //平台风险内容数量变化趋势视图
     @ApiOperation("风险内容数量变化趋势视图")
@@ -47,7 +46,7 @@ public class PlatformCockpitController {
     }
 
     //平台风险指数变化趋势视图
-    @ApiOperation("平台风险指数变化趋势视图")
+    @ApiOperation("风险指数变化趋势视图")
     @GetMapping("indextrends")
     public BaseResult<IndexTrendsVO> getIndexTrends(@Validated PlatformAndTimeSelectionDTO dto) {
         return BaseResult.ok(new IndexTrendsVO());

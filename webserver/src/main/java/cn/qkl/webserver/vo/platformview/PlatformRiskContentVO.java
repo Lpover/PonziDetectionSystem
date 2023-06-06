@@ -1,4 +1,4 @@
-package cn.qkl.webserver.vo.platformcockpit;
+package cn.qkl.webserver.vo.platformview;
 
 import lombok.Data;
 
@@ -9,6 +9,6 @@ import lombok.Data;
  * @wiki
  */
 @Data
-public class HotnessRankingViewVO {
+public class PlatformRiskContentVO {
 
 }

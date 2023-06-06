@@ -25,9 +25,6 @@ public class PlatformDairyStatisticsInsertBackgroundTask implements BackgroundTa
     @Autowired
     private PlatformDailyStatisticsDao platformDailyStatisticsDao;
 
-    /**
-     * 间隔1天
-     */
     @Override
     public long getPeriod() {
         return 24 * 60 * 60 * 1000;

@@ -1,4 +1,4 @@
-package cn.qkl.webserver.dto.platformcockpit;
+package cn.qkl.webserver.dto.platformview;
 
 import lombok.Data;
 
