@@ -53,7 +53,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         }
 
         // 如果角色为空，表示不需要认证
-        Class<? extends RoleType>[] roles = role.roles();
+        Class<? extends BaseRole>[] roles = role.roles();
         if (roles.length == 0) {
             return true;
         }

@@ -4,6 +4,7 @@ package cn.qkl.webserver.controller;
 import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.common.framework.response.PageVO;
+import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dto.dynamic.DynamicContentExportDTO;
 import cn.qkl.webserver.dto.dynamic.DynamicContentListQueryDTO;
 import cn.qkl.webserver.dto.dynamic.ManualReviseDynamicTypeDTO;
@@ -34,7 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 @ApiSupport(author = "wx")
 @RequestMapping("dynamic")
 @RefreshScope
-@Role
+@Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
 public class DynamicContentController {
 
     @Autowired

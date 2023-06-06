@@ -8,6 +8,7 @@ import cn.qkl.common.repository.model.User;
 import cn.qkl.webserver.common.BusinessStatus;
 import cn.qkl.webserver.common.ServerConfig;
 import cn.qkl.webserver.common.auth.RoleEnum;
+import cn.qkl.webserver.common.enums.UserRoleEnum;
 import cn.qkl.webserver.dao.UserDao;
 import cn.qkl.webserver.dto.user.LoginDTO;
 import cn.qkl.webserver.vo.user.UserInfoVO;
@@ -59,12 +60,12 @@ public class UserService {
     public String emailLogin(LoginDTO dto) {
         //判断账号密码是否正确
         User user = userDao.selectOne(c -> c
-                .where(Tables.user.userNum, isEqualTo(dto.getUserNum()))
-                .and(Tables.user.userPwd, isEqualTo(dto.getUserPwd()))
+                .where(Tables.user.phone, isEqualTo(dto.getPhone()))
+                .and(Tables.user.pwd, isEqualTo(dto.getPwd()))
         ).orElseThrow(() -> new BusinessException(BusinessStatus.EMAIL_OR_PASSWORD_IS_WRONG));
 
         //生成token
-        TokenBean tokenBean = new TokenBean(user.getUserId()).withRoleType(RoleEnum.RoleTypeEnum.USER.getRoleType()).withUuid();
+        TokenBean tokenBean = new TokenBean(user.getId()).withRoleType(RoleEnum.RoleTypeEnum.valueOf(UserRoleEnum.valueOf(user.getRole())).getRoleType()).withUuid();
         return TokenHandler.generateToken(tokenBean);
     }
 
@@ -80,13 +81,8 @@ public class UserService {
     public UserInfoVO getUserInfo() {
         //判断账号密码是否正确
         User user = userDao.selectOne(c -> c
-                .where(Tables.user.userId, isEqualTo(TokenHandler.getUserId()))
+                .where(Tables.user.id, isEqualTo(TokenHandler.getUserId()))
         ).orElseThrow(() -> new BusinessException(BusinessStatus.User_Not_EXISTS));
-//        User user = new User();
-//        user.setUserNum(environment.getProperty("server.port")); # VM启动不行
-//        user.setUserNum(serverConfig.getIp());
-//        log.info("" + serverConfig.getIp());
-//        log.info(user.toString());
         return UserInfoVO.transform(user);
     }
 }

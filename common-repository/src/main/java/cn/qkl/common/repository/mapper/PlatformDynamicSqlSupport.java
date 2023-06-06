@@ -1,5 +1,6 @@
 package cn.qkl.common.repository.mapper;
 
+import java.math.BigDecimal;
 import java.sql.JDBCType;
 import java.util.Date;
 import javax.annotation.Generated;
@@ -77,6 +78,12 @@ public final class PlatformDynamicSqlSupport {
     public static final SqlColumn<Date> updateTime = platform.updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<BigDecimal> riskIndex = platform.riskIndex;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Long> hotness = platform.hotness;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class Platform extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -121,6 +128,10 @@ public final class PlatformDynamicSqlSupport {
         public final SqlColumn<Date> createTime = column("create_time", JDBCType.TIMESTAMP);
 
         public final SqlColumn<Date> updateTime = column("update_time", JDBCType.TIMESTAMP);
+
+        public final SqlColumn<BigDecimal> riskIndex = column("risk_index", JDBCType.DECIMAL);
+
+        public final SqlColumn<Long> hotness = column("hotness", JDBCType.BIGINT);
 
         public Platform() {
             super("platform");

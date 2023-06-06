@@ -14,6 +14,9 @@ public class ContentRiskStatistics {
     private Long num;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Long platformId;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Date createTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -68,6 +71,22 @@ public class ContentRiskStatistics {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Long getPlatformId() {
+        return platformId;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public ContentRiskStatistics withPlatformId(Long platformId) {
+        this.setPlatformId(platformId);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setPlatformId(Long platformId) {
+        this.platformId = platformId;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Date getCreateTime() {
         return createTime;
     }
@@ -109,6 +128,7 @@ public class ContentRiskStatistics {
         sb.append(", id=").append(id);
         sb.append(", categoryId=").append(categoryId);
         sb.append(", num=").append(num);
+        sb.append(", platformId=").append(platformId);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append("]");

@@ -9,15 +9,15 @@ public interface AuthChecker {
 
     Object getUser(final TokenBean tokenBean);
 
-    Class<? extends RoleType> getRole(Object user, final TokenBean tokenBean);
+    Class<? extends BaseRole> getRole(Object user, final TokenBean tokenBean);
 
     void customCheck(Object user, final TokenBean tokenBean);
 
-    default void check(final TokenBean tokenBean, Class<? extends RoleType>[] roles) {
+    default void check(final TokenBean tokenBean, Class<? extends BaseRole>[] roles) {
         Object user = getUser(tokenBean);
-        Class<? extends RoleType> roleClazz = getRole(user, tokenBean);
+        Class<? extends BaseRole> roleClazz = getRole(user, tokenBean);
         if (Arrays.stream(roles).noneMatch(role -> role.isAssignableFrom(roleClazz))) {
-            throw new UnauthorizedException("Unauthorized");
+            throw new UnauthorizedException("未授权");
         }
         customCheck(user, tokenBean);
     }

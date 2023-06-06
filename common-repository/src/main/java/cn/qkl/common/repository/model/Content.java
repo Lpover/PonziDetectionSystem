@@ -83,6 +83,12 @@ public class Content {
     private Integer riskType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer hotNum12h;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer hotNum24h;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
@@ -498,6 +504,38 @@ public class Content {
         this.riskType = riskType;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getHotNum12h() {
+        return hotNum12h;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Content withHotNum12h(Integer hotNum12h) {
+        this.setHotNum12h(hotNum12h);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setHotNum12h(Integer hotNum12h) {
+        this.hotNum12h = hotNum12h;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getHotNum24h() {
+        return hotNum24h;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Content withHotNum24h(Integer hotNum24h) {
+        this.setHotNum24h(hotNum24h);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setHotNum24h(Integer hotNum24h) {
+        this.hotNum24h = hotNum24h;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -531,6 +569,8 @@ public class Content {
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", riskType=").append(riskType);
+        sb.append(", hotNum12h=").append(hotNum12h);
+        sb.append(", hotNum24h=").append(hotNum24h);
         sb.append("]");
         return sb.toString();
     }

@@ -89,6 +89,12 @@ public final class ContentDynamicSqlSupport {
     public static final SqlColumn<Integer> riskType = content.riskType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Integer> hotNum12h = content.hotNum12h;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Integer> hotNum24h = content.hotNum24h;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class Content extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -141,6 +147,10 @@ public final class ContentDynamicSqlSupport {
         public final SqlColumn<Date> updateTime = column("update_time", JDBCType.TIMESTAMP);
 
         public final SqlColumn<Integer> riskType = column("risk_type", JDBCType.INTEGER);
+
+        public final SqlColumn<Integer> hotNum12h = column("hot_num_12h", JDBCType.INTEGER);
+
+        public final SqlColumn<Integer> hotNum24h = column("hot_num_24h", JDBCType.INTEGER);
 
         public Content() {
             super("content");

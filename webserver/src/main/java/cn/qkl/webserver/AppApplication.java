@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //@EnableWebMvc //会覆盖@EnableAutoConfiguration关于WebMvcAutoConfiguration的配置！从而导致所有的Date返回都变成时间戳。
 @SpringBootApplication(scanBasePackages = {"cn.qkl"})
 @MapperScan(nameGenerator = UniqueNameGenerator.class, basePackages = {"cn.qkl.webserver.*"})
-public class AppApplication implements WebMvcConfigurer {
+public class AppApplication {
 
     public static void main(String[] args) {
         try {
@@ -22,13 +22,4 @@ public class AppApplication implements WebMvcConfigurer {
         }
 
     }
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("doc.html")
-                .addResourceLocations("classpath:/META-INF/resources/");
-        registry.addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
-    }
-
 }

@@ -1,5 +1,6 @@
 package cn.qkl.common.repository.mapper;
 
+import java.math.BigDecimal;
 import java.sql.JDBCType;
 import java.util.Date;
 import javax.annotation.Generated;
@@ -32,12 +33,6 @@ public final class PlatformDailyStatisticsDynamicSqlSupport {
     public static final SqlColumn<Integer> contentRiskSum = platformDailyStatistics.contentRiskSum;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Date> createTime = platformDailyStatistics.createTime;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Date> updateTime = platformDailyStatistics.updateTime;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Integer> highRiskTx = platformDailyStatistics.highRiskTx;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -47,25 +42,25 @@ public final class PlatformDailyStatisticsDynamicSqlSupport {
     public static final SqlColumn<Integer> lowRiskTx = platformDailyStatistics.lowRiskTx;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Integer> storageRatio = platformDailyStatistics.storageRatio;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Integer> carrierRatio = platformDailyStatistics.carrierRatio;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Integer> categoryRatio = platformDailyStatistics.categoryRatio;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> storageProviderName = platformDailyStatistics.storageProviderName;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> carrierName = platformDailyStatistics.carrierName;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> categoryName = platformDailyStatistics.categoryName;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Integer> riskIndex = platformDailyStatistics.riskIndex;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Date> updateTime = platformDailyStatistics.updateTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Date> createTime = platformDailyStatistics.createTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<BigDecimal> hotnessChange24h = platformDailyStatistics.hotnessChange24h;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<BigDecimal> hotnessChange7d = platformDailyStatistics.hotnessChange7d;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<BigDecimal> hotnessChange30d = platformDailyStatistics.hotnessChange30d;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Long> hotness24h = platformDailyStatistics.hotness24h;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class PlatformDailyStatistics extends SqlTable {
@@ -83,29 +78,25 @@ public final class PlatformDailyStatisticsDynamicSqlSupport {
 
         public final SqlColumn<Integer> contentRiskSum = column("content_risk_sum", JDBCType.INTEGER);
 
-        public final SqlColumn<Date> createTime = column("create_time", JDBCType.TIMESTAMP);
-
-        public final SqlColumn<Date> updateTime = column("update_time", JDBCType.TIMESTAMP);
-
         public final SqlColumn<Integer> highRiskTx = column("high_risk_tx", JDBCType.INTEGER);
 
         public final SqlColumn<Integer> middleRiskTx = column("middle_risk_tx", JDBCType.INTEGER);
 
         public final SqlColumn<Integer> lowRiskTx = column("low_risk_tx", JDBCType.INTEGER);
 
-        public final SqlColumn<Integer> storageRatio = column("storage_ratio", JDBCType.INTEGER);
-
-        public final SqlColumn<Integer> carrierRatio = column("carrier_ratio", JDBCType.INTEGER);
-
-        public final SqlColumn<Integer> categoryRatio = column("category_ratio", JDBCType.INTEGER);
-
-        public final SqlColumn<String> storageProviderName = column("`storage_ provider_name`", JDBCType.VARCHAR);
-
-        public final SqlColumn<String> carrierName = column("carrier_name", JDBCType.VARCHAR);
-
-        public final SqlColumn<String> categoryName = column("category_name", JDBCType.VARCHAR);
-
         public final SqlColumn<Integer> riskIndex = column("risk_index", JDBCType.INTEGER);
+
+        public final SqlColumn<Date> updateTime = column("update_time", JDBCType.TIMESTAMP);
+
+        public final SqlColumn<Date> createTime = column("create_time", JDBCType.TIMESTAMP);
+
+        public final SqlColumn<BigDecimal> hotnessChange24h = column("hotness_change_24h", JDBCType.DECIMAL);
+
+        public final SqlColumn<BigDecimal> hotnessChange7d = column("hotness_change_7d", JDBCType.DECIMAL);
+
+        public final SqlColumn<BigDecimal> hotnessChange30d = column("hotness_change_30d", JDBCType.DECIMAL);
+
+        public final SqlColumn<Long> hotness24h = column("hotness_24h", JDBCType.BIGINT);
 
         public PlatformDailyStatistics() {
             super("platform_daily_statistics");

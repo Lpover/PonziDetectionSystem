@@ -20,6 +20,9 @@ public final class ContentRiskStatisticsDynamicSqlSupport {
     public static final SqlColumn<Long> num = contentRiskStatistics.num;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Long> platformId = contentRiskStatistics.platformId;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Date> createTime = contentRiskStatistics.createTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -32,6 +35,8 @@ public final class ContentRiskStatisticsDynamicSqlSupport {
         public final SqlColumn<Long> categoryId = column("category_id", JDBCType.BIGINT);
 
         public final SqlColumn<Long> num = column("num", JDBCType.BIGINT);
+
+        public final SqlColumn<Long> platformId = column("platform_id", JDBCType.BIGINT);
 
         public final SqlColumn<Date> createTime = column("create_time", JDBCType.TIMESTAMP);
 

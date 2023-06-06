@@ -3,7 +3,7 @@ package cn.qkl.webserver.dto.user;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
 
 /**
  * @title:
@@ -13,9 +13,11 @@ import javax.validation.constraints.Email;
  */
 @Data
 public class LoginDTO {
-    @ApiModelProperty("账号")
-    private String userNum;
+    @ApiModelProperty("手机号")
+    @Pattern(regexp = "[0-9]{11}", message = "手机号格式不正确")
+    private String phone;
 
     @ApiModelProperty("密码")
-    private String userPwd;
+    @Pattern(regexp = "[A-Za-z0-9]+", message = "密码格式不正确")
+    private String pwd;
 }

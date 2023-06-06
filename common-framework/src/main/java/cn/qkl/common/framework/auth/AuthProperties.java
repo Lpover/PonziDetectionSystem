@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 @Data
 @Slf4j
 @Configuration
-@ConfigurationProperties(prefix = "mindlax.framework.auth")
+@ConfigurationProperties(prefix = "qkl.framework.auth")
 public class AuthProperties implements InitializingBean {
     public static final TimeUnit TIME_UNIT = TimeUnit.DAYS;
     // token到期时间，默认一天

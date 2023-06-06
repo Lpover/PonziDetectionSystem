@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface ContentRiskStatisticsMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, categoryId, num, createTime, updateTime);
+    BasicColumn[] selectList = BasicColumn.columnList(id, categoryId, num, platformId, createTime, updateTime);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -64,6 +64,7 @@ public interface ContentRiskStatisticsMapper {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="category_id", property="categoryId", jdbcType=JdbcType.BIGINT),
         @Result(column="num", property="num", jdbcType=JdbcType.BIGINT),
+        @Result(column="platform_id", property="platformId", jdbcType=JdbcType.BIGINT),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
     })
@@ -96,6 +97,7 @@ public interface ContentRiskStatisticsMapper {
             c.map(id).toProperty("id")
             .map(categoryId).toProperty("categoryId")
             .map(num).toProperty("num")
+            .map(platformId).toProperty("platformId")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
         );
@@ -107,6 +109,7 @@ public interface ContentRiskStatisticsMapper {
             c.map(id).toProperty("id")
             .map(categoryId).toProperty("categoryId")
             .map(num).toProperty("num")
+            .map(platformId).toProperty("platformId")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
         );
@@ -118,6 +121,7 @@ public interface ContentRiskStatisticsMapper {
             c.map(id).toPropertyWhenPresent("id", record::getId)
             .map(categoryId).toPropertyWhenPresent("categoryId", record::getCategoryId)
             .map(num).toPropertyWhenPresent("num", record::getNum)
+            .map(platformId).toPropertyWhenPresent("platformId", record::getPlatformId)
             .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
             .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
         );
@@ -155,6 +159,7 @@ public interface ContentRiskStatisticsMapper {
         return dsl.set(id).equalTo(record::getId)
                 .set(categoryId).equalTo(record::getCategoryId)
                 .set(num).equalTo(record::getNum)
+                .set(platformId).equalTo(record::getPlatformId)
                 .set(createTime).equalTo(record::getCreateTime)
                 .set(updateTime).equalTo(record::getUpdateTime);
     }
@@ -164,6 +169,7 @@ public interface ContentRiskStatisticsMapper {
         return dsl.set(id).equalToWhenPresent(record::getId)
                 .set(categoryId).equalToWhenPresent(record::getCategoryId)
                 .set(num).equalToWhenPresent(record::getNum)
+                .set(platformId).equalToWhenPresent(record::getPlatformId)
                 .set(createTime).equalToWhenPresent(record::getCreateTime)
                 .set(updateTime).equalToWhenPresent(record::getUpdateTime);
     }
@@ -173,6 +179,7 @@ public interface ContentRiskStatisticsMapper {
         return update(c ->
             c.set(categoryId).equalTo(record::getCategoryId)
             .set(num).equalTo(record::getNum)
+            .set(platformId).equalTo(record::getPlatformId)
             .set(createTime).equalTo(record::getCreateTime)
             .set(updateTime).equalTo(record::getUpdateTime)
             .where(id, isEqualTo(record::getId))
@@ -184,6 +191,7 @@ public interface ContentRiskStatisticsMapper {
         return update(c ->
             c.set(categoryId).equalToWhenPresent(record::getCategoryId)
             .set(num).equalToWhenPresent(record::getNum)
+            .set(platformId).equalToWhenPresent(record::getPlatformId)
             .set(createTime).equalToWhenPresent(record::getCreateTime)
             .set(updateTime).equalToWhenPresent(record::getUpdateTime)
             .where(id, isEqualTo(record::getId))

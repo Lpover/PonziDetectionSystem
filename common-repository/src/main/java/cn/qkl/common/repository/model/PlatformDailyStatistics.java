@@ -1,5 +1,6 @@
 package cn.qkl.common.repository.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.annotation.Generated;
 
@@ -26,12 +27,6 @@ public class PlatformDailyStatistics {
     private Integer contentRiskSum;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Date createTime;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Date updateTime;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer highRiskTx;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -41,25 +36,25 @@ public class PlatformDailyStatistics {
     private Integer lowRiskTx;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Integer storageRatio;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Integer carrierRatio;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Integer categoryRatio;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String storageProviderName;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String carrierName;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String categoryName;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer riskIndex;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Date updateTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Date createTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private BigDecimal hotnessChange24h;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private BigDecimal hotnessChange7d;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private BigDecimal hotnessChange30d;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Long hotness24h;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
@@ -174,38 +169,6 @@ public class PlatformDailyStatistics {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public PlatformDailyStatistics withCreateTime(Date createTime) {
-        this.setCreateTime(createTime);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public PlatformDailyStatistics withUpdateTime(Date updateTime) {
-        this.setUpdateTime(updateTime);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Integer getHighRiskTx() {
         return highRiskTx;
     }
@@ -254,102 +217,6 @@ public class PlatformDailyStatistics {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Integer getStorageRatio() {
-        return storageRatio;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public PlatformDailyStatistics withStorageRatio(Integer storageRatio) {
-        this.setStorageRatio(storageRatio);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setStorageRatio(Integer storageRatio) {
-        this.storageRatio = storageRatio;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Integer getCarrierRatio() {
-        return carrierRatio;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public PlatformDailyStatistics withCarrierRatio(Integer carrierRatio) {
-        this.setCarrierRatio(carrierRatio);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setCarrierRatio(Integer carrierRatio) {
-        this.carrierRatio = carrierRatio;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Integer getCategoryRatio() {
-        return categoryRatio;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public PlatformDailyStatistics withCategoryRatio(Integer categoryRatio) {
-        this.setCategoryRatio(categoryRatio);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setCategoryRatio(Integer categoryRatio) {
-        this.categoryRatio = categoryRatio;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getStorageProviderName() {
-        return storageProviderName;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public PlatformDailyStatistics withStorageProviderName(String storageProviderName) {
-        this.setStorageProviderName(storageProviderName);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setStorageProviderName(String storageProviderName) {
-        this.storageProviderName = storageProviderName;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getCarrierName() {
-        return carrierName;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public PlatformDailyStatistics withCarrierName(String carrierName) {
-        this.setCarrierName(carrierName);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setCarrierName(String carrierName) {
-        this.carrierName = carrierName;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public PlatformDailyStatistics withCategoryName(String categoryName) {
-        this.setCategoryName(categoryName);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Integer getRiskIndex() {
         return riskIndex;
     }
@@ -363,6 +230,102 @@ public class PlatformDailyStatistics {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setRiskIndex(Integer riskIndex) {
         this.riskIndex = riskIndex;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public PlatformDailyStatistics withUpdateTime(Date updateTime) {
+        this.setUpdateTime(updateTime);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public PlatformDailyStatistics withCreateTime(Date createTime) {
+        this.setCreateTime(createTime);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public BigDecimal getHotnessChange24h() {
+        return hotnessChange24h;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public PlatformDailyStatistics withHotnessChange24h(BigDecimal hotnessChange24h) {
+        this.setHotnessChange24h(hotnessChange24h);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setHotnessChange24h(BigDecimal hotnessChange24h) {
+        this.hotnessChange24h = hotnessChange24h;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public BigDecimal getHotnessChange7d() {
+        return hotnessChange7d;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public PlatformDailyStatistics withHotnessChange7d(BigDecimal hotnessChange7d) {
+        this.setHotnessChange7d(hotnessChange7d);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setHotnessChange7d(BigDecimal hotnessChange7d) {
+        this.hotnessChange7d = hotnessChange7d;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public BigDecimal getHotnessChange30d() {
+        return hotnessChange30d;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public PlatformDailyStatistics withHotnessChange30d(BigDecimal hotnessChange30d) {
+        this.setHotnessChange30d(hotnessChange30d);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setHotnessChange30d(BigDecimal hotnessChange30d) {
+        this.hotnessChange30d = hotnessChange30d;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Long getHotness24h() {
+        return hotness24h;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public PlatformDailyStatistics withHotness24h(Long hotness24h) {
+        this.setHotness24h(hotness24h);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setHotness24h(Long hotness24h) {
+        this.hotness24h = hotness24h;
     }
 
     @Override
@@ -379,18 +342,16 @@ public class PlatformDailyStatistics {
         sb.append(", lowRiskNum=").append(lowRiskNum);
         sb.append(", contentSum=").append(contentSum);
         sb.append(", contentRiskSum=").append(contentRiskSum);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", updateTime=").append(updateTime);
         sb.append(", highRiskTx=").append(highRiskTx);
         sb.append(", middleRiskTx=").append(middleRiskTx);
         sb.append(", lowRiskTx=").append(lowRiskTx);
-        sb.append(", storageRatio=").append(storageRatio);
-        sb.append(", carrierRatio=").append(carrierRatio);
-        sb.append(", categoryRatio=").append(categoryRatio);
-        sb.append(", storageProviderName=").append(storageProviderName);
-        sb.append(", carrierName=").append(carrierName);
-        sb.append(", categoryName=").append(categoryName);
         sb.append(", riskIndex=").append(riskIndex);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", hotnessChange24h=").append(hotnessChange24h);
+        sb.append(", hotnessChange7d=").append(hotnessChange7d);
+        sb.append(", hotnessChange30d=").append(hotnessChange30d);
+        sb.append(", hotness24h=").append(hotness24h);
         sb.append("]");
         return sb.toString();
     }

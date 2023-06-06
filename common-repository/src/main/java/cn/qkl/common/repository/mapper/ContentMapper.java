@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface ContentMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, name, address, tokenid, metaUrl, cryptoPrice, currencyPrice, creator, platformId, standard, chainId, listingTime, description, dynamicType, dynamicAlgorithmId, dynamicRecognition, revised, riskLevel, contentType, contentTag, owner, mintTime, thingType, createTime, updateTime, riskType);
+    BasicColumn[] selectList = BasicColumn.columnList(id, name, address, tokenid, metaUrl, cryptoPrice, currencyPrice, creator, platformId, standard, chainId, listingTime, description, dynamicType, dynamicAlgorithmId, dynamicRecognition, revised, riskLevel, contentType, contentTag, owner, mintTime, thingType, createTime, updateTime, riskType, hotNum12h, hotNum24h);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -86,7 +86,9 @@ public interface ContentMapper {
         @Result(column="thing_type", property="thingType", jdbcType=JdbcType.INTEGER),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="risk_type", property="riskType", jdbcType=JdbcType.INTEGER)
+        @Result(column="risk_type", property="riskType", jdbcType=JdbcType.INTEGER),
+        @Result(column="hot_num_12h", property="hotNum12h", jdbcType=JdbcType.INTEGER),
+        @Result(column="hot_num_24h", property="hotNum24h", jdbcType=JdbcType.INTEGER)
     })
     List<Content> selectMany(SelectStatementProvider selectStatement);
 
@@ -140,6 +142,8 @@ public interface ContentMapper {
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
             .map(riskType).toProperty("riskType")
+            .map(hotNum12h).toProperty("hotNum12h")
+            .map(hotNum24h).toProperty("hotNum24h")
         );
     }
 
@@ -172,6 +176,8 @@ public interface ContentMapper {
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
             .map(riskType).toProperty("riskType")
+            .map(hotNum12h).toProperty("hotNum12h")
+            .map(hotNum24h).toProperty("hotNum24h")
         );
     }
 
@@ -204,6 +210,8 @@ public interface ContentMapper {
             .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
             .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
             .map(riskType).toPropertyWhenPresent("riskType", record::getRiskType)
+            .map(hotNum12h).toPropertyWhenPresent("hotNum12h", record::getHotNum12h)
+            .map(hotNum24h).toPropertyWhenPresent("hotNum24h", record::getHotNum24h)
         );
     }
 
@@ -261,7 +269,9 @@ public interface ContentMapper {
                 .set(thingType).equalTo(record::getThingType)
                 .set(createTime).equalTo(record::getCreateTime)
                 .set(updateTime).equalTo(record::getUpdateTime)
-                .set(riskType).equalTo(record::getRiskType);
+                .set(riskType).equalTo(record::getRiskType)
+                .set(hotNum12h).equalTo(record::getHotNum12h)
+                .set(hotNum24h).equalTo(record::getHotNum24h);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -291,7 +301,9 @@ public interface ContentMapper {
                 .set(thingType).equalToWhenPresent(record::getThingType)
                 .set(createTime).equalToWhenPresent(record::getCreateTime)
                 .set(updateTime).equalToWhenPresent(record::getUpdateTime)
-                .set(riskType).equalToWhenPresent(record::getRiskType);
+                .set(riskType).equalToWhenPresent(record::getRiskType)
+                .set(hotNum12h).equalToWhenPresent(record::getHotNum12h)
+                .set(hotNum24h).equalToWhenPresent(record::getHotNum24h);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -322,6 +334,8 @@ public interface ContentMapper {
             .set(createTime).equalTo(record::getCreateTime)
             .set(updateTime).equalTo(record::getUpdateTime)
             .set(riskType).equalTo(record::getRiskType)
+            .set(hotNum12h).equalTo(record::getHotNum12h)
+            .set(hotNum24h).equalTo(record::getHotNum24h)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -354,6 +368,8 @@ public interface ContentMapper {
             .set(createTime).equalToWhenPresent(record::getCreateTime)
             .set(updateTime).equalToWhenPresent(record::getUpdateTime)
             .set(riskType).equalToWhenPresent(record::getRiskType)
+            .set(hotNum12h).equalToWhenPresent(record::getHotNum12h)
+            .set(hotNum24h).equalToWhenPresent(record::getHotNum24h)
             .where(id, isEqualTo(record::getId))
         );
     }

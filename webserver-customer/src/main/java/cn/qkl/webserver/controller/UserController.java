@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.*;
 @ApiSupport(author = "wx")
 @RequestMapping("user")
 @RefreshScope
-@Role(roles = RoleEnum.UserRole.class)
+@Role(roles = RoleEnum.UserBaseRole.class)
 public class UserController {
 
 //    @LoadBalanced
