@@ -72,7 +72,10 @@ public class Platform {
     private Date updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private BigDecimal riskIndex;
+    private BigDecimal riskIndexChina;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private BigDecimal riskIndexOversea;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long hotness;
@@ -430,19 +433,35 @@ public class Platform {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public BigDecimal getRiskIndex() {
-        return riskIndex;
+    public BigDecimal getRiskIndexChina() {
+        return riskIndexChina;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Platform withRiskIndex(BigDecimal riskIndex) {
-        this.setRiskIndex(riskIndex);
+    public Platform withRiskIndexChina(BigDecimal riskIndexChina) {
+        this.setRiskIndexChina(riskIndexChina);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setRiskIndex(BigDecimal riskIndex) {
-        this.riskIndex = riskIndex;
+    public void setRiskIndexChina(BigDecimal riskIndexChina) {
+        this.riskIndexChina = riskIndexChina;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public BigDecimal getRiskIndexOversea() {
+        return riskIndexOversea;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Platform withRiskIndexOversea(BigDecimal riskIndexOversea) {
+        this.setRiskIndexOversea(riskIndexOversea);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setRiskIndexOversea(BigDecimal riskIndexOversea) {
+        this.riskIndexOversea = riskIndexOversea;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -490,7 +509,8 @@ public class Platform {
         sb.append(", lowContentNum=").append(lowContentNum);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
-        sb.append(", riskIndex=").append(riskIndex);
+        sb.append(", riskIndexChina=").append(riskIndexChina);
+        sb.append(", riskIndexOversea=").append(riskIndexOversea);
         sb.append(", hotness=").append(hotness);
         sb.append("]");
         return sb.toString();

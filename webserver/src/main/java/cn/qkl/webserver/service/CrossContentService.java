@@ -3,11 +3,9 @@ package cn.qkl.webserver.service;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.qkl.common.framework.response.PageVO;
-import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.Account;
 import cn.qkl.common.repository.model.Chain;
 import cn.qkl.common.repository.model.ContentCross;
-import cn.qkl.webserver.common.enums.ContentRiskLevelEnum;
 import cn.qkl.webserver.dao.AccountDao;
 import cn.qkl.webserver.dao.ChainDao;
 import cn.qkl.webserver.dao.ContentCrossDao;
@@ -23,9 +21,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
-
-import static org.mybatis.dynamic.sql.SqlBuilder.*;
-import static org.mybatis.dynamic.sql.SqlBuilder.isLessThanOrEqualToWhenPresent;
 
 
 /**
@@ -77,8 +72,8 @@ public class CrossContentService {
             contentCross.setBridge(random.nextInt(2) + 1);
             contentCross.setDynamicType(random.nextInt(2));
             contentCross.setRiskLevel(random.nextInt(4));
-//            contentCross.setCreateTime(end);
-            contentCross.setCreateTime(DateUtil.offsetDay(end, -1));
+            contentCross.setCreateTime(end);
+//            contentCross.setCreateTime(DateUtil.offsetDay(end, -1));
             contentCross.setUpdateTime(end);
             contentCrossList.add(contentCross);
         }

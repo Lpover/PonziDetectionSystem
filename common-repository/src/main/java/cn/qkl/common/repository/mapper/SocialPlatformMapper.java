@@ -1,9 +1,9 @@
 package cn.qkl.common.repository.mapper;
 
-import static cn.qkl.common.repository.mapper.UserDynamicSqlSupport.*;
+import static cn.qkl.common.repository.mapper.SocialPlatformDynamicSqlSupport.*;
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
-import cn.qkl.common.repository.model.User;
+import cn.qkl.common.repository.model.SocialPlatform;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -33,9 +33,9 @@ import org.mybatis.dynamic.sql.util.SqlProviderAdapter;
 import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 
 @Mapper
-public interface UserMapper {
+public interface SocialPlatformMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, phone, pwd, role, state);
+    BasicColumn[] selectList = BasicColumn.columnList(id, name, socialPlatformIndex12h, socialPlatformIndex24h);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -47,27 +47,26 @@ public interface UserMapper {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @InsertProvider(type=SqlProviderAdapter.class, method="insert")
-    int insert(InsertStatementProvider<User> insertStatement);
+    int insert(InsertStatementProvider<SocialPlatform> insertStatement);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @InsertProvider(type=SqlProviderAdapter.class, method="insertMultiple")
-    int insertMultiple(MultiRowInsertStatementProvider<User> multipleInsertStatement);
+    int insertMultiple(MultiRowInsertStatementProvider<SocialPlatform> multipleInsertStatement);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
-    @ResultMap("UserResult")
-    Optional<User> selectOne(SelectStatementProvider selectStatement);
+    @ResultMap("SocialPlatformResult")
+    Optional<SocialPlatform> selectOne(SelectStatementProvider selectStatement);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
-    @Results(id="UserResult", value = {
-        @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
-        @Result(column="phone", property="phone", jdbcType=JdbcType.VARCHAR),
-        @Result(column="pwd", property="pwd", jdbcType=JdbcType.VARCHAR),
-        @Result(column="role", property="role", jdbcType=JdbcType.INTEGER),
-        @Result(column="state", property="state", jdbcType=JdbcType.INTEGER)
+    @Results(id="SocialPlatformResult", value = {
+        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
+        @Result(column="social_platform_index_12h", property="socialPlatformIndex12h", jdbcType=JdbcType.DECIMAL),
+        @Result(column="social_platform_index_24h", property="socialPlatformIndex24h", jdbcType=JdbcType.DECIMAL)
     })
-    List<User> selectMany(SelectStatementProvider selectStatement);
+    List<SocialPlatform> selectMany(SelectStatementProvider selectStatement);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @UpdateProvider(type=SqlProviderAdapter.class, method="update")
@@ -75,71 +74,68 @@ public interface UserMapper {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default long count(CountDSLCompleter completer) {
-        return MyBatis3Utils.countFrom(this::count, user, completer);
+        return MyBatis3Utils.countFrom(this::count, socialPlatform, completer);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int delete(DeleteDSLCompleter completer) {
-        return MyBatis3Utils.deleteFrom(this::delete, user, completer);
+        return MyBatis3Utils.deleteFrom(this::delete, socialPlatform, completer);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int deleteByPrimaryKey(Long id_) {
+    default int deleteByPrimaryKey(Integer id_) {
         return delete(c -> 
             c.where(id, isEqualTo(id_))
         );
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int insert(User record) {
-        return MyBatis3Utils.insert(this::insert, record, user, c ->
+    default int insert(SocialPlatform record) {
+        return MyBatis3Utils.insert(this::insert, record, socialPlatform, c ->
             c.map(id).toProperty("id")
-            .map(phone).toProperty("phone")
-            .map(pwd).toProperty("pwd")
-            .map(role).toProperty("role")
-            .map(state).toProperty("state")
+            .map(name).toProperty("name")
+            .map(socialPlatformIndex12h).toProperty("socialPlatformIndex12h")
+            .map(socialPlatformIndex24h).toProperty("socialPlatformIndex24h")
         );
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int insertMultiple(Collection<User> records) {
-        return MyBatis3Utils.insertMultiple(this::insertMultiple, records, user, c ->
+    default int insertMultiple(Collection<SocialPlatform> records) {
+        return MyBatis3Utils.insertMultiple(this::insertMultiple, records, socialPlatform, c ->
             c.map(id).toProperty("id")
-            .map(phone).toProperty("phone")
-            .map(pwd).toProperty("pwd")
-            .map(role).toProperty("role")
-            .map(state).toProperty("state")
+            .map(name).toProperty("name")
+            .map(socialPlatformIndex12h).toProperty("socialPlatformIndex12h")
+            .map(socialPlatformIndex24h).toProperty("socialPlatformIndex24h")
         );
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int insertSelective(User record) {
-        return MyBatis3Utils.insert(this::insert, record, user, c ->
+    default int insertSelective(SocialPlatform record) {
+        return MyBatis3Utils.insert(this::insert, record, socialPlatform, c ->
             c.map(id).toPropertyWhenPresent("id", record::getId)
-            .map(phone).toPropertyWhenPresent("phone", record::getPhone)
-            .map(pwd).toPropertyWhenPresent("pwd", record::getPwd)
-            .map(role).toPropertyWhenPresent("role", record::getRole)
-            .map(state).toPropertyWhenPresent("state", record::getState)
+            .map(name).toPropertyWhenPresent("name", record::getName)
+            .map(socialPlatformIndex12h).toPropertyWhenPresent("socialPlatformIndex12h", record::getSocialPlatformIndex12h)
+            .map(socialPlatformIndex24h).toPropertyWhenPresent("socialPlatformIndex24h", record::getSocialPlatformIndex24h)
         );
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default Optional<User> selectOne(SelectDSLCompleter completer) {
-        return MyBatis3Utils.selectOne(this::selectOne, selectList, user, completer);
+    default Optional<SocialPlatform> selectOne(SelectDSLCompleter completer) {
+        return MyBatis3Utils.selectOne(this::selectOne, selectList, socialPlatform, completer);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default List<User> select(SelectDSLCompleter completer) {
-        return MyBatis3Utils.selectList(this::selectMany, selectList, user, completer);
+    default List<SocialPlatform> select(SelectDSLCompleter completer) {
+        return MyBatis3Utils.selectList(this::selectMany, selectList, socialPlatform, completer);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default List<User> selectDistinct(SelectDSLCompleter completer) {
-        return MyBatis3Utils.selectDistinct(this::selectMany, selectList, user, completer);
+    default List<SocialPlatform> selectDistinct(SelectDSLCompleter completer) {
+        return MyBatis3Utils.selectDistinct(this::selectMany, selectList, socialPlatform, completer);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default Optional<User> selectByPrimaryKey(Long id_) {
+    default Optional<SocialPlatform> selectByPrimaryKey(Integer id_) {
         return selectOne(c ->
             c.where(id, isEqualTo(id_))
         );
@@ -147,45 +143,41 @@ public interface UserMapper {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int update(UpdateDSLCompleter completer) {
-        return MyBatis3Utils.update(this::update, user, completer);
+        return MyBatis3Utils.update(this::update, socialPlatform, completer);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    static UpdateDSL<UpdateModel> updateAllColumns(User record, UpdateDSL<UpdateModel> dsl) {
+    static UpdateDSL<UpdateModel> updateAllColumns(SocialPlatform record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalTo(record::getId)
-                .set(phone).equalTo(record::getPhone)
-                .set(pwd).equalTo(record::getPwd)
-                .set(role).equalTo(record::getRole)
-                .set(state).equalTo(record::getState);
+                .set(name).equalTo(record::getName)
+                .set(socialPlatformIndex12h).equalTo(record::getSocialPlatformIndex12h)
+                .set(socialPlatformIndex24h).equalTo(record::getSocialPlatformIndex24h);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    static UpdateDSL<UpdateModel> updateSelectiveColumns(User record, UpdateDSL<UpdateModel> dsl) {
+    static UpdateDSL<UpdateModel> updateSelectiveColumns(SocialPlatform record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalToWhenPresent(record::getId)
-                .set(phone).equalToWhenPresent(record::getPhone)
-                .set(pwd).equalToWhenPresent(record::getPwd)
-                .set(role).equalToWhenPresent(record::getRole)
-                .set(state).equalToWhenPresent(record::getState);
+                .set(name).equalToWhenPresent(record::getName)
+                .set(socialPlatformIndex12h).equalToWhenPresent(record::getSocialPlatformIndex12h)
+                .set(socialPlatformIndex24h).equalToWhenPresent(record::getSocialPlatformIndex24h);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int updateByPrimaryKey(User record) {
+    default int updateByPrimaryKey(SocialPlatform record) {
         return update(c ->
-            c.set(phone).equalTo(record::getPhone)
-            .set(pwd).equalTo(record::getPwd)
-            .set(role).equalTo(record::getRole)
-            .set(state).equalTo(record::getState)
+            c.set(name).equalTo(record::getName)
+            .set(socialPlatformIndex12h).equalTo(record::getSocialPlatformIndex12h)
+            .set(socialPlatformIndex24h).equalTo(record::getSocialPlatformIndex24h)
             .where(id, isEqualTo(record::getId))
         );
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int updateByPrimaryKeySelective(User record) {
+    default int updateByPrimaryKeySelective(SocialPlatform record) {
         return update(c ->
-            c.set(phone).equalToWhenPresent(record::getPhone)
-            .set(pwd).equalToWhenPresent(record::getPwd)
-            .set(role).equalToWhenPresent(record::getRole)
-            .set(state).equalToWhenPresent(record::getState)
+            c.set(name).equalToWhenPresent(record::getName)
+            .set(socialPlatformIndex12h).equalToWhenPresent(record::getSocialPlatformIndex12h)
+            .set(socialPlatformIndex24h).equalToWhenPresent(record::getSocialPlatformIndex24h)
             .where(id, isEqualTo(record::getId))
         );
     }

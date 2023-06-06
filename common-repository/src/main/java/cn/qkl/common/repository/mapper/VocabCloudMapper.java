@@ -1,9 +1,9 @@
 package cn.qkl.common.repository.mapper;
 
-import static cn.qkl.common.repository.mapper.UserDynamicSqlSupport.*;
+import static cn.qkl.common.repository.mapper.VocabCloudDynamicSqlSupport.*;
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
-import cn.qkl.common.repository.model.User;
+import cn.qkl.common.repository.model.VocabCloud;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -33,9 +33,9 @@ import org.mybatis.dynamic.sql.util.SqlProviderAdapter;
 import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 
 @Mapper
-public interface UserMapper {
+public interface VocabCloudMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, phone, pwd, role, state);
+    BasicColumn[] selectList = BasicColumn.columnList(id, vocab, num, createTime, updateTime);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -47,27 +47,27 @@ public interface UserMapper {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @InsertProvider(type=SqlProviderAdapter.class, method="insert")
-    int insert(InsertStatementProvider<User> insertStatement);
+    int insert(InsertStatementProvider<VocabCloud> insertStatement);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @InsertProvider(type=SqlProviderAdapter.class, method="insertMultiple")
-    int insertMultiple(MultiRowInsertStatementProvider<User> multipleInsertStatement);
+    int insertMultiple(MultiRowInsertStatementProvider<VocabCloud> multipleInsertStatement);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
-    @ResultMap("UserResult")
-    Optional<User> selectOne(SelectStatementProvider selectStatement);
+    @ResultMap("VocabCloudResult")
+    Optional<VocabCloud> selectOne(SelectStatementProvider selectStatement);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
-    @Results(id="UserResult", value = {
+    @Results(id="VocabCloudResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
-        @Result(column="phone", property="phone", jdbcType=JdbcType.VARCHAR),
-        @Result(column="pwd", property="pwd", jdbcType=JdbcType.VARCHAR),
-        @Result(column="role", property="role", jdbcType=JdbcType.INTEGER),
-        @Result(column="state", property="state", jdbcType=JdbcType.INTEGER)
+        @Result(column="vocab", property="vocab", jdbcType=JdbcType.VARCHAR),
+        @Result(column="num", property="num", jdbcType=JdbcType.INTEGER),
+        @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
     })
-    List<User> selectMany(SelectStatementProvider selectStatement);
+    List<VocabCloud> selectMany(SelectStatementProvider selectStatement);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @UpdateProvider(type=SqlProviderAdapter.class, method="update")
@@ -75,12 +75,12 @@ public interface UserMapper {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default long count(CountDSLCompleter completer) {
-        return MyBatis3Utils.countFrom(this::count, user, completer);
+        return MyBatis3Utils.countFrom(this::count, vocabCloud, completer);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int delete(DeleteDSLCompleter completer) {
-        return MyBatis3Utils.deleteFrom(this::delete, user, completer);
+        return MyBatis3Utils.deleteFrom(this::delete, vocabCloud, completer);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -91,55 +91,55 @@ public interface UserMapper {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int insert(User record) {
-        return MyBatis3Utils.insert(this::insert, record, user, c ->
+    default int insert(VocabCloud record) {
+        return MyBatis3Utils.insert(this::insert, record, vocabCloud, c ->
             c.map(id).toProperty("id")
-            .map(phone).toProperty("phone")
-            .map(pwd).toProperty("pwd")
-            .map(role).toProperty("role")
-            .map(state).toProperty("state")
+            .map(vocab).toProperty("vocab")
+            .map(num).toProperty("num")
+            .map(createTime).toProperty("createTime")
+            .map(updateTime).toProperty("updateTime")
         );
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int insertMultiple(Collection<User> records) {
-        return MyBatis3Utils.insertMultiple(this::insertMultiple, records, user, c ->
+    default int insertMultiple(Collection<VocabCloud> records) {
+        return MyBatis3Utils.insertMultiple(this::insertMultiple, records, vocabCloud, c ->
             c.map(id).toProperty("id")
-            .map(phone).toProperty("phone")
-            .map(pwd).toProperty("pwd")
-            .map(role).toProperty("role")
-            .map(state).toProperty("state")
+            .map(vocab).toProperty("vocab")
+            .map(num).toProperty("num")
+            .map(createTime).toProperty("createTime")
+            .map(updateTime).toProperty("updateTime")
         );
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int insertSelective(User record) {
-        return MyBatis3Utils.insert(this::insert, record, user, c ->
+    default int insertSelective(VocabCloud record) {
+        return MyBatis3Utils.insert(this::insert, record, vocabCloud, c ->
             c.map(id).toPropertyWhenPresent("id", record::getId)
-            .map(phone).toPropertyWhenPresent("phone", record::getPhone)
-            .map(pwd).toPropertyWhenPresent("pwd", record::getPwd)
-            .map(role).toPropertyWhenPresent("role", record::getRole)
-            .map(state).toPropertyWhenPresent("state", record::getState)
+            .map(vocab).toPropertyWhenPresent("vocab", record::getVocab)
+            .map(num).toPropertyWhenPresent("num", record::getNum)
+            .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
+            .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
         );
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default Optional<User> selectOne(SelectDSLCompleter completer) {
-        return MyBatis3Utils.selectOne(this::selectOne, selectList, user, completer);
+    default Optional<VocabCloud> selectOne(SelectDSLCompleter completer) {
+        return MyBatis3Utils.selectOne(this::selectOne, selectList, vocabCloud, completer);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default List<User> select(SelectDSLCompleter completer) {
-        return MyBatis3Utils.selectList(this::selectMany, selectList, user, completer);
+    default List<VocabCloud> select(SelectDSLCompleter completer) {
+        return MyBatis3Utils.selectList(this::selectMany, selectList, vocabCloud, completer);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default List<User> selectDistinct(SelectDSLCompleter completer) {
-        return MyBatis3Utils.selectDistinct(this::selectMany, selectList, user, completer);
+    default List<VocabCloud> selectDistinct(SelectDSLCompleter completer) {
+        return MyBatis3Utils.selectDistinct(this::selectMany, selectList, vocabCloud, completer);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default Optional<User> selectByPrimaryKey(Long id_) {
+    default Optional<VocabCloud> selectByPrimaryKey(Long id_) {
         return selectOne(c ->
             c.where(id, isEqualTo(id_))
         );
@@ -147,45 +147,45 @@ public interface UserMapper {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int update(UpdateDSLCompleter completer) {
-        return MyBatis3Utils.update(this::update, user, completer);
+        return MyBatis3Utils.update(this::update, vocabCloud, completer);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    static UpdateDSL<UpdateModel> updateAllColumns(User record, UpdateDSL<UpdateModel> dsl) {
+    static UpdateDSL<UpdateModel> updateAllColumns(VocabCloud record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalTo(record::getId)
-                .set(phone).equalTo(record::getPhone)
-                .set(pwd).equalTo(record::getPwd)
-                .set(role).equalTo(record::getRole)
-                .set(state).equalTo(record::getState);
+                .set(vocab).equalTo(record::getVocab)
+                .set(num).equalTo(record::getNum)
+                .set(createTime).equalTo(record::getCreateTime)
+                .set(updateTime).equalTo(record::getUpdateTime);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    static UpdateDSL<UpdateModel> updateSelectiveColumns(User record, UpdateDSL<UpdateModel> dsl) {
+    static UpdateDSL<UpdateModel> updateSelectiveColumns(VocabCloud record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalToWhenPresent(record::getId)
-                .set(phone).equalToWhenPresent(record::getPhone)
-                .set(pwd).equalToWhenPresent(record::getPwd)
-                .set(role).equalToWhenPresent(record::getRole)
-                .set(state).equalToWhenPresent(record::getState);
+                .set(vocab).equalToWhenPresent(record::getVocab)
+                .set(num).equalToWhenPresent(record::getNum)
+                .set(createTime).equalToWhenPresent(record::getCreateTime)
+                .set(updateTime).equalToWhenPresent(record::getUpdateTime);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int updateByPrimaryKey(User record) {
+    default int updateByPrimaryKey(VocabCloud record) {
         return update(c ->
-            c.set(phone).equalTo(record::getPhone)
-            .set(pwd).equalTo(record::getPwd)
-            .set(role).equalTo(record::getRole)
-            .set(state).equalTo(record::getState)
+            c.set(vocab).equalTo(record::getVocab)
+            .set(num).equalTo(record::getNum)
+            .set(createTime).equalTo(record::getCreateTime)
+            .set(updateTime).equalTo(record::getUpdateTime)
             .where(id, isEqualTo(record::getId))
         );
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int updateByPrimaryKeySelective(User record) {
+    default int updateByPrimaryKeySelective(VocabCloud record) {
         return update(c ->
-            c.set(phone).equalToWhenPresent(record::getPhone)
-            .set(pwd).equalToWhenPresent(record::getPwd)
-            .set(role).equalToWhenPresent(record::getRole)
-            .set(state).equalToWhenPresent(record::getState)
+            c.set(vocab).equalToWhenPresent(record::getVocab)
+            .set(num).equalToWhenPresent(record::getNum)
+            .set(createTime).equalToWhenPresent(record::getCreateTime)
+            .set(updateTime).equalToWhenPresent(record::getUpdateTime)
             .where(id, isEqualTo(record::getId))
         );
     }

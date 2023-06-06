@@ -1,101 +1,83 @@
 package cn.qkl.common.repository.model;
 
+import java.math.BigDecimal;
 import javax.annotation.Generated;
 
-public class User {
+public class SocialPlatform {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long id;
+    private Integer id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String phone;
+    private String name;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String pwd;
+    private BigDecimal socialPlatformIndex12h;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Integer role;
+    private BigDecimal socialPlatformIndex24h;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Integer state;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public User withId(Long id) {
+    public SocialPlatform withId(Integer id) {
         this.setId(id);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getPhone() {
-        return phone;
+    public String getName() {
+        return name;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public User withPhone(String phone) {
-        this.setPhone(phone);
+    public SocialPlatform withName(String name) {
+        this.setName(name);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getPwd() {
-        return pwd;
+    public BigDecimal getSocialPlatformIndex12h() {
+        return socialPlatformIndex12h;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public User withPwd(String pwd) {
-        this.setPwd(pwd);
+    public SocialPlatform withSocialPlatformIndex12h(BigDecimal socialPlatformIndex12h) {
+        this.setSocialPlatformIndex12h(socialPlatformIndex12h);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
+    public void setSocialPlatformIndex12h(BigDecimal socialPlatformIndex12h) {
+        this.socialPlatformIndex12h = socialPlatformIndex12h;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Integer getRole() {
-        return role;
+    public BigDecimal getSocialPlatformIndex24h() {
+        return socialPlatformIndex24h;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public User withRole(Integer role) {
-        this.setRole(role);
+    public SocialPlatform withSocialPlatformIndex24h(BigDecimal socialPlatformIndex24h) {
+        this.setSocialPlatformIndex24h(socialPlatformIndex24h);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setRole(Integer role) {
-        this.role = role;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Integer getState() {
-        return state;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public User withState(Integer state) {
-        this.setState(state);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setState(Integer state) {
-        this.state = state;
+    public void setSocialPlatformIndex24h(BigDecimal socialPlatformIndex24h) {
+        this.socialPlatformIndex24h = socialPlatformIndex24h;
     }
 
     @Override
@@ -106,10 +88,9 @@ public class User {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", phone=").append(phone);
-        sb.append(", pwd=").append(pwd);
-        sb.append(", role=").append(role);
-        sb.append(", state=").append(state);
+        sb.append(", name=").append(name);
+        sb.append(", socialPlatformIndex12h=").append(socialPlatformIndex12h);
+        sb.append(", socialPlatformIndex24h=").append(socialPlatformIndex24h);
         sb.append("]");
         return sb.toString();
     }

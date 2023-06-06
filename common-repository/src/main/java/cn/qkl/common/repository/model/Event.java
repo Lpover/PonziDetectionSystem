@@ -2,100 +2,100 @@ package cn.qkl.common.repository.model;
 
 import javax.annotation.Generated;
 
-public class User {
+public class Event {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long id;
+    private Integer id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String phone;
+    private String title;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String pwd;
+    private String abstractText;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Integer role;
+    private Integer hotNum12h;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Integer state;
+    private Integer hotNum24h;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public User withId(Long id) {
+    public Event withId(Integer id) {
         this.setId(id);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getPhone() {
-        return phone;
+    public String getTitle() {
+        return title;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public User withPhone(String phone) {
-        this.setPhone(phone);
+    public Event withTitle(String title) {
+        this.setTitle(title);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getPwd() {
-        return pwd;
+    public String getAbstractText() {
+        return abstractText;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public User withPwd(String pwd) {
-        this.setPwd(pwd);
+    public Event withAbstractText(String abstractText) {
+        this.setAbstractText(abstractText);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
+    public void setAbstractText(String abstractText) {
+        this.abstractText = abstractText;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Integer getRole() {
-        return role;
+    public Integer getHotNum12h() {
+        return hotNum12h;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public User withRole(Integer role) {
-        this.setRole(role);
+    public Event withHotNum12h(Integer hotNum12h) {
+        this.setHotNum12h(hotNum12h);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setRole(Integer role) {
-        this.role = role;
+    public void setHotNum12h(Integer hotNum12h) {
+        this.hotNum12h = hotNum12h;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Integer getState() {
-        return state;
+    public Integer getHotNum24h() {
+        return hotNum24h;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public User withState(Integer state) {
-        this.setState(state);
+    public Event withHotNum24h(Integer hotNum24h) {
+        this.setHotNum24h(hotNum24h);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setState(Integer state) {
-        this.state = state;
+    public void setHotNum24h(Integer hotNum24h) {
+        this.hotNum24h = hotNum24h;
     }
 
     @Override
@@ -106,10 +106,10 @@ public class User {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", phone=").append(phone);
-        sb.append(", pwd=").append(pwd);
-        sb.append(", role=").append(role);
-        sb.append(", state=").append(state);
+        sb.append(", title=").append(title);
+        sb.append(", abstractText=").append(abstractText);
+        sb.append(", hotNum12h=").append(hotNum12h);
+        sb.append(", hotNum24h=").append(hotNum24h);
         sb.append("]");
         return sb.toString();
     }

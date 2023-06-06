@@ -1,22 +1,23 @@
 package cn.qkl.common.repository.model;
 
+import java.util.Date;
 import javax.annotation.Generated;
 
-public class User {
+public class VocabCloud {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String phone;
+    private String vocab;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String pwd;
+    private Integer num;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Integer role;
+    private Date createTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Integer state;
+    private Date updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
@@ -24,7 +25,7 @@ public class User {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public User withId(Long id) {
+    public VocabCloud withId(Long id) {
         this.setId(id);
         return this;
     }
@@ -35,67 +36,67 @@ public class User {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getPhone() {
-        return phone;
+    public String getVocab() {
+        return vocab;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public User withPhone(String phone) {
-        this.setPhone(phone);
+    public VocabCloud withVocab(String vocab) {
+        this.setVocab(vocab);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setVocab(String vocab) {
+        this.vocab = vocab;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getPwd() {
-        return pwd;
+    public Integer getNum() {
+        return num;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public User withPwd(String pwd) {
-        this.setPwd(pwd);
+    public VocabCloud withNum(Integer num) {
+        this.setNum(num);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
+    public void setNum(Integer num) {
+        this.num = num;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Integer getRole() {
-        return role;
+    public Date getCreateTime() {
+        return createTime;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public User withRole(Integer role) {
-        this.setRole(role);
+    public VocabCloud withCreateTime(Date createTime) {
+        this.setCreateTime(createTime);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setRole(Integer role) {
-        this.role = role;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Integer getState() {
-        return state;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public User withState(Integer state) {
-        this.setState(state);
+    public VocabCloud withUpdateTime(Date updateTime) {
+        this.setUpdateTime(updateTime);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setState(Integer state) {
-        this.state = state;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     @Override
@@ -106,10 +107,10 @@ public class User {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", phone=").append(phone);
-        sb.append(", pwd=").append(pwd);
-        sb.append(", role=").append(role);
-        sb.append(", state=").append(state);
+        sb.append(", vocab=").append(vocab);
+        sb.append(", num=").append(num);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
         sb.append("]");
         return sb.toString();
     }
