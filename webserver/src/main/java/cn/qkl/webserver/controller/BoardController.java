@@ -5,8 +5,17 @@ import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dto.board.CrossContentRiskViewDTO;
+import cn.qkl.webserver.dto.carrier.CarrierViewDTO;
+import cn.qkl.webserver.dto.category.CategoryViewDTO;
+import cn.qkl.webserver.dto.stroage.StorageViewDTO;
+import cn.qkl.webserver.service.CarrierViewService;
+import cn.qkl.webserver.service.CategoryViewService;
 import cn.qkl.webserver.service.CrossContentDailyStatisticsService;
+import cn.qkl.webserver.service.StorageViewService;
 import cn.qkl.webserver.vo.board.CrossContentRiskViewVO;
+import cn.qkl.webserver.vo.carrier.CarrierViewVO;
+import cn.qkl.webserver.vo.category.CategoryViewVO;
+import cn.qkl.webserver.vo.stroage.StorageViewVO;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,10 +48,38 @@ public class BoardController {
     @Autowired
     private CrossContentDailyStatisticsService crossContentDailyStatisticsService;
 
+    @Autowired
+    private CarrierViewService carrierViewService;
+
+    @Autowired
+    private StorageViewService storageViewService;
+
+    @Autowired
+    private CategoryViewService categoryViewService;
+
     @ApiOperation("跨链风险视图")
     @GetMapping("cross/view")
     public BaseResult<List<CrossContentRiskViewVO>> getCrossContentRiskView(@Validated CrossContentRiskViewDTO dto) {
         return BaseResult.ok(crossContentDailyStatisticsService.getCrossContentRiskView(dto));
+    }
+
+    @ApiOperation("存储视图")
+    @GetMapping("stroage/view")
+    public BaseResult<List<StorageViewVO>> getStorageView(@Validated StorageViewDTO dto) {
+        return BaseResult.ok(storageViewService.getStorageView(dto));
+    }
+
+
+    @ApiOperation("载体视图")
+    @GetMapping("carrier/view")
+    public BaseResult<List<CarrierViewVO>> getCarrierView(@Validated CarrierViewDTO dto) {
+        return BaseResult.ok(carrierViewService.getCarrierView(dto));
+    }
+
+    @ApiOperation("动态数字内容视图")
+    @GetMapping("category/view")
+    public BaseResult<List<CategoryViewVO>> getCategoryView(@Validated CategoryViewDTO dto) {
+        return BaseResult.ok(categoryViewService.getCategoryView(dto));
     }
 
 }

@@ -3,6 +3,7 @@ package cn.qkl.webserver.controller;
 
 import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
+import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dto.algorithm.AlgorithmListQueryDTO;
 import cn.qkl.webserver.service.AlgorithmService;
 import cn.qkl.webserver.vo.algorithm.AlgorithmVO;
@@ -32,7 +33,7 @@ import java.util.List;
 @ApiSupport(author = "wx")
 @RequestMapping("algorithm")
 @RefreshScope
-@Role
+@Role(roles = { RoleEnum.AdminBaseRole.class})
 public class AlgorithmController {
     @Autowired
     AlgorithmService algorithmService;
