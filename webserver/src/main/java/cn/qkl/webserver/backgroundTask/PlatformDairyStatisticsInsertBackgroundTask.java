@@ -101,14 +101,5 @@ public class PlatformDairyStatisticsInsertBackgroundTask implements BackgroundTa
         platformDailyStatistics.setUpdateTime(end);
         return platformDailyStatistics;
 
-        //平台风险数量处理
-//        platformDailyStatistics = PlatformViewService.class.getName();
-        //风险账号处理
-//        platformDailyStatistics = acount(platformDailyStatistics);
-        //风险内容处理
-//        platformDailyStatistics = riks(platformDailyStatistics);
-
-        //风险内容处理
-        platformDailyStatisticsDao.insert(platformDailyStatistics);
     }
 }

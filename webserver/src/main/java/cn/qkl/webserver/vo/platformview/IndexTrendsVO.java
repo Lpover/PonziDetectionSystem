@@ -1,6 +1,10 @@
 package cn.qkl.webserver.vo.platformview;
 
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
 import lombok.Data;
+
+import java.util.Date;
 
 /**
  * @title:
@@ -10,5 +14,9 @@ import lombok.Data;
  */
 @Data
 public class IndexTrendsVO {
+    @ApiModelProperty("今日风险指数")
+    private Integer riskIndex;
 
+    @ApiModelProperty("统计的时间")
+    private Date createTime;
 }
