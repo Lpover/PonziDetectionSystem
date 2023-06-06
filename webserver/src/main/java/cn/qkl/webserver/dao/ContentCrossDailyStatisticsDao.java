@@ -1,7 +1,7 @@
 package cn.qkl.webserver.dao;
 
 import cn.qkl.common.repository.mapper.ContentCrossDailyStatisticsMapper;
-import cn.qkl.webserver.vo.cross.CrossContentRiskViewVO;
+import cn.qkl.webserver.vo.board.CrossContentRiskViewVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
