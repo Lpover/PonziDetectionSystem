@@ -1,10 +1,24 @@
 package cn.qkl.webserver.service;
 
+import cn.qkl.common.repository.Tables;
+import cn.qkl.common.repository.model.PlatformDailyStatistics;
 import cn.qkl.webserver.dao.PlatformDao;
+import cn.qkl.webserver.dao.PlatformViewDao;
+import cn.qkl.webserver.dto.platformview.PlatformAndTimeSelectionDTO;
+import cn.qkl.webserver.vo.contentDetection.ContentTagsVO;
+import cn.qkl.webserver.vo.platformview.VolumeDailyVO;
+import cn.qkl.webserver.vo.platformview.VolumeTrendsVO;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.jsqlparser.statement.select.Select;
+import org.mybatis.dynamic.sql.render.RenderingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.mybatis.dynamic.sql.SqlBuilder.select;
 
 /**
  * @title:
@@ -17,6 +31,17 @@ import org.springframework.stereotype.Service;
 @RefreshScope
 public class PlatformViewService {
     @Autowired
-    private PlatformDao platformDao;
+    private PlatformViewDao platformViewDao;
+
+    //返回平台（NFT、WEB3）的风险内容数量
+    public VolumeTrendsVO getVolumeTrends(PlatformAndTimeSelectionDTO dto){
+        List<VolumeTrendsVO> volumeTrendsList = platformViewDao.getVolumeTrends(
+                    select(Tables.platformDailyStatistics.contentRiskSum)
+                            .from(Tables.platformDailyStatistics)
+                            .build()
+                            .render(RenderingStrategies.MYBATIS3)
+        );
+        return VolumeTrendsVO.transform(volumeTrendsList);
+    }
 
 }

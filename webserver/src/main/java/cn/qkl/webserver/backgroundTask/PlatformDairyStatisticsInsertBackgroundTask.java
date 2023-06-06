@@ -6,6 +6,7 @@ import cn.qkl.common.framework.initAndBackground.BackgroundTask;
 import cn.qkl.common.repository.model.PlatformDailyStatistics;
 import cn.qkl.webserver.dao.PlatformDailyStatisticsDao;
 import cn.qkl.webserver.service.CrossContentService;
+import cn.qkl.webserver.service.PlatformViewService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,8 @@ public class PlatformDairyStatisticsInsertBackgroundTask implements BackgroundTa
 
     @Autowired
     private PlatformDailyStatisticsDao platformDailyStatisticsDao;
-
+    @Autowired
+    private PlatformViewService platformViewService;
     @Override
     public long getPeriod() {
         return 24 * 60 * 60 * 1000;
@@ -58,6 +60,8 @@ public class PlatformDairyStatisticsInsertBackgroundTask implements BackgroundTa
         PlatformDailyStatistics platformDailyStatistics = new PlatformDailyStatistics();
         platformDailyStatistics.setId(IdUtil.getSnowflakeNextId());
 
+        //平台风险数量处理
+//        platformDailyStatistics = PlatformViewService.class.getName();
         //风险账号处理
 //        platformDailyStatistics = acount(platformDailyStatistics);
         //风险内容处理
