@@ -78,7 +78,10 @@ public final class PlatformDynamicSqlSupport {
     public static final SqlColumn<Date> updateTime = platform.updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<BigDecimal> riskIndex = platform.riskIndex;
+    public static final SqlColumn<BigDecimal> riskIndexChina = platform.riskIndexChina;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<BigDecimal> riskIndexOversea = platform.riskIndexOversea;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Long> hotness = platform.hotness;
@@ -129,7 +132,9 @@ public final class PlatformDynamicSqlSupport {
 
         public final SqlColumn<Date> updateTime = column("update_time", JDBCType.TIMESTAMP);
 
-        public final SqlColumn<BigDecimal> riskIndex = column("risk_index", JDBCType.DECIMAL);
+        public final SqlColumn<BigDecimal> riskIndexChina = column("risk_index_china", JDBCType.DECIMAL);
+
+        public final SqlColumn<BigDecimal> riskIndexOversea = column("risk_index_oversea", JDBCType.DECIMAL);
 
         public final SqlColumn<Long> hotness = column("hotness", JDBCType.BIGINT);
 

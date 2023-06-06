@@ -13,10 +13,10 @@ public final class UserDynamicSqlSupport {
     public static final SqlColumn<Long> id = user.id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> pwd = user.pwd;
+    public static final SqlColumn<String> phone = user.phone;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> phone = user.phone;
+    public static final SqlColumn<String> pwd = user.pwd;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Integer> role = user.role;
@@ -28,9 +28,9 @@ public final class UserDynamicSqlSupport {
     public static final class User extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
-        public final SqlColumn<String> pwd = column("pwd", JDBCType.VARCHAR);
-
         public final SqlColumn<String> phone = column("phone", JDBCType.VARCHAR);
+
+        public final SqlColumn<String> pwd = column("pwd", JDBCType.VARCHAR);
 
         public final SqlColumn<Integer> role = column("`role`", JDBCType.INTEGER);
 

@@ -5,6 +5,7 @@ import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.request.PageDTO;
 import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.common.framework.response.PageVO;
+import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dto.platform.AddPlatformDTO;
 import cn.qkl.webserver.dto.platform.ModifyPlatformDTO;
 import cn.qkl.webserver.dto.platform.ModifySuperviseDTO;
@@ -38,7 +39,7 @@ import java.util.List;
 @ApiSupport(author = "ly")
 @RequestMapping("platform")
 @RefreshScope
-@Role
+@Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
 public class PlatformController {
 
     @Autowired

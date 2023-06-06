@@ -3,15 +3,21 @@ package cn.qkl.webserver.backgroundTask;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.qkl.common.framework.initAndBackground.BackgroundTask;
+import cn.qkl.common.repository.model.Platform;
 import cn.qkl.common.repository.model.PlatformDailyStatistics;
 import cn.qkl.webserver.dao.PlatformDailyStatisticsDao;
 import cn.qkl.webserver.service.CrossContentService;
 import cn.qkl.webserver.service.PlatformViewService;
+import cn.qkl.webserver.dao.PlatformDao;
+import cn.qkl.webserver.service.RiskTxViewService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @title:
@@ -27,6 +33,16 @@ public class PlatformDairyStatisticsInsertBackgroundTask implements BackgroundTa
     private PlatformDailyStatisticsDao platformDailyStatisticsDao;
     @Autowired
     private PlatformViewService platformViewService;
+
+    @Autowired
+    private PlatformDao platformDao;
+
+    @Autowired
+    private RiskTxViewService riskTxViewService;
+
+    /**
+     * 间隔1天
+     */
     @Override
     public long getPeriod() {
         return 24 * 60 * 60 * 1000;
@@ -46,6 +62,7 @@ public class PlatformDairyStatisticsInsertBackgroundTask implements BackgroundTa
 
         //延迟至第二天凌晨2点开始执行
         return end.getTime() - start.getTime();
+//        return 0;
     }
 
     @Override
@@ -55,10 +72,34 @@ public class PlatformDairyStatisticsInsertBackgroundTask implements BackgroundTa
 
     @Override
     public void run() {
-        log.debug("模拟插入content_corss表数据");
+        log.debug("模拟插入platform_daily_statistics表数据");
+        List<PlatformDailyStatistics> list = new ArrayList<>();
+
+        List<Long> platformIDList= platformDao.select(c -> c).stream().map(Platform::getId).collect(Collectors.toList());
         //每天插入十条数据
-        PlatformDailyStatistics platformDailyStatistics = new PlatformDailyStatistics();
+        for (Long platformid : platformIDList) {
+            PlatformDailyStatistics platformDailyStatistics = new PlatformDailyStatistics();
+            insertCommon(platformDailyStatistics, platformid);
+
+            riskTxViewService.InsertRiskTx(platformDailyStatistics);
+
+            //
+            //
+
+            //风险内容处理
+            list.add(platformDailyStatistics);
+        }
+
+        platformDailyStatisticsDao.insertMultiple(list);
+    }
+
+    private PlatformDailyStatistics insertCommon(PlatformDailyStatistics platformDailyStatistics, Long platformid){
+        Date end = new Date();
         platformDailyStatistics.setId(IdUtil.getSnowflakeNextId());
+        platformDailyStatistics.setPlatformId(platformid);
+        platformDailyStatistics.setCreateTime(end);
+        platformDailyStatistics.setUpdateTime(end);
+        return platformDailyStatistics;
 
         //平台风险数量处理
 //        platformDailyStatistics = PlatformViewService.class.getName();

@@ -3,17 +3,23 @@ package cn.qkl.webserver.controller;
 
 import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
+import cn.qkl.webserver.dto.user.AddUserDTO;
 import cn.qkl.webserver.dto.user.LoginDTO;
+import cn.qkl.webserver.dto.user.ModifyPwdDTO;
 import cn.qkl.webserver.service.UserService;
 import cn.qkl.webserver.vo.user.UserInfoVO;
+import cn.qkl.webserver.vo.user.UserListVO;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @title:
@@ -45,4 +51,24 @@ public class UserController {
 //    public BaseResult<UserInfoVO> getUserInfo() {
 //        return BaseResult.ok(userService.getUserInfo());
 //    }
+
+    @ApiOperation("用户列表")
+    @GetMapping("list")
+    public BaseResult<List<UserListVO>> getUserList() {
+        return BaseResult.ok(userService.getUserList());
+    }
+
+    @ApiOperation("添加普通用户")
+    @PostMapping("normal")
+    public BaseResult<Void> addUser(@Validated @RequestBody AddUserDTO dto) {
+        userService.addUser(dto);
+        return BaseResult.ok();
+    }
+
+    @ApiOperation("修改密码")
+    @PutMapping("pwd")
+    public BaseResult<Void> modifyPwd(@Validated @RequestBody ModifyPwdDTO dto) {
+        userService.modifyPwd(dto);
+        return BaseResult.ok();
+    }
 }
