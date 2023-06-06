@@ -50,6 +50,6 @@ public class AccountBackgroundTask implements BackgroundTask {
     public void run() {
         log.debug("check account risk");
         //业务代码
-
+        //
     }
 }

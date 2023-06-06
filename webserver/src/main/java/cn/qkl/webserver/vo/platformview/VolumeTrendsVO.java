@@ -10,6 +10,7 @@ import cn.qkl.webserver.vo.riskReport.RiskReportInfoVO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,8 +21,11 @@ import java.util.List;
  */
 @Data
 public class VolumeTrendsVO {
-    @ApiModelProperty("每日数据")
-    private List<VolumeDailyVO> volumeDailyVOList;
+    @ApiModelProperty("今日风险内容数量")
+    private Integer contentRiskSum;
+
+    @ApiModelProperty("统计的时间")
+    private Date createTime;
     public static VolumeTrendsVO transform(List<VolumeTrendsVO> platformDailyStatistics) {
         VolumeTrendsVO vo = new VolumeTrendsVO();
         BeanUtil.copyProperties(platformDailyStatistics, vo);
