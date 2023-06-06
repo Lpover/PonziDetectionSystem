@@ -29,7 +29,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @Validated
-@Api(value = "跨链内容相关接口", tags = {"跨链内容相关接口"})
+@Api(value = "驾驶舱相关接口", tags = {"驾驶舱相关接口"})
 @ApiSupport(author = "wx")
 @RequestMapping("board")
 @RefreshScope
