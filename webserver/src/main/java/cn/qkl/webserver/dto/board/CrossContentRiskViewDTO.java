@@ -1,4 +1,4 @@
-package cn.qkl.webserver.dto.cross;
+package cn.qkl.webserver.dto.board;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
