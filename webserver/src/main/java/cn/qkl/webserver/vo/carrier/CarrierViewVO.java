@@ -6,8 +6,6 @@ import lombok.Data;
 
 @Data
 public class CarrierViewVO {
-    @ApiModelProperty("载体主键id")
-    private Long Id;
     @ApiModelProperty("载体数量")
     private Integer carrierNumber;
     @ApiModelProperty("载体类别")

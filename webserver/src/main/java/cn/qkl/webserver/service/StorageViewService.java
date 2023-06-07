@@ -1,5 +1,6 @@
 package cn.qkl.webserver.service;
 
+import cn.qkl.common.repository.model.Storage;
 import cn.qkl.webserver.dto.stroage.StorageViewDTO;
 import cn.qkl.webserver.vo.stroage.StorageViewVO;
 import lombok.extern.slf4j.Slf4j;
@@ -23,4 +24,9 @@ public class StorageViewService {
         List <StorageViewVO> list = new ArrayList<>();
         return list;
     }
+
+    public Storage insertStorage(Storage storage) {
+        return storage;
+    }
+
 }
