@@ -1,23 +1,16 @@
 package cn.qkl.webserver.service;
 
 import cn.qkl.common.repository.Tables;
-import cn.qkl.common.repository.model.PlatformDailyStatistics;
-import cn.qkl.webserver.dao.PlatformDao;
 import cn.qkl.webserver.dao.PlatformViewDao;
 import cn.qkl.webserver.dto.platformview.PlatformAndTimeSelectionDTO;
-import cn.qkl.webserver.vo.contentDetection.ContentTagsVO;
-import cn.qkl.webserver.vo.platformview.VolumeDailyVO;
 import cn.qkl.webserver.vo.platformview.VolumeTrendsVO;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.jsqlparser.statement.select.Limit;
-import net.sf.jsqlparser.statement.select.Select;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
 import static org.mybatis.dynamic.sql.SqlBuilder.select;

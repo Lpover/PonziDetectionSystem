@@ -128,8 +128,8 @@ public class BoardController {
     //平台风险账户top10视图
     @ApiOperation("平台风险账户top10视图")
     @GetMapping("riskaccount")
-    public BaseResult<PlatformRiskContentVO> getRiskAccount(@Validated PlatformSelectionDTO dto) {
-        return BaseResult.ok(new PlatformRiskContentVO());
+    public BaseResult<PlatformRiskAccountVO> getRiskAccount(@Validated PlatformSelectionDTO dto) {
+        return BaseResult.ok(new PlatformRiskAccountVO());
     }
 
     //平台风险内容top10视图
