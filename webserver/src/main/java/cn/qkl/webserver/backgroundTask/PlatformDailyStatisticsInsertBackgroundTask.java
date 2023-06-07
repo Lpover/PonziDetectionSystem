@@ -69,13 +69,13 @@ public class PlatformDailyStatisticsInsertBackgroundTask implements BackgroundTa
         end = DateUtil.offsetDay(end, 1);
 
         //延迟至第二天凌晨2点开始执行
-        return end.getTime() - start.getTime();
-//        return 0;
+//        return end.getTime() - start.getTime();
+        return 0;
     }
 
     @Override
     public String getName() {
-        return ContentCrossStatisticsInsertBackgroundTask.class.getName();
+        return PlatformDailyStatisticsInsertBackgroundTask.class.getName();
     }
 
     @Override
@@ -89,13 +89,10 @@ public class PlatformDailyStatisticsInsertBackgroundTask implements BackgroundTa
             PlatformDailyStatistics platformDailyStatistics = new PlatformDailyStatistics();
             insertCommon(platformDailyStatistics, platformId);
 
-            riskTxViewService.InsertRiskTx(platformDailyStatistics);
-            riskNumViewService.InsertRiskNum(platformDailyStatistics);
-            //
-            //
+            riskTxViewService.insertRiskTx(platformDailyStatistics);    //风险交易
+            riskNumViewService.insertRiskNum(platformDailyStatistics);  //风险内容
 
-            //高中低风险内容处理
-            platformDailyStatistics=riskCategoryTrendService.insertRiskNum(platformDailyStatistics);
+
             //当天监控到的数字内容总数
             platformDailyStatistics=riskCategoryTrendService.insertRiskContentSum(platformDailyStatistics);
             //当天监控到的风险数字内容总数

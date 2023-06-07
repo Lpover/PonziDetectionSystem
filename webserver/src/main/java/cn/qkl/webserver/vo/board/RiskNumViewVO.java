@@ -21,6 +21,6 @@ public class RiskNumViewVO {
     @ApiModelProperty("低风险数量的列表")
     List<Integer> lowNum;
 
-    @ApiModelProperty("当前时间")
-    Date currentTime;
+    @ApiModelProperty("时间列表")
+    List<Date> timeList;
 }

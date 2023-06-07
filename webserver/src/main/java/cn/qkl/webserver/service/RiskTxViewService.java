@@ -31,7 +31,8 @@ public class RiskTxViewService {
 
     public RiskTxViewVO getRiskTxView(TimePlatformSelecteDTO dto) {
         Date date = new Date();
-        Date end = DateUtil.beginOfDay(date);
+//        Date end = DateUtil.beginOfDay(date);
+        Date end = DateUtil.endOfDay(date);
         Date start = DateUtil.offsetDay(end, -7);   //默认近7天
         if (dto.getTimeSpan() == 0) {   // 近7天
             start = DateUtil.offsetDay(end, -7);
@@ -59,12 +60,15 @@ public class RiskTxViewService {
                 .sorted(Comparator.comparing(PlatformDailyStatistics::getCreateTime))
                 .map(PlatformDailyStatistics::getLowRiskTx)
                 .collect(Collectors.toList()));
-        vo.setCurrentTime(end);
+        vo.setTimeList(platformDailyStatisticsList.stream()
+                .sorted(Comparator.comparing(PlatformDailyStatistics::getCreateTime))
+                .map(PlatformDailyStatistics::getCreateTime)
+                .collect(Collectors.toList()));
         return vo;
     }
 
     // 随机插入风险交易数据
-    public void InsertRiskTx(PlatformDailyStatistics platformDailyStatistics) {
+    public void insertRiskTx(PlatformDailyStatistics platformDailyStatistics) {
         Random random = new Random();
         platformDailyStatistics.setHighRiskTx(random.nextInt(1000));
         platformDailyStatistics.setMiddleRiskTx(random.nextInt(1000));

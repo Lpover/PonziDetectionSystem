@@ -5,14 +5,12 @@ import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dto.board.CrossContentRiskViewDTO;
-import cn.qkl.webserver.dto.platformview.HotnessRankingViewDTO;
-import cn.qkl.webserver.dto.platformview.PlatformAndTimeSelectionDTO;
-import cn.qkl.webserver.dto.platformview.PlatformSelectionDTO;
-import cn.qkl.webserver.service.CrossContentDailyStatisticsService;
-import cn.qkl.webserver.service.PlatformViewService;
 import cn.qkl.webserver.dto.board.TimePlatformSelecteDTO;
 import cn.qkl.webserver.dto.carrier.CarrierViewDTO;
 import cn.qkl.webserver.dto.category.CategoryViewDTO;
+import cn.qkl.webserver.dto.platformview.HotnessRankingViewDTO;
+import cn.qkl.webserver.dto.platformview.PlatformAndTimeSelectionDTO;
+import cn.qkl.webserver.dto.platformview.PlatformSelectionDTO;
 import cn.qkl.webserver.dto.stroage.StorageViewDTO;
 import cn.qkl.webserver.service.*;
 import cn.qkl.webserver.vo.board.CrossContentRiskViewVO;
@@ -21,8 +19,8 @@ import cn.qkl.webserver.vo.board.RiskTxViewVO;
 import cn.qkl.webserver.vo.board.WordCloudViewVO;
 import cn.qkl.webserver.vo.carrier.CarrierViewVO;
 import cn.qkl.webserver.vo.category.CategoryViewVO;
-import cn.qkl.webserver.vo.stroage.StorageViewVO;
 import cn.qkl.webserver.vo.platformview.*;
+import cn.qkl.webserver.vo.stroage.StorageViewVO;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -108,7 +106,7 @@ public class BoardController {
 
     @ApiOperation("风险类别词云分布视图")
     @GetMapping("risk/cloud")
-    public BaseResult<WordCloudViewVO> getWordCloudView(@Validated TimePlatformSelecteDTO dto) {
+    public BaseResult<List<WordCloudViewVO>> getWordCloudView(@Validated TimePlatformSelecteDTO dto) {
         return BaseResult.ok(wordCloudViewService.getWordCloudView(dto));
     }
 
@@ -151,7 +149,6 @@ public class BoardController {
     public BaseResult<HotnessRankingViewVO> getHotnessRankingView(@Validated HotnessRankingViewDTO dto) {
         return BaseResult.ok(new HotnessRankingViewVO());
     }
-
 
 
 
