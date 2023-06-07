@@ -6,6 +6,8 @@ import cn.qkl.common.framework.initAndBackground.BackgroundTask;
 import cn.qkl.common.repository.model.Platform;
 import cn.qkl.common.repository.model.PlatformDailyStatistics;
 import cn.qkl.webserver.dao.PlatformDailyStatisticsDao;
+import cn.qkl.webserver.service.CrossContentService;
+import cn.qkl.webserver.service.RiskCategoryTrendService;
 import cn.qkl.webserver.dao.PlatformDao;
 import cn.qkl.webserver.service.RiskTxViewService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +31,8 @@ public class PlatformDairyStatisticsInsertBackgroundTask implements BackgroundTa
 
     @Autowired
     private PlatformDailyStatisticsDao platformDailyStatisticsDao;
+    @Autowired
+    RiskCategoryTrendService riskCategoryTrendService;
 
     @Autowired
     private PlatformDao platformDao;
@@ -78,11 +82,12 @@ public class PlatformDairyStatisticsInsertBackgroundTask implements BackgroundTa
             insertCommon(platformDailyStatistics, platformid);
 
             riskTxViewService.InsertRiskTx(platformDailyStatistics);
-
-            //
-            //
-
-            //风险内容处理
+            //高中低风险内容处理
+            platformDailyStatistics=riskCategoryTrendService.insertRiskNum(platformDailyStatistics);
+            //当天监控到的数字内容总数
+            platformDailyStatistics=riskCategoryTrendService.insertRiskContentSum(platformDailyStatistics);
+            //当天监控到的风险数字内容总数
+            platformDailyStatistics=riskCategoryTrendService.insertContentSum(platformDailyStatistics);
             list.add(platformDailyStatistics);
         }
 
@@ -91,10 +96,10 @@ public class PlatformDairyStatisticsInsertBackgroundTask implements BackgroundTa
 
     private PlatformDailyStatistics insertCommon(PlatformDailyStatistics platformDailyStatistics, Long platformid){
         Date end = new Date();
-        platformDailyStatistics.setId(IdUtil.getSnowflakeNextId());
         platformDailyStatistics.setPlatformId(platformid);
         platformDailyStatistics.setCreateTime(end);
         platformDailyStatistics.setUpdateTime(end);
         return platformDailyStatistics;
     }
+
 }

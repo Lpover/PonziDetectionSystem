@@ -3,6 +3,7 @@ package cn.qkl.webserver.controller;
 
 import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
+import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dto.user.AddUserDTO;
 import cn.qkl.webserver.dto.user.LoginDTO;
 import cn.qkl.webserver.dto.user.ModifyPwdDTO;
@@ -54,12 +55,14 @@ public class UserController {
 
     @ApiOperation("用户列表")
     @GetMapping("list")
+    @Role(roles = { RoleEnum.AdminBaseRole.class})
     public BaseResult<List<UserListVO>> getUserList() {
         return BaseResult.ok(userService.getUserList());
     }
 
     @ApiOperation("添加普通用户")
     @PostMapping("normal")
+    @Role(roles = { RoleEnum.AdminBaseRole.class})
     public BaseResult<Void> addUser(@Validated @RequestBody AddUserDTO dto) {
         userService.addUser(dto);
         return BaseResult.ok();
@@ -67,6 +70,7 @@ public class UserController {
 
     @ApiOperation("修改密码")
     @PutMapping("pwd")
+    @Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
     public BaseResult<Void> modifyPwd(@Validated @RequestBody ModifyPwdDTO dto) {
         userService.modifyPwd(dto);
         return BaseResult.ok();
