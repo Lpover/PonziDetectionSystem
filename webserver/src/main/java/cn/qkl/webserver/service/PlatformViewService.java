@@ -36,7 +36,6 @@ public class PlatformViewService {
         //dayLimit指的是显示的天数
         int dayLimit=7;
         if(dto.getSelectTime()==2)dayLimit=30;
-
         List<VolumeTrendsVO> volumeTrendsList = platformViewDao.getVolumeTrends(
                     select(Tables.platformDailyStatistics.contentRiskSum, Tables.platformDailyStatistics.createTime)
                             .from(Tables.platformDailyStatistics)

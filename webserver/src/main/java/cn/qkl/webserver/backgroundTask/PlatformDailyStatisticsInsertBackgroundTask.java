@@ -6,7 +6,6 @@ import cn.qkl.common.framework.initAndBackground.BackgroundTask;
 import cn.qkl.common.repository.model.Platform;
 import cn.qkl.common.repository.model.PlatformDailyStatistics;
 import cn.qkl.webserver.dao.PlatformDailyStatisticsDao;
-import cn.qkl.webserver.service.CrossContentService;
 import cn.qkl.webserver.service.PlatformViewService;
 import cn.qkl.webserver.dao.PlatformDao;
 import cn.qkl.webserver.service.RiskTxViewService;
@@ -27,7 +26,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Component
-public class PlatformDairyStatisticsInsertBackgroundTask implements BackgroundTask {
+public class PlatformDailyStatisticsInsertBackgroundTask implements BackgroundTask {
 
     @Autowired
     private PlatformDailyStatisticsDao platformDailyStatisticsDao;
