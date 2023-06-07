@@ -6,6 +6,7 @@ import cn.qkl.webserver.dto.platformview.PlatformAndTimeSelectionDTO;
 import cn.qkl.webserver.dto.platformview.PlatformSelectionDTO;
 import cn.qkl.webserver.vo.platformview.IndexTrendsVO;
 import cn.qkl.webserver.vo.platformview.PlatformRiskAccountVO;
+import cn.qkl.webserver.vo.platformview.PlatformRiskContentVO;
 import cn.qkl.webserver.vo.platformview.VolumeTrendsVO;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
@@ -77,6 +78,20 @@ public class PlatformViewService {
                         .render(RenderingStrategies.MYBATIS3)
         );
         return platformRiskAccountList;
+    }
+
+    //返回十个平台风险内容
+    public List<PlatformRiskContentVO> getPlatformRiskContent(PlatformSelectionDTO dto){
+        List<PlatformRiskContentVO> platformRiskContentList = platformViewDao.getPlatformRiskContent(
+                select(Tables.content.id,Tables.content.name,Tables.content.metaUrl,Tables.content.currencyPrice)
+                        .from(Tables.content)
+                        .where(Tables.content.platformId,isEqualTo(dto.getSelectPlatformId()))
+                        .orderBy(Tables.content.currencyPriceRanking.descending())
+                        .limit(10)
+                        .build()
+                        .render(RenderingStrategies.MYBATIS3)
+        );
+        return platformRiskContentList;
     }
 
 }

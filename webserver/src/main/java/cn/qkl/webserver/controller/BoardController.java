@@ -141,8 +141,8 @@ public class BoardController {
     //平台风险内容top10视图
     @ApiOperation("平台风险内容top10视图")
     @GetMapping("riskcontent")
-    public BaseResult<PlatformRiskContentVO> getRiskContent(@Validated PlatformSelectionDTO dto) {
-        return BaseResult.ok(new PlatformRiskContentVO());
+    public BaseResult<List<PlatformRiskContentVO>> getRiskContent(@Validated PlatformSelectionDTO dto) {
+        return BaseResult.ok(platformViewService.getPlatformRiskContent(dto));
     }
 
     //NFT、WEB3热度排行视图
