@@ -61,7 +61,7 @@ public interface EventMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
     @Results(id="EventResult", value = {
-        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="title", property="title", jdbcType=JdbcType.VARCHAR),
         @Result(column="abstract_text", property="abstractText", jdbcType=JdbcType.VARCHAR),
         @Result(column="hot_num_12h", property="hotNum12h", jdbcType=JdbcType.INTEGER),
@@ -84,7 +84,7 @@ public interface EventMapper {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int deleteByPrimaryKey(Integer id_) {
+    default int deleteByPrimaryKey(Long id_) {
         return delete(c -> 
             c.where(id, isEqualTo(id_))
         );
@@ -139,7 +139,7 @@ public interface EventMapper {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default Optional<Event> selectByPrimaryKey(Integer id_) {
+    default Optional<Event> selectByPrimaryKey(Long id_) {
         return selectOne(c ->
             c.where(id, isEqualTo(id_))
         );

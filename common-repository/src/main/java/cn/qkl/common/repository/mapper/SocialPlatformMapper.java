@@ -61,7 +61,7 @@ public interface SocialPlatformMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
     @Results(id="SocialPlatformResult", value = {
-        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
         @Result(column="social_platform_index_12h", property="socialPlatformIndex12h", jdbcType=JdbcType.DECIMAL),
         @Result(column="social_platform_index_24h", property="socialPlatformIndex24h", jdbcType=JdbcType.DECIMAL)
@@ -83,7 +83,7 @@ public interface SocialPlatformMapper {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int deleteByPrimaryKey(Integer id_) {
+    default int deleteByPrimaryKey(Long id_) {
         return delete(c -> 
             c.where(id, isEqualTo(id_))
         );
@@ -135,7 +135,7 @@ public interface SocialPlatformMapper {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default Optional<SocialPlatform> selectByPrimaryKey(Integer id_) {
+    default Optional<SocialPlatform> selectByPrimaryKey(Long id_) {
         return selectOne(c ->
             c.where(id, isEqualTo(id_))
         );

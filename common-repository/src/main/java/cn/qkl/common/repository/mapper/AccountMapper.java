@@ -71,7 +71,7 @@ public interface AccountMapper {
         @Result(column="exchange_rate", property="exchangeRate", jdbcType=JdbcType.VARCHAR),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="platform_id", property="platformId", jdbcType=JdbcType.INTEGER),
+        @Result(column="platform_id", property="platformId", jdbcType=JdbcType.BIGINT),
         @Result(column="release_num", property="releaseNum", jdbcType=JdbcType.INTEGER)
     })
     List<Account> selectMany(SelectStatementProvider selectStatement);

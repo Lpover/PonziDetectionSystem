@@ -11,7 +11,7 @@ public final class SocialPlatformDynamicSqlSupport {
     public static final SocialPlatform socialPlatform = new SocialPlatform();
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Integer> id = socialPlatform.id;
+    public static final SqlColumn<Long> id = socialPlatform.id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> name = socialPlatform.name;
@@ -24,7 +24,7 @@ public final class SocialPlatformDynamicSqlSupport {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class SocialPlatform extends SqlTable {
-        public final SqlColumn<Integer> id = column("id", JDBCType.INTEGER);
+        public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
         public final SqlColumn<String> name = column("`name`", JDBCType.VARCHAR);
 

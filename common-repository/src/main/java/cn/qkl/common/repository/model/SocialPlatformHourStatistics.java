@@ -5,7 +5,10 @@ import javax.annotation.Generated;
 
 public class SocialPlatformHourStatistics {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Integer socialPlatformId;
+    private Long id;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Long socialPlatformId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Date createTime;
@@ -26,18 +29,34 @@ public class SocialPlatformHourStatistics {
     private Integer negEmotionNum;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Integer getSocialPlatformId() {
+    public Long getId() {
+        return id;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public SocialPlatformHourStatistics withId(Long id) {
+        this.setId(id);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Long getSocialPlatformId() {
         return socialPlatformId;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public SocialPlatformHourStatistics withSocialPlatformId(Integer socialPlatformId) {
+    public SocialPlatformHourStatistics withSocialPlatformId(Long socialPlatformId) {
         this.setSocialPlatformId(socialPlatformId);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setSocialPlatformId(Integer socialPlatformId) {
+    public void setSocialPlatformId(Long socialPlatformId) {
         this.socialPlatformId = socialPlatformId;
     }
 
@@ -144,6 +163,7 @@ public class SocialPlatformHourStatistics {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
         sb.append(", socialPlatformId=").append(socialPlatformId);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);

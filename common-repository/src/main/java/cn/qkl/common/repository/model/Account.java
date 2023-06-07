@@ -35,7 +35,7 @@ public class Account {
     private Date updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Integer platformId;
+    private Long platformId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer releaseNum;
@@ -201,18 +201,18 @@ public class Account {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Integer getPlatformId() {
+    public Long getPlatformId() {
         return platformId;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Account withPlatformId(Integer platformId) {
+    public Account withPlatformId(Long platformId) {
         this.setPlatformId(platformId);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setPlatformId(Integer platformId) {
+    public void setPlatformId(Long platformId) {
         this.platformId = platformId;
     }
 

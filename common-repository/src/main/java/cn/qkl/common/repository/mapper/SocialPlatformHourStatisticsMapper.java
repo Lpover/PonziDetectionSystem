@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface SocialPlatformHourStatisticsMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(socialPlatformId, createTime, updateTime, sensitiveNum, nonSensitiveNum, posEmotionNum, negEmotionNum);
+    BasicColumn[] selectList = BasicColumn.columnList(id, socialPlatformId, createTime, updateTime, sensitiveNum, nonSensitiveNum, posEmotionNum, negEmotionNum);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -61,7 +61,8 @@ public interface SocialPlatformHourStatisticsMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
     @Results(id="SocialPlatformHourStatisticsResult", value = {
-        @Result(column="social_platform_id", property="socialPlatformId", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
+        @Result(column="social_platform_id", property="socialPlatformId", jdbcType=JdbcType.BIGINT),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="sensitive_num", property="sensitiveNum", jdbcType=JdbcType.INTEGER),
@@ -86,16 +87,17 @@ public interface SocialPlatformHourStatisticsMapper {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int deleteByPrimaryKey(Integer socialPlatformId_) {
+    default int deleteByPrimaryKey(Long id_) {
         return delete(c -> 
-            c.where(socialPlatformId, isEqualTo(socialPlatformId_))
+            c.where(id, isEqualTo(id_))
         );
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int insert(SocialPlatformHourStatistics record) {
         return MyBatis3Utils.insert(this::insert, record, socialPlatformHourStatistics, c ->
-            c.map(socialPlatformId).toProperty("socialPlatformId")
+            c.map(id).toProperty("id")
+            .map(socialPlatformId).toProperty("socialPlatformId")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
             .map(sensitiveNum).toProperty("sensitiveNum")
@@ -108,7 +110,8 @@ public interface SocialPlatformHourStatisticsMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int insertMultiple(Collection<SocialPlatformHourStatistics> records) {
         return MyBatis3Utils.insertMultiple(this::insertMultiple, records, socialPlatformHourStatistics, c ->
-            c.map(socialPlatformId).toProperty("socialPlatformId")
+            c.map(id).toProperty("id")
+            .map(socialPlatformId).toProperty("socialPlatformId")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
             .map(sensitiveNum).toProperty("sensitiveNum")
@@ -121,7 +124,8 @@ public interface SocialPlatformHourStatisticsMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int insertSelective(SocialPlatformHourStatistics record) {
         return MyBatis3Utils.insert(this::insert, record, socialPlatformHourStatistics, c ->
-            c.map(socialPlatformId).toPropertyWhenPresent("socialPlatformId", record::getSocialPlatformId)
+            c.map(id).toPropertyWhenPresent("id", record::getId)
+            .map(socialPlatformId).toPropertyWhenPresent("socialPlatformId", record::getSocialPlatformId)
             .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
             .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
             .map(sensitiveNum).toPropertyWhenPresent("sensitiveNum", record::getSensitiveNum)
@@ -147,9 +151,9 @@ public interface SocialPlatformHourStatisticsMapper {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default Optional<SocialPlatformHourStatistics> selectByPrimaryKey(Integer socialPlatformId_) {
+    default Optional<SocialPlatformHourStatistics> selectByPrimaryKey(Long id_) {
         return selectOne(c ->
-            c.where(socialPlatformId, isEqualTo(socialPlatformId_))
+            c.where(id, isEqualTo(id_))
         );
     }
 
@@ -160,7 +164,8 @@ public interface SocialPlatformHourStatisticsMapper {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     static UpdateDSL<UpdateModel> updateAllColumns(SocialPlatformHourStatistics record, UpdateDSL<UpdateModel> dsl) {
-        return dsl.set(socialPlatformId).equalTo(record::getSocialPlatformId)
+        return dsl.set(id).equalTo(record::getId)
+                .set(socialPlatformId).equalTo(record::getSocialPlatformId)
                 .set(createTime).equalTo(record::getCreateTime)
                 .set(updateTime).equalTo(record::getUpdateTime)
                 .set(sensitiveNum).equalTo(record::getSensitiveNum)
@@ -171,7 +176,8 @@ public interface SocialPlatformHourStatisticsMapper {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     static UpdateDSL<UpdateModel> updateSelectiveColumns(SocialPlatformHourStatistics record, UpdateDSL<UpdateModel> dsl) {
-        return dsl.set(socialPlatformId).equalToWhenPresent(record::getSocialPlatformId)
+        return dsl.set(id).equalToWhenPresent(record::getId)
+                .set(socialPlatformId).equalToWhenPresent(record::getSocialPlatformId)
                 .set(createTime).equalToWhenPresent(record::getCreateTime)
                 .set(updateTime).equalToWhenPresent(record::getUpdateTime)
                 .set(sensitiveNum).equalToWhenPresent(record::getSensitiveNum)
@@ -183,26 +189,28 @@ public interface SocialPlatformHourStatisticsMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int updateByPrimaryKey(SocialPlatformHourStatistics record) {
         return update(c ->
-            c.set(createTime).equalTo(record::getCreateTime)
+            c.set(socialPlatformId).equalTo(record::getSocialPlatformId)
+            .set(createTime).equalTo(record::getCreateTime)
             .set(updateTime).equalTo(record::getUpdateTime)
             .set(sensitiveNum).equalTo(record::getSensitiveNum)
             .set(nonSensitiveNum).equalTo(record::getNonSensitiveNum)
             .set(posEmotionNum).equalTo(record::getPosEmotionNum)
             .set(negEmotionNum).equalTo(record::getNegEmotionNum)
-            .where(socialPlatformId, isEqualTo(record::getSocialPlatformId))
+            .where(id, isEqualTo(record::getId))
         );
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int updateByPrimaryKeySelective(SocialPlatformHourStatistics record) {
         return update(c ->
-            c.set(createTime).equalToWhenPresent(record::getCreateTime)
+            c.set(socialPlatformId).equalToWhenPresent(record::getSocialPlatformId)
+            .set(createTime).equalToWhenPresent(record::getCreateTime)
             .set(updateTime).equalToWhenPresent(record::getUpdateTime)
             .set(sensitiveNum).equalToWhenPresent(record::getSensitiveNum)
             .set(nonSensitiveNum).equalToWhenPresent(record::getNonSensitiveNum)
             .set(posEmotionNum).equalToWhenPresent(record::getPosEmotionNum)
             .set(negEmotionNum).equalToWhenPresent(record::getNegEmotionNum)
-            .where(socialPlatformId, isEqualTo(record::getSocialPlatformId))
+            .where(id, isEqualTo(record::getId))
         );
     }
 }

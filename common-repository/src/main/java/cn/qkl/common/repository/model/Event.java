@@ -4,7 +4,7 @@ import javax.annotation.Generated;
 
 public class Event {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Integer id;
+    private Long id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String title;
@@ -19,18 +19,18 @@ public class Event {
     private Integer hotNum24h;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Event withId(Integer id) {
+    public Event withId(Long id) {
         this.setId(id);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

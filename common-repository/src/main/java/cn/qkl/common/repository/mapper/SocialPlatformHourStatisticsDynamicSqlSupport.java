@@ -11,7 +11,10 @@ public final class SocialPlatformHourStatisticsDynamicSqlSupport {
     public static final SocialPlatformHourStatistics socialPlatformHourStatistics = new SocialPlatformHourStatistics();
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Integer> socialPlatformId = socialPlatformHourStatistics.socialPlatformId;
+    public static final SqlColumn<Long> id = socialPlatformHourStatistics.id;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Long> socialPlatformId = socialPlatformHourStatistics.socialPlatformId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Date> createTime = socialPlatformHourStatistics.createTime;
@@ -33,7 +36,9 @@ public final class SocialPlatformHourStatisticsDynamicSqlSupport {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class SocialPlatformHourStatistics extends SqlTable {
-        public final SqlColumn<Integer> socialPlatformId = column("social_platform_id", JDBCType.INTEGER);
+        public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
+
+        public final SqlColumn<Long> socialPlatformId = column("social_platform_id", JDBCType.BIGINT);
 
         public final SqlColumn<Date> createTime = column("create_time", JDBCType.TIMESTAMP);
 

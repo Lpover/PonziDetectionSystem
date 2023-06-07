@@ -10,7 +10,7 @@ public final class EventDynamicSqlSupport {
     public static final Event event = new Event();
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Integer> id = event.id;
+    public static final SqlColumn<Long> id = event.id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> title = event.title;
@@ -26,7 +26,7 @@ public final class EventDynamicSqlSupport {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class Event extends SqlTable {
-        public final SqlColumn<Integer> id = column("id", JDBCType.INTEGER);
+        public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
         public final SqlColumn<String> title = column("title", JDBCType.VARCHAR);
 

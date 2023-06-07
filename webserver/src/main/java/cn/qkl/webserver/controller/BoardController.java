@@ -55,6 +55,7 @@ public class BoardController {
 
     @Autowired
     private CrossContentDailyStatisticsService crossContentDailyStatisticsService;
+
     @Autowired
     private PlatformViewService platformViewService;
 
@@ -121,8 +122,8 @@ public class BoardController {
     //平台风险指数变化趋势视图
     @ApiOperation("平台风险指数变化趋势视图")
     @GetMapping("indextrends")
-    public BaseResult<IndexTrendsVO> getIndexTrends(@Validated PlatformAndTimeSelectionDTO dto) {
-        return BaseResult.ok(new IndexTrendsVO());
+    public BaseResult<List<IndexTrendsVO>> getIndexTrends(@Validated PlatformAndTimeSelectionDTO dto) {
+        return BaseResult.ok(platformViewService.getIndexTrends(dto));
     }
 
     //平台风险账户top10视图
