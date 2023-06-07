@@ -45,7 +45,7 @@
         </table>
         <table tableName="content_risk" domainObjectName="ContentRisk">
         </table>
-        <table tableName="content_risk_statistics" domainObjectName="ContentRiskStatistics">
+        <table tableName="content_risk_daily_statistics" domainObjectName="ContentRiskDailyStatistics">
         </table>
         <table tableName="content_tx_history" domainObjectName="ContentTxHistory">
         </table>
