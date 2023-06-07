@@ -8,6 +8,7 @@ import cn.qkl.common.repository.model.PlatformDailyStatistics;
 import cn.qkl.webserver.dao.PlatformDailyStatisticsDao;
 import cn.qkl.webserver.service.PlatformViewService;
 import cn.qkl.webserver.dao.PlatformDao;
+import cn.qkl.webserver.service.RiskCategoryTrendService;
 import cn.qkl.webserver.service.RiskNumViewService;
 import cn.qkl.webserver.service.RiskTxViewService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,8 +32,9 @@ public class PlatformDailyStatisticsInsertBackgroundTask implements BackgroundTa
 
     @Autowired
     private PlatformDailyStatisticsDao platformDailyStatisticsDao;
+
     @Autowired
-    RiskCategoryTrendService riskCategoryTrendService;
+    private RiskCategoryTrendService riskCategoryTrendService;
 
     @Autowired
     private PlatformViewService platformViewService;
