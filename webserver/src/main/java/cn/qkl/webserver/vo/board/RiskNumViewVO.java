@@ -3,6 +3,7 @@ package cn.qkl.webserver.vo.board;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -10,13 +11,16 @@ import java.util.List;
  * @return
  */
 @Data
-public class RiskNumVO {
+public class RiskNumViewVO {
     @ApiModelProperty("高风险数量的列表")
-    List<Integer> high;
+    List<Integer> highNum;
 
     @ApiModelProperty("中风险数量的列表")
-    List<Integer> mid;
+    List<Integer> midNum;
 
     @ApiModelProperty("低风险数量的列表")
-    List<Integer> low;
+    List<Integer> lowNum;
+
+    @ApiModelProperty("当前时间")
+    Date currentTime;
 }

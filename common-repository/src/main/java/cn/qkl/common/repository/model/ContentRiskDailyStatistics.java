@@ -1,9 +1,9 @@
 package cn.qkl.common.repository.model;
 
-import java.util.Date;
 import javax.annotation.Generated;
+import java.util.Date;
 
-public class ContentRiskStatistics {
+public class ContentRiskDailyStatistics {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
 
@@ -11,7 +11,7 @@ public class ContentRiskStatistics {
     private Long categoryId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long num;
+    private Integer num;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long platformId;
@@ -28,7 +28,7 @@ public class ContentRiskStatistics {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public ContentRiskStatistics withId(Long id) {
+    public ContentRiskDailyStatistics withId(Long id) {
         this.setId(id);
         return this;
     }
@@ -44,7 +44,7 @@ public class ContentRiskStatistics {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public ContentRiskStatistics withCategoryId(Long categoryId) {
+    public ContentRiskDailyStatistics withCategoryId(Long categoryId) {
         this.setCategoryId(categoryId);
         return this;
     }
@@ -55,18 +55,18 @@ public class ContentRiskStatistics {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getNum() {
+    public Integer getNum() {
         return num;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public ContentRiskStatistics withNum(Long num) {
+    public ContentRiskDailyStatistics withNum(Integer num) {
         this.setNum(num);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setNum(Long num) {
+    public void setNum(Integer num) {
         this.num = num;
     }
 
@@ -76,7 +76,7 @@ public class ContentRiskStatistics {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public ContentRiskStatistics withPlatformId(Long platformId) {
+    public ContentRiskDailyStatistics withPlatformId(Long platformId) {
         this.setPlatformId(platformId);
         return this;
     }
@@ -92,7 +92,7 @@ public class ContentRiskStatistics {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public ContentRiskStatistics withCreateTime(Date createTime) {
+    public ContentRiskDailyStatistics withCreateTime(Date createTime) {
         this.setCreateTime(createTime);
         return this;
     }
@@ -108,7 +108,7 @@ public class ContentRiskStatistics {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public ContentRiskStatistics withUpdateTime(Date updateTime) {
+    public ContentRiskDailyStatistics withUpdateTime(Date updateTime) {
         this.setUpdateTime(updateTime);
         return this;
     }

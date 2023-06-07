@@ -9,6 +9,7 @@ import cn.qkl.webserver.dao.PlatformDailyStatisticsDao;
 import cn.qkl.webserver.service.CrossContentService;
 import cn.qkl.webserver.service.RiskCategoryTrendService;
 import cn.qkl.webserver.dao.PlatformDao;
+import cn.qkl.webserver.service.RiskNumViewService;
 import cn.qkl.webserver.service.RiskTxViewService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,9 @@ public class PlatformDairyStatisticsInsertBackgroundTask implements BackgroundTa
 
     @Autowired
     private RiskTxViewService riskTxViewService;
+
+    @Autowired
+    private RiskNumViewService riskNumViewService;
 
     /**
      * 间隔1天
@@ -76,12 +80,16 @@ public class PlatformDairyStatisticsInsertBackgroundTask implements BackgroundTa
         List<PlatformDailyStatistics> list = new ArrayList<>();
 
         List<Long> platformIDList= platformDao.select(c -> c).stream().map(Platform::getId).collect(Collectors.toList());
-        //每天插入十条数据
-        for (Long platformid : platformIDList) {
+        //每天 每个平台插入一条数据
+        for (Long platformId : platformIDList) {
             PlatformDailyStatistics platformDailyStatistics = new PlatformDailyStatistics();
-            insertCommon(platformDailyStatistics, platformid);
+            insertCommon(platformDailyStatistics, platformId);
 
             riskTxViewService.InsertRiskTx(platformDailyStatistics);
+            riskNumViewService.InsertRiskNum(platformDailyStatistics);
+            //
+            //
+
             //高中低风险内容处理
             platformDailyStatistics=riskCategoryTrendService.insertRiskNum(platformDailyStatistics);
             //当天监控到的数字内容总数
@@ -94,12 +102,12 @@ public class PlatformDairyStatisticsInsertBackgroundTask implements BackgroundTa
         platformDailyStatisticsDao.insertMultiple(list);
     }
 
-    private PlatformDailyStatistics insertCommon(PlatformDailyStatistics platformDailyStatistics, Long platformid){
+    private void insertCommon(PlatformDailyStatistics platformDailyStatistics, Long platformID){
         Date end = new Date();
-        platformDailyStatistics.setPlatformId(platformid);
+        platformDailyStatistics.setId(IdUtil.getSnowflakeNextId());
+        platformDailyStatistics.setPlatformId(platformID);
         platformDailyStatistics.setCreateTime(end);
         platformDailyStatistics.setUpdateTime(end);
-        return platformDailyStatistics;
     }
 
 }

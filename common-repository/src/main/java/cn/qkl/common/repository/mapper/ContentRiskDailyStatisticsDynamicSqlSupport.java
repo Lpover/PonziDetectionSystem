@@ -6,35 +6,35 @@ import javax.annotation.Generated;
 import org.mybatis.dynamic.sql.SqlColumn;
 import org.mybatis.dynamic.sql.SqlTable;
 
-public final class ContentRiskStatisticsDynamicSqlSupport {
+public final class ContentRiskDailyStatisticsDynamicSqlSupport {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final ContentRiskStatistics contentRiskStatistics = new ContentRiskStatistics();
+    public static final ContentRiskDailyStatistics contentRiskDailyStatistics = new ContentRiskDailyStatistics();
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Long> id = contentRiskStatistics.id;
+    public static final SqlColumn<Long> id = contentRiskDailyStatistics.id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Long> categoryId = contentRiskStatistics.categoryId;
+    public static final SqlColumn<Long> categoryId = contentRiskDailyStatistics.categoryId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Long> num = contentRiskStatistics.num;
+    public static final SqlColumn<Integer> num = contentRiskDailyStatistics.num;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Long> platformId = contentRiskStatistics.platformId;
+    public static final SqlColumn<Long> platformId = contentRiskDailyStatistics.platformId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Date> createTime = contentRiskStatistics.createTime;
+    public static final SqlColumn<Date> createTime = contentRiskDailyStatistics.createTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Date> updateTime = contentRiskStatistics.updateTime;
+    public static final SqlColumn<Date> updateTime = contentRiskDailyStatistics.updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final class ContentRiskStatistics extends SqlTable {
+    public static final class ContentRiskDailyStatistics extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
         public final SqlColumn<Long> categoryId = column("category_id", JDBCType.BIGINT);
 
-        public final SqlColumn<Long> num = column("num", JDBCType.BIGINT);
+        public final SqlColumn<Integer> num = column("num", JDBCType.INTEGER);
 
         public final SqlColumn<Long> platformId = column("platform_id", JDBCType.BIGINT);
 
@@ -42,8 +42,8 @@ public final class ContentRiskStatisticsDynamicSqlSupport {
 
         public final SqlColumn<Date> updateTime = column("update_time", JDBCType.TIMESTAMP);
 
-        public ContentRiskStatistics() {
-            super("content_risk_statistics");
+        public ContentRiskDailyStatistics() {
+            super("content_risk_daily_statistics");
         }
     }
 }

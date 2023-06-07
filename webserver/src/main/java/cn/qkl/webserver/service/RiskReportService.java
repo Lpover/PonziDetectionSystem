@@ -23,9 +23,6 @@ import java.util.List;
 
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
-import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
-import static org.mybatis.dynamic.sql.SqlBuilder.isInWhenPresent;
-
 /**
  * @title:
  * @Author lpc
@@ -60,11 +57,11 @@ public class RiskReportService {
         DateTime start =  DateUtil.offsetDay(end, -7);
         //每日标签新增
         List<RiskCategoryVO> riskContentStatistics = contentRiskStatisticsDao.getContentRiskStatistic(
-                select(Tables.contentRisk.category.as("riskName"), Tables.contentRiskStatistics.num.as("riskNum"))
-                        .from(Tables.contentRiskStatistics)
-                        .leftJoin(Tables.contentRisk).on(Tables.contentRiskStatistics.categoryId, equalTo(Tables.contentRisk.id))
-                        .where(Tables.contentRiskStatistics.createTime, isGreaterThanOrEqualToWhenPresent(start))
-                        .and(Tables.contentRiskStatistics.createTime, isLessThanOrEqualToWhenPresent(end))
+                select(Tables.contentRisk.category.as("riskName"), Tables.contentRiskDailyStatistics.num.as("riskNum"))
+                        .from(Tables.contentRiskDailyStatistics)
+                        .leftJoin(Tables.contentRisk).on(Tables.contentRiskDailyStatistics.categoryId, equalTo(Tables.contentRisk.id))
+                        .where(Tables.contentRiskDailyStatistics.createTime, isGreaterThanOrEqualToWhenPresent(start))
+                        .and(Tables.contentRiskDailyStatistics.createTime, isLessThanOrEqualToWhenPresent(end))
                         .orderBy(SimpleSortSpecification.of("riskNum").descending())
                         .build()
                         .render(RenderingStrategies.MYBATIS3)

@@ -11,9 +11,9 @@ import cn.qkl.webserver.dto.category.CategoryViewDTO;
 import cn.qkl.webserver.dto.stroage.StorageViewDTO;
 import cn.qkl.webserver.service.*;
 import cn.qkl.webserver.vo.board.CrossContentRiskViewVO;
-import cn.qkl.webserver.vo.board.RiskNumVO;
+import cn.qkl.webserver.vo.board.RiskNumViewVO;
 import cn.qkl.webserver.vo.board.RiskTxViewVO;
-import cn.qkl.webserver.vo.board.WordCloudVO;
+import cn.qkl.webserver.vo.board.WordCloudViewVO;
 import cn.qkl.webserver.vo.carrier.CarrierViewVO;
 import cn.qkl.webserver.vo.category.CategoryViewVO;
 import cn.qkl.webserver.vo.stroage.StorageViewVO;
@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -61,6 +60,12 @@ public class BoardController {
 
     @Autowired
     private RiskTxViewService riskTxViewService;
+
+    @Autowired
+    private RiskNumViewService riskNumViewService;
+
+    @Autowired
+    private WordCloudViewService wordCloudViewService;
     @ApiOperation("跨链风险视图")
     @GetMapping("cross/view")
     public BaseResult<List<CrossContentRiskViewVO>> getCrossContentRiskView(@Validated CrossContentRiskViewDTO dto) {
@@ -94,13 +99,15 @@ public class BoardController {
 
     @ApiOperation("风险类别词云分布视图")
     @GetMapping("risk/cloud")
-    public BaseResult<List<WordCloudVO>> getWordCloudView(@Validated TimePlatformSelecteDTO dto) {
-        return BaseResult.ok(new ArrayList<>());
+    public BaseResult<WordCloudViewVO> getWordCloudView(@Validated TimePlatformSelecteDTO dto) {
+        return BaseResult.ok(wordCloudViewService.getWordCloudView(dto));
     }
 
-    @ApiOperation("风险变化趋势图")
+    @ApiOperation("风险数量变化趋势图")
     @GetMapping("risk/num")
-    public BaseResult<List<RiskNumVO>> getRiskNumView(@Validated TimePlatformSelecteDTO dto) {
-        return BaseResult.ok(new ArrayList<>());
+    public BaseResult<RiskNumViewVO> getRiskNumView(@Validated TimePlatformSelecteDTO dto) {
+        return BaseResult.ok(riskNumViewService.getRiskNumView(dto));
     }
+
+
 }
