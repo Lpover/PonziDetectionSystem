@@ -47,6 +47,9 @@ public final class AccountDynamicSqlSupport {
     public static final SqlColumn<Integer> releaseNum = account.releaseNum;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Integer> riskLevel = account.riskLevel;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class Account extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -71,6 +74,8 @@ public final class AccountDynamicSqlSupport {
         public final SqlColumn<Long> platformId = column("platform_id", JDBCType.BIGINT);
 
         public final SqlColumn<Integer> releaseNum = column("release_num", JDBCType.INTEGER);
+
+        public final SqlColumn<Integer> riskLevel = column("risk_level", JDBCType.INTEGER);
 
         public Account() {
             super("account");

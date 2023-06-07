@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface AccountMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, accountAddress, chainId, accountAlias, image, cryptoBalance, currencyBalance, exchangeRate, createTime, updateTime, platformId, releaseNum);
+    BasicColumn[] selectList = BasicColumn.columnList(id, accountAddress, chainId, accountAlias, image, cryptoBalance, currencyBalance, exchangeRate, createTime, updateTime, platformId, releaseNum, riskLevel);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -72,7 +72,8 @@ public interface AccountMapper {
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="platform_id", property="platformId", jdbcType=JdbcType.BIGINT),
-        @Result(column="release_num", property="releaseNum", jdbcType=JdbcType.INTEGER)
+        @Result(column="release_num", property="releaseNum", jdbcType=JdbcType.INTEGER),
+        @Result(column="risk_level", property="riskLevel", jdbcType=JdbcType.INTEGER)
     })
     List<Account> selectMany(SelectStatementProvider selectStatement);
 
@@ -112,6 +113,7 @@ public interface AccountMapper {
             .map(updateTime).toProperty("updateTime")
             .map(platformId).toProperty("platformId")
             .map(releaseNum).toProperty("releaseNum")
+            .map(riskLevel).toProperty("riskLevel")
         );
     }
 
@@ -130,6 +132,7 @@ public interface AccountMapper {
             .map(updateTime).toProperty("updateTime")
             .map(platformId).toProperty("platformId")
             .map(releaseNum).toProperty("releaseNum")
+            .map(riskLevel).toProperty("riskLevel")
         );
     }
 
@@ -148,6 +151,7 @@ public interface AccountMapper {
             .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
             .map(platformId).toPropertyWhenPresent("platformId", record::getPlatformId)
             .map(releaseNum).toPropertyWhenPresent("releaseNum", record::getReleaseNum)
+            .map(riskLevel).toPropertyWhenPresent("riskLevel", record::getRiskLevel)
         );
     }
 
@@ -191,7 +195,8 @@ public interface AccountMapper {
                 .set(createTime).equalTo(record::getCreateTime)
                 .set(updateTime).equalTo(record::getUpdateTime)
                 .set(platformId).equalTo(record::getPlatformId)
-                .set(releaseNum).equalTo(record::getReleaseNum);
+                .set(releaseNum).equalTo(record::getReleaseNum)
+                .set(riskLevel).equalTo(record::getRiskLevel);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -207,7 +212,8 @@ public interface AccountMapper {
                 .set(createTime).equalToWhenPresent(record::getCreateTime)
                 .set(updateTime).equalToWhenPresent(record::getUpdateTime)
                 .set(platformId).equalToWhenPresent(record::getPlatformId)
-                .set(releaseNum).equalToWhenPresent(record::getReleaseNum);
+                .set(releaseNum).equalToWhenPresent(record::getReleaseNum)
+                .set(riskLevel).equalToWhenPresent(record::getRiskLevel);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -224,6 +230,7 @@ public interface AccountMapper {
             .set(updateTime).equalTo(record::getUpdateTime)
             .set(platformId).equalTo(record::getPlatformId)
             .set(releaseNum).equalTo(record::getReleaseNum)
+            .set(riskLevel).equalTo(record::getRiskLevel)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -242,6 +249,7 @@ public interface AccountMapper {
             .set(updateTime).equalToWhenPresent(record::getUpdateTime)
             .set(platformId).equalToWhenPresent(record::getPlatformId)
             .set(releaseNum).equalToWhenPresent(record::getReleaseNum)
+            .set(riskLevel).equalToWhenPresent(record::getRiskLevel)
             .where(id, isEqualTo(record::getId))
         );
     }

@@ -96,7 +96,7 @@ public final class ContentDynamicSqlSupport {
     public static final SqlColumn<Integer> hotNum24h = content.hotNum24h;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<BigDecimal> cryptoPriceRanking = content.cryptoPriceRanking;
+    public static final SqlColumn<BigDecimal> currencyPriceRanking = content.currencyPriceRanking;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class Content extends SqlTable {
@@ -156,7 +156,7 @@ public final class ContentDynamicSqlSupport {
 
         public final SqlColumn<Integer> hotNum24h = column("hot_num_24h", JDBCType.INTEGER);
 
-        public final SqlColumn<BigDecimal> cryptoPriceRanking = column("crypto_price_ranking", JDBCType.DECIMAL);
+        public final SqlColumn<BigDecimal> currencyPriceRanking = column("currency_price_ranking", JDBCType.DECIMAL);
 
         public Content() {
             super("content");

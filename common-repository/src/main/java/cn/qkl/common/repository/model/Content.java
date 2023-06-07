@@ -90,7 +90,7 @@ public class Content {
     private Integer hotNum24h;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private BigDecimal cryptoPriceRanking;
+    private BigDecimal currencyPriceRanking;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
@@ -541,19 +541,19 @@ public class Content {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public BigDecimal getCryptoPriceRanking() {
-        return cryptoPriceRanking;
+    public BigDecimal getCurrencyPriceRanking() {
+        return currencyPriceRanking;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Content withCryptoPriceRanking(BigDecimal cryptoPriceRanking) {
-        this.setCryptoPriceRanking(cryptoPriceRanking);
+    public Content withCurrencyPriceRanking(BigDecimal currencyPriceRanking) {
+        this.setCurrencyPriceRanking(currencyPriceRanking);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setCryptoPriceRanking(BigDecimal cryptoPriceRanking) {
-        this.cryptoPriceRanking = cryptoPriceRanking;
+    public void setCurrencyPriceRanking(BigDecimal currencyPriceRanking) {
+        this.currencyPriceRanking = currencyPriceRanking;
     }
 
     @Override
@@ -591,7 +591,7 @@ public class Content {
         sb.append(", riskType=").append(riskType);
         sb.append(", hotNum12h=").append(hotNum12h);
         sb.append(", hotNum24h=").append(hotNum24h);
-        sb.append(", cryptoPriceRanking=").append(cryptoPriceRanking);
+        sb.append(", currencyPriceRanking=").append(currencyPriceRanking);
         sb.append("]");
         return sb.toString();
     }

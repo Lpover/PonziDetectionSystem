@@ -41,6 +41,9 @@ public class Account {
     private Integer releaseNum;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer riskLevel;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
@@ -232,6 +235,22 @@ public class Account {
         this.releaseNum = releaseNum;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getRiskLevel() {
+        return riskLevel;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Account withRiskLevel(Integer riskLevel) {
+        this.setRiskLevel(riskLevel);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setRiskLevel(Integer riskLevel) {
+        this.riskLevel = riskLevel;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -251,6 +270,7 @@ public class Account {
         sb.append(", updateTime=").append(updateTime);
         sb.append(", platformId=").append(platformId);
         sb.append(", releaseNum=").append(releaseNum);
+        sb.append(", riskLevel=").append(riskLevel);
         sb.append("]");
         return sb.toString();
     }

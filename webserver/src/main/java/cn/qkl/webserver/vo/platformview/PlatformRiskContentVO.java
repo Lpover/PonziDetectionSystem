@@ -22,7 +22,7 @@ public class PlatformRiskContentVO {
     @ApiModelProperty("logo的url")
     private String metaUrl;
 
-    @ApiModelProperty("该内容的价值")
-    private String cryptoPrice;
+    @ApiModelProperty("该内容的的法定货币价格，单位：美元")
+    private String currencyPrice;
 
 }
