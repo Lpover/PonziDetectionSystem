@@ -1,21 +1,20 @@
 package cn.qkl.webserver.service;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.IdUtil;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.ContentRiskDailyStatistics;
 import cn.qkl.webserver.dao.WordCloudViewDao;
 import cn.qkl.webserver.dto.board.TimePlatformSelecteDTO;
 import cn.qkl.webserver.vo.board.WordCloudViewVO;
 import lombok.extern.slf4j.Slf4j;
+import org.mybatis.dynamic.sql.render.RenderingStrategies;
+import org.mybatis.dynamic.sql.select.SimpleSortSpecification;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
@@ -29,9 +28,10 @@ public class WordCloudViewService {
     @Resource
     WordCloudViewDao wordCloudViewDao;
 
-    public WordCloudViewVO getWordCloudView(TimePlatformSelecteDTO dto) {
+    public List<WordCloudViewVO> getWordCloudView(TimePlatformSelecteDTO dto) {
         Date date = new Date();
-        Date end = DateUtil.beginOfDay(date);
+//        Date end = DateUtil.beginOfDay(date);
+        Date end = DateUtil.endOfDay(date);
         Date start = DateUtil.offsetDay(end, -7);   //默认近7天
         if (dto.getTimeSpan() == 0) {   // 近7天
             start = DateUtil.offsetDay(end, -7);
@@ -39,32 +39,44 @@ public class WordCloudViewService {
             start = DateUtil.offsetDay(end, -30);
         }
         Date finalStart = start;
-        // 对时间和平台筛选
-        List<ContentRiskDailyStatistics> contentRiskDailyStatisticsList= wordCloudViewDao.select(c -> c
+
+        List<WordCloudViewVO> list = wordCloudViewDao.getWordNum(select(Tables.contentRisk.category.as("word"), Tables.contentRiskDailyStatistics.num)
+                .from(Tables.contentRiskDailyStatistics)
+                .leftJoin(Tables.contentRisk).on(Tables.contentRisk.id, equalTo(Tables.contentRiskDailyStatistics.categoryId))
                 .where(Tables.contentRiskDailyStatistics.platformId, isEqualTo(dto.getPlatformid()))
-                .and(Tables.contentRiskDailyStatistics.createTime, isGreaterThan(finalStart))
-                .and(Tables.contentRiskDailyStatistics.createTime, isLessThan(end))
+                .and(Tables.contentRiskDailyStatistics.createTime, isGreaterThanOrEqualToWhenPresent(finalStart))
+                .and(Tables.contentRiskDailyStatistics.createTime, isLessThanOrEqualToWhenPresent(end))
+                .orderBy(SimpleSortSpecification.of("content_risk_daily_statistics.create_time"))
+                .build()
+                .render(RenderingStrategies.MYBATIS3)
         );
 
-        List<Integer> listNum = contentRiskDailyStatisticsList.stream()
-                .sorted(Comparator.comparing(ContentRiskDailyStatistics::getCreateTime))
-                .map(ContentRiskDailyStatistics::getNum).collect(Collectors.toList());
-        List<Long> listWordID = contentRiskDailyStatisticsList.stream()
-                .sorted(Comparator.comparing(ContentRiskDailyStatistics::getCreateTime))
-                .map(ContentRiskDailyStatistics::getCategoryId).collect(Collectors.toList());
+        // 对相同的word进行累加
+        Map<String, Integer> countMap = list.stream()
+                .collect(Collectors.groupingBy(
+                        WordCloudViewVO::getWord,
+                        Collectors.summingInt(WordCloudViewVO::getNum)
+                ));
+        List<WordCloudViewVO> res = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : countMap.entrySet()) {
+            WordCloudViewVO wordCloudViewVO = new WordCloudViewVO();
+            wordCloudViewVO.setWord(entry.getKey());
+            wordCloudViewVO.setNum(entry.getValue());
+            res.add(wordCloudViewVO);
+        }
+        return res;
 
-        HashMap<Long, Integer> hashMap = IntStream.range(0, listNum.size())
-                .boxed()
-                .collect(Collectors.toMap(
-                        listWordID::get,
-                        listNum::get,
-                        (oldValue, newValue) -> newValue,
-                        HashMap::new)
-                );
+    }
 
-        WordCloudViewVO vo = new WordCloudViewVO();
-//        vo.setWordDict(hashMap);
-        return vo;
+    public void insertWordNum(ContentRiskDailyStatistics contentRiskDailyStatistics, Long categoryID, Long platformID) {
+        Random random = new Random();
+        Date end = new Date();
+        contentRiskDailyStatistics.setId(IdUtil.getSnowflakeNextId());
+        contentRiskDailyStatistics.setNum(random.nextInt(1000));
+        contentRiskDailyStatistics.setPlatformId(platformID);
+        contentRiskDailyStatistics.setCategoryId(categoryID);
+        contentRiskDailyStatistics.setCreateTime(end);
+        contentRiskDailyStatistics.setUpdateTime(end);
     }
 
 }

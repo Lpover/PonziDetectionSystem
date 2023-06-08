@@ -1,6 +1,7 @@
 package cn.qkl.webserver.vo.settings;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import java.util.Date;
 
@@ -8,7 +9,7 @@ import java.util.Date;
  * @param
  * @return
  */
-
+@Data
 public class MonitorRulesInfoVO {
     @ApiModelProperty("主键id")
     private Long id;

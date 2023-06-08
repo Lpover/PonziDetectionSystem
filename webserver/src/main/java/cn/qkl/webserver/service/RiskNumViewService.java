@@ -31,6 +31,7 @@ public class RiskNumViewService {
     public RiskNumViewVO getRiskNumView(TimePlatformSelecteDTO dto) {
         Date date = new Date();
         Date end = DateUtil.beginOfDay(date);
+//        Date end = DateUtil.endOfDay(date);
         Date start = DateUtil.offsetDay(end, -7);   //默认近7天
         if (dto.getTimeSpan() == 0) {   // 近7天
             start = DateUtil.offsetDay(end, -7);
@@ -38,7 +39,7 @@ public class RiskNumViewService {
             start = DateUtil.offsetDay(end, -30);
         }
         Date finalStart = start;
-        // 对时间和平台筛选，并根据时间排序
+        // 对时间和平台筛选
         List<PlatformDailyStatistics> platformDailyStatisticsList= riskNumViewDao.select(c -> c
                 .where(Tables.platformDailyStatistics.platformId, isEqualTo(dto.getPlatformid()))
                 .and(Tables.platformDailyStatistics.createTime, isGreaterThan(finalStart))
@@ -58,15 +59,22 @@ public class RiskNumViewService {
                 .sorted(Comparator.comparing(PlatformDailyStatistics::getCreateTime))
                 .map(PlatformDailyStatistics::getLowRiskNum)
                 .collect(Collectors.toList()));
-        vo.setCurrentTime(end);
+        vo.setTimeList(platformDailyStatisticsList.stream()
+                .sorted(Comparator.comparing(PlatformDailyStatistics::getCreateTime))
+                .map(PlatformDailyStatistics::getCreateTime)
+                .collect(Collectors.toList()));
         return vo;
     }
 
     // 随机插入风险数量数据
-    public void InsertRiskNum(PlatformDailyStatistics platformDailyStatistics) {
+    public void insertRiskNum(PlatformDailyStatistics platformDailyStatistics) {
         Random random = new Random();
-        platformDailyStatistics.setHighRiskNum(random.nextInt(1000));
-        platformDailyStatistics.setMiddleRiskNum(random.nextInt(1000));
-        platformDailyStatistics.setLowRiskNum(random.nextInt(1000));
+        Integer high = random.nextInt(1000);
+        Integer mid = random.nextInt(1000);
+        Integer low = random.nextInt(1000);
+        platformDailyStatistics.setHighRiskNum(high);
+        platformDailyStatistics.setMiddleRiskNum(mid);
+        platformDailyStatistics.setLowRiskNum(low);
+        platformDailyStatistics.setContentRiskSum(high + mid + low);
     }
 }
