@@ -3,12 +3,11 @@ package cn.qkl.webserver.backgroundTask;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.qkl.common.framework.initAndBackground.BackgroundTask;
+import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.Platform;
 import cn.qkl.common.repository.model.PlatformDailyStatistics;
 import cn.qkl.webserver.dao.PlatformDailyStatisticsDao;
-import cn.qkl.webserver.service.PlatformViewService;
 import cn.qkl.webserver.dao.PlatformDao;
-import cn.qkl.webserver.service.RiskCategoryTrendService;
 import cn.qkl.webserver.service.RiskNumViewService;
 import cn.qkl.webserver.service.RiskTxViewService;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
 
 /**
  * @title:
@@ -32,12 +33,6 @@ public class PlatformDailyStatisticsInsertBackgroundTask implements BackgroundTa
 
     @Autowired
     private PlatformDailyStatisticsDao platformDailyStatisticsDao;
-
-    @Autowired
-    private RiskCategoryTrendService riskCategoryTrendService;
-
-    @Autowired
-    private PlatformViewService platformViewService;
 
     @Autowired
     private PlatformDao platformDao;
@@ -75,31 +70,23 @@ public class PlatformDailyStatisticsInsertBackgroundTask implements BackgroundTa
 
     @Override
     public String getName() {
-        return ContentCrossStatisticsInsertBackgroundTask.class.getName();
+        return PlatformDailyStatisticsInsertBackgroundTask.class.getName();
     }
 
     @Override
     public void run() {
         log.debug("模拟插入platform_daily_statistics表数据");
         List<PlatformDailyStatistics> list = new ArrayList<>();
-
-        List<Long> platformIDList= platformDao.select(c -> c).stream().map(Platform::getId).collect(Collectors.toList());
+        // 只获取正在监测的平台id
+        List<Long> platformIDList= platformDao.select(c -> c.where(Tables.platform.monitor, isEqualTo(1))).stream().map(Platform::getId).collect(Collectors.toList());
         //每天 每个平台插入一条数据
         for (Long platformId : platformIDList) {
             PlatformDailyStatistics platformDailyStatistics = new PlatformDailyStatistics();
             insertCommon(platformDailyStatistics, platformId);
 
-            riskTxViewService.InsertRiskTx(platformDailyStatistics);
-            riskNumViewService.InsertRiskNum(platformDailyStatistics);
-            //
-            //
+            riskTxViewService.insertRiskTx(platformDailyStatistics);    //风险交易
+            riskNumViewService.insertRiskNum(platformDailyStatistics);  //风险内容
 
-            //高中低风险内容处理
-            platformDailyStatistics=riskCategoryTrendService.insertRiskNum(platformDailyStatistics);
-            //当天监控到的数字内容总数
-            platformDailyStatistics=riskCategoryTrendService.insertRiskContentSum(platformDailyStatistics);
-            //当天监控到的风险数字内容总数
-            platformDailyStatistics=riskCategoryTrendService.insertContentSum(platformDailyStatistics);
             list.add(platformDailyStatistics);
         }
 
