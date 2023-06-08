@@ -51,8 +51,6 @@
         </table>
         <table tableName="dynamic_monitor" domainObjectName="DynamicMonitor">
         </table>
-        <table tableName="event" domainObjectName="Event">
-        </table>
         <table tableName="platform" domainObjectName="Platform">
         </table>
         <table tableName="platform_daily_statistics" domainObjectName="PlatformDailyStatistics">
@@ -61,18 +59,20 @@
         </table>
         <table tableName="settings_monitor_rules" domainObjectName="SettingsMonitorRules">
         </table>
-        <table tableName="social_platform" domainObjectName="SocialPlatform">
-        </table>
-        <table tableName="social_platform_hour_statistics" domainObjectName="SocialPlatformHourStatistics">
-        </table>
         <table tableName="storage" domainObjectName="Storage">
         </table>
         <table tableName="user" domainObjectName="User">
         </table>
         <table tableName="vocab_cloud" domainObjectName="VocabCloud">
         </table>
-
-
+        <table tableName="event" domainObjectName="Event" >
+        </table>
+        <table tableName="social_platform" domainObjectName="SocialPlatform">
+        </table>
+        <table tableName="social_platform_hour_statistics" domainObjectName="SocialPlatformHourStatistics">
+        </table>
+        <table tableName="vocab_cloud" domainObjectName="VocabCloud">
+        </table>
 
     </context>
 </generatorConfiguration>

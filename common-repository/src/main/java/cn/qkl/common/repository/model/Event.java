@@ -19,6 +19,12 @@ public class Event {
     private Integer hotNum24h;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String imageUrl;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Long platformId;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
@@ -98,6 +104,38 @@ public class Event {
         this.hotNum24h = hotNum24h;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Event withImageUrl(String imageUrl) {
+        this.setImageUrl(imageUrl);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Long getPlatformId() {
+        return platformId;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Event withPlatformId(Long platformId) {
+        this.setPlatformId(platformId);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setPlatformId(Long platformId) {
+        this.platformId = platformId;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -110,6 +148,8 @@ public class Event {
         sb.append(", abstractText=").append(abstractText);
         sb.append(", hotNum12h=").append(hotNum12h);
         sb.append(", hotNum24h=").append(hotNum24h);
+        sb.append(", imageUrl=").append(imageUrl);
+        sb.append(", platformId=").append(platformId);
         sb.append("]");
         return sb.toString();
     }

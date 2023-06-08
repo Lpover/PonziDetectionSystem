@@ -17,7 +17,7 @@ public final class VocabCloudDynamicSqlSupport {
     public static final SqlColumn<String> vocab = vocabCloud.vocab;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Integer> num = vocabCloud.num;
+    public static final SqlColumn<Long> num = vocabCloud.num;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Date> createTime = vocabCloud.createTime;
@@ -31,7 +31,7 @@ public final class VocabCloudDynamicSqlSupport {
 
         public final SqlColumn<String> vocab = column("vocab", JDBCType.VARCHAR);
 
-        public final SqlColumn<Integer> num = column("num", JDBCType.INTEGER);
+        public final SqlColumn<Long> num = column("num", JDBCType.BIGINT);
 
         public final SqlColumn<Date> createTime = column("create_time", JDBCType.TIMESTAMP);
 

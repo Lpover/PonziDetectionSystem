@@ -1,7 +1,7 @@
 package cn.qkl.common.repository.model;
 
-import javax.annotation.Generated;
 import java.util.Date;
+import javax.annotation.Generated;
 
 public class ContentRiskDailyStatistics {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
