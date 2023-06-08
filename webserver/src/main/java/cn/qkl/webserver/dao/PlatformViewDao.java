@@ -1,10 +1,7 @@
 package cn.qkl.webserver.dao;
 
 import cn.qkl.common.repository.mapper.PlatformDailyStatisticsMapper;
-import cn.qkl.webserver.vo.platformview.IndexTrendsVO;
-import cn.qkl.webserver.vo.platformview.PlatformRiskAccountVO;
-import cn.qkl.webserver.vo.platformview.PlatformRiskContentVO;
-import cn.qkl.webserver.vo.platformview.VolumeTrendsVO;
+import cn.qkl.webserver.vo.platformview.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
@@ -31,4 +28,8 @@ public interface PlatformViewDao extends PlatformDailyStatisticsMapper {
 
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     List<PlatformRiskContentVO> getPlatformRiskContent(SelectStatementProvider selectStatementProvider);
+
+    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
+    List<HotnessRankingViewVO> getHotnessRankingView(SelectStatementProvider selectStatementProvider);
+
 }

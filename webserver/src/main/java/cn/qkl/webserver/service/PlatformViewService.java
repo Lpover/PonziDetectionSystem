@@ -1,23 +1,33 @@
 package cn.qkl.webserver.service;
 
+import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.repository.Tables;
+import cn.qkl.common.repository.mapper.PlatformMapper;
+import cn.qkl.common.repository.model.Platform;
+import cn.qkl.webserver.dao.PlatformDao;
 import cn.qkl.webserver.dao.PlatformViewDao;
+import cn.qkl.webserver.dto.platformview.HotnessRankingViewDTO;
 import cn.qkl.webserver.dto.platformview.PlatformAndTimeSelectionDTO;
 import cn.qkl.webserver.dto.platformview.PlatformSelectionDTO;
-import cn.qkl.webserver.vo.platformview.IndexTrendsVO;
-import cn.qkl.webserver.vo.platformview.PlatformRiskAccountVO;
-import cn.qkl.webserver.vo.platformview.PlatformRiskContentVO;
-import cn.qkl.webserver.vo.platformview.VolumeTrendsVO;
+import cn.qkl.webserver.vo.contentDetection.ContentDetectionInfoVO;
+import cn.qkl.webserver.vo.platformview.*;
+import com.alibaba.druid.support.ibatis.SqlMapClientImplWrapper;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.jsqlparser.expression.operators.relational.EqualsTo;
+import org.apache.ibatis.session.SqlSession;
+import org.mybatis.dynamic.sql.SqlBuilder;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
-import static org.mybatis.dynamic.sql.SqlBuilder.select;
+import static org.mybatis.dynamic.sql.SqlBuilder.*;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+
 
 /**
  * @title:
@@ -31,6 +41,8 @@ import static org.mybatis.dynamic.sql.SqlBuilder.select;
 public class PlatformViewService {
     @Autowired
     private PlatformViewDao platformViewDao;
+    @Autowired
+    private PlatformDao platformDao;
 
     //返回平台（NFT、WEB3）的风险内容数量
     public List<VolumeTrendsVO> getVolumeTrends(PlatformAndTimeSelectionDTO dto){
@@ -93,5 +105,30 @@ public class PlatformViewService {
         );
         return platformRiskContentList;
     }
+
+    //主流平台（NFT、WEB3）热度排行视图
+    public PageVO<HotnessRankingViewVO> getHotnessRankingView(HotnessRankingViewDTO dto){
+        //获得platform表中平台的数量
+        List<Long> platformIDList= platformDao.select(c -> c).stream().map(Platform::getId).collect(Collectors.toList());
+        int platformNum=platformIDList.size();
+
+        return PageVO.getPageData(dto.getPageId(),dto.getPageSize(),
+                ()->platformViewDao.getHotnessRankingView(
+                        select(Tables.platformDailyStatistics.id,Tables.platformDailyStatistics.platformId,Tables.platform.name,
+                                Tables.platform.logo,Tables.platform.hotness, Tables.platform.riskLevel,
+                                Tables.platformDailyStatistics.hotness24h, Tables.platformDailyStatistics.hotnessChange24h,
+                                Tables.platformDailyStatistics.hotnessChange7d, Tables.platformDailyStatistics.hotnessChange30d
+                                )
+                                .from(Tables.platformDailyStatistics)
+                                .leftJoin(Tables.platform).on(Tables.platformDailyStatistics.platformId, equalTo(Tables.platform.id))
+                                .where(Tables.platform.monitor,isEqualTo(1))
+                                .orderBy(Tables.platformDailyStatistics.hotness24h)
+//                                .limit(platformNum)
+                                .build()
+                                .render(RenderingStrategies.MYBATIS3)
+                )
+        );
+    }
+
 
 }
