@@ -1,5 +1,6 @@
 package cn.qkl.webserver.controller;
 import cn.qkl.common.framework.response.PageVO;
+import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dto.contentdetection.ContentTagsDTO;
 import cn.qkl.webserver.dto.contentdetection.PlatformDistributionDTO;
 import cn.qkl.webserver.dto.contentdetection.ContentDetectionListQueryDTO;
@@ -33,7 +34,7 @@ import java.util.List;
 @ApiSupport(author = "lpc")
 @RequestMapping("contentdetection")
 @RefreshScope
-@Role
+@Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
 public class ContentDetectionController {
 
     @Autowired

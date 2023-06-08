@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface UserMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, pwd, phone, role, state);
+    BasicColumn[] selectList = BasicColumn.columnList(id, phone, pwd, role, state);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -62,8 +62,8 @@ public interface UserMapper {
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
     @Results(id="UserResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
-        @Result(column="pwd", property="pwd", jdbcType=JdbcType.VARCHAR),
         @Result(column="phone", property="phone", jdbcType=JdbcType.VARCHAR),
+        @Result(column="pwd", property="pwd", jdbcType=JdbcType.VARCHAR),
         @Result(column="role", property="role", jdbcType=JdbcType.INTEGER),
         @Result(column="state", property="state", jdbcType=JdbcType.INTEGER)
     })
@@ -94,8 +94,8 @@ public interface UserMapper {
     default int insert(User record) {
         return MyBatis3Utils.insert(this::insert, record, user, c ->
             c.map(id).toProperty("id")
-            .map(pwd).toProperty("pwd")
             .map(phone).toProperty("phone")
+            .map(pwd).toProperty("pwd")
             .map(role).toProperty("role")
             .map(state).toProperty("state")
         );
@@ -105,8 +105,8 @@ public interface UserMapper {
     default int insertMultiple(Collection<User> records) {
         return MyBatis3Utils.insertMultiple(this::insertMultiple, records, user, c ->
             c.map(id).toProperty("id")
-            .map(pwd).toProperty("pwd")
             .map(phone).toProperty("phone")
+            .map(pwd).toProperty("pwd")
             .map(role).toProperty("role")
             .map(state).toProperty("state")
         );
@@ -116,8 +116,8 @@ public interface UserMapper {
     default int insertSelective(User record) {
         return MyBatis3Utils.insert(this::insert, record, user, c ->
             c.map(id).toPropertyWhenPresent("id", record::getId)
-            .map(pwd).toPropertyWhenPresent("pwd", record::getPwd)
             .map(phone).toPropertyWhenPresent("phone", record::getPhone)
+            .map(pwd).toPropertyWhenPresent("pwd", record::getPwd)
             .map(role).toPropertyWhenPresent("role", record::getRole)
             .map(state).toPropertyWhenPresent("state", record::getState)
         );
@@ -153,8 +153,8 @@ public interface UserMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     static UpdateDSL<UpdateModel> updateAllColumns(User record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalTo(record::getId)
-                .set(pwd).equalTo(record::getPwd)
                 .set(phone).equalTo(record::getPhone)
+                .set(pwd).equalTo(record::getPwd)
                 .set(role).equalTo(record::getRole)
                 .set(state).equalTo(record::getState);
     }
@@ -162,8 +162,8 @@ public interface UserMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     static UpdateDSL<UpdateModel> updateSelectiveColumns(User record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalToWhenPresent(record::getId)
-                .set(pwd).equalToWhenPresent(record::getPwd)
                 .set(phone).equalToWhenPresent(record::getPhone)
+                .set(pwd).equalToWhenPresent(record::getPwd)
                 .set(role).equalToWhenPresent(record::getRole)
                 .set(state).equalToWhenPresent(record::getState);
     }
@@ -171,8 +171,8 @@ public interface UserMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int updateByPrimaryKey(User record) {
         return update(c ->
-            c.set(pwd).equalTo(record::getPwd)
-            .set(phone).equalTo(record::getPhone)
+            c.set(phone).equalTo(record::getPhone)
+            .set(pwd).equalTo(record::getPwd)
             .set(role).equalTo(record::getRole)
             .set(state).equalTo(record::getState)
             .where(id, isEqualTo(record::getId))
@@ -182,8 +182,8 @@ public interface UserMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int updateByPrimaryKeySelective(User record) {
         return update(c ->
-            c.set(pwd).equalToWhenPresent(record::getPwd)
-            .set(phone).equalToWhenPresent(record::getPhone)
+            c.set(phone).equalToWhenPresent(record::getPhone)
+            .set(pwd).equalToWhenPresent(record::getPwd)
             .set(role).equalToWhenPresent(record::getRole)
             .set(state).equalToWhenPresent(record::getState)
             .where(id, isEqualTo(record::getId))

@@ -3,6 +3,7 @@ package cn.qkl.webserver.controller;
 
 import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
+import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.service.RiskReportService;
 import cn.qkl.webserver.vo.riskReport.RiskReportInfoVO;
 import cn.qkl.webserver.dto.riskreport.ExportRiskReportDTO;
@@ -31,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 @ApiSupport(author = "lpc")
 @RequestMapping("riskreport")
 @RefreshScope
-@Role
+@Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
 public class RiskReportController {
 
 //    @LoadBalanced

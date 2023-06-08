@@ -3,6 +3,7 @@ package cn.qkl.webserver.service;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.qkl.common.repository.Tables;
+import cn.qkl.common.repository.model.PlatformDailyStatistics;
 import cn.qkl.webserver.dao.PlatformDailyStatisticsDao;
 import cn.qkl.webserver.vo.riskcontentstatistics.RiskContentStatisticDataVO;
 import cn.qkl.webserver.vo.riskcontentstatistics.RiskContentStatisticsVO;
@@ -47,5 +48,17 @@ public class RiskCategoryTrendService  {
                         .render(RenderingStrategies.MYBATIS3)
         );
         return RiskContentStatisticsVO.transform(risks);
+    }
+    public PlatformDailyStatistics insertRiskNum(PlatformDailyStatistics platformDailyStatistics){
+        return platformDailyStatistics;
+    }
+
+
+    public PlatformDailyStatistics insertContentSum(PlatformDailyStatistics platformDailyStatistics) {
+        return platformDailyStatistics;
+    }
+
+    public PlatformDailyStatistics insertRiskContentSum(PlatformDailyStatistics platformDailyStatistics) {
+        return platformDailyStatistics;
     }
 }

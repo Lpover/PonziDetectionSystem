@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface PlatformMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, name, url, monitor, riskContentNum, activation, riskLevel, platformType, logo, location, frequency, crawlerFile, web3Type, contentNum, highAccountNum, midAccountNum, lowAccountNum, highContentNum, midContentNum, lowContentNum, createTime, updateTime, riskIndex, hotness);
+    BasicColumn[] selectList = BasicColumn.columnList(id, name, url, monitor, riskContentNum, activation, riskLevel, platformType, logo, location, frequency, crawlerFile, web3Type, contentNum, highAccountNum, midAccountNum, lowAccountNum, highContentNum, midContentNum, lowContentNum, createTime, updateTime, riskIndexChina, riskIndexOversea, hotness);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -83,7 +83,8 @@ public interface PlatformMapper {
         @Result(column="low_content_num", property="lowContentNum", jdbcType=JdbcType.INTEGER),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="risk_index", property="riskIndex", jdbcType=JdbcType.DECIMAL),
+        @Result(column="risk_index_china", property="riskIndexChina", jdbcType=JdbcType.DECIMAL),
+        @Result(column="risk_index_oversea", property="riskIndexOversea", jdbcType=JdbcType.DECIMAL),
         @Result(column="hotness", property="hotness", jdbcType=JdbcType.BIGINT)
     })
     List<Platform> selectMany(SelectStatementProvider selectStatement);
@@ -134,7 +135,8 @@ public interface PlatformMapper {
             .map(lowContentNum).toProperty("lowContentNum")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
-            .map(riskIndex).toProperty("riskIndex")
+            .map(riskIndexChina).toProperty("riskIndexChina")
+            .map(riskIndexOversea).toProperty("riskIndexOversea")
             .map(hotness).toProperty("hotness")
         );
     }
@@ -164,7 +166,8 @@ public interface PlatformMapper {
             .map(lowContentNum).toProperty("lowContentNum")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
-            .map(riskIndex).toProperty("riskIndex")
+            .map(riskIndexChina).toProperty("riskIndexChina")
+            .map(riskIndexOversea).toProperty("riskIndexOversea")
             .map(hotness).toProperty("hotness")
         );
     }
@@ -194,7 +197,8 @@ public interface PlatformMapper {
             .map(lowContentNum).toPropertyWhenPresent("lowContentNum", record::getLowContentNum)
             .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
             .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
-            .map(riskIndex).toPropertyWhenPresent("riskIndex", record::getRiskIndex)
+            .map(riskIndexChina).toPropertyWhenPresent("riskIndexChina", record::getRiskIndexChina)
+            .map(riskIndexOversea).toPropertyWhenPresent("riskIndexOversea", record::getRiskIndexOversea)
             .map(hotness).toPropertyWhenPresent("hotness", record::getHotness)
         );
     }
@@ -250,7 +254,8 @@ public interface PlatformMapper {
                 .set(lowContentNum).equalTo(record::getLowContentNum)
                 .set(createTime).equalTo(record::getCreateTime)
                 .set(updateTime).equalTo(record::getUpdateTime)
-                .set(riskIndex).equalTo(record::getRiskIndex)
+                .set(riskIndexChina).equalTo(record::getRiskIndexChina)
+                .set(riskIndexOversea).equalTo(record::getRiskIndexOversea)
                 .set(hotness).equalTo(record::getHotness);
     }
 
@@ -278,7 +283,8 @@ public interface PlatformMapper {
                 .set(lowContentNum).equalToWhenPresent(record::getLowContentNum)
                 .set(createTime).equalToWhenPresent(record::getCreateTime)
                 .set(updateTime).equalToWhenPresent(record::getUpdateTime)
-                .set(riskIndex).equalToWhenPresent(record::getRiskIndex)
+                .set(riskIndexChina).equalToWhenPresent(record::getRiskIndexChina)
+                .set(riskIndexOversea).equalToWhenPresent(record::getRiskIndexOversea)
                 .set(hotness).equalToWhenPresent(record::getHotness);
     }
 
@@ -306,7 +312,8 @@ public interface PlatformMapper {
             .set(lowContentNum).equalTo(record::getLowContentNum)
             .set(createTime).equalTo(record::getCreateTime)
             .set(updateTime).equalTo(record::getUpdateTime)
-            .set(riskIndex).equalTo(record::getRiskIndex)
+            .set(riskIndexChina).equalTo(record::getRiskIndexChina)
+            .set(riskIndexOversea).equalTo(record::getRiskIndexOversea)
             .set(hotness).equalTo(record::getHotness)
             .where(id, isEqualTo(record::getId))
         );
@@ -336,7 +343,8 @@ public interface PlatformMapper {
             .set(lowContentNum).equalToWhenPresent(record::getLowContentNum)
             .set(createTime).equalToWhenPresent(record::getCreateTime)
             .set(updateTime).equalToWhenPresent(record::getUpdateTime)
-            .set(riskIndex).equalToWhenPresent(record::getRiskIndex)
+            .set(riskIndexChina).equalToWhenPresent(record::getRiskIndexChina)
+            .set(riskIndexOversea).equalToWhenPresent(record::getRiskIndexOversea)
             .set(hotness).equalToWhenPresent(record::getHotness)
             .where(id, isEqualTo(record::getId))
         );

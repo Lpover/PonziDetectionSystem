@@ -1,5 +1,6 @@
 package cn.qkl.common.repository.mapper;
 
+import java.math.BigDecimal;
 import java.sql.JDBCType;
 import java.util.Date;
 import javax.annotation.Generated;
@@ -95,6 +96,9 @@ public final class ContentDynamicSqlSupport {
     public static final SqlColumn<Integer> hotNum24h = content.hotNum24h;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<BigDecimal> currencyPriceRanking = content.currencyPriceRanking;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class Content extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -151,6 +155,8 @@ public final class ContentDynamicSqlSupport {
         public final SqlColumn<Integer> hotNum12h = column("hot_num_12h", JDBCType.INTEGER);
 
         public final SqlColumn<Integer> hotNum24h = column("hot_num_24h", JDBCType.INTEGER);
+
+        public final SqlColumn<BigDecimal> currencyPriceRanking = column("currency_price_ranking", JDBCType.DECIMAL);
 
         public Content() {
             super("content");

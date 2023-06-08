@@ -1,12 +1,6 @@
 package cn.qkl.webserver.service.user;
 
-import cn.qkl.common.framework.auth.TokenBean;
-import cn.qkl.common.framework.auth.TokenHandler;
-import cn.qkl.common.framework.exception.BusinessException;
-import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.User;
-import cn.qkl.webserver.common.BusinessStatus;
-import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dao.UserDao;
 import cn.qkl.webserver.dto.user.LoginDTO;
 import cn.qkl.webserver.service.OutUserService;
@@ -18,8 +12,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-
-import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
 
 
 /**
@@ -55,25 +47,27 @@ public class UserService {
      * @return
      */
     public String emailLogin(LoginDTO dto) {
-        //判断账号密码是否正确
-        User user = userDao.selectOne(c -> c
-                .where(Tables.user.userNum, isEqualTo(dto.getUserNum()))
-                .and(Tables.user.userPwd, isEqualTo(dto.getUserPwd()))
-        ).orElseThrow(() -> new BusinessException(BusinessStatus.EMAIL_OR_PASSWORD_IS_WRONG));
-
-        //生成token
-        TokenBean tokenBean = new TokenBean(user.getUserId()).withRoleType(RoleEnum.RoleTypeEnum.USER.getRoleType()).withUuid();
-        return TokenHandler.generateToken(tokenBean);
+//        //判断账号密码是否正确
+//        User user = userDao.selectOne(c -> c
+//                .where(Tables.user.userNum, isEqualTo(dto.getUserNum()))
+//                .and(Tables.user.userPwd, isEqualTo(dto.getUserPwd()))
+//        ).orElseThrow(() -> new BusinessException(BusinessStatus.EMAIL_OR_PASSWORD_IS_WRONG));
+//
+//        //生成token
+//        TokenBean tokenBean = new TokenBean(user.getUserId()).withRoleType(RoleEnum.RoleTypeEnum.USER.getRoleType()).withUuid();
+//        return TokenHandler.generateToken(tokenBean);
+        return null ;
     }
-
+//
     public void test() {
-        System.out.println(""+webServerAge+webServerAlias);
+//        System.out.println(""+webServerAge+webServerAlias);
     }
-
+//
     public User getRemoteUserInfo() {
-        User user =  outUserService.getUserInfo();
-        System.out.println(user);
-        return user;
+//        User user =  outUserService.getUserInfo();
+//        System.out.println(user);
+//        return user;
+        return null;
     }
     /**
      * 获取个人信息
@@ -85,9 +79,10 @@ public class UserService {
 //        User user = userDao.selectOne(c -> c
 //                .where(Tables.user.userId, isEqualTo((int) TokenHandler.getUserId()))
 //        ).orElseThrow(() -> new BusinessException(BusinessStatus.User_Not_EXISTS));
-        User user = new User();
-        user.setUserNum(environment.getProperty("server.port"));
+//        User user = new User();
+//        user.setUserNum(environment.getProperty("server.port"));
 
-        return user;
+//        return user;
+        return null;
     }
 }

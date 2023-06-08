@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface ContentMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, name, address, tokenid, metaUrl, cryptoPrice, currencyPrice, creator, platformId, standard, chainId, listingTime, description, dynamicType, dynamicAlgorithmId, dynamicRecognition, revised, riskLevel, contentType, contentTag, owner, mintTime, thingType, createTime, updateTime, riskType, hotNum12h, hotNum24h);
+    BasicColumn[] selectList = BasicColumn.columnList(id, name, address, tokenid, metaUrl, cryptoPrice, currencyPrice, creator, platformId, standard, chainId, listingTime, description, dynamicType, dynamicAlgorithmId, dynamicRecognition, revised, riskLevel, contentType, contentTag, owner, mintTime, thingType, createTime, updateTime, riskType, hotNum12h, hotNum24h, currencyPriceRanking);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -88,7 +88,8 @@ public interface ContentMapper {
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="risk_type", property="riskType", jdbcType=JdbcType.INTEGER),
         @Result(column="hot_num_12h", property="hotNum12h", jdbcType=JdbcType.INTEGER),
-        @Result(column="hot_num_24h", property="hotNum24h", jdbcType=JdbcType.INTEGER)
+        @Result(column="hot_num_24h", property="hotNum24h", jdbcType=JdbcType.INTEGER),
+        @Result(column="currency_price_ranking", property="currencyPriceRanking", jdbcType=JdbcType.DECIMAL)
     })
     List<Content> selectMany(SelectStatementProvider selectStatement);
 
@@ -144,6 +145,7 @@ public interface ContentMapper {
             .map(riskType).toProperty("riskType")
             .map(hotNum12h).toProperty("hotNum12h")
             .map(hotNum24h).toProperty("hotNum24h")
+            .map(currencyPriceRanking).toProperty("currencyPriceRanking")
         );
     }
 
@@ -178,6 +180,7 @@ public interface ContentMapper {
             .map(riskType).toProperty("riskType")
             .map(hotNum12h).toProperty("hotNum12h")
             .map(hotNum24h).toProperty("hotNum24h")
+            .map(currencyPriceRanking).toProperty("currencyPriceRanking")
         );
     }
 
@@ -212,6 +215,7 @@ public interface ContentMapper {
             .map(riskType).toPropertyWhenPresent("riskType", record::getRiskType)
             .map(hotNum12h).toPropertyWhenPresent("hotNum12h", record::getHotNum12h)
             .map(hotNum24h).toPropertyWhenPresent("hotNum24h", record::getHotNum24h)
+            .map(currencyPriceRanking).toPropertyWhenPresent("currencyPriceRanking", record::getCurrencyPriceRanking)
         );
     }
 
@@ -271,7 +275,8 @@ public interface ContentMapper {
                 .set(updateTime).equalTo(record::getUpdateTime)
                 .set(riskType).equalTo(record::getRiskType)
                 .set(hotNum12h).equalTo(record::getHotNum12h)
-                .set(hotNum24h).equalTo(record::getHotNum24h);
+                .set(hotNum24h).equalTo(record::getHotNum24h)
+                .set(currencyPriceRanking).equalTo(record::getCurrencyPriceRanking);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -303,7 +308,8 @@ public interface ContentMapper {
                 .set(updateTime).equalToWhenPresent(record::getUpdateTime)
                 .set(riskType).equalToWhenPresent(record::getRiskType)
                 .set(hotNum12h).equalToWhenPresent(record::getHotNum12h)
-                .set(hotNum24h).equalToWhenPresent(record::getHotNum24h);
+                .set(hotNum24h).equalToWhenPresent(record::getHotNum24h)
+                .set(currencyPriceRanking).equalToWhenPresent(record::getCurrencyPriceRanking);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -336,6 +342,7 @@ public interface ContentMapper {
             .set(riskType).equalTo(record::getRiskType)
             .set(hotNum12h).equalTo(record::getHotNum12h)
             .set(hotNum24h).equalTo(record::getHotNum24h)
+            .set(currencyPriceRanking).equalTo(record::getCurrencyPriceRanking)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -370,6 +377,7 @@ public interface ContentMapper {
             .set(riskType).equalToWhenPresent(record::getRiskType)
             .set(hotNum12h).equalToWhenPresent(record::getHotNum12h)
             .set(hotNum24h).equalToWhenPresent(record::getHotNum24h)
+            .set(currencyPriceRanking).equalToWhenPresent(record::getCurrencyPriceRanking)
             .where(id, isEqualTo(record::getId))
         );
     }

@@ -1,5 +1,6 @@
 package cn.qkl.common.repository.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.annotation.Generated;
 
@@ -87,6 +88,9 @@ public class Content {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer hotNum24h;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private BigDecimal currencyPriceRanking;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
@@ -536,6 +540,22 @@ public class Content {
         this.hotNum24h = hotNum24h;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public BigDecimal getCurrencyPriceRanking() {
+        return currencyPriceRanking;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Content withCurrencyPriceRanking(BigDecimal currencyPriceRanking) {
+        this.setCurrencyPriceRanking(currencyPriceRanking);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setCurrencyPriceRanking(BigDecimal currencyPriceRanking) {
+        this.currencyPriceRanking = currencyPriceRanking;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -571,6 +591,7 @@ public class Content {
         sb.append(", riskType=").append(riskType);
         sb.append(", hotNum12h=").append(hotNum12h);
         sb.append(", hotNum24h=").append(hotNum24h);
+        sb.append(", currencyPriceRanking=").append(currencyPriceRanking);
         sb.append("]");
         return sb.toString();
     }

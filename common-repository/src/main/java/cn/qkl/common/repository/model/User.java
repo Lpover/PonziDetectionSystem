@@ -7,10 +7,10 @@ public class User {
     private Long id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String pwd;
+    private String phone;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String phone;
+    private String pwd;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer role;
@@ -35,22 +35,6 @@ public class User {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getPwd() {
-        return pwd;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public User withPwd(String pwd) {
-        this.setPwd(pwd);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String getPhone() {
         return phone;
     }
@@ -64,6 +48,22 @@ public class User {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getPwd() {
+        return pwd;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public User withPwd(String pwd) {
+        this.setPwd(pwd);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -106,8 +106,8 @@ public class User {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", pwd=").append(pwd);
         sb.append(", phone=").append(phone);
+        sb.append(", pwd=").append(pwd);
         sb.append(", role=").append(role);
         sb.append(", state=").append(state);
         sb.append("]");

@@ -1,5 +1,6 @@
 package cn.qkl.webserver.service;
 
+import cn.qkl.common.repository.model.Category;
 import cn.qkl.webserver.dto.category.CategoryViewDTO;
 import cn.qkl.webserver.dto.stroage.StorageViewDTO;
 import cn.qkl.webserver.vo.category.CategoryViewVO;
@@ -24,5 +25,9 @@ public class CategoryViewService {
     public  List<CategoryViewVO> getCategoryView(CategoryViewDTO dto){
         List <CategoryViewVO> list = new ArrayList<>();
         return list;
+    }
+
+    public Category insertCategory(Category category) {
+        return category;
     }
 }

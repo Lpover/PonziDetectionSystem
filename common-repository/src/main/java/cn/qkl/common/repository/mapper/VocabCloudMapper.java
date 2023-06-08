@@ -1,9 +1,9 @@
 package cn.qkl.common.repository.mapper;
 
-import static cn.qkl.common.repository.mapper.ContentRiskStatisticsDynamicSqlSupport.*;
+import static cn.qkl.common.repository.mapper.VocabCloudDynamicSqlSupport.*;
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
-import cn.qkl.common.repository.model.ContentRiskStatistics;
+import cn.qkl.common.repository.model.VocabCloud;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -33,9 +33,9 @@ import org.mybatis.dynamic.sql.util.SqlProviderAdapter;
 import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 
 @Mapper
-public interface ContentRiskStatisticsMapper {
+public interface VocabCloudMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, categoryId, num, platformId, createTime, updateTime);
+    BasicColumn[] selectList = BasicColumn.columnList(id, vocab, num, createTime, updateTime);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -47,28 +47,27 @@ public interface ContentRiskStatisticsMapper {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @InsertProvider(type=SqlProviderAdapter.class, method="insert")
-    int insert(InsertStatementProvider<ContentRiskStatistics> insertStatement);
+    int insert(InsertStatementProvider<VocabCloud> insertStatement);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @InsertProvider(type=SqlProviderAdapter.class, method="insertMultiple")
-    int insertMultiple(MultiRowInsertStatementProvider<ContentRiskStatistics> multipleInsertStatement);
+    int insertMultiple(MultiRowInsertStatementProvider<VocabCloud> multipleInsertStatement);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
-    @ResultMap("ContentRiskStatisticsResult")
-    Optional<ContentRiskStatistics> selectOne(SelectStatementProvider selectStatement);
+    @ResultMap("VocabCloudResult")
+    Optional<VocabCloud> selectOne(SelectStatementProvider selectStatement);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
-    @Results(id="ContentRiskStatisticsResult", value = {
+    @Results(id="VocabCloudResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
-        @Result(column="category_id", property="categoryId", jdbcType=JdbcType.BIGINT),
-        @Result(column="num", property="num", jdbcType=JdbcType.BIGINT),
-        @Result(column="platform_id", property="platformId", jdbcType=JdbcType.BIGINT),
+        @Result(column="vocab", property="vocab", jdbcType=JdbcType.VARCHAR),
+        @Result(column="num", property="num", jdbcType=JdbcType.INTEGER),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
     })
-    List<ContentRiskStatistics> selectMany(SelectStatementProvider selectStatement);
+    List<VocabCloud> selectMany(SelectStatementProvider selectStatement);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @UpdateProvider(type=SqlProviderAdapter.class, method="update")
@@ -76,12 +75,12 @@ public interface ContentRiskStatisticsMapper {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default long count(CountDSLCompleter completer) {
-        return MyBatis3Utils.countFrom(this::count, contentRiskStatistics, completer);
+        return MyBatis3Utils.countFrom(this::count, vocabCloud, completer);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int delete(DeleteDSLCompleter completer) {
-        return MyBatis3Utils.deleteFrom(this::delete, contentRiskStatistics, completer);
+        return MyBatis3Utils.deleteFrom(this::delete, vocabCloud, completer);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -92,58 +91,55 @@ public interface ContentRiskStatisticsMapper {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int insert(ContentRiskStatistics record) {
-        return MyBatis3Utils.insert(this::insert, record, contentRiskStatistics, c ->
+    default int insert(VocabCloud record) {
+        return MyBatis3Utils.insert(this::insert, record, vocabCloud, c ->
             c.map(id).toProperty("id")
-            .map(categoryId).toProperty("categoryId")
+            .map(vocab).toProperty("vocab")
             .map(num).toProperty("num")
-            .map(platformId).toProperty("platformId")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
         );
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int insertMultiple(Collection<ContentRiskStatistics> records) {
-        return MyBatis3Utils.insertMultiple(this::insertMultiple, records, contentRiskStatistics, c ->
+    default int insertMultiple(Collection<VocabCloud> records) {
+        return MyBatis3Utils.insertMultiple(this::insertMultiple, records, vocabCloud, c ->
             c.map(id).toProperty("id")
-            .map(categoryId).toProperty("categoryId")
+            .map(vocab).toProperty("vocab")
             .map(num).toProperty("num")
-            .map(platformId).toProperty("platformId")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
         );
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int insertSelective(ContentRiskStatistics record) {
-        return MyBatis3Utils.insert(this::insert, record, contentRiskStatistics, c ->
+    default int insertSelective(VocabCloud record) {
+        return MyBatis3Utils.insert(this::insert, record, vocabCloud, c ->
             c.map(id).toPropertyWhenPresent("id", record::getId)
-            .map(categoryId).toPropertyWhenPresent("categoryId", record::getCategoryId)
+            .map(vocab).toPropertyWhenPresent("vocab", record::getVocab)
             .map(num).toPropertyWhenPresent("num", record::getNum)
-            .map(platformId).toPropertyWhenPresent("platformId", record::getPlatformId)
             .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
             .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
         );
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default Optional<ContentRiskStatistics> selectOne(SelectDSLCompleter completer) {
-        return MyBatis3Utils.selectOne(this::selectOne, selectList, contentRiskStatistics, completer);
+    default Optional<VocabCloud> selectOne(SelectDSLCompleter completer) {
+        return MyBatis3Utils.selectOne(this::selectOne, selectList, vocabCloud, completer);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default List<ContentRiskStatistics> select(SelectDSLCompleter completer) {
-        return MyBatis3Utils.selectList(this::selectMany, selectList, contentRiskStatistics, completer);
+    default List<VocabCloud> select(SelectDSLCompleter completer) {
+        return MyBatis3Utils.selectList(this::selectMany, selectList, vocabCloud, completer);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default List<ContentRiskStatistics> selectDistinct(SelectDSLCompleter completer) {
-        return MyBatis3Utils.selectDistinct(this::selectMany, selectList, contentRiskStatistics, completer);
+    default List<VocabCloud> selectDistinct(SelectDSLCompleter completer) {
+        return MyBatis3Utils.selectDistinct(this::selectMany, selectList, vocabCloud, completer);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default Optional<ContentRiskStatistics> selectByPrimaryKey(Long id_) {
+    default Optional<VocabCloud> selectByPrimaryKey(Long id_) {
         return selectOne(c ->
             c.where(id, isEqualTo(id_))
         );
@@ -151,35 +147,32 @@ public interface ContentRiskStatisticsMapper {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int update(UpdateDSLCompleter completer) {
-        return MyBatis3Utils.update(this::update, contentRiskStatistics, completer);
+        return MyBatis3Utils.update(this::update, vocabCloud, completer);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    static UpdateDSL<UpdateModel> updateAllColumns(ContentRiskStatistics record, UpdateDSL<UpdateModel> dsl) {
+    static UpdateDSL<UpdateModel> updateAllColumns(VocabCloud record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalTo(record::getId)
-                .set(categoryId).equalTo(record::getCategoryId)
+                .set(vocab).equalTo(record::getVocab)
                 .set(num).equalTo(record::getNum)
-                .set(platformId).equalTo(record::getPlatformId)
                 .set(createTime).equalTo(record::getCreateTime)
                 .set(updateTime).equalTo(record::getUpdateTime);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    static UpdateDSL<UpdateModel> updateSelectiveColumns(ContentRiskStatistics record, UpdateDSL<UpdateModel> dsl) {
+    static UpdateDSL<UpdateModel> updateSelectiveColumns(VocabCloud record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalToWhenPresent(record::getId)
-                .set(categoryId).equalToWhenPresent(record::getCategoryId)
+                .set(vocab).equalToWhenPresent(record::getVocab)
                 .set(num).equalToWhenPresent(record::getNum)
-                .set(platformId).equalToWhenPresent(record::getPlatformId)
                 .set(createTime).equalToWhenPresent(record::getCreateTime)
                 .set(updateTime).equalToWhenPresent(record::getUpdateTime);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int updateByPrimaryKey(ContentRiskStatistics record) {
+    default int updateByPrimaryKey(VocabCloud record) {
         return update(c ->
-            c.set(categoryId).equalTo(record::getCategoryId)
+            c.set(vocab).equalTo(record::getVocab)
             .set(num).equalTo(record::getNum)
-            .set(platformId).equalTo(record::getPlatformId)
             .set(createTime).equalTo(record::getCreateTime)
             .set(updateTime).equalTo(record::getUpdateTime)
             .where(id, isEqualTo(record::getId))
@@ -187,11 +180,10 @@ public interface ContentRiskStatisticsMapper {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default int updateByPrimaryKeySelective(ContentRiskStatistics record) {
+    default int updateByPrimaryKeySelective(VocabCloud record) {
         return update(c ->
-            c.set(categoryId).equalToWhenPresent(record::getCategoryId)
+            c.set(vocab).equalToWhenPresent(record::getVocab)
             .set(num).equalToWhenPresent(record::getNum)
-            .set(platformId).equalToWhenPresent(record::getPlatformId)
             .set(createTime).equalToWhenPresent(record::getCreateTime)
             .set(updateTime).equalToWhenPresent(record::getUpdateTime)
             .where(id, isEqualTo(record::getId))

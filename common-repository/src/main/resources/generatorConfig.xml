@@ -31,29 +31,48 @@
         </table>
         <table tableName="algorithm" domainObjectName="Algorithm">
         </table>
+        <table tableName="carrier" domainObjectName="Carrier">
+        </table>
+        <table tableName="category" domainObjectName="Category">
+        </table>
         <table tableName="chain" domainObjectName="Chain">
         </table>
         <table tableName="content" domainObjectName="Content">
         </table>
+        <table tableName="content_cross" domainObjectName="ContentCross">
+        </table>
+        <table tableName="content_cross_daily_statistics" domainObjectName="ContentCrossDailyStatistics">
+        </table>
         <table tableName="content_risk" domainObjectName="ContentRisk">
         </table>
-        <table tableName="content_cross" domainObjectName="ContentCross">
+        <table tableName="content_risk_daily_statistics" domainObjectName="ContentRiskDailyStatistics">
         </table>
         <table tableName="content_tx_history" domainObjectName="ContentTxHistory">
         </table>
         <table tableName="dynamic_monitor" domainObjectName="DynamicMonitor">
         </table>
+        <table tableName="event" domainObjectName="Event">
+        </table>
         <table tableName="platform" domainObjectName="Platform">
-        </table>
-        <table tableName="risk_report" domainObjectName="RiskReport">
-        </table>
-        <table tableName="content_risk_statistics" domainObjectName="ContentRiskStatistics">
-        </table>
-        <table tableName="user" domainObjectName="User">
         </table>
         <table tableName="platform_daily_statistics" domainObjectName="PlatformDailyStatistics">
         </table>
-        <table tableName="content_cross_daily_statistics" domainObjectName="ContentCrossDailyStatistics">
+        <table tableName="risk_report" domainObjectName="RiskReport">
         </table>
+        <table tableName="settings_monitor_rules" domainObjectName="SettingsMonitorRules">
+        </table>
+        <table tableName="social_platform" domainObjectName="SocialPlatform">
+        </table>
+        <table tableName="social_platform_hour_statistics" domainObjectName="SocialPlatformHourStatistics">
+        </table>
+        <table tableName="storage" domainObjectName="Storage">
+        </table>
+        <table tableName="user" domainObjectName="User">
+        </table>
+        <table tableName="vocab_cloud" domainObjectName="VocabCloud">
+        </table>
+
+
+
     </context>
 </generatorConfiguration>
