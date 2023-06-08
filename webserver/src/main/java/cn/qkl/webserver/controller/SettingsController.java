@@ -37,7 +37,7 @@ public class SettingsController {
     @ApiOperation("查看监测规则列表")
     @GetMapping("monitor/rules/info")
     public BaseResult<List<MonitorRulesInfoVO>> getMonitorRules() {
-        return BaseResult.ok(monitorRulesService.getMonitorRules());
+        return BaseResult.ok(monitorRulesService.getMonitorRulesInfo());
     }
 
 //    @ApiOperation("修改监测规则列表")
