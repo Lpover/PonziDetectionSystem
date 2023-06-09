@@ -3,6 +3,7 @@ package cn.qkl.webserver.controller;
 
 import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
+import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dto.board.CrossContentRiskViewDTO;
 import cn.qkl.webserver.dto.board.TimePlatformSelecteDTO;
@@ -139,15 +140,15 @@ public class BoardController {
     //平台风险内容top10视图
     @ApiOperation("平台风险内容top10视图")
     @GetMapping("riskcontent")
-    public BaseResult<PlatformRiskContentVO> getRiskContent(@Validated PlatformSelectionDTO dto) {
-        return BaseResult.ok(new PlatformRiskContentVO());
+    public BaseResult<List<PlatformRiskContentVO>> getRiskContent(@Validated PlatformSelectionDTO dto) {
+        return BaseResult.ok(platformViewService.getPlatformRiskContent(dto));
     }
 
     //NFT、WEB3热度排行视图
     @ApiOperation("NFT、WEB3热度排行视图")
     @GetMapping("hotnessrankingview")
-    public BaseResult<HotnessRankingViewVO> getHotnessRankingView(@Validated HotnessRankingViewDTO dto) {
-        return BaseResult.ok(new HotnessRankingViewVO());
+    public BaseResult<PageVO<HotnessRankingViewVO>> getHotnessRankingView(@Validated HotnessRankingViewDTO dto) {
+        return BaseResult.ok(platformViewService.getHotnessRankingView(dto));
     }
 
 
