@@ -5,6 +5,7 @@ import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.mapper.PlatformMapper;
 import cn.qkl.common.repository.model.Platform;
 import cn.qkl.common.repository.model.PlatformDailyStatistics;
+import cn.qkl.webserver.dao.PlatformDailyStatisticsDao;
 import cn.qkl.webserver.dao.PlatformDao;
 import cn.qkl.webserver.dao.PlatformViewDao;
 import cn.qkl.webserver.dto.platformview.HotnessRankingViewDTO;
@@ -15,6 +16,7 @@ import cn.qkl.webserver.vo.platformview.*;
 import com.alibaba.druid.support.ibatis.SqlMapClientImplWrapper;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.expression.operators.relational.EqualsTo;
+import org.apache.ibatis.jdbc.Null;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.dynamic.sql.SqlBuilder;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
@@ -24,8 +26,10 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 import java.text.DecimalFormat;
 import java.util.concurrent.ThreadLocalRandom;
@@ -50,9 +54,42 @@ public class PlatformViewService {
     private PlatformViewDao platformViewDao;
     @Autowired
     private PlatformDao platformDao;
+    @Autowired
+    private PlatformDailyStatisticsDao platformDailyStatisticsDao;
 
-    //返回平台（NFT、WEB3）的风险内容数量
+    public Long getHotestPlatform(HotnessRankingViewDTO dto) {
+
+        //平台选择：0-NFT平台,1-WEB3平台,默认选择NFT平台
+        int platType;
+        if(dto.getSelectType()==1){
+            platType = 1;
+        } else {
+            platType = 0;
+        }
+
+        if(platType==0){
+            // 获取第一热门平台的ID
+            List<Long> platformIDList= platformViewDao.select(c -> c
+                            .where(Tables.platform.platformType, isEqualTo(0))
+                            .orderBy(Tables.platformDailyStatistics.hotness24h.descending())
+                            .limit(1)
+                    )
+                    .stream().map(PlatformDailyStatistics::getPlatformId).collect(Collectors.toList());
+        }
+
+
+    }
+
+
+        //返回平台（NFT、WEB3）的风险内容数量
     public List<VolumeTrendsVO> getVolumeTrends(PlatformAndTimeSelectionDTO dto){
+        if(dto.getSelectPlatformId()== Null){
+            platformDailyStatisticsDao.selectOne(c-> c
+                    .where())
+
+        }
+        PlatformDailyStatistics platformDailyStatistics;
+        long pid = platformDailyStatistics.getPlatformId();
         //dayLimit指的是显示的天数
         int dayLimit=7;
         if(dto.getSelectTime()==2)dayLimit=30;
