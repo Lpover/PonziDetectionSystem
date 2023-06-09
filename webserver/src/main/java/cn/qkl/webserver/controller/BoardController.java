@@ -20,6 +20,7 @@ import cn.qkl.webserver.vo.board.RiskTxViewVO;
 import cn.qkl.webserver.vo.board.WordCloudViewVO;
 import cn.qkl.webserver.vo.carrier.CarrierViewVO;
 import cn.qkl.webserver.vo.category.CategoryViewVO;
+import cn.qkl.webserver.vo.platform.PlatformNameListVO;
 import cn.qkl.webserver.vo.platformview.*;
 import cn.qkl.webserver.vo.stroage.StorageViewVO;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
@@ -74,6 +75,9 @@ public class BoardController {
 
     @Autowired
     private WordCloudViewService wordCloudViewService;
+
+    @Autowired
+    private PlatformService platformService;
     @ApiOperation("跨链风险视图")
     @GetMapping("cross/view")
     public BaseResult<List<CrossContentRiskViewVO>> getCrossContentRiskView(@Validated CrossContentRiskViewDTO dto) {
@@ -97,6 +101,12 @@ public class BoardController {
     @GetMapping("category/view")
     public BaseResult<List<CategoryViewVO>> getCategoryView(@Validated CategoryViewDTO dto) {
         return BaseResult.ok(categoryViewService.getCategoryView(dto));
+    }
+
+    @ApiOperation("获取正在监测中的平台列表")
+    @GetMapping("monitoring/platform")
+    public BaseResult<List<PlatformNameListVO>> getMonitoringPlatform() {
+        return BaseResult.ok(platformService.getMonitoringPlatform());
     }
 
     @ApiOperation("风险交易视图")

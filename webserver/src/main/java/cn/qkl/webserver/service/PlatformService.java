@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -100,5 +101,18 @@ public class PlatformService {
                 .set(Tables.platform.crawlerFile).equalTo(dto.getCrawlerUrl())
                 .where(Tables.platform.id,isEqualTo(dto.getId()))
         );
+    }
+
+    public List<PlatformNameListVO> getMonitoringPlatform() {
+        List<Platform> platformList = platformDao.select(c -> c.where(Tables.platform.monitor, isEqualTo(1)));
+        List<PlatformNameListVO> list = new ArrayList<>();
+        for (Platform item : platformList) {
+            PlatformNameListVO platformNameListVO = new PlatformNameListVO();
+            platformNameListVO.setId(item.getId());
+            platformNameListVO.setName(item.getName());
+            list.add(platformNameListVO);
+
+        }
+        return list;
     }
 }
