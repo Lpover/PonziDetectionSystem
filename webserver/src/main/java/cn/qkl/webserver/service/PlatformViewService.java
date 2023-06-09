@@ -25,12 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.util.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 import java.text.DecimalFormat;
@@ -59,46 +56,36 @@ public class PlatformViewService {
     @Autowired
     private PlatformDailyStatisticsDao platformDailyStatisticsDao;
 
-    public Long getHotestPlatform(HotnessRankingViewDTO dto) {
+    //获取最热门NFT平台的PlatformId
+    public Long getHotestPlatform(PlatformAndTimeSelectionDTO dto) {
 
-        //平台选择：0-NFT平台,1-WEB3平台,默认选择NFT平台
-        int platType;
-        if(dto.getSelectType()==1){
-            platType = 1;
-        } else {
-            platType = 0;
+        if(dto.getSelectPlatformId() == -999){
+
+            Optional<PlatformDailyStatistics> optionalPlatformDailyStatistics = platformDailyStatisticsDao.selectOne(c-> c
+                    .orderBy(Tables.platformDailyStatistics.hotness24h.descending())
+                    .limit(1)
+            );
+            PlatformDailyStatistics platformDailyStatistics=optionalPlatformDailyStatistics.get();
+            long pid = platformDailyStatistics.getPlatformId();
+            return pid;
         }
-
-        if(platType==0){
-            // 获取第一热门平台的ID
-            List<Long> platformIDList= platformViewDao.select(c -> c
-                            .where(Tables.platform.platformType, isEqualTo(0))
-                            .orderBy(Tables.platformDailyStatistics.hotness24h.descending())
-                            .limit(1)
-                    )
-                    .stream().map(PlatformDailyStatistics::getPlatformId).collect(Collectors.toList());
-        }
-
+        else return dto.getSelectPlatformId();
 
     }
 
 
         //返回平台（NFT、WEB3）的风险内容数量
     public List<VolumeTrendsVO> getVolumeTrends(PlatformAndTimeSelectionDTO dto){
-        if(dto.getSelectPlatformId()== Null){
-            platformDailyStatisticsDao.selectOne(c-> c
-                    .where())
 
-        }
-        PlatformDailyStatistics platformDailyStatistics;
-        long pid = platformDailyStatistics.getPlatformId();
+        //默认最热门NFT平台
+        long HotestPlatform=getHotestPlatform(dto);
         //dayLimit指的是显示的天数
         int dayLimit=7;
         if(dto.getSelectTime()==2)dayLimit=30;
         List<VolumeTrendsVO> volumeTrendsList = platformViewDao.getVolumeTrends(
                     select(Tables.platformDailyStatistics.contentRiskSum, Tables.platformDailyStatistics.createTime)
                             .from(Tables.platformDailyStatistics)
-                            .where(Tables.platformDailyStatistics.platformId, isEqualTo(dto.getSelectPlatformId()))
+                            .where(Tables.platformDailyStatistics.platformId, isEqualTo(HotestPlatform))
                             .orderBy(Tables.platformDailyStatistics.createTime.descending())
                             .limit(dayLimit)
                             .build()
@@ -109,13 +96,16 @@ public class PlatformViewService {
 
     //返回平台（NFT、WEB3）的风险指数
     public List<IndexTrendsVO> getIndexTrends(PlatformAndTimeSelectionDTO dto){
+
+        //默认最热门NFT平台
+        long HotestPlatform=getHotestPlatform(dto);
         //dayLimit指的是显示的天数
         int dayLimit=7;
         if(dto.getSelectTime()==2)dayLimit=30;
         List<IndexTrendsVO> indexTrendsList = platformViewDao.getIndexTrends(
                 select(Tables.platformDailyStatistics.riskIndex, Tables.platformDailyStatistics.createTime)
                         .from(Tables.platformDailyStatistics)
-                        .where(Tables.platformDailyStatistics.platformId, isEqualTo(dto.getSelectPlatformId()))
+                        .where(Tables.platformDailyStatistics.platformId, isEqualTo(HotestPlatform))
                         .orderBy(Tables.platformDailyStatistics.createTime.descending())
                         .limit(dayLimit)
                         .build()
@@ -159,19 +149,12 @@ public class PlatformViewService {
         Date end = DateUtil.endOfDay(date);
         Date start = DateUtil.offsetDay(end, -1);
 
-        //平台选择 平台类别： 0 nft  1 web3
-        int platformType;
-        if(dto.getSelectType()==1)platformType=1;
-        else {
-            platformType = 0;
-        }
-
         //平台选择：0-NFT平台,1-WEB3平台,默认选择NFT平台
-        int platType;
+        int platformType;
         if(dto.getSelectType()==1){
-            platType = 1;
+            platformType = 1;
         } else {
-            platType = 0;
+            platformType = 0;
         }
 
         return PageVO.getPageData(dto.getPageId(),dto.getPageSize(),
@@ -184,13 +167,10 @@ public class PlatformViewService {
                                 .from(Tables.platformDailyStatistics)
                                 .leftJoin(Tables.platform).on(Tables.platformDailyStatistics.platformId, equalTo(Tables.platform.id))
                                 .where(Tables.platform.monitor,isEqualTo(1))
-                                .and(Tables.platform.platformType,isEqualTo(platType))
-                                .orderBy(Tables.platformDailyStatistics.hotness24h.descending())
-//                                .where(Tables.platform.monitor,isEqualTo(1))
-                                .where(Tables.platformDailyStatistics.createTime,isGreaterThanOrEqualToWhenPresent(start))
-                                .and(Tables.platformDailyStatistics.createTime,isLessThanOrEqualToWhenPresent(end))
                                 .and(Tables.platform.platformType,isEqualTo(platformType))
-                                .orderBy(Tables.platformDailyStatistics.hotness24h)
+                                .and(Tables.platformDailyStatistics.createTime,isGreaterThanOrEqualToWhenPresent(start))
+                                .and(Tables.platformDailyStatistics.createTime,isLessThanOrEqualToWhenPresent(end))
+                                .orderBy(Tables.platformDailyStatistics.hotness24h.descending())
 //                                .limit(platformNum)
                                 .build()
                                 .render(RenderingStrategies.MYBATIS3)
