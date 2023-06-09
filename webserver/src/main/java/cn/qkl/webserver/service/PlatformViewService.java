@@ -5,6 +5,8 @@ import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.mapper.PlatformMapper;
 import cn.qkl.common.repository.model.Platform;
+import cn.qkl.common.repository.model.PlatformDailyStatistics;
+import cn.qkl.webserver.dao.PlatformDailyStatisticsDao;
 import cn.qkl.webserver.dao.PlatformDao;
 import cn.qkl.webserver.dao.PlatformViewDao;
 import cn.qkl.webserver.dto.platformview.HotnessRankingViewDTO;
@@ -15,6 +17,7 @@ import cn.qkl.webserver.vo.platformview.*;
 import com.alibaba.druid.support.ibatis.SqlMapClientImplWrapper;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.expression.operators.relational.EqualsTo;
+import org.apache.ibatis.jdbc.Null;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.dynamic.sql.SqlBuilder;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
@@ -23,8 +26,16 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
+import java.text.DecimalFormat;
+import java.util.concurrent.ThreadLocalRandom;
+
 
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 import org.apache.ibatis.session.SqlSession;
@@ -45,9 +56,42 @@ public class PlatformViewService {
     private PlatformViewDao platformViewDao;
     @Autowired
     private PlatformDao platformDao;
+    @Autowired
+    private PlatformDailyStatisticsDao platformDailyStatisticsDao;
 
-    //返回平台（NFT、WEB3）的风险内容数量
+    public Long getHotestPlatform(HotnessRankingViewDTO dto) {
+
+        //平台选择：0-NFT平台,1-WEB3平台,默认选择NFT平台
+        int platType;
+        if(dto.getSelectType()==1){
+            platType = 1;
+        } else {
+            platType = 0;
+        }
+
+        if(platType==0){
+            // 获取第一热门平台的ID
+            List<Long> platformIDList= platformViewDao.select(c -> c
+                            .where(Tables.platform.platformType, isEqualTo(0))
+                            .orderBy(Tables.platformDailyStatistics.hotness24h.descending())
+                            .limit(1)
+                    )
+                    .stream().map(PlatformDailyStatistics::getPlatformId).collect(Collectors.toList());
+        }
+
+
+    }
+
+
+        //返回平台（NFT、WEB3）的风险内容数量
     public List<VolumeTrendsVO> getVolumeTrends(PlatformAndTimeSelectionDTO dto){
+        if(dto.getSelectPlatformId()== Null){
+            platformDailyStatisticsDao.selectOne(c-> c
+                    .where())
+
+        }
+        PlatformDailyStatistics platformDailyStatistics;
+        long pid = platformDailyStatistics.getPlatformId();
         //dayLimit指的是显示的天数
         int dayLimit=7;
         if(dto.getSelectTime()==2)dayLimit=30;
@@ -122,15 +166,26 @@ public class PlatformViewService {
             platformType = 0;
         }
 
+        //平台选择：0-NFT平台,1-WEB3平台,默认选择NFT平台
+        int platType;
+        if(dto.getSelectType()==1){
+            platType = 1;
+        } else {
+            platType = 0;
+        }
+
         return PageVO.getPageData(dto.getPageId(),dto.getPageSize(),
                 ()->platformViewDao.getHotnessRankingView(
                         select(Tables.platformDailyStatistics.id,Tables.platformDailyStatistics.platformId,Tables.platform.name,
-                                Tables.platform.logo,Tables.platform.hotness, Tables.platform.riskLevel,
+                                Tables.platform.logo,Tables.platform.hotness.as("hotness"), Tables.platform.riskLevel,
                                 Tables.platformDailyStatistics.hotness24h, Tables.platformDailyStatistics.hotnessChange24h,
                                 Tables.platformDailyStatistics.hotnessChange7d, Tables.platformDailyStatistics.hotnessChange30d
                                 )
                                 .from(Tables.platformDailyStatistics)
                                 .leftJoin(Tables.platform).on(Tables.platformDailyStatistics.platformId, equalTo(Tables.platform.id))
+                                .where(Tables.platform.monitor,isEqualTo(1))
+                                .and(Tables.platform.platformType,isEqualTo(platType))
+                                .orderBy(Tables.platformDailyStatistics.hotness24h.descending())
 //                                .where(Tables.platform.monitor,isEqualTo(1))
                                 .where(Tables.platformDailyStatistics.createTime,isGreaterThanOrEqualToWhenPresent(start))
                                 .and(Tables.platformDailyStatistics.createTime,isLessThanOrEqualToWhenPresent(end))
@@ -143,5 +198,34 @@ public class PlatformViewService {
         );
     }
 
+    //热门平台每日数据更新
+    public void insertPlatformView(PlatformDailyStatistics platformDailyStatistics){
+        Random random = new Random();
 
+        Integer totalSum=platformDailyStatistics.getContentRiskSum();
+        Integer rand_risk_index = random.nextInt(100);
+
+        DecimalFormat decimalFormat = new DecimalFormat("#0.00");
+
+        double rand_24_hotness_c = random.nextDouble() * 2 - 1;//一天之内的变化-1~1
+        BigDecimal decimal_rand_24_hotness_c = BigDecimal.valueOf(rand_24_hotness_c).setScale(2, BigDecimal.ROUND_HALF_UP);
+
+        double rand_7_hotness_c = random.nextDouble() * 14 - 7;//7天之内的变化-7~7
+        BigDecimal decimal_rand_7_hotness_c = BigDecimal.valueOf(rand_7_hotness_c).setScale(2, BigDecimal.ROUND_HALF_UP);
+
+
+        double rand_30_hotness_c = random.nextDouble() * 60 - 30;//一天之内的变化-30~30
+        BigDecimal decimal_rand_30_hotness_c = BigDecimal.valueOf(rand_30_hotness_c).setScale(2, BigDecimal.ROUND_HALF_UP);
+
+        //随机热度生成
+        long rand_hotness_24h = ThreadLocalRandom.current().nextLong(20000001);
+
+        platformDailyStatistics.setContentSum(totalSum);
+        platformDailyStatistics.setRiskIndex(rand_risk_index);
+        platformDailyStatistics.setHotnessChange24h(decimal_rand_24_hotness_c);
+        platformDailyStatistics.setHotnessChange7d(decimal_rand_7_hotness_c);
+        platformDailyStatistics.setHotnessChange30d(decimal_rand_30_hotness_c);
+        platformDailyStatistics.setHotness24h(rand_hotness_24h);
+
+    }
 }

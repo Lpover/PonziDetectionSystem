@@ -8,6 +8,7 @@ import cn.qkl.common.repository.model.Platform;
 import cn.qkl.common.repository.model.PlatformDailyStatistics;
 import cn.qkl.webserver.dao.PlatformDailyStatisticsDao;
 import cn.qkl.webserver.dao.PlatformDao;
+import cn.qkl.webserver.service.PlatformViewService;
 import cn.qkl.webserver.service.RiskNumViewService;
 import cn.qkl.webserver.service.RiskTxViewService;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +43,9 @@ public class PlatformDailyStatisticsInsertBackgroundTask implements BackgroundTa
 
     @Autowired
     private RiskNumViewService riskNumViewService;
+
+    @Autowired
+    private PlatformViewService platformViewService;
 
     /**
      * 间隔1天
@@ -86,6 +90,7 @@ public class PlatformDailyStatisticsInsertBackgroundTask implements BackgroundTa
 
             riskTxViewService.insertRiskTx(platformDailyStatistics);    //风险交易
             riskNumViewService.insertRiskNum(platformDailyStatistics);  //风险内容
+            platformViewService.insertPlatformView(platformDailyStatistics);//热门平台每日数据更新
 
             list.add(platformDailyStatistics);
         }
