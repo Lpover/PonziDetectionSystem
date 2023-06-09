@@ -12,7 +12,7 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ViewVO {
     @ApiModelProperty("视图ID")
-    private Long viewId;
+    private Integer viewId;
 
     @ApiModelProperty("视图名称")
     private String viewName;
