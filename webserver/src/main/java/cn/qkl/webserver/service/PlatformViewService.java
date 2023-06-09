@@ -1,5 +1,6 @@
 package cn.qkl.webserver.service;
 
+import cn.hutool.core.date.DateUtil;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.mapper.PlatformMapper;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -108,9 +110,17 @@ public class PlatformViewService {
 
     //主流平台（NFT、WEB3）热度排行视图
     public PageVO<HotnessRankingViewVO> getHotnessRankingView(HotnessRankingViewDTO dto){
-        //获得platform表中平台的数量
-        List<Long> platformIDList= platformDao.select(c -> c).stream().map(Platform::getId).collect(Collectors.toList());
-        int platformNum=platformIDList.size();
+        //时间：今天的数据
+        Date date = new Date();
+        Date end = DateUtil.endOfDay(date);
+        Date start = DateUtil.offsetDay(end, -1);
+
+        //平台选择 平台类别： 0 nft  1 web3
+        int platformType;
+        if(dto.getSelectType()==1)platformType=1;
+        else {
+            platformType = 0;
+        }
 
         return PageVO.getPageData(dto.getPageId(),dto.getPageSize(),
                 ()->platformViewDao.getHotnessRankingView(
@@ -121,7 +131,10 @@ public class PlatformViewService {
                                 )
                                 .from(Tables.platformDailyStatistics)
                                 .leftJoin(Tables.platform).on(Tables.platformDailyStatistics.platformId, equalTo(Tables.platform.id))
-                                .where(Tables.platform.monitor,isEqualTo(1))
+//                                .where(Tables.platform.monitor,isEqualTo(1))
+                                .where(Tables.platformDailyStatistics.createTime,isGreaterThanOrEqualToWhenPresent(start))
+                                .and(Tables.platformDailyStatistics.createTime,isLessThanOrEqualToWhenPresent(end))
+                                .and(Tables.platform.platformType,isEqualTo(platformType))
                                 .orderBy(Tables.platformDailyStatistics.hotness24h)
 //                                .limit(platformNum)
                                 .build()
