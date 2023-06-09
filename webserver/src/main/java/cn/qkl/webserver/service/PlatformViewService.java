@@ -4,6 +4,7 @@ import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.mapper.PlatformMapper;
 import cn.qkl.common.repository.model.Platform;
+import cn.qkl.common.repository.model.PlatformDailyStatistics;
 import cn.qkl.webserver.dao.PlatformDao;
 import cn.qkl.webserver.dao.PlatformViewDao;
 import cn.qkl.webserver.dto.platformview.HotnessRankingViewDTO;
@@ -21,7 +22,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
@@ -130,5 +134,30 @@ public class PlatformViewService {
         );
     }
 
+    //热门平台每日数据更新
+    public void insertPlatformView(PlatformDailyStatistics platformDailyStatistics){
+        Random random = new Random();
 
+        Integer totalSum=platformDailyStatistics.getContentRiskSum();
+        Integer rand_risk_index = random.nextInt(100);
+
+        double rand_24_hotness_c = random.nextDouble() * 2 - 1;//一天之内的变化-1~1
+        BigDecimal decimal_rand_24_hotness_c = BigDecimal.valueOf(rand_24_hotness_c).setScale(2,BigDecimal.ROUND_HALF_UP);
+
+        double rand_7_hotness_c = random.nextDouble() * 14 - 7;//7天之内的变化-7~7
+        BigDecimal decimal_rand_7_hotness_c = BigDecimal.valueOf(rand_7_hotness_c).setScale(2,BigDecimal.ROUND_HALF_UP);
+
+        double rand_30_hotness_c = random.nextDouble() * 60 - 30;//一天之内的变化-30~30
+        BigDecimal decimal_rand_30_hotness_c = BigDecimal.valueOf(rand_30_hotness_c).setScale(2,BigDecimal.ROUND_HALF_UP);
+
+        Long rand_hotness_24h = random.nextLong() * 100000000;
+
+        platformDailyStatistics.setContentSum(totalSum);
+        platformDailyStatistics.setRiskIndex(rand_risk_index);
+        platformDailyStatistics.setHotnessChange24h(decimal_rand_24_hotness_c);
+        platformDailyStatistics.setHotnessChange7d(decimal_rand_7_hotness_c);
+        platformDailyStatistics.setHotnessChange30d(decimal_rand_30_hotness_c);
+        platformDailyStatistics.setHotness24h(rand_hotness_24h);
+
+    }
 }
