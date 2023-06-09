@@ -27,6 +27,9 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+import java.text.DecimalFormat;
+import java.util.concurrent.ThreadLocalRandom;
+
 
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 import org.apache.ibatis.session.SqlSession;
@@ -141,16 +144,20 @@ public class PlatformViewService {
         Integer totalSum=platformDailyStatistics.getContentRiskSum();
         Integer rand_risk_index = random.nextInt(100);
 
+        DecimalFormat decimalFormat = new DecimalFormat("#0.00");
+
         double rand_24_hotness_c = random.nextDouble() * 2 - 1;//一天之内的变化-1~1
-        BigDecimal decimal_rand_24_hotness_c = BigDecimal.valueOf(rand_24_hotness_c).setScale(2,BigDecimal.ROUND_HALF_UP);
+        BigDecimal decimal_rand_24_hotness_c = BigDecimal.valueOf(rand_24_hotness_c).setScale(2, BigDecimal.ROUND_HALF_UP);
 
         double rand_7_hotness_c = random.nextDouble() * 14 - 7;//7天之内的变化-7~7
-        BigDecimal decimal_rand_7_hotness_c = BigDecimal.valueOf(rand_7_hotness_c).setScale(2,BigDecimal.ROUND_HALF_UP);
+        BigDecimal decimal_rand_7_hotness_c = BigDecimal.valueOf(rand_7_hotness_c).setScale(2, BigDecimal.ROUND_HALF_UP);
+
 
         double rand_30_hotness_c = random.nextDouble() * 60 - 30;//一天之内的变化-30~30
-        BigDecimal decimal_rand_30_hotness_c = BigDecimal.valueOf(rand_30_hotness_c).setScale(2,BigDecimal.ROUND_HALF_UP);
+        BigDecimal decimal_rand_30_hotness_c = BigDecimal.valueOf(rand_30_hotness_c).setScale(2, BigDecimal.ROUND_HALF_UP);
 
-        Long rand_hotness_24h = random.nextLong() * 100000000;
+        //随机热度生成
+        long rand_hotness_24h = ThreadLocalRandom.current().nextLong(20000001);
 
         platformDailyStatistics.setContentSum(totalSum);
         platformDailyStatistics.setRiskIndex(rand_risk_index);
