@@ -119,17 +119,26 @@ public class PlatformViewService {
         List<Long> platformIDList= platformDao.select(c -> c).stream().map(Platform::getId).collect(Collectors.toList());
         int platformNum=platformIDList.size();
 
+        //平台选择：0-NFT平台,1-WEB3平台,默认选择NFT平台
+        int platType;
+        if(dto.getSelectType()==1){
+            platType = 1;
+        } else {
+            platType = 0;
+        }
+
         return PageVO.getPageData(dto.getPageId(),dto.getPageSize(),
                 ()->platformViewDao.getHotnessRankingView(
                         select(Tables.platformDailyStatistics.id,Tables.platformDailyStatistics.platformId,Tables.platform.name,
-                                Tables.platform.logo,Tables.platform.hotness, Tables.platform.riskLevel,
+                                Tables.platform.logo,Tables.platform.hotness.as("hotness"), Tables.platform.riskLevel,
                                 Tables.platformDailyStatistics.hotness24h, Tables.platformDailyStatistics.hotnessChange24h,
                                 Tables.platformDailyStatistics.hotnessChange7d, Tables.platformDailyStatistics.hotnessChange30d
                                 )
                                 .from(Tables.platformDailyStatistics)
                                 .leftJoin(Tables.platform).on(Tables.platformDailyStatistics.platformId, equalTo(Tables.platform.id))
                                 .where(Tables.platform.monitor,isEqualTo(1))
-                                .orderBy(Tables.platformDailyStatistics.hotness24h)
+                                .and(Tables.platform.platformType,isEqualTo(platType))
+                                .orderBy(Tables.platformDailyStatistics.hotness24h.descending())
 //                                .limit(platformNum)
                                 .build()
                                 .render(RenderingStrategies.MYBATIS3)
