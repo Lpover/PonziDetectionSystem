@@ -38,7 +38,7 @@ public class HotContentViewVO extends ViewVO {
         private String cryptoPrice;
 
         @ApiModelProperty("内容热度")
-        private Long hotNum;
+        private Integer hotNum;
     }
 
 //    public static HotContentViewVO transformFromContent(List<ContentInfo> contentInfoList) {

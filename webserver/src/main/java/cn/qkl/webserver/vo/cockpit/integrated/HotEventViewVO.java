@@ -33,6 +33,6 @@ public class HotEventViewVO extends ViewVO {
         private String abstractText;
 
         @ApiModelProperty("事件热度")
-        private Long hotNum;
+        private Integer hotNum;
     }
 }

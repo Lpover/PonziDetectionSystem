@@ -1,6 +1,7 @@
 package cn.qkl.webserver.service;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.lang.func.Func;
 import cn.qkl.common.framework.util.FunctionUtil;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.SocialPlatformHourStatistics;
@@ -53,7 +54,7 @@ public class CockpitIntegratedService {
                                 .render(RenderingStrategies.MYBATIS3)
                 )), it -> {
 //                        it.setViewChoice(viewChoice);
-                        it.setViewId(0L);
+                        it.setViewId(0);
                         it.setViewName("链上内容社交舆情指数视图");
                     }
                 );
@@ -71,7 +72,7 @@ public class CockpitIntegratedService {
                                 .build()
                                 .render(RenderingStrategies.MYBATIS3)
                 )), it -> {
-                        it.setViewId(1L);
+                        it.setViewId(1);
                         it.setViewName("链上内容多平台风险指数视图");
                     }
                 );
@@ -92,11 +93,12 @@ public class CockpitIntegratedService {
                             .where(Tables.socialPlatformHourStatistics.createTime,isGreaterThanWhenPresent(start))
                             .and(Tables.socialPlatformHourStatistics.createTime,isLessThanOrEqualToWhenPresent(base))
                             .orderBy(Tables.vocabCloud.num.descending())
+                            .limit(20)
                             .build()
                             .render(RenderingStrategies.MYBATIS3)
                     )
                 ),it -> {
-                        it.setViewId(2L);
+                        it.setViewId(2);
                         it.setViewName("热门话题词云视图");
                     }
                 );
@@ -124,10 +126,10 @@ public class CockpitIntegratedService {
 
         Optional<QueryExpressionDSL<SelectModel>.QueryExpressionWhereBuilder> finalBuilder = builder;
         return FunctionUtil.apply(new HotContentViewVO(), it -> {
-            it.setViewId(3L);
+            it.setViewId(3);
             it.setViewName("热门NFT视图");
 //            it.setViewChoice(viewChoice);
-            finalBuilder.ifPresent(queryExpressionWhereBuilder -> it.setViewData(cockpitIntegratedDao.getHotContentView(queryExpressionWhereBuilder.orderBy(SimpleSortSpecification.of("hotNum")).limit(10).build().render(RenderingStrategies.MYBATIS3))));
+            finalBuilder.ifPresent(queryExpressionWhereBuilder -> it.setViewData(cockpitIntegratedDao.getHotContentView(queryExpressionWhereBuilder.orderBy(SimpleSortSpecification.of("hotNum").descending()).limit(10).build().render(RenderingStrategies.MYBATIS3))));
         });
 
     }
@@ -153,10 +155,10 @@ public class CockpitIntegratedService {
         }
         Optional<QueryExpressionDSL<SelectModel>.QueryExpressionWhereBuilder> finalBuilder = builder;
         return FunctionUtil.apply(new HotEventViewVO(), it -> {
-            it.setViewId(4L);
+            it.setViewId(4);
             it.setViewName("热门Event视图");
 //            it.setViewChoice(viewChoice);
-            finalBuilder.ifPresent(queryExpressionWhereBuilder -> it.setViewData(cockpitIntegratedDao.getHotEventView(queryExpressionWhereBuilder.orderBy(SimpleSortSpecification.of("hotNum")).limit(10).build().render(RenderingStrategies.MYBATIS3))));
+            finalBuilder.ifPresent(queryExpressionWhereBuilder -> it.setViewData(cockpitIntegratedDao.getHotEventView(queryExpressionWhereBuilder.orderBy(SimpleSortSpecification.of("hotNum").descending()).limit(10).build().render(RenderingStrategies.MYBATIS3))));
         });
     }
 
@@ -186,8 +188,8 @@ public class CockpitIntegratedService {
                         .build()
                         .render(RenderingStrategies.MYBATIS3)
         );
-        Long countPos = 0L;
-        Long countNeg = 0L;
+        Integer countPos = 0;
+        Integer countNeg = 0;
         List<BigDecimal> sensitiveSeries = new ArrayList<>();
         List<BigDecimal> nonSensitiveSeries = new ArrayList<>();
         List<String> timeSeries = new ArrayList<>();
@@ -200,18 +202,38 @@ public class CockpitIntegratedService {
         }
 
         return FunctionUtil.apply(TextAnalysisViewVO.transform(countPos,countNeg,sensitiveSeries,nonSensitiveSeries,timeSeries), it ->{
-            it.setViewId(5L);
+            it.setViewId(5);
             it.setViewName("社交平台文本情绪、敏感分析视图");
         });
     }
 
     public CockpitIntegratedResponseVO getCockpitIntegratedResponseAll() {
-        return new CockpitIntegratedResponseVO();
+        CockpitIntegratedMultipleChoiceVO multipleChoice = getCockpitIntegratedMultipleChoice();
+        Long socialPlatformId = multipleChoice.getSocialPlatforms().get(0).getChoiceId();
+        Long timeId = multipleChoice.getTimeSeries().get(0).getChoiceId();
+        Long platformId = multipleChoice.getPlatforms().get(0).getChoiceId();
+        List<Long> platformIdList = multipleChoice.getPlatforms().stream().map(ChoiceVO::getChoiceId).collect(Collectors.toList());
+        return FunctionUtil.apply(new CockpitIntegratedResponseVO(), it -> {
+            it.setSocialIndexView(getSocialIndexView(socialPlatformId));
+            it.setPlatformIndexView(getPlatformIndexView(platformIdList));
+            it.setVocabCloudView(getVocabCloudView());
+            it.setHotContentView(getHotContentView(platformId,timeId));
+            it.setHotEventView(getHotEventView(platformId,timeId));
+            it.setTextAnalysisViewVO(getTextAnalysisView(socialPlatformId,timeId)); //default & fixed
+        });
     }
 
     public CockpitIntegratedResponseVO getCockpitIntegratedResponseDynamic(CockpitIntegratedQueryDTO dto) {
 
-        return new CockpitIntegratedResponseVO();
+        OptionalLong socialPlatformId = OptionalLong.of(dto.getSocialPlatformChoice());
+        OptionalLong timeId = OptionalLong.of(dto.getTimeSeriesChoice());
+        OptionalLong platformId = OptionalLong.of(dto.getPlatformChoice());
+
+        return FunctionUtil.apply(new CockpitIntegratedResponseVO(), it -> {
+            it.setSocialIndexView(getSocialIndexView(socialPlatformId.getAsLong()));
+            it.setHotContentView(getHotContentView(platformId.getAsLong(),timeId.getAsLong()));
+            it.setHotEventView(getHotEventView(platformId.getAsLong(),timeId.getAsLong()));
+        });
     }
 
     public CockpitIntegratedMultipleChoiceVO getCockpitIntegratedMultipleChoice() {

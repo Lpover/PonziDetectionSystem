@@ -37,7 +37,7 @@ public class TextAnalysisViewVO extends ViewVO {
         private List<String> series;
     }
 
-    public static TextAnalysisViewVO transform(Long countPos, Long countNeg, List<BigDecimal> sensitive, List<BigDecimal> nonSensitive, List<String> time) {
+    public static TextAnalysisViewVO transform(Integer countPos, Integer countNeg, List<BigDecimal> sensitive, List<BigDecimal> nonSensitive, List<String> time) {
         return apply(new TextAnalysisViewVO(), it ->{
            it.setViewData(apply(new ViewData(), v -> {
                v.setSeries(time);

@@ -80,7 +80,7 @@ class CockpitIntegratedServiceTest {
     void testGetHotContentView() throws JsonProcessingException {
         com.fasterxml.jackson.databind.ObjectMapper mapper = new ObjectMapper();
 //        String json = mapper.writeValueAsString(cockpitIntegratedService.getHotContentView(1L,1L));
-        String json = mapper.writeValueAsString(cockpitIntegratedService.getHotContentView(2L,2L));
+        String json = mapper.writeValueAsString(cockpitIntegratedService.getHotContentView(1L,2L));
         System.out.println(json);
     }
 
@@ -93,7 +93,9 @@ class CockpitIntegratedServiceTest {
     }
 
     @Test
-    void testGetTextAnalysisView() {
-
+    void testGetTextAnalysisView() throws JsonProcessingException {
+        com.fasterxml.jackson.databind.ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(cockpitIntegratedService.getTextAnalysisView(1L,1L));
+        System.out.println(json);
     }
 }

@@ -26,7 +26,7 @@ public class VocabCloudViewVO extends ViewVO {
     public static class VocabNumPair {
         private String vocab;
 
-        private Long num;
+        private Integer num;
     }
 
     public static VocabCloudViewVO transformFromVocabCloud(List<VocabCloud> vocabCloudList) {

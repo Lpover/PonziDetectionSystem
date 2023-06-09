@@ -22,5 +22,5 @@ public class LegendNumberVO {
     String name;
 
     @ApiModelProperty("数字")
-    Long number;
+    Integer number;
 }

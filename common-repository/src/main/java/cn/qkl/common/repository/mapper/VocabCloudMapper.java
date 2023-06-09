@@ -63,7 +63,7 @@ public interface VocabCloudMapper {
     @Results(id="VocabCloudResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="vocab", property="vocab", jdbcType=JdbcType.VARCHAR),
-        @Result(column="num", property="num", jdbcType=JdbcType.BIGINT),
+        @Result(column="num", property="num", jdbcType=JdbcType.INTEGER),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
     })

@@ -11,7 +11,7 @@ public class VocabCloud {
     private String vocab;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long num;
+    private Integer num;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Date createTime;
@@ -52,18 +52,18 @@ public class VocabCloud {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getNum() {
+    public Integer getNum() {
         return num;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public VocabCloud withNum(Long num) {
+    public VocabCloud withNum(Integer num) {
         this.setNum(num);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setNum(Long num) {
+    public void setNum(Integer num) {
         this.num = num;
     }
 

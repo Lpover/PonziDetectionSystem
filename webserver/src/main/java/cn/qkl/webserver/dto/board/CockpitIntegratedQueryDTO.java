@@ -10,9 +10,9 @@ import lombok.Data;
 @Data
 public class CockpitIntegratedQueryDTO {
     @ApiModelProperty("综合风险驾驶舱筛选入参-时间")
-    Long timeSeriesChoice = 0L;
+    Long timeSeriesChoice;
     @ApiModelProperty("综合风险驾驶舱筛选入参-社交平台")
-    Long socialPlatformChoice = 0L;
+    Long socialPlatformChoice;
     @ApiModelProperty("综合风险驾驶舱筛选入参-平台")
-    Long platformChoice = 0L;
+    Long platformChoice;
 }

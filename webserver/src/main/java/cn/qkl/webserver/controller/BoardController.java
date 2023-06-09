@@ -105,14 +105,14 @@ public class BoardController {
 
     @ApiOperation("综合风险驾驶舱首屏接口")
     @PostMapping("/board/cockpit/integrated/all")
-    public BaseResult<CockpitIntegratedResponseVO> getCockpitIntegratedResponseAll(@RequestBody CockpitIntegratedQueryDTO dto) {
-        System.out.println(dto);
+    public BaseResult<CockpitIntegratedResponseVO> getCockpitIntegratedResponseAll(@RequestBody(required = false) CockpitIntegratedQueryDTO dto) {
+        // no check for inputs
         return BaseResult.ok(cockpitIntegratedService.getCockpitIntegratedResponseAll());
     }
 
     @ApiOperation("综合风险驾驶舱动态接口")
     @PostMapping("/board/cockpit/integrated/dynamic")
-    public BaseResult<CockpitIntegratedResponseVO> getCockpitIntegratedResponseDynamic(@RequestBody CockpitIntegratedQueryDTO dto) {
+    public BaseResult<CockpitIntegratedResponseVO> getCockpitIntegratedResponseDynamic(@RequestBody(required = true) CockpitIntegratedQueryDTO dto) {
         return BaseResult.ok(cockpitIntegratedService.getCockpitIntegratedResponseDynamic(dto));
     }
 
