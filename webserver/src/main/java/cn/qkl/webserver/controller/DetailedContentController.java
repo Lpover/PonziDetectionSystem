@@ -3,7 +3,7 @@ package cn.qkl.webserver.controller;
 import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.common.framework.response.PageVO;
-import cn.qkl.common.framework.util.OssUtil;
+import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dto.detail.*;
 import cn.qkl.webserver.service.DetailService;
 import cn.qkl.webserver.vo.detail.ContentDynamicMonitorVO;
@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.*;
 @ApiSupport(author = "zz")
 @RequestMapping("detail")
 @RefreshScope
-@Role
+@Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
 public class DetailedContentController {
     @Autowired
     DetailService detailService;

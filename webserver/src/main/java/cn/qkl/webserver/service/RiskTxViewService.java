@@ -34,17 +34,17 @@ public class RiskTxViewService {
 //        Date end = DateUtil.beginOfDay(date);
         Date end = DateUtil.endOfDay(date);
         Date start = DateUtil.offsetDay(end, -7);   //默认近7天
-        if (dto.getTimeSpan() == 0) {   // 近7天
+        if (dto.getTimeSpan() == 1) {   // 近7天
             start = DateUtil.offsetDay(end, -7);
-        } else if (dto.getTimeSpan() == 1) {    // 近30天
+        } else if (dto.getTimeSpan() == 2) {    // 近30天
             start = DateUtil.offsetDay(end, -30);
         }
         Date finalStart = start;
         // 对时间和平台筛选，并根据时间排序
         List<PlatformDailyStatistics> platformDailyStatisticsList= riskTxViewDao.select(c -> c
                         .where(Tables.platformDailyStatistics.platformId, isEqualTo(dto.getPlatformid()))
-                .and(Tables.platformDailyStatistics.createTime, isGreaterThan(finalStart))
-                .and(Tables.platformDailyStatistics.createTime, isLessThan(end))
+                .and(Tables.platformDailyStatistics.createTime, isGreaterThanOrEqualTo(finalStart))
+                .and(Tables.platformDailyStatistics.createTime, isLessThanOrEqualTo(end))
         );
         RiskTxViewVO vo = new RiskTxViewVO();
         // 根据创建时间进行排序，封装到vo中
