@@ -217,8 +217,8 @@ public class PlatformViewService {
         public void insertAccount (Account account){
 
             Random random = new Random();
-            Integer rand_realeaseNum = random.nextInt(100);
-            Integer rand_riskLevel = random.nextInt(2);
+            Integer rand_realeaseNum = random.nextInt(101);
+            Integer rand_riskLevel = random.nextInt(3);
 
             account.setAccountAddress(generateRandomAccountAddress());
             account.setChainId(1L);
