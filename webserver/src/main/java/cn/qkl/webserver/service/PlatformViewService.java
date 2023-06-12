@@ -318,7 +318,6 @@ public class PlatformViewService {
             content.setHotNum24h(rand_hot_num_24h);
             content.setCurrencyPriceRanking(decimal_current_price_ranking);
 
-
         }
         private static String generateRandomAccountAddress() {
             // 生成随机的以太坊账号地址
