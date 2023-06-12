@@ -47,11 +47,11 @@ public class UserController {
         return BaseResult.ok(userService.emailLogin(dto));
     }
 
-//    @ApiOperation("获取个人信息")
-//    @GetMapping("info")
-//    public BaseResult<UserInfoVO> getUserInfo() {
-//        return BaseResult.ok(userService.getUserInfo());
-//    }
+    @ApiOperation("获取个人信息")
+    @GetMapping("info")
+    public BaseResult<UserInfoVO> getUserInfo() {
+        return BaseResult.ok(userService.getUserInfo());
+    }
 
     @ApiOperation("用户列表")
     @GetMapping("list")

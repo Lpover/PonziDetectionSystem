@@ -5,15 +5,13 @@ import cn.hutool.core.util.IdUtil;
 import cn.qkl.common.framework.initAndBackground.BackgroundTask;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.Account;
+import cn.qkl.common.repository.model.Content;
 import cn.qkl.common.repository.model.Platform;
-import cn.qkl.common.repository.model.PlatformDailyStatistics;
 import cn.qkl.webserver.dao.AccountDao;
-import cn.qkl.webserver.dao.PlatformDailyStatisticsDao;
+import cn.qkl.webserver.dao.ContentDao;
 import cn.qkl.webserver.dao.PlatformDao;
 import cn.qkl.webserver.service.PlatformViewService;
 import cn.qkl.webserver.service.PlatformViewService.AccountGenerator;
-import cn.qkl.webserver.service.RiskNumViewService;
-import cn.qkl.webserver.service.RiskTxViewService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,10 +31,10 @@ import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
  */
 @Slf4j
 @Component
-public class AccountOnetimeBackgroundTask implements BackgroundTask {
+public class ContentOnetimeBackgroundTask implements BackgroundTask {
 
     @Autowired
-    private AccountDao accountDao;
+    private ContentDao contentDao;
 
     @Autowired
     private PlatformDao platformDao;
@@ -72,36 +70,38 @@ public class AccountOnetimeBackgroundTask implements BackgroundTask {
 
     @Override
     public String getName() {
-        return AccountOnetimeBackgroundTask.class.getName();
+        return ContentOnetimeBackgroundTask.class.getName();
     }
 
     @Override
     public void run() {
-        log.debug("模拟插入account表数据，一次性使用，注意修改数据");
-        List<Account> list = new ArrayList<>();
+        log.debug("模拟插入content表数据，一次性使用，注意修改数据");
+        List<Content> list = new ArrayList<>();
         // 只获取正在监测的平台id
         List<Long> platformIDList= platformDao.select(c -> c.where(Tables.platform.monitor, isEqualTo(1))).stream().map(Platform::getId).collect(Collectors.toList());
         // 每个平台插入一条账号
 
         for (Long platformId : platformIDList) {
-            Account account = new Account();
-            insertCommon(account, platformId);
+            Content content = new Content();
+            insertCommon(content, platformId);
 
-            AccountGenerator accountGenerator = new AccountGenerator();
-            accountGenerator.insertAccount(account);//账号内容
+            PlatformViewService.ContentGenerator contentGenerator = new PlatformViewService.ContentGenerator();
+            contentGenerator.insertContent(content);//账号内容
 
-            list.add(account);
+            list.add(content);
         }
 
-        accountDao.insertMultiple(list);
+        contentDao.insertMultiple(list);
     }
 
-    private void insertCommon(Account account, Long platformID){
+    private void insertCommon(Content content, Long platformID){
         Date end = new Date();
-        account.setId(IdUtil.getSnowflakeNextId());
-        account.setPlatformId(platformID);
-        account.setCreateTime(end);
-        account.setUpdateTime(end);
+        content.setId(IdUtil.getSnowflakeNextId());
+        content.setPlatformId(platformID);
+        content.setListingTime(end);
+        content.setCreateTime(end);
+        content.setUpdateTime(end);
+        content.setMintTime(end);
     }
 
 }
