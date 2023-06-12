@@ -243,7 +243,7 @@ public class PlatformViewService {
             account.setAccountAddress(generateRandomAccountAddress());
             account.setChainId(1L);
             account.setAccountAlias(generateRandomString());
-            account.setImage("image/65/a8/65a869ba6f14f304cd06444b29745738.gif");
+            account.setImage("https://image.kmf.com/da-image/65/a8/65a869ba6f14f304cd06444b29745738.gif");
             account.setCryptoBalance("1 ETH");
             account.setCurrencyBalance("500");
             account.setExchangeRate("500");
@@ -297,7 +297,7 @@ public class PlatformViewService {
             content.setName(generateRandomString());
             content.setAddress(generateRandomAccountAddress());
             content.setTokenid(rand_tokenid);
-            content.setMetaUrl("8c2ee9a783c45bb49b5af6b828ab1191_r.jpg");
+            content.setMetaUrl("https://pic2.zhimg.com/v2-8c2ee9a783c45bb49b5af6b828ab1191_r.jpg");
             content.setCryptoPrice("1 ETH");
             content.setCurrencyPrice(string_current_price_ranking);
             content.setCreator("0xa8c62111e4652b07110a0fc81816303c42632f64");
