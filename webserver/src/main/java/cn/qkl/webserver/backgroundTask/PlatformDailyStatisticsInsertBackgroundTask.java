@@ -68,8 +68,8 @@ public class PlatformDailyStatisticsInsertBackgroundTask implements BackgroundTa
         end = DateUtil.offsetDay(end, 1);
 
         //延迟至第二天凌晨2点开始执行
-//        return end.getTime() - start.getTime();
-        return 0;
+        return end.getTime() - start.getTime();
+//        return 0;
     }
 
     @Override
