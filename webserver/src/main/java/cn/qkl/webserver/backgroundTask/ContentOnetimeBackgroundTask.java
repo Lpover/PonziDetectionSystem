@@ -1,5 +1,6 @@
 package cn.qkl.webserver.backgroundTask;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.qkl.common.framework.initAndBackground.BackgroundTask;
 import cn.qkl.common.repository.Tables;
@@ -52,8 +53,19 @@ public class ContentOnetimeBackgroundTask implements BackgroundTask {
     //从第二天开始每天凌晨2点执行
     @Override
     public long getDelay() {
-        //一次性任务，delay为0
-        return 0;
+        //当前服务器时间
+        Date start = new Date();
+        //一天的结束，结果：00:00:00
+        Date end = DateUtil.beginOfDay(start);
+        //当天1：00：00
+        end = DateUtil.offsetHour(end, 1);
+        //第二天1：00：00
+        end = DateUtil.offsetDay(end, 1);
+
+        //延迟至第二天凌晨1点开始执行
+        return end.getTime() - start.getTime();
+//        //一次性任务，delay为0
+//        return 0;
     }
 
     @Override
