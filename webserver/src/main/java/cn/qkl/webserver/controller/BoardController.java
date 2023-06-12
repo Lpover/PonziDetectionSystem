@@ -49,7 +49,7 @@ import java.util.List;
 @ApiSupport(author = "wx")
 @RequestMapping("board")
 @RefreshScope
-@Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
+//@Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
 public class BoardController {
 
     @Autowired
@@ -104,20 +104,20 @@ public class BoardController {
     }
 
     @ApiOperation("综合风险驾驶舱首屏接口")
-    @PostMapping("/board/cockpit/integrated/all")
+    @PostMapping("/cockpit/integrated/all")
     public BaseResult<CockpitIntegratedResponseVO> getCockpitIntegratedResponseAll(@RequestBody(required = false) CockpitIntegratedQueryDTO dto) {
         // no check for inputs
         return BaseResult.ok(cockpitIntegratedService.getCockpitIntegratedResponseAll());
     }
 
     @ApiOperation("综合风险驾驶舱动态接口")
-    @PostMapping("/board/cockpit/integrated/dynamic")
+    @PostMapping("/cockpit/integrated/dynamic")
     public BaseResult<CockpitIntegratedResponseVO> getCockpitIntegratedResponseDynamic(@RequestBody(required = true) CockpitIntegratedQueryDTO dto) {
         return BaseResult.ok(cockpitIntegratedService.getCockpitIntegratedResponseDynamic(dto));
     }
 
     @ApiOperation("综合风险驾驶舱查看可筛选项接口")
-    @GetMapping("/board/cockpit/integrated/choice")
+    @GetMapping("/cockpit/integrated/choice")
     public BaseResult<CockpitIntegratedMultipleChoiceVO> getCockpitIntegratedMultipleChoice() {
         return BaseResult.ok(cockpitIntegratedService.getCockpitIntegratedMultipleChoice());
     }

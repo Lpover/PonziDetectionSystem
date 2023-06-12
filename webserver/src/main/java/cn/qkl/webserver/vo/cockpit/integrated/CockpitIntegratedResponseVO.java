@@ -27,5 +27,5 @@ public class CockpitIntegratedResponseVO {
     HotEventViewVO hotEventView;
 
     @ApiModelProperty("情绪分析-敏感内容分析视图")
-    TextAnalysisViewVO textAnalysisViewVO;
+    TextAnalysisViewVO textAnalysisView;
 }

@@ -3,15 +3,16 @@ package cn.qkl.webserver.backgroundTask;
 import cn.hutool.core.util.IdUtil;
 import cn.qkl.common.framework.initAndBackground.BackgroundTask;
 import cn.qkl.common.framework.util.FunctionUtil;
-import cn.qkl.common.repository.mapper.EventMapper;
-import cn.qkl.common.repository.mapper.VocabCloudMapper;
+import cn.qkl.common.repository.model.Event;
 import cn.qkl.common.repository.model.VocabCloud;
+import cn.qkl.webserver.dao.EventDao;
 import cn.qkl.webserver.dao.VocabCloudDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Date;
+import java.util.Random;
 
 /**
  * @title:
@@ -21,17 +22,17 @@ import java.util.*;
  */
 @Slf4j
 @Component
-public class VocabCloudBackgroundTask implements BackgroundTask {
+public class EventBackgroundTask implements BackgroundTask {
 
     @Autowired
-    VocabCloudDao vocabCloudDao;
+    EventDao eventDao;
 
     /**
      * 间隔1 min
      */
     @Override
     public long getPeriod() {
-        return 1 * 1 * 60 * 1000;
+        return 1 * 1 * 1 * 1000;
     }
 
     //每天18点执行
@@ -49,23 +50,27 @@ public class VocabCloudBackgroundTask implements BackgroundTask {
 
     @Override
     public String getName() {
-        return VocabCloudBackgroundTask.class.getName();
+        return EventBackgroundTask.class.getName();
     }
 
     @Override
     public void run() {
-        log.debug("insert vocabCloud");
+        log.debug("insert event");
         //业务代码
         Date end = new Date();
-        VocabCloud vocabCloud = FunctionUtil.apply(new VocabCloud(), it -> {
+        Event event= FunctionUtil.apply(new Event(), it -> {
             it.setId(IdUtil.getSnowflakeNextId());
             byte x = 'A';
-            it.setVocab((x+new Random().nextInt(26))+"Xjp"+(x+new Random().nextInt(26)));
-            it.setNum(new Random().nextInt(1000));
+            it.setAbstractText("XjpHelloHa Abstract"+(char)(x+new Random().nextInt(26))+"Xjp"+new Random().nextInt(2006));
+            it.setHotNum12h(new Random().nextInt(1000));
+            it.setHotNum24h(new Random().nextInt(1000));
+            it.setImageUrl("https://pic2.zhimg.com/v2-8c2ee9a783c45bb49b5af6b828ab1191_r.jpg");
             it.setCreateTime(end);
             it.setUpdateTime(end);
+            it.setTitle("Title"+(char)(x+new Random().nextInt(26))+new Random().nextInt(2006));
+            it.setPlatformId((long) (1+new Random().nextInt(10)));
         });
-        System.out.println(vocabCloud);
-        vocabCloudDao.insert(vocabCloud);
+        System.out.println(event);
+        eventDao.insert(event);
     }
 }
