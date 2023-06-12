@@ -4,13 +4,14 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.qkl.common.framework.initAndBackground.BackgroundTask;
 import cn.qkl.common.repository.Tables;
+import cn.qkl.common.repository.model.Account;
+import cn.qkl.common.repository.model.Content;
 import cn.qkl.common.repository.model.Platform;
-import cn.qkl.common.repository.model.PlatformDailyStatistics;
-import cn.qkl.webserver.dao.PlatformDailyStatisticsDao;
+import cn.qkl.webserver.dao.AccountDao;
+import cn.qkl.webserver.dao.ContentDao;
 import cn.qkl.webserver.dao.PlatformDao;
 import cn.qkl.webserver.service.PlatformViewService;
-import cn.qkl.webserver.service.RiskNumViewService;
-import cn.qkl.webserver.service.RiskTxViewService;
+import cn.qkl.webserver.service.PlatformViewService.AccountGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,19 +31,13 @@ import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
  */
 @Slf4j
 @Component
-public class PlatformDailyStatisticsInsertBackgroundTask implements BackgroundTask {
+public class ContentOnetimeBackgroundTask implements BackgroundTask {
 
     @Autowired
-    private PlatformDailyStatisticsDao platformDailyStatisticsDao;
+    private ContentDao contentDao;
 
     @Autowired
     private PlatformDao platformDao;
-
-    @Autowired
-    private RiskTxViewService riskTxViewService;
-
-    @Autowired
-    private RiskNumViewService riskNumViewService;
 
     @Autowired
     private PlatformViewService platformViewService;
@@ -62,48 +57,51 @@ public class PlatformDailyStatisticsInsertBackgroundTask implements BackgroundTa
         Date start = new Date();
         //一天的结束，结果：00:00:00
         Date end = DateUtil.beginOfDay(start);
-        //当天2：00：00
-        end = DateUtil.offsetHour(end, 2);
+        //当天1：00：00
+        end = DateUtil.offsetHour(end, 1);
         //第二天1：00：00
         end = DateUtil.offsetDay(end, 1);
 
-        //延迟至第二天凌晨2点开始执行
+        //延迟至第二天凌晨1点开始执行
         return end.getTime() - start.getTime();
+//        //一次性任务，delay为0
 //        return 0;
     }
 
     @Override
     public String getName() {
-        return PlatformDailyStatisticsInsertBackgroundTask.class.getName();
+        return ContentOnetimeBackgroundTask.class.getName();
     }
 
     @Override
     public void run() {
-        log.debug("模拟插入platform_daily_statistics表数据");
-        List<PlatformDailyStatistics> list = new ArrayList<>();
+        log.debug("模拟插入content表数据，一次性使用，注意修改数据");
+        List<Content> list = new ArrayList<>();
         // 只获取正在监测的平台id
         List<Long> platformIDList= platformDao.select(c -> c.where(Tables.platform.monitor, isEqualTo(1))).stream().map(Platform::getId).collect(Collectors.toList());
-        //每天 每个平台插入一条数据
+        // 每个平台插入一条账号
+
         for (Long platformId : platformIDList) {
-            PlatformDailyStatistics platformDailyStatistics = new PlatformDailyStatistics();
-            insertCommon(platformDailyStatistics, platformId);
+            Content content = new Content();
+            insertCommon(content, platformId);
 
-            riskTxViewService.insertRiskTx(platformDailyStatistics);    //风险交易
-            riskNumViewService.insertRiskNum(platformDailyStatistics);  //风险内容
-            platformViewService.insertPlatformView(platformDailyStatistics);//热门平台每日数据更新
+            PlatformViewService.ContentGenerator contentGenerator = new PlatformViewService.ContentGenerator();
+            contentGenerator.insertContent(content);//账号内容
 
-            list.add(platformDailyStatistics);
+            list.add(content);
         }
 
-        platformDailyStatisticsDao.insertMultiple(list);
+        contentDao.insertMultiple(list);
     }
 
-    private void insertCommon(PlatformDailyStatistics platformDailyStatistics, Long platformID){
+    private void insertCommon(Content content, Long platformID){
         Date end = new Date();
-        platformDailyStatistics.setId(IdUtil.getSnowflakeNextId());
-        platformDailyStatistics.setPlatformId(platformID);
-        platformDailyStatistics.setCreateTime(end);
-        platformDailyStatistics.setUpdateTime(end);
+        content.setId(IdUtil.getSnowflakeNextId());
+        content.setPlatformId(platformID);
+        content.setListingTime(end);
+        content.setCreateTime(end);
+        content.setUpdateTime(end);
+        content.setMintTime(end);
     }
 
 }

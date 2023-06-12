@@ -103,6 +103,12 @@
             <artifactId>esdk-obs-java-bundle</artifactId>
             <version>[3.21.11,)</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
 
     </dependencies>
 

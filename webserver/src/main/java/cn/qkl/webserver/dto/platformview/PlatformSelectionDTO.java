@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 public class PlatformSelectionDTO {
     @ApiModelProperty("平台选择：平台ID")
-    private Long selectPlatformId;
+    private long selectPlatformId=-999;
 }
