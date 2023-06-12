@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.mapper.PlatformMapper;
+import cn.qkl.common.repository.model.Account;
 import cn.qkl.common.repository.model.Platform;
 import cn.qkl.common.repository.model.PlatformDailyStatistics;
 import cn.qkl.webserver.dao.PlatformDailyStatisticsDao;
@@ -24,6 +25,7 @@ import org.mybatis.dynamic.sql.render.RenderingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
+import com.github.javafaker.Faker;
 
 import java.util.*;
 import java.math.BigDecimal;
@@ -208,4 +210,49 @@ public class PlatformViewService {
         platformDailyStatistics.setHotness24h(rand_hotness_24h);
 
     }
+
+    //插入每个平台的账号数据
+    public static class AccountGenerator{
+        private Faker faker;
+        public void insertAccount (Account account){
+
+            Random random = new Random();
+            Integer rand_realeaseNum = random.nextInt(100);
+            Integer rand_riskLevel = random.nextInt(2);
+
+            account.setAccountAddress(generateRandomAccountAddress());
+            account.setChainId(1L);
+            account.setAccountAlias(generateRandomString());
+            account.setImage("image/65/a8/65a869ba6f14f304cd06444b29745738.gif");
+            account.setCryptoBalance("1 ETH");
+            account.setCurrencyBalance("500");
+            account.setExchangeRate("500");
+            account.setReleaseNum(rand_realeaseNum);
+            account.setRiskLevel(rand_riskLevel);
+
+        }
+        private static String generateRandomAccountAddress() {
+            // 生成随机的以太坊账号地址
+            Random random = new Random();
+            String address = "0x";
+            for (int i = 0; i < 40; i++) {
+                int digit = random.nextInt(16);
+                address += Integer.toHexString(digit);
+            }
+            return address;
+        }
+        private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private static final int STRING_LENGTH = 6;
+        private static String generateRandomString() {
+            Random random = new Random();
+            StringBuilder sb = new StringBuilder(STRING_LENGTH);
+            for (int i = 0; i < STRING_LENGTH; i++) {
+                int index = random.nextInt(CHARACTERS.length());
+                sb.append(CHARACTERS.charAt(index));
+            }
+            return sb.toString();
+        }
+
+    }
+
 }
