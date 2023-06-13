@@ -12,12 +12,13 @@ public class CarrierViewVO {
     @Data
     public static class ViewData {
         @ApiModelProperty("载体数量")
-        private Integer carrierNumber;
+        private List<Integer> carrierNumber;
         @ApiModelProperty("载体名字")
         private String name;
+        @ApiModelProperty("时间列表")
+        List<Date> timeList;
     }
     @ApiModelProperty("画图数据")
     List<ViewData> list;
-    @ApiModelProperty("时间列表")
-    List<Date> timeList;
+
 }

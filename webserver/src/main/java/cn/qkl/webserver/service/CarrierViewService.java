@@ -17,10 +17,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
@@ -51,17 +48,42 @@ public class CarrierViewService {
                 .orderBy(Tables.carrier.createTime.descending())
         );
         List<CarrierViewVO.ViewData> list = new ArrayList<>();
-        List<Date> t=new ArrayList<>();
+        HashMap<Integer, List<Integer>> hashNumber = new HashMap<>();
+        HashMap<Integer, List<Date>> hashDate = new HashMap<>();
         for (Carrier carrier : carrierList) {
-            CarrierViewVO.ViewData v=new CarrierViewVO.ViewData();
-            v.setCarrierNumber(carrier.getCarrierNumber());
-            v.setName(CarrierTypeEnum.valueOf(carrier.getCarrierType()).getDescription());
-            list.add(v);
-            t.add(carrier.getCreateTime());
+            if (hashNumber.containsKey(carrier.getCarrierType())) {
+                hashNumber.get(carrier.getCarrierType()).add(carrier.getCarrierNumber());
+            } else {
+                List<Integer> lis = new ArrayList<>();
+                lis.add(carrier.getCarrierNumber());
+                hashNumber.put(carrier.getCarrierType(), lis);
+            }
+            if (hashDate.containsKey(carrier.getCarrierType())) {
+                hashDate.get(carrier.getCarrierType()).add(carrier.getCreateTime());
+            } else {
+                List<Date> lis = new ArrayList<>();
+                lis.add(carrier.getCreateTime());
+                hashDate.put(carrier.getCarrierType(), lis);
+            }
         }
         // 对时间和平台筛选
+        Set<Map.Entry<Integer, List<Integer>>> entryseSet = hashNumber.entrySet();
+        for (Map.Entry<Integer, List<Integer>> entry : entryseSet) {
+            CarrierViewVO.ViewData a = new CarrierViewVO.ViewData();
+            a.setName(CarrierTypeEnum.valueOf(entry.getKey()).getDescription());
+            List<Integer> ll = new ArrayList<>();
+            List<Date> dd = new ArrayList<>();
+            for (Integer aaa : entry.getValue()) {
+                ll.add(aaa);
+            }
+            for (Date t : hashDate.get(entry.getKey())) {
+                dd.add(t);
+            }
+            a.setCarrierNumber(ll);
+            a.setTimeList(dd);
+            list.add(a);
+        }
         CarrierViewVO vo = new CarrierViewVO();
-        vo.setTimeList(t);
         vo.setList(list);
         return vo;
     }

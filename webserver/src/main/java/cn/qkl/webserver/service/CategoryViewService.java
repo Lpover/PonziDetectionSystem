@@ -6,6 +6,7 @@ import cn.qkl.common.repository.model.Carrier;
 import cn.qkl.common.repository.model.Category;
 import cn.qkl.webserver.common.enums.CarrierTypeEnum;
 import cn.qkl.webserver.common.enums.CategoryTypeEnum;
+import cn.qkl.webserver.common.enums.StorageTypeEnum;
 import cn.qkl.webserver.dao.CategoryDao;
 import cn.qkl.webserver.dao.StorageDao;
 import cn.qkl.webserver.dto.category.CategoryViewDTO;
@@ -18,9 +19,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
@@ -51,17 +50,42 @@ public class CategoryViewService {
                 .orderBy(Tables.category.createTime.descending())
         );
         List<CategoryViewVO.ViewData> list = new ArrayList<>();
-        List<Date> t=new ArrayList<>();
+        HashMap<Integer, List<Integer>> hashNumber = new HashMap<>();
+        HashMap<Integer, List<Date>> hashDate = new HashMap<>();
         for (Category category : categoryList) {
-            CategoryViewVO.ViewData v=new CategoryViewVO.ViewData();
-            v.setCategoryNumber(category.getCategoryNumber());
-            v.setName(CategoryTypeEnum.valueOf(category.getCategoryType()).getDescription());
-            list.add(v);
-            t.add(category.getCreateTime());
+            if (hashNumber.containsKey(category.getCategoryType())) {
+                hashNumber.get(category.getCategoryType()).add(category.getCategoryNumber());
+            } else {
+                List<Integer> lis = new ArrayList<>();
+                lis.add(category.getCategoryNumber());
+                hashNumber.put(category.getCategoryType(), lis);
+            }
+            if (hashDate.containsKey(category.getCategoryType())) {
+                hashDate.get(category.getCategoryType()).add(category.getCreateTime());
+            } else {
+                List<Date> lis = new ArrayList<>();
+                lis.add(category.getCreateTime());
+                hashDate.put(category.getCategoryType(), lis);
+            }
+        }
+        Set<Map.Entry<Integer, List<Integer>>> entryseSet = hashNumber.entrySet();
+        for (Map.Entry<Integer, List<Integer>> entry : entryseSet) {
+            CategoryViewVO.ViewData a = new CategoryViewVO.ViewData();
+            a.setName(CategoryTypeEnum.valueOf(entry.getKey()).getDescription());
+            List<Integer> l = new ArrayList<>();
+            List<Date> dd = new ArrayList<>();
+            for (Integer aaa : entry.getValue()) {
+                l.add(aaa);
+            }
+            for (Date t : hashDate.get(entry.getKey())) {
+                dd.add(t);
+            }
+            a.setCategoryNumber(l);
+            a.setTimeList(dd);
+            list.add(a);
         }
         // 对时间和平台筛选
         CategoryViewVO vo = new CategoryViewVO();
-        vo.setTimeList(t);
         vo.setList(list);
         return vo;
     }

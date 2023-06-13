@@ -64,6 +64,7 @@ public class StorageViewService {
                 lis.add(storage.getCreateTime());
                 hashDate.put(storage.getStorageType(), lis);
             }
+        }
             Set<Map.Entry<Integer, List<Integer>>> entryseSet = hashNumber.entrySet();
             for (Map.Entry<Integer, List<Integer>> entry : entryseSet) {
                 StorageViewVO.ViewData a = new StorageViewVO.ViewData();
@@ -80,7 +81,6 @@ public class StorageViewService {
                 a.setTimeList(dd);
                 list.add(a);
             }
-        }
         StorageViewVO vo = new StorageViewVO();
         vo.setList(list);
         return vo;
