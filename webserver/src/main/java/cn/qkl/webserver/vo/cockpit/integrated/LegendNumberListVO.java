@@ -19,7 +19,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class LegendNumberListVO {
     @ApiModelProperty("图例名称")
-    String name;
+    String legend;
 
     @ApiModelProperty("数字序列")
     List<BigDecimal> number;

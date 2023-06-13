@@ -1,7 +1,6 @@
 package cn.qkl.webserver.service;
 
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.lang.func.Func;
 import cn.qkl.common.framework.util.FunctionUtil;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.SocialPlatformHourStatistics;
@@ -10,20 +9,16 @@ import cn.qkl.webserver.common.enums.TimeSeriesChoiceEnum;
 import cn.qkl.webserver.dao.CockpitIntegratedDao;
 import cn.qkl.webserver.dao.CockpitMultipleChoiceDao;
 import cn.qkl.webserver.dto.board.CockpitIntegratedQueryDTO;
-import cn.qkl.webserver.vo.cockpit.integrated.*;;
-import org.mybatis.dynamic.sql.SqlColumn;
+import cn.qkl.webserver.vo.cockpit.integrated.*;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
 import org.mybatis.dynamic.sql.select.QueryExpressionDSL;
 import org.mybatis.dynamic.sql.select.SelectModel;
 import org.mybatis.dynamic.sql.select.SimpleSortSpecification;
-import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.*;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
@@ -53,7 +48,6 @@ public class CockpitIntegratedService {
                                 .build()
                                 .render(RenderingStrategies.MYBATIS3)
                 )), it -> {
-//                        it.setViewChoice(viewChoice);
                         it.setViewId(0);
                         it.setViewName("链上内容社交舆情指数视图");
                     }
@@ -81,7 +75,8 @@ public class CockpitIntegratedService {
 
     VocabCloudViewVO getVocabCloudView() {
         Date date = new Date();
-        Date base = DateUtil.beginOfDay(date);
+//        Date base = DateUtil.beginOfDay(date);
+        Date base = date;
         Date start = DateUtil.offsetHour(base, -12); //默认近12h
 
         return FunctionUtil.apply(VocabCloudViewVO.transformFromVocabCloud(
@@ -128,7 +123,6 @@ public class CockpitIntegratedService {
         return FunctionUtil.apply(new HotContentViewVO(), it -> {
             it.setViewId(3);
             it.setViewName("热门NFT视图");
-//            it.setViewChoice(viewChoice);
             finalBuilder.ifPresent(queryExpressionWhereBuilder -> it.setViewData(cockpitIntegratedDao.getHotContentView(queryExpressionWhereBuilder.orderBy(SimpleSortSpecification.of("hotNum").descending()).limit(10).build().render(RenderingStrategies.MYBATIS3))));
         });
 
@@ -157,7 +151,6 @@ public class CockpitIntegratedService {
         return FunctionUtil.apply(new HotEventViewVO(), it -> {
             it.setViewId(4);
             it.setViewName("热门Event视图");
-//            it.setViewChoice(viewChoice);
             finalBuilder.ifPresent(queryExpressionWhereBuilder -> it.setViewData(cockpitIntegratedDao.getHotEventView(queryExpressionWhereBuilder.orderBy(SimpleSortSpecification.of("hotNum").descending()).limit(10).build().render(RenderingStrategies.MYBATIS3))));
         });
     }
@@ -165,7 +158,8 @@ public class CockpitIntegratedService {
     TextAnalysisViewVO getTextAnalysisView(Long socialPlatformId, Long timeId) {
 
         Date date = new Date();
-        Date base = DateUtil.beginOfDay(date);
+//        Date base = DateUtil.beginOfDay(date);
+        Date base = date;
         Date start = DateUtil.offsetHour(base, -12); //默认近12h
         if (timeId == TimeSeriesChoiceEnum.J12H.getCode()) {   // 近12h
             start = DateUtil.offsetHour(base, -12);
@@ -181,7 +175,7 @@ public class CockpitIntegratedService {
                         Tables.socialPlatformHourStatistics.nonSensitiveNum,
                         Tables.socialPlatformHourStatistics.createTime)
                         .from(Tables.socialPlatformHourStatistics)
-                        .where(Tables.socialPlatformHourStatistics.id, isEqualTo(socialPlatformId))
+                        .where(Tables.socialPlatformHourStatistics.socialPlatformId, isEqualTo(socialPlatformId))
                         .and(Tables.socialPlatformHourStatistics.createTime,isGreaterThanWhenPresent(start))
                         .and(Tables.socialPlatformHourStatistics.createTime,isLessThanOrEqualToWhenPresent(base))
                         .orderBy(Tables.socialPlatformHourStatistics.createTime.descending())
@@ -209,30 +203,36 @@ public class CockpitIntegratedService {
 
     public CockpitIntegratedResponseVO getCockpitIntegratedResponseAll() {
         CockpitIntegratedMultipleChoiceVO multipleChoice = getCockpitIntegratedMultipleChoice();
-        Long socialPlatformId = multipleChoice.getSocialPlatforms().get(0).getChoiceId();
-        Long timeId = multipleChoice.getTimeSeries().get(0).getChoiceId();
-        Long platformId = multipleChoice.getPlatforms().get(0).getChoiceId();
+        ChoiceVO socialPlatformChoiceVO = multipleChoice.getSocialPlatforms().get(0);
+        ChoiceVO timeChoiceVO = multipleChoice.getTimeSeries().get(0);
+        ChoiceVO platformChoiceVO = multipleChoice.getPlatforms().get(0);
         List<Long> platformIdList = multipleChoice.getPlatforms().stream().map(ChoiceVO::getChoiceId).collect(Collectors.toList());
         return FunctionUtil.apply(new CockpitIntegratedResponseVO(), it -> {
-            it.setSocialIndexView(getSocialIndexView(socialPlatformId));
+            it.setSocialIndexView(FunctionUtil.apply(getSocialIndexView(socialPlatformChoiceVO.getChoiceId()),v -> v.setViewChoice(socialPlatformChoiceVO.getText())));
             it.setPlatformIndexView(getPlatformIndexView(platformIdList));
             it.setVocabCloudView(getVocabCloudView());
-            it.setHotContentView(getHotContentView(platformId,timeId));
-            it.setHotEventView(getHotEventView(platformId,timeId));
-            it.setTextAnalysisViewVO(getTextAnalysisView(socialPlatformId,timeId)); //default & fixed
+            it.setHotContentView(FunctionUtil.apply(getHotContentView(platformChoiceVO.getChoiceId(),timeChoiceVO.getChoiceId()), v -> v.setViewChoice(platformChoiceVO.getText()+timeChoiceVO.getText())));
+            it.setHotEventView(FunctionUtil.apply(getHotEventView(platformChoiceVO.getChoiceId(), timeChoiceVO.getChoiceId()),v -> v.setViewChoice(platformChoiceVO.getText()+timeChoiceVO.getText())));
+            it.setTextAnalysisView(getTextAnalysisView(socialPlatformChoiceVO.getChoiceId(), timeChoiceVO.getChoiceId())); //default & fixed
         });
     }
 
     public CockpitIntegratedResponseVO getCockpitIntegratedResponseDynamic(CockpitIntegratedQueryDTO dto) {
+        CockpitIntegratedMultipleChoiceVO multipleChoice = getCockpitIntegratedMultipleChoice();
 
-        OptionalLong socialPlatformId = OptionalLong.of(dto.getSocialPlatformChoice());
-        OptionalLong timeId = OptionalLong.of(dto.getTimeSeriesChoice());
-        OptionalLong platformId = OptionalLong.of(dto.getPlatformChoice());
+        Long socialPlatformId = dto.getSocialPlatformChoice();
+        Long timeId = dto.getTimeSeriesChoice();
+        Long platformId = dto.getPlatformChoice();
+
+        ChoiceVO socialPlatformChoiceVO = multipleChoice.getSocialPlatforms().stream().filter(obj -> obj.getChoiceId().equals(socialPlatformId)).findFirst().get();
+        ChoiceVO timeChoiceVO = multipleChoice.getTimeSeries().stream().filter(obj -> obj.getChoiceId().equals(timeId)).findFirst().get();
+        ChoiceVO platformChoiceVO = multipleChoice.getPlatforms().stream().filter(obj -> obj.getChoiceId().equals(platformId)).findFirst().get();
 
         return FunctionUtil.apply(new CockpitIntegratedResponseVO(), it -> {
-            it.setSocialIndexView(getSocialIndexView(socialPlatformId.getAsLong()));
-            it.setHotContentView(getHotContentView(platformId.getAsLong(),timeId.getAsLong()));
-            it.setHotEventView(getHotEventView(platformId.getAsLong(),timeId.getAsLong()));
+            it.setSocialIndexView(FunctionUtil.apply(getSocialIndexView(socialPlatformChoiceVO.getChoiceId()),v -> v.setViewChoice(socialPlatformChoiceVO.getText())));
+            it.setHotContentView(FunctionUtil.apply(getHotContentView(platformChoiceVO.getChoiceId(),timeChoiceVO.getChoiceId()), v -> v.setViewChoice(platformChoiceVO.getText()+timeChoiceVO.getText())));
+            it.setHotEventView(FunctionUtil.apply(getHotEventView(platformChoiceVO.getChoiceId(), timeChoiceVO.getChoiceId()),v -> v.setViewChoice(platformChoiceVO.getText()+timeChoiceVO.getText())));
+
         });
     }
 

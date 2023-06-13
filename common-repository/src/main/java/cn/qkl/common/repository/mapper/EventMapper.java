@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface EventMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, title, abstractText, hotNum12h, hotNum24h, imageUrl, platformId);
+    BasicColumn[] selectList = BasicColumn.columnList(id, title, abstractText, hotNum12h, hotNum24h, imageUrl, platformId, createTime, updateTime);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -67,7 +67,9 @@ public interface EventMapper {
         @Result(column="hot_num_12h", property="hotNum12h", jdbcType=JdbcType.INTEGER),
         @Result(column="hot_num_24h", property="hotNum24h", jdbcType=JdbcType.INTEGER),
         @Result(column="image_url", property="imageUrl", jdbcType=JdbcType.VARCHAR),
-        @Result(column="platform_id", property="platformId", jdbcType=JdbcType.BIGINT)
+        @Result(column="platform_id", property="platformId", jdbcType=JdbcType.BIGINT),
+        @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
     })
     List<Event> selectMany(SelectStatementProvider selectStatement);
 
@@ -102,6 +104,8 @@ public interface EventMapper {
             .map(hotNum24h).toProperty("hotNum24h")
             .map(imageUrl).toProperty("imageUrl")
             .map(platformId).toProperty("platformId")
+            .map(createTime).toProperty("createTime")
+            .map(updateTime).toProperty("updateTime")
         );
     }
 
@@ -115,6 +119,8 @@ public interface EventMapper {
             .map(hotNum24h).toProperty("hotNum24h")
             .map(imageUrl).toProperty("imageUrl")
             .map(platformId).toProperty("platformId")
+            .map(createTime).toProperty("createTime")
+            .map(updateTime).toProperty("updateTime")
         );
     }
 
@@ -128,6 +134,8 @@ public interface EventMapper {
             .map(hotNum24h).toPropertyWhenPresent("hotNum24h", record::getHotNum24h)
             .map(imageUrl).toPropertyWhenPresent("imageUrl", record::getImageUrl)
             .map(platformId).toPropertyWhenPresent("platformId", record::getPlatformId)
+            .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
+            .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
         );
     }
 
@@ -166,7 +174,9 @@ public interface EventMapper {
                 .set(hotNum12h).equalTo(record::getHotNum12h)
                 .set(hotNum24h).equalTo(record::getHotNum24h)
                 .set(imageUrl).equalTo(record::getImageUrl)
-                .set(platformId).equalTo(record::getPlatformId);
+                .set(platformId).equalTo(record::getPlatformId)
+                .set(createTime).equalTo(record::getCreateTime)
+                .set(updateTime).equalTo(record::getUpdateTime);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -177,7 +187,9 @@ public interface EventMapper {
                 .set(hotNum12h).equalToWhenPresent(record::getHotNum12h)
                 .set(hotNum24h).equalToWhenPresent(record::getHotNum24h)
                 .set(imageUrl).equalToWhenPresent(record::getImageUrl)
-                .set(platformId).equalToWhenPresent(record::getPlatformId);
+                .set(platformId).equalToWhenPresent(record::getPlatformId)
+                .set(createTime).equalToWhenPresent(record::getCreateTime)
+                .set(updateTime).equalToWhenPresent(record::getUpdateTime);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -189,6 +201,8 @@ public interface EventMapper {
             .set(hotNum24h).equalTo(record::getHotNum24h)
             .set(imageUrl).equalTo(record::getImageUrl)
             .set(platformId).equalTo(record::getPlatformId)
+            .set(createTime).equalTo(record::getCreateTime)
+            .set(updateTime).equalTo(record::getUpdateTime)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -202,6 +216,8 @@ public interface EventMapper {
             .set(hotNum24h).equalToWhenPresent(record::getHotNum24h)
             .set(imageUrl).equalToWhenPresent(record::getImageUrl)
             .set(platformId).equalToWhenPresent(record::getPlatformId)
+            .set(createTime).equalToWhenPresent(record::getCreateTime)
+            .set(updateTime).equalToWhenPresent(record::getUpdateTime)
             .where(id, isEqualTo(record::getId))
         );
     }
