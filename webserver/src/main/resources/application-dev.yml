@@ -49,6 +49,15 @@ spring:
     username: root
     password: Lianshang@N404
 
+#  task:
+#    execution:
+#      pool:
+#        core-size: 5
+#        max-size: 10
+#        queue-capacity: 5
+#        keep-alive: 60
+#      thread-name-prefix: qkl-task-
+
 #  redis:
 #    host:
 #    port: 6379

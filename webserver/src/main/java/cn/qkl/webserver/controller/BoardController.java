@@ -30,6 +30,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -118,7 +119,11 @@ public class BoardController {
 
     @ApiOperation("综合风险驾驶舱查看可筛选项接口")
     @GetMapping("/cockpit/integrated/choice")
+    @Async
     public BaseResult<CockpitIntegratedMultipleChoiceVO> getCockpitIntegratedMultipleChoice() {
+        log.info("== async controller start==");
+        log.info("线程{}执行代码逻辑",Thread.currentThread().getName());
+        log.info("== async controller end==");
         return BaseResult.ok(cockpitIntegratedService.getCockpitIntegratedMultipleChoice());
     }
     @ApiOperation("风险交易视图")

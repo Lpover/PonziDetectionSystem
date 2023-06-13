@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 import static org.mybatis.dynamic.sql.SqlBuilder.isInWhenPresent;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CockpitIntegratedServiceTest {
 
     @Resource

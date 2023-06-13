@@ -208,7 +208,7 @@ public class CockpitIntegratedService {
         ChoiceVO platformChoiceVO = multipleChoice.getPlatforms().get(0);
         List<Long> platformIdList = multipleChoice.getPlatforms().stream().map(ChoiceVO::getChoiceId).collect(Collectors.toList());
         return FunctionUtil.apply(new CockpitIntegratedResponseVO(), it -> {
-            it.setSocialIndexView(FunctionUtil.apply(getSocialIndexView(socialPlatformChoiceVO.getChoiceId()),v -> v.setViewChoice(platformChoiceVO.getText())));
+            it.setSocialIndexView(FunctionUtil.apply(getSocialIndexView(socialPlatformChoiceVO.getChoiceId()),v -> v.setViewChoice(socialPlatformChoiceVO.getText())));
             it.setPlatformIndexView(getPlatformIndexView(platformIdList));
             it.setVocabCloudView(getVocabCloudView());
             it.setHotContentView(FunctionUtil.apply(getHotContentView(platformChoiceVO.getChoiceId(),timeChoiceVO.getChoiceId()), v -> v.setViewChoice(platformChoiceVO.getText()+timeChoiceVO.getText())));
@@ -218,15 +218,21 @@ public class CockpitIntegratedService {
     }
 
     public CockpitIntegratedResponseVO getCockpitIntegratedResponseDynamic(CockpitIntegratedQueryDTO dto) {
+        CockpitIntegratedMultipleChoiceVO multipleChoice = getCockpitIntegratedMultipleChoice();
 
-        OptionalLong socialPlatformId = OptionalLong.of(dto.getSocialPlatformChoice());
-        OptionalLong timeId = OptionalLong.of(dto.getTimeSeriesChoice());
-        OptionalLong platformId = OptionalLong.of(dto.getPlatformChoice());
+        Long socialPlatformId = dto.getSocialPlatformChoice();
+        Long timeId = dto.getTimeSeriesChoice();
+        Long platformId = dto.getPlatformChoice();
+
+        ChoiceVO socialPlatformChoiceVO = multipleChoice.getSocialPlatforms().stream().filter(obj -> obj.getChoiceId().equals(socialPlatformId)).findFirst().get();
+        ChoiceVO timeChoiceVO = multipleChoice.getTimeSeries().stream().filter(obj -> obj.getChoiceId().equals(timeId)).findFirst().get();
+        ChoiceVO platformChoiceVO = multipleChoice.getPlatforms().stream().filter(obj -> obj.getChoiceId().equals(platformId)).findFirst().get();
 
         return FunctionUtil.apply(new CockpitIntegratedResponseVO(), it -> {
-            it.setSocialIndexView(getSocialIndexView(socialPlatformId.getAsLong()));
-            it.setHotContentView(getHotContentView(platformId.getAsLong(),timeId.getAsLong()));
-            it.setHotEventView(getHotEventView(platformId.getAsLong(),timeId.getAsLong()));
+            it.setSocialIndexView(FunctionUtil.apply(getSocialIndexView(socialPlatformChoiceVO.getChoiceId()),v -> v.setViewChoice(socialPlatformChoiceVO.getText())));
+            it.setHotContentView(FunctionUtil.apply(getHotContentView(platformChoiceVO.getChoiceId(),timeChoiceVO.getChoiceId()), v -> v.setViewChoice(platformChoiceVO.getText()+timeChoiceVO.getText())));
+            it.setHotEventView(FunctionUtil.apply(getHotEventView(platformChoiceVO.getChoiceId(), timeChoiceVO.getChoiceId()),v -> v.setViewChoice(platformChoiceVO.getText()+timeChoiceVO.getText())));
+
         });
     }
 
