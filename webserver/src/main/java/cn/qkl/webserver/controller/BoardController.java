@@ -49,7 +49,7 @@ import java.util.List;
 @ApiSupport(author = "wx")
 @RequestMapping("board")
 @RefreshScope
-@Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
+//@Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
 public class BoardController {
 
     @Autowired
@@ -85,21 +85,21 @@ public class BoardController {
     }
 
     @ApiOperation("存储视图")
-    @GetMapping("stroage/view")
-    public BaseResult<List<StorageViewVO>> getStorageView(@Validated StorageViewDTO dto) {
+    @GetMapping("storage/view")
+    public BaseResult<StorageViewVO> getStorageView(@Validated StorageViewDTO dto) {
         return BaseResult.ok(storageViewService.getStorageView(dto));
     }
 
 
     @ApiOperation("载体视图")
     @GetMapping("carrier/view")
-    public BaseResult<List<CarrierViewVO>> getCarrierView(@Validated CarrierViewDTO dto) {
+    public BaseResult<CarrierViewVO> getCarrierView(@Validated CarrierViewDTO dto) {
         return BaseResult.ok(carrierViewService.getCarrierView(dto));
     }
 
     @ApiOperation("动态数字内容视图")
     @GetMapping("category/view")
-    public BaseResult<List<CategoryViewVO>> getCategoryView(@Validated CategoryViewDTO dto) {
+    public BaseResult<CategoryViewVO> getCategoryView(@Validated CategoryViewDTO dto) {
         return BaseResult.ok(categoryViewService.getCategoryView(dto));
     }
 
