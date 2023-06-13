@@ -1,5 +1,6 @@
 package cn.qkl.common.repository.model;
 
+import java.util.Date;
 import javax.annotation.Generated;
 
 public class Event {
@@ -17,6 +18,18 @@ public class Event {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer hotNum24h;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String imageUrl;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Long platformId;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Date createTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Date updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
@@ -98,6 +111,70 @@ public class Event {
         this.hotNum24h = hotNum24h;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Event withImageUrl(String imageUrl) {
+        this.setImageUrl(imageUrl);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Long getPlatformId() {
+        return platformId;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Event withPlatformId(Long platformId) {
+        this.setPlatformId(platformId);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setPlatformId(Long platformId) {
+        this.platformId = platformId;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Event withCreateTime(Date createTime) {
+        this.setCreateTime(createTime);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Event withUpdateTime(Date updateTime) {
+        this.setUpdateTime(updateTime);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -110,6 +187,10 @@ public class Event {
         sb.append(", abstractText=").append(abstractText);
         sb.append(", hotNum12h=").append(hotNum12h);
         sb.append(", hotNum24h=").append(hotNum24h);
+        sb.append(", imageUrl=").append(imageUrl);
+        sb.append(", platformId=").append(platformId);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
         sb.append("]");
         return sb.toString();
     }

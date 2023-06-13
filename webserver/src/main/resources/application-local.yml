@@ -11,7 +11,14 @@ qkl:
       endpoint: https://obs.cn-east-3.myhuaweicloud.com
       ak: MUIBG1CQ5TLHIF5NHER2
       sk: BMNCoYbF4vd9Pv5LCHFCgz0xnFHLp8oUu8mmJXXV
-
+    thread:
+      pool:
+        executor:
+          corePoolSize: 10 # 核心线程数量
+          maxPoolSize: 30 # 最大线程数量
+          queueCapacity: 100 # 队列长度
+          keppAliveSeconds: 60 # 存活时间
+          prefixName: threadPool-Thread-No-      # 线程名称前缀
 
 
 spring:
@@ -47,6 +54,16 @@ spring:
     url: jdbc:mysql://sh-cynosdbmysql-grp-6y5peoca.sql.tencentcdb.com:21798/tsgz-dev?characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
     password: Lianshang@N404
+#  task:
+#    execution:
+#      pool:
+#        core-size: 5
+#        max-size: 10
+#        queue-capacity: 5
+#        keep-alive: 60
+#      thread-name-prefix: qkl-task-
+
+
 
 #  redis:
 #    host:

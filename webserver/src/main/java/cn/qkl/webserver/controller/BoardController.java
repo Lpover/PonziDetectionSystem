@@ -5,6 +5,7 @@ import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.common.auth.RoleEnum;
+import cn.qkl.webserver.dto.board.CockpitIntegratedQueryDTO;
 import cn.qkl.webserver.dto.board.CrossContentRiskViewDTO;
 import cn.qkl.webserver.dto.board.TimePlatformSelecteDTO;
 import cn.qkl.webserver.dto.carrier.CarrierViewDTO;
@@ -12,6 +13,8 @@ import cn.qkl.webserver.dto.category.CategoryViewDTO;
 import cn.qkl.webserver.dto.platformview.HotnessRankingViewDTO;
 import cn.qkl.webserver.dto.platformview.PlatformAndTimeSelectionDTO;
 import cn.qkl.webserver.dto.platformview.PlatformSelectionDTO;
+import cn.qkl.webserver.service.CrossContentDailyStatisticsService;
+import cn.qkl.webserver.service.PlatformViewService;
 import cn.qkl.webserver.dto.stroage.StorageViewDTO;
 import cn.qkl.webserver.service.*;
 import cn.qkl.webserver.vo.board.CrossContentRiskViewVO;
@@ -20,6 +23,8 @@ import cn.qkl.webserver.vo.board.RiskTxViewVO;
 import cn.qkl.webserver.vo.board.WordCloudViewVO;
 import cn.qkl.webserver.vo.carrier.CarrierViewVO;
 import cn.qkl.webserver.vo.category.CategoryViewVO;
+import cn.qkl.webserver.vo.cockpit.integrated.CockpitIntegratedMultipleChoiceVO;
+import cn.qkl.webserver.vo.cockpit.integrated.CockpitIntegratedResponseVO;
 import cn.qkl.webserver.vo.platform.PlatformNameListVO;
 import cn.qkl.webserver.vo.platformview.*;
 import cn.qkl.webserver.vo.stroage.StorageViewVO;
@@ -30,9 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -68,6 +71,9 @@ public class BoardController {
     private CategoryViewService categoryViewService;
 
     @Autowired
+    private CockpitIntegratedService cockpitIntegratedService;
+
+    @Autowired
     private RiskTxViewService riskTxViewService;
 
     @Autowired
@@ -78,6 +84,7 @@ public class BoardController {
 
     @Autowired
     private PlatformService platformService;
+
     @ApiOperation("跨链风险视图")
     @GetMapping("cross/view")
     public BaseResult<List<CrossContentRiskViewVO>> getCrossContentRiskView(@Validated CrossContentRiskViewDTO dto) {
@@ -103,6 +110,24 @@ public class BoardController {
         return BaseResult.ok(categoryViewService.getCategoryView(dto));
     }
 
+    @ApiOperation("综合风险驾驶舱首屏接口")
+    @PostMapping("/cockpit/integrated/all")
+    public BaseResult<CockpitIntegratedResponseVO> getCockpitIntegratedResponseAll(@RequestBody(required = false) CockpitIntegratedQueryDTO dto) {
+        // no check for inputs
+        return BaseResult.ok(cockpitIntegratedService.getCockpitIntegratedResponseAll());
+    }
+
+    @ApiOperation("综合风险驾驶舱动态接口")
+    @PostMapping("/cockpit/integrated/dynamic")
+    public BaseResult<CockpitIntegratedResponseVO> getCockpitIntegratedResponseDynamic(@RequestBody(required = true) CockpitIntegratedQueryDTO dto) {
+        return BaseResult.ok(cockpitIntegratedService.getCockpitIntegratedResponseDynamic(dto));
+    }
+
+    @ApiOperation("综合风险驾驶舱查看可筛选项接口")
+    @GetMapping("/cockpit/integrated/choice")
+    public BaseResult<CockpitIntegratedMultipleChoiceVO> getCockpitIntegratedMultipleChoice() {
+        return BaseResult.ok(cockpitIntegratedService.getCockpitIntegratedMultipleChoice());
+    }
     @ApiOperation("获取正在监测中的平台列表")
     @GetMapping("monitoring/platform")
     public BaseResult<List<PlatformNameListVO>> getMonitoringPlatform() {
