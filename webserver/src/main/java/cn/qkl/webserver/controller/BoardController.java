@@ -3,9 +3,13 @@ package cn.qkl.webserver.controller;
 
 import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
+import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dto.board.CockpitIntegratedQueryDTO;
 import cn.qkl.webserver.dto.board.CrossContentRiskViewDTO;
+import cn.qkl.webserver.dto.board.TimePlatformSelecteDTO;
+import cn.qkl.webserver.dto.carrier.CarrierViewDTO;
+import cn.qkl.webserver.dto.category.CategoryViewDTO;
 import cn.qkl.webserver.dto.platformview.HotnessRankingViewDTO;
 import cn.qkl.webserver.dto.platformview.PlatformAndTimeSelectionDTO;
 import cn.qkl.webserver.dto.platformview.PlatformSelectionDTO;
@@ -20,10 +24,12 @@ import cn.qkl.webserver.vo.board.RiskTxViewVO;
 import cn.qkl.webserver.vo.board.WordCloudViewVO;
 import cn.qkl.webserver.vo.carrier.CarrierViewVO;
 import cn.qkl.webserver.vo.category.CategoryViewVO;
+import cn.qkl.webserver.vo.platform.PlatformNameListVO;
 import cn.qkl.webserver.vo.cockpit.integrated.CockpitIntegratedMultipleChoiceVO;
 import cn.qkl.webserver.vo.cockpit.integrated.CockpitIntegratedResponseVO;
 import cn.qkl.webserver.vo.stroage.StorageViewVO;
 import cn.qkl.webserver.vo.platformview.*;
+import cn.qkl.webserver.vo.stroage.StorageViewVO;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -78,6 +84,9 @@ public class BoardController {
 
     @Autowired
     private WordCloudViewService wordCloudViewService;
+
+    @Autowired
+    private PlatformService platformService;
     @ApiOperation("跨链风险视图")
     @GetMapping("cross/view")
     public BaseResult<List<CrossContentRiskViewVO>> getCrossContentRiskView(@Validated CrossContentRiskViewDTO dto) {
@@ -121,6 +130,12 @@ public class BoardController {
     public BaseResult<CockpitIntegratedMultipleChoiceVO> getCockpitIntegratedMultipleChoice() {
         return BaseResult.ok(cockpitIntegratedService.getCockpitIntegratedMultipleChoice());
     }
+    @ApiOperation("获取正在监测中的平台列表")
+    @GetMapping("monitoring/platform")
+    public BaseResult<List<PlatformNameListVO>> getMonitoringPlatform() {
+        return BaseResult.ok(platformService.getMonitoringPlatform());
+    }
+
     @ApiOperation("风险交易视图")
     @GetMapping("risk/tx")
     public BaseResult<RiskTxViewVO> getRiskTxView(@Validated TimePlatformSelecteDTO dto) {
@@ -129,7 +144,7 @@ public class BoardController {
 
     @ApiOperation("风险类别词云分布视图")
     @GetMapping("risk/cloud")
-    public BaseResult<WordCloudViewVO> getWordCloudView(@Validated TimePlatformSelecteDTO dto) {
+    public BaseResult<List<WordCloudViewVO>> getWordCloudView(@Validated TimePlatformSelecteDTO dto) {
         return BaseResult.ok(wordCloudViewService.getWordCloudView(dto));
     }
 
@@ -162,17 +177,16 @@ public class BoardController {
     //平台风险内容top10视图
     @ApiOperation("平台风险内容top10视图")
     @GetMapping("riskcontent")
-    public BaseResult<PlatformRiskContentVO> getRiskContent(@Validated PlatformSelectionDTO dto) {
-        return BaseResult.ok(new PlatformRiskContentVO());
+    public BaseResult<List<PlatformRiskContentVO>> getRiskContent(@Validated PlatformSelectionDTO dto) {
+        return BaseResult.ok(platformViewService.getPlatformRiskContent(dto));
     }
 
     //NFT、WEB3热度排行视图
     @ApiOperation("NFT、WEB3热度排行视图")
     @GetMapping("hotnessrankingview")
-    public BaseResult<HotnessRankingViewVO> getHotnessRankingView(@Validated HotnessRankingViewDTO dto) {
-        return BaseResult.ok(new HotnessRankingViewVO());
+    public BaseResult<PageVO<HotnessRankingViewVO>> getHotnessRankingView(@Validated HotnessRankingViewDTO dto) {
+        return BaseResult.ok(platformViewService.getHotnessRankingView(dto));
     }
-
 
 
 

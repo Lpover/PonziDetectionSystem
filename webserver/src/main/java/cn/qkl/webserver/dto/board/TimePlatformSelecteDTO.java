@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 public class TimePlatformSelecteDTO {
-    @ApiModelProperty("时间跨度：0 近七天; 1 近一月; 2 近半年; 3 近一年")
+    @ApiModelProperty("时间跨度：1 近七天; 2 近一月; 3 近半年; 4 近一年")
     Integer timeSpan;
     @ApiModelProperty("平台选择")
     Long platformid;

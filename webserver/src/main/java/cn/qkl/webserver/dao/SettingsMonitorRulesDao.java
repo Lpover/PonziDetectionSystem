@@ -1,7 +1,7 @@
 package cn.qkl.webserver.dao;
 
-import cn.qkl.common.repository.mapper.ContentRiskDailyStatisticsMapper;
-import cn.qkl.webserver.vo.board.WordCloudViewVO;
+import cn.qkl.common.repository.mapper.SettingsMonitorRulesMapper;
+import cn.qkl.webserver.vo.settings.MonitorRulesInfoVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
@@ -10,7 +10,7 @@ import org.mybatis.dynamic.sql.util.SqlProviderAdapter;
 import java.util.List;
 
 @Mapper
-public interface WordCloudViewDao extends ContentRiskDailyStatisticsMapper {
+public interface SettingsMonitorRulesDao extends SettingsMonitorRulesMapper {
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
-    List<WordCloudViewVO> getWordNum(SelectStatementProvider selectStatementProvider);
+    List<MonitorRulesInfoVO> getMonitorRules(SelectStatementProvider selectStatementProvider);
 }
