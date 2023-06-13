@@ -15,33 +15,14 @@ import javax.annotation.Generated;
  */
 @Data
 public class UserInfoVO {
-    @ApiModelProperty("用户id")
-    private Long userId;
+    @ApiModelProperty("用户主键id")
+    private Long id;
 
-    @ApiModelProperty("角色")
-    private Integer roleType;
+    @ApiModelProperty("用户手机号")
+    private String phone;
 
-    @ApiModelProperty("昵称")
-    private String nickName;
-
-    @ApiModelProperty("邮箱")
-    private String email;
-
-    @ApiModelProperty("头像")
-    private String photo;
-
-    @ApiModelProperty("性别")
-    private Byte sex;
-
-    @ApiModelProperty("简介")
-    private String description;
-
-    @ApiModelProperty("注册时间")
-    private Long created;
-
-    @ApiModelProperty("最后登录时间")
-    private Long lastLogin;
-
+    @ApiModelProperty("用户角色 0管理员 5 用户")
+    private int role;
     public static UserInfoVO transform(User user) {
         UserInfoVO vo = new UserInfoVO();
         BeanUtil.copyProperties(user, vo);

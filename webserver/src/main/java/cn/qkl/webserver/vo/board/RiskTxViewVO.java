@@ -21,7 +21,7 @@ public class RiskTxViewVO {
     @ApiModelProperty("低风险交易数量的列表")
     List<Integer> lowTx;
 
-    @ApiModelProperty("当前时间")
-    Date currentTime;
+    @ApiModelProperty("时间列表")
+    List<Date> timeList;
 
 }

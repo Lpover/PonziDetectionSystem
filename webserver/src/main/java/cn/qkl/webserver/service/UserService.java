@@ -1,25 +1,22 @@
 package cn.qkl.webserver.service;
 
+import cn.hutool.core.util.IdUtil;
 import cn.qkl.common.framework.auth.TokenBean;
 import cn.qkl.common.framework.auth.TokenHandler;
 import cn.qkl.common.framework.exception.BusinessException;
 import cn.qkl.common.repository.Tables;
-import cn.qkl.common.repository.model.Platform;
 import cn.qkl.common.repository.model.User;
 import cn.qkl.webserver.common.BusinessStatus;
 import cn.qkl.webserver.common.ServerConfig;
 import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.common.enums.UserRoleEnum;
 import cn.qkl.webserver.dao.UserDao;
-import cn.qkl.webserver.dto.platform.AddPlatformDTO;
-import cn.qkl.webserver.dto.platform.ModifySuperviseDTO;
 import cn.qkl.webserver.dto.user.AddUserDTO;
 import cn.qkl.webserver.dto.user.LoginDTO;
 import cn.qkl.webserver.dto.user.ModifyPwdDTO;
 import cn.qkl.webserver.vo.user.UserInfoVO;
 import cn.qkl.webserver.vo.user.UserListVO;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.core.util.UuidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -27,7 +24,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -96,18 +92,20 @@ public class UserService {
         return UserInfoVO.transform(user);
     }
 
-    public  List<UserListVO> getUserList(){
+    public List<UserListVO> getUserList() {
         List<User> users = userDao.select(c -> c);
         return users.stream().map(UserListVO::transform).collect(Collectors.toList());
     }
 
-    public void addUser(AddUserDTO dto){
-        User user=new User();
+    public void addUser(AddUserDTO dto) {
+        User user = new User();
+        user.setId(IdUtil.getSnowflakeNextId());
         user.setPhone(dto.getPhone());
         user.setPwd(dto.getPwd());
         userDao.insert(user);
     }
-    public void modifyPwd(ModifyPwdDTO dto){
+
+    public void modifyPwd(ModifyPwdDTO dto) {
         userDao.update(c -> c
                 .set(Tables.user.pwd).equalTo(dto.getPwd())
                 .where(Tables.user.id, isEqualTo(dto.getId()))
