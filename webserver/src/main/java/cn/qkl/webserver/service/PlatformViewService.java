@@ -95,43 +95,65 @@ public class PlatformViewService {
 
 
         //返回平台（NFT、WEB3）的风险内容数量
-    public List<VolumeTrendsVO> getVolumeTrends(PlatformAndTimeSelectionDTO dto){
+    public VolumeTrendsVO getVolumeTrends(PlatformAndTimeSelectionDTO dto){
 
         //默认最热门NFT平台
         long HotestPlatform=getHotestPlatform(dto);
-        //dayLimit指的是显示的天数
-        int dayLimit=7;
+        //dayLimit指的是显示的天数，默认7天
+        int dayLimit;
         if(dto.getSelectTime()==2)dayLimit=30;
-        List<VolumeTrendsVO> volumeTrendsList = platformViewDao.getVolumeTrends(
-                    select(Tables.platformDailyStatistics.contentRiskSum, Tables.platformDailyStatistics.createTime)
-                            .from(Tables.platformDailyStatistics)
+        else {
+            dayLimit = 7;
+        }
+
+        List<PlatformDailyStatistics> volumeTrendsList = platformViewDao.select(c->c
                             .where(Tables.platformDailyStatistics.platformId, isEqualTo(HotestPlatform))
                             .orderBy(Tables.platformDailyStatistics.createTime.descending())
                             .limit(dayLimit)
-                            .build()
-                            .render(RenderingStrategies.MYBATIS3)
         );
-        return volumeTrendsList;
+        VolumeTrendsVO vo=new VolumeTrendsVO();
+
+        vo.setContentRiskSum(volumeTrendsList.stream()
+                .map(PlatformDailyStatistics::getContentRiskSum)
+                .collect(Collectors.toList())
+        );
+
+        vo.setCreateTime(volumeTrendsList.stream()
+                .map(PlatformDailyStatistics::getCreateTime)
+                .collect(Collectors.toList())
+        );
+        return vo;
     }
 
     //返回平台（NFT、WEB3）的风险指数
-    public List<IndexTrendsVO> getIndexTrends(PlatformAndTimeSelectionDTO dto){
+    public IndexTrendsVO getIndexTrends(PlatformAndTimeSelectionDTO dto){
 
         //默认最热门NFT平台
         long HotestPlatform=getHotestPlatform(dto);
-        //dayLimit指的是显示的天数
-        int dayLimit=7;
+        //dayLimit指的是显示的天数,默认7天
+        int dayLimit;
         if(dto.getSelectTime()==2)dayLimit=30;
-        List<IndexTrendsVO> indexTrendsList = platformViewDao.getIndexTrends(
-                select(Tables.platformDailyStatistics.riskIndex, Tables.platformDailyStatistics.createTime)
-                        .from(Tables.platformDailyStatistics)
-                        .where(Tables.platformDailyStatistics.platformId, isEqualTo(HotestPlatform))
-                        .orderBy(Tables.platformDailyStatistics.createTime.descending())
-                        .limit(dayLimit)
-                        .build()
-                        .render(RenderingStrategies.MYBATIS3)
+        else {
+            dayLimit = 7;
+        }
+
+        List<PlatformDailyStatistics> indexTrendsList = platformViewDao.select(c->c
+                .where(Tables.platformDailyStatistics.platformId, isEqualTo(HotestPlatform))
+                .orderBy(Tables.platformDailyStatistics.createTime.descending())
+                .limit(dayLimit)
         );
-        return indexTrendsList;
+        IndexTrendsVO vo=new IndexTrendsVO();
+
+        vo.setRiskIndex(indexTrendsList.stream()
+                .map(PlatformDailyStatistics::getRiskIndex)
+                .collect(Collectors.toList())
+        );
+
+        vo.setCreateTime(indexTrendsList.stream()
+                .map(PlatformDailyStatistics::getCreateTime)
+                .collect(Collectors.toList())
+        );
+        return vo;
     }
 
 //    返回十个平台风险账户
