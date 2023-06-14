@@ -1,15 +1,23 @@
 package cn.qkl.webserver.vo.stroage;
 
-import cn.qkl.webserver.vo.riskcontentstatistics.RiskContentStatisticsVO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.Date;
+import java.util.List;
+
 @Data
 public class StorageViewVO {
-    @ApiModelProperty("存储商数量")
-    private Integer storageNumber;
-    @ApiModelProperty("存储商类别")
-    private Integer storageType;
-    @ApiModelProperty("存储商名字")
-    private String name;
+    @Data
+    public static class ViewData {
+        @ApiModelProperty("存储商数量")
+        private List<Integer> storageNumber;
+        @ApiModelProperty("存储商名字")
+        private String name;
+        @ApiModelProperty("时间列表")
+        List<Date> timeList;
+    }
+    @ApiModelProperty("画图数据")
+    List<ViewData> list;
+
 }

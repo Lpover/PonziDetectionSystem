@@ -5,7 +5,7 @@ import java.util.Arrays;
 public enum CarrierTypeEnum {
     PICTURE(0, "图片"),
     VIDEO(1, "视频"),
-    OTHER(2, "其他"),
+    OTHER(10, "其他"),
     ;
 
     private final int code;

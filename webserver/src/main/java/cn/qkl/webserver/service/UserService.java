@@ -4,6 +4,8 @@ import cn.hutool.core.util.IdUtil;
 import cn.qkl.common.framework.auth.TokenBean;
 import cn.qkl.common.framework.auth.TokenHandler;
 import cn.qkl.common.framework.exception.BusinessException;
+import cn.qkl.common.framework.request.PageDTO;
+import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.User;
 import cn.qkl.webserver.common.BusinessStatus;
@@ -12,8 +14,10 @@ import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.common.enums.UserRoleEnum;
 import cn.qkl.webserver.dao.UserDao;
 import cn.qkl.webserver.dto.user.AddUserDTO;
+import cn.qkl.webserver.dto.user.GetUserInfoDTO;
 import cn.qkl.webserver.dto.user.LoginDTO;
 import cn.qkl.webserver.dto.user.ModifyPwdDTO;
+import cn.qkl.webserver.vo.platform.PlatformListVO;
 import cn.qkl.webserver.vo.user.UserInfoVO;
 import cn.qkl.webserver.vo.user.UserListVO;
 import lombok.extern.slf4j.Slf4j;
@@ -92,16 +96,18 @@ public class UserService {
         return UserInfoVO.transform(user);
     }
 
-    public List<UserListVO> getUserList() {
-        List<User> users = userDao.select(c -> c);
-        return users.stream().map(UserListVO::transform).collect(Collectors.toList());
+    public  PageVO<UserListVO> getUserList(PageDTO dto){
+        return PageVO.getPageData(dto.getPageId(), dto.getPageSize(),()->userDao.select(c -> c
+        ), UserListVO::transform);
     }
 
-    public void addUser(AddUserDTO dto) {
+    public void addUser(AddUserDTO dto){
         User user = new User();
         user.setId(IdUtil.getSnowflakeNextId());
         user.setPhone(dto.getPhone());
         user.setPwd(dto.getPwd());
+        user.setRole(5);
+        user.setState(1);
         userDao.insert(user);
     }
 

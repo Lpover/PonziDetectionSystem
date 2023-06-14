@@ -2,9 +2,12 @@ package cn.qkl.webserver.controller;
 
 
 import cn.qkl.common.framework.auth.Role;
+import cn.qkl.common.framework.request.PageDTO;
 import cn.qkl.common.framework.response.BaseResult;
+import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dto.user.AddUserDTO;
+import cn.qkl.webserver.dto.user.GetUserInfoDTO;
 import cn.qkl.webserver.dto.user.LoginDTO;
 import cn.qkl.webserver.dto.user.ModifyPwdDTO;
 import cn.qkl.webserver.service.UserService;
@@ -49,6 +52,7 @@ public class UserController {
 
     @ApiOperation("获取个人信息")
     @GetMapping("info")
+    @Role(roles = { RoleEnum.AdminBaseRole.class})
     public BaseResult<UserInfoVO> getUserInfo() {
         return BaseResult.ok(userService.getUserInfo());
     }
@@ -56,8 +60,8 @@ public class UserController {
     @ApiOperation("用户列表")
     @GetMapping("list")
     @Role(roles = { RoleEnum.AdminBaseRole.class})
-    public BaseResult<List<UserListVO>> getUserList() {
-        return BaseResult.ok(userService.getUserList());
+    public BaseResult<PageVO<UserListVO>> getUserList(@Validated PageDTO dto) {
+        return BaseResult.ok(userService.getUserList(dto));
     }
 
     @ApiOperation("添加普通用户")

@@ -5,7 +5,7 @@ import java.util.Arrays;
 public enum CategoryTypeEnum {
     DYNAMIC(0, "动态"),
     STATIC(1, "静态"),
-    OTHER(2, "其他"),
+    OTHER(10, "其他"),
     ;
 
     private final int code;

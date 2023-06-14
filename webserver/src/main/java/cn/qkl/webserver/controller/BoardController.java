@@ -13,6 +13,9 @@ import cn.qkl.webserver.dto.category.CategoryViewDTO;
 import cn.qkl.webserver.dto.platformview.HotnessRankingViewDTO;
 import cn.qkl.webserver.dto.platformview.PlatformAndTimeSelectionDTO;
 import cn.qkl.webserver.dto.platformview.PlatformSelectionDTO;
+import cn.qkl.webserver.dto.board.TimePlatformSelecteDTO;
+import cn.qkl.webserver.dto.carrier.CarrierViewDTO;
+import cn.qkl.webserver.dto.category.CategoryViewDTO;
 import cn.qkl.webserver.service.CrossContentDailyStatisticsService;
 import cn.qkl.webserver.service.PlatformViewService;
 import cn.qkl.webserver.dto.stroage.StorageViewDTO;
@@ -23,8 +26,10 @@ import cn.qkl.webserver.vo.board.RiskTxViewVO;
 import cn.qkl.webserver.vo.board.WordCloudViewVO;
 import cn.qkl.webserver.vo.carrier.CarrierViewVO;
 import cn.qkl.webserver.vo.category.CategoryViewVO;
+import cn.qkl.webserver.vo.platform.PlatformNameListVO;
 import cn.qkl.webserver.vo.cockpit.integrated.CockpitIntegratedMultipleChoiceVO;
 import cn.qkl.webserver.vo.cockpit.integrated.CockpitIntegratedResponseVO;
+import cn.qkl.webserver.vo.stroage.StorageViewVO;
 import cn.qkl.webserver.vo.platform.PlatformNameListVO;
 import cn.qkl.webserver.vo.platformview.*;
 import cn.qkl.webserver.vo.stroage.StorageViewVO;
@@ -37,6 +42,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -92,21 +98,21 @@ public class BoardController {
     }
 
     @ApiOperation("存储视图")
-    @GetMapping("stroage/view")
-    public BaseResult<List<StorageViewVO>> getStorageView(@Validated StorageViewDTO dto) {
+    @GetMapping("storage/view")
+    public BaseResult<StorageViewVO> getStorageView(@Validated StorageViewDTO dto) {
         return BaseResult.ok(storageViewService.getStorageView(dto));
     }
 
 
     @ApiOperation("载体视图")
     @GetMapping("carrier/view")
-    public BaseResult<List<CarrierViewVO>> getCarrierView(@Validated CarrierViewDTO dto) {
+    public BaseResult<CarrierViewVO> getCarrierView(@Validated CarrierViewDTO dto) {
         return BaseResult.ok(carrierViewService.getCarrierView(dto));
     }
 
     @ApiOperation("动态数字内容视图")
     @GetMapping("category/view")
-    public BaseResult<List<CategoryViewVO>> getCategoryView(@Validated CategoryViewDTO dto) {
+    public BaseResult<CategoryViewVO> getCategoryView(@Validated CategoryViewDTO dto) {
         return BaseResult.ok(categoryViewService.getCategoryView(dto));
     }
 
