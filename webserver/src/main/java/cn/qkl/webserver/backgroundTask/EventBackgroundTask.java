@@ -32,7 +32,7 @@ public class EventBackgroundTask implements BackgroundTask {
      */
     @Override
     public long getPeriod() {
-        return 1 * 1 * 1 * 1000;
+        return 1 * 1 * 1 * 1000 * 60;
     }
 
     //每天18点执行
