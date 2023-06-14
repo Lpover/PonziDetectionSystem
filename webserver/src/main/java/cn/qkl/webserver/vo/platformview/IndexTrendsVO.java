@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @title:
@@ -15,8 +16,8 @@ import java.util.Date;
 @Data
 public class IndexTrendsVO {
     @ApiModelProperty("今日风险指数")
-    private Integer riskIndex;
+    private List<Integer> riskIndex;
 
     @ApiModelProperty("统计的时间")
-    private Date createTime;
+    private List<Date> createTime;
 }

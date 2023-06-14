@@ -95,43 +95,65 @@ public class PlatformViewService {
 
 
         //返回平台（NFT、WEB3）的风险内容数量
-    public List<VolumeTrendsVO> getVolumeTrends(PlatformAndTimeSelectionDTO dto){
+    public VolumeTrendsVO getVolumeTrends(PlatformAndTimeSelectionDTO dto){
 
         //默认最热门NFT平台
         long HotestPlatform=getHotestPlatform(dto);
-        //dayLimit指的是显示的天数
-        int dayLimit=7;
+        //dayLimit指的是显示的天数，默认7天
+        int dayLimit;
         if(dto.getSelectTime()==2)dayLimit=30;
-        List<VolumeTrendsVO> volumeTrendsList = platformViewDao.getVolumeTrends(
-                    select(Tables.platformDailyStatistics.contentRiskSum, Tables.platformDailyStatistics.createTime)
-                            .from(Tables.platformDailyStatistics)
+        else {
+            dayLimit = 7;
+        }
+
+        List<PlatformDailyStatistics> volumeTrendsList = platformViewDao.select(c->c
                             .where(Tables.platformDailyStatistics.platformId, isEqualTo(HotestPlatform))
                             .orderBy(Tables.platformDailyStatistics.createTime.descending())
                             .limit(dayLimit)
-                            .build()
-                            .render(RenderingStrategies.MYBATIS3)
         );
-        return volumeTrendsList;
+        VolumeTrendsVO vo=new VolumeTrendsVO();
+
+        vo.setContentRiskSum(volumeTrendsList.stream()
+                .map(PlatformDailyStatistics::getContentRiskSum)
+                .collect(Collectors.toList())
+        );
+
+        vo.setCreateTime(volumeTrendsList.stream()
+                .map(PlatformDailyStatistics::getCreateTime)
+                .collect(Collectors.toList())
+        );
+        return vo;
     }
 
     //返回平台（NFT、WEB3）的风险指数
-    public List<IndexTrendsVO> getIndexTrends(PlatformAndTimeSelectionDTO dto){
+    public IndexTrendsVO getIndexTrends(PlatformAndTimeSelectionDTO dto){
 
         //默认最热门NFT平台
         long HotestPlatform=getHotestPlatform(dto);
-        //dayLimit指的是显示的天数
-        int dayLimit=7;
+        //dayLimit指的是显示的天数,默认7天
+        int dayLimit;
         if(dto.getSelectTime()==2)dayLimit=30;
-        List<IndexTrendsVO> indexTrendsList = platformViewDao.getIndexTrends(
-                select(Tables.platformDailyStatistics.riskIndex, Tables.platformDailyStatistics.createTime)
-                        .from(Tables.platformDailyStatistics)
-                        .where(Tables.platformDailyStatistics.platformId, isEqualTo(HotestPlatform))
-                        .orderBy(Tables.platformDailyStatistics.createTime.descending())
-                        .limit(dayLimit)
-                        .build()
-                        .render(RenderingStrategies.MYBATIS3)
+        else {
+            dayLimit = 7;
+        }
+
+        List<PlatformDailyStatistics> indexTrendsList = platformViewDao.select(c->c
+                .where(Tables.platformDailyStatistics.platformId, isEqualTo(HotestPlatform))
+                .orderBy(Tables.platformDailyStatistics.createTime.descending())
+                .limit(dayLimit)
         );
-        return indexTrendsList;
+        IndexTrendsVO vo=new IndexTrendsVO();
+
+        vo.setRiskIndex(indexTrendsList.stream()
+                .map(PlatformDailyStatistics::getRiskIndex)
+                .collect(Collectors.toList())
+        );
+
+        vo.setCreateTime(indexTrendsList.stream()
+                .map(PlatformDailyStatistics::getCreateTime)
+                .collect(Collectors.toList())
+        );
+        return vo;
     }
 
 //    返回十个平台风险账户
@@ -243,7 +265,7 @@ public class PlatformViewService {
             account.setAccountAddress(generateRandomAccountAddress());
             account.setChainId(1L);
             account.setAccountAlias(generateRandomString());
-            account.setImage("image/65/a8/65a869ba6f14f304cd06444b29745738.gif");
+            account.setImage("https://image.kmf.com/da-image/65/a8/65a869ba6f14f304cd06444b29745738.gif");
             account.setCryptoBalance("1 ETH");
             account.setCurrencyBalance("500");
             account.setExchangeRate("500");
@@ -297,7 +319,7 @@ public class PlatformViewService {
             content.setName(generateRandomString());
             content.setAddress(generateRandomAccountAddress());
             content.setTokenid(rand_tokenid);
-            content.setMetaUrl("8c2ee9a783c45bb49b5af6b828ab1191_r.jpg");
+            content.setMetaUrl("https://pic2.zhimg.com/v2-8c2ee9a783c45bb49b5af6b828ab1191_r.jpg");
             content.setCryptoPrice("1 ETH");
             content.setCurrencyPrice(string_current_price_ranking);
             content.setCreator("0xa8c62111e4652b07110a0fc81816303c42632f64");

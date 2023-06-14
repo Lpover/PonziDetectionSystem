@@ -22,13 +22,9 @@ import java.util.List;
 @Data
 public class VolumeTrendsVO {
     @ApiModelProperty("今日风险内容数量")
-    private Integer contentRiskSum;
+    private List<Integer> contentRiskSum;
 
     @ApiModelProperty("统计的时间")
-    private Date createTime;
-    public static VolumeTrendsVO transform(List<VolumeTrendsVO> platformDailyStatistics) {
-        VolumeTrendsVO vo = new VolumeTrendsVO();
-        BeanUtil.copyProperties(platformDailyStatistics, vo);
-        return vo;
-    }
+    private List<Date> createTime;
+
 }

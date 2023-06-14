@@ -58,7 +58,7 @@ import java.util.List;
 @ApiSupport(author = "wx")
 @RequestMapping("board")
 @RefreshScope
-@Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
+@Role()
 public class BoardController {
 
     @Autowired
@@ -160,14 +160,14 @@ public class BoardController {
     //平台风险内容数量变化趋势视图
     @ApiOperation("平台风险内容数量变化趋势视图")
     @GetMapping("volumetrends")
-    public BaseResult<List<VolumeTrendsVO>> getVolumeTrends(@Validated PlatformAndTimeSelectionDTO dto) {
+    public BaseResult<VolumeTrendsVO> getVolumeTrends(@Validated PlatformAndTimeSelectionDTO dto) {
         return BaseResult.ok(platformViewService.getVolumeTrends(dto));
     }
 
     //平台风险指数变化趋势视图
     @ApiOperation("平台风险指数变化趋势视图")
     @GetMapping("indextrends")
-    public BaseResult<List<IndexTrendsVO>> getIndexTrends(@Validated PlatformAndTimeSelectionDTO dto) {
+    public BaseResult<IndexTrendsVO> getIndexTrends(@Validated PlatformAndTimeSelectionDTO dto) {
         return BaseResult.ok(platformViewService.getIndexTrends(dto));
     }
 
