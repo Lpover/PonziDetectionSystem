@@ -32,4 +32,9 @@ public interface PlatformViewDao extends PlatformDailyStatisticsMapper {
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     List<HotnessRankingViewVO> getHotnessRankingView(SelectStatementProvider selectStatementProvider);
 
+    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
+    List<IndexTrendsVO> getRiskIndex(SelectStatementProvider selectStatementProvider);
+
+    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
+    List<IndexTrendsVO> getCreateTime(SelectStatementProvider selectStatementProvider);
 }
