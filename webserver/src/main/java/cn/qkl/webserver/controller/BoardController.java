@@ -58,7 +58,7 @@ import java.util.List;
 @ApiSupport(author = "wx")
 @RequestMapping("board")
 @RefreshScope
-@Role()
+@Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
 public class BoardController {
 
     @Autowired
