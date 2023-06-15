@@ -3,6 +3,7 @@ package cn.qkl.webserver.controller;
 
 import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
+import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.service.ChainService;
 import cn.qkl.webserver.vo.chain.ChainVO;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
@@ -29,7 +30,7 @@ import java.util.List;
 @ApiSupport(author = "xn")
 @RequestMapping("chain")
 @RefreshScope
-@Role
+@Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
 public class ChainController {
 
     @Resource

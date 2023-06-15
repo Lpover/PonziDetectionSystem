@@ -33,7 +33,7 @@ import java.util.List;
 @ApiSupport(author = "wx")
 @RequestMapping("algorithm")
 @RefreshScope
-//@Role(roles = { RoleEnum.AdminBaseRole.class})
+@Role(roles = { RoleEnum.AdminBaseRole.class})
 public class AlgorithmController {
     @Autowired
     AlgorithmService algorithmService;

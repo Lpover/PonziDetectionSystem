@@ -3,6 +3,7 @@ package cn.qkl.webserver.controller;
 import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.common.framework.response.PageVO;
+import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dto.account.AccountContentQueryDTO;
 import cn.qkl.webserver.dto.account.AccountTxHistoryQueryDTO;
 import cn.qkl.webserver.service.AccountService;
@@ -34,7 +35,7 @@ import java.util.List;
 @ApiSupport(author = "xn")
 @RequestMapping("account")
 @RefreshScope
-@Role
+@Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
 public class AccountController {
 
     @Resource

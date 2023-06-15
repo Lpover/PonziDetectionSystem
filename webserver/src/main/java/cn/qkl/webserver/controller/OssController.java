@@ -3,6 +3,7 @@ package cn.qkl.webserver.controller;
 import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.common.framework.util.OssUtil;
+import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dto.oss.ossUploadFileDTO;
 import cn.qkl.webserver.vo.oss.OssUploadFileVO;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
@@ -27,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @ApiSupport(author = "zz")
 @RequestMapping("oss")
 @RefreshScope
-@Role
+@Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
 public class OssController {
     @Autowired
     OssUtil ossUtil;
