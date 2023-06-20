@@ -90,7 +90,10 @@ public class CategoryViewService {
         return vo;
     }
 
-    public Category insertCategory(Category category) {
+    public Category insertCategory(Category category,CategoryTypeEnum cc) {
+        Random random = new Random();
+        category.setCategoryNumber(random.nextInt(10000));
+        category.setCategoryType(cc.getCode());
         return category;
     }
 }
