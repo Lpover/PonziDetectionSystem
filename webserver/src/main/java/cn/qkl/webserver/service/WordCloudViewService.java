@@ -75,8 +75,6 @@ public class WordCloudViewService {
         contentRiskDailyStatistics.setNum(random.nextInt(1000));
         contentRiskDailyStatistics.setPlatformId(platformID);
         contentRiskDailyStatistics.setCategoryId(categoryID);
-        contentRiskDailyStatistics.setCreateTime(end);
-        contentRiskDailyStatistics.setUpdateTime(end);
     }
 
 }

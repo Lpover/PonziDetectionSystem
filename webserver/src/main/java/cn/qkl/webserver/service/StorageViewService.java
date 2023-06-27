@@ -86,7 +86,11 @@ public class StorageViewService {
         return vo;
     }
 
-    public Storage insertStorage(Storage storage) {
+    public Storage insertStorage(Storage storage,StorageTypeEnum s) {
+        Random random = new Random();
+        Integer number=random.nextInt(10000);
+        storage.setStorageNumber(number);
+        storage.setStorageType(s.getCode());
         return storage;
     }
 

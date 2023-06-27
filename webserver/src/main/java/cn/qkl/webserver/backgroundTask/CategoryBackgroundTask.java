@@ -7,6 +7,7 @@ import cn.qkl.common.repository.model.Carrier;
 import cn.qkl.common.repository.model.Category;
 import cn.qkl.common.repository.model.Platform;
 import cn.qkl.common.repository.model.PlatformDailyStatistics;
+import cn.qkl.webserver.common.enums.CategoryTypeEnum;
 import cn.qkl.webserver.dao.CarrierDao;
 import cn.qkl.webserver.dao.CategoryDao;
 import cn.qkl.webserver.dao.PlatformDao;
@@ -16,6 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -68,19 +71,18 @@ public class CategoryBackgroundTask implements BackgroundTask {
         List<Category> list=new ArrayList<>();
         List<Long> platformIDList= platformDao.select(c -> c).stream().map(Platform::getId).collect(Collectors.toList());
         //每天插入十条数据
-        for(Long platformid : platformIDList) {
-            Category category = new Category();
-            insertCommon(category, platformid);
-            category = categoryViewService.insertCategory(category);
-            list.add(category);
-        }
+            for (Long platformid : platformIDList) {
+                for(CategoryTypeEnum cc:CategoryTypeEnum.values()) {
+                    Date end = new Date();
+                    Category category = new Category();
+                    category.setId(IdUtil.getSnowflakeNextId());
+                    category.setPlatformId(platformid);
+                    category.setCreateTime(end);
+                    category.setUpdateTime(end);
+                    category = categoryViewService.insertCategory(category,cc);
+                    list.add(category);
+                }
+            }
         categoryDao.insertMultiple(list);
-    }
-    private void insertCommon(Category category, Long platformid){
-        Date end = new Date();
-        category.setId(IdUtil.getSnowflakeNextId());
-        category.setPlatformId(platformid);
-        category.setCreateTime(end);
-        category.setUpdateTime(end);
     }
 }
