@@ -34,7 +34,7 @@ public class SocialPlatformHourStatisticsBackgroundTask implements BackgroundTas
     SocialPlatformHourStatisticsDao socialPlatformHourStatisticsDao;
 
     /**
-     * 间隔1 min
+     * 间隔1 h
      */
     @Override
     public long getPeriod() {
