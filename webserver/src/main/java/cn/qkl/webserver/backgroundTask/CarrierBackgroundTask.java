@@ -6,6 +6,7 @@ import cn.qkl.common.framework.initAndBackground.BackgroundTask;
 import cn.qkl.common.repository.model.Carrier;
 import cn.qkl.common.repository.model.Platform;
 import cn.qkl.common.repository.model.Storage;
+import cn.qkl.webserver.common.enums.CarrierTypeEnum;
 import cn.qkl.webserver.dao.CarrierDao;
 import cn.qkl.webserver.dao.PlatformDao;
 import cn.qkl.webserver.dao.StorageDao;
@@ -15,6 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -67,19 +70,18 @@ public class CarrierBackgroundTask implements BackgroundTask {
         List<Carrier> list=new ArrayList<>();
         List<Long> platformIDList= platformDao.select(c -> c).stream().map(Platform::getId).collect(Collectors.toList());
         //每天插入十条数据
-        for(Long platformid : platformIDList){
-            Carrier carrier = new Carrier();
-            insertCommon(carrier,platformid);
-            carrierViewService.insertCarrier(carrier);
-            list.add(carrier);
-        }
+            for (Long platformid : platformIDList) {
+                for(CarrierTypeEnum c:CarrierTypeEnum.values()) {
+                    Date end = new Date();
+                    Carrier carrier = new Carrier();
+                    carrier.setId(IdUtil.getSnowflakeNextId());
+                    carrier.setPlatformId(platformid);
+                    carrier.setCreateTime(end);
+                    carrier.setUpdateTime(end);
+                    carrierViewService.insertCarrier(carrier,c);
+                    list.add(carrier);
+                }
+            }
         carrierDao.insertMultiple(list);
-    }
-    private void insertCommon(Carrier carrier,Long platformid){
-        Date end = new Date();
-        carrier.setId(IdUtil.getSnowflakeNextId());
-        carrier.setPlatformId(platformid);
-        carrier.setCreateTime(end);
-        carrier.setUpdateTime(end);
     }
 }

@@ -27,9 +27,10 @@ import static org.mybatis.dynamic.sql.SqlBuilder.*;
 public class CarrierViewService {
     @Resource
     CarrierDao carrierDao;
-    public  void insertCarrier(Carrier carrier) {
+    public  void insertCarrier(Carrier carrier,CarrierTypeEnum c) {
         Random random = new Random();
-        carrier.setCarrierNumber(random.nextInt(1000));
+        carrier.setCarrierNumber(random.nextInt(10000));
+        carrier.setCarrierType(c.getCode());
     }
 
     public  CarrierViewVO getCarrierView(CarrierViewDTO dto){

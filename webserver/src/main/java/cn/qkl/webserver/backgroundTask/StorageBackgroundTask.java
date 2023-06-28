@@ -6,6 +6,7 @@ import cn.qkl.common.framework.initAndBackground.BackgroundTask;
 import cn.qkl.common.repository.model.Platform;
 import cn.qkl.common.repository.model.PlatformDailyStatistics;
 import cn.qkl.common.repository.model.Storage;
+import cn.qkl.webserver.common.enums.StorageTypeEnum;
 import cn.qkl.webserver.dao.PlatformDailyStatisticsDao;
 import cn.qkl.webserver.dao.PlatformDao;
 import cn.qkl.webserver.dao.StorageDao;
@@ -14,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -66,19 +69,19 @@ public class StorageBackgroundTask implements BackgroundTask {
         List<Storage> list = new ArrayList<>();
         List<Long> platformIDList= platformDao.select(c -> c).stream().map(Platform::getId).collect(Collectors.toList());
         //每天插入十条数据
-        for(Long platformid : platformIDList) {
-            Storage storage = new Storage();
-            insertCommon(storage, platformid);
-            storage = storageViewService.insertStorage(storage);
-            list.add(storage);
-        }
+        StorageTypeEnum[] storageList = StorageTypeEnum.values();
+            for (Long platformid : platformIDList) {
+                for (StorageTypeEnum s : storageList) {
+                    Date end = new Date();
+                    Storage storage = new Storage();
+                    storage.setId(IdUtil.getSnowflakeNextId());
+                    storage.setPlatformId(platformid);
+                    storage.setCreateTime(end);
+                    storage.setUpdateTime(end);
+                    storage = storageViewService.insertStorage(storage, s);
+                    list.add(storage);
+                }
+            }
         storageDao.insertMultiple(list);
-    }
-    private void insertCommon(Storage storage,Long platformid){
-        Date end = new Date();
-        storage.setId(IdUtil.getSnowflakeNextId());
-        storage.setPlatformId(platformid);
-        storage.setCreateTime(end);
-        storage.setUpdateTime(end);
     }
 }

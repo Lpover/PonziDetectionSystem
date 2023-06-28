@@ -71,7 +71,7 @@ public class ContentRiskDailyStatisticsBackgroundTask implements BackgroundTask 
     public void run() {
         log.debug("添加content_risk_daily_statistics表数据");
         List<ContentRiskDailyStatistics> list = new ArrayList<>();
-
+        Date end = new Date();
         List<Long> categoryIDList = contentRiskDao.select(c->c).stream().map(ContentRisk::getId).collect(Collectors.toList());
         // 只获取正在监测的平台id
         List<Long> platformIDList= platformDao.select(c -> c.where(Tables.platform.monitor, isEqualTo(1))).stream().map(Platform::getId).collect(Collectors.toList());
@@ -79,9 +79,11 @@ public class ContentRiskDailyStatisticsBackgroundTask implements BackgroundTask 
             for (Long platformID : platformIDList) {
                 ContentRiskDailyStatistics contentRiskDailyStatistics = new ContentRiskDailyStatistics();
                 wordCloudViewService.insertWordNum(contentRiskDailyStatistics, categoryID, platformID);
+                contentRiskDailyStatistics.setCreateTime(end);
+                contentRiskDailyStatistics.setUpdateTime(end);
                 list.add(contentRiskDailyStatistics);
             }
-        contentRiskStatisticsDao.insertMultiple(list);
 
+        contentRiskStatisticsDao.insertMultiple(list);
     }
 }
