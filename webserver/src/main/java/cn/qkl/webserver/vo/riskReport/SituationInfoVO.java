@@ -32,10 +32,10 @@ public class SituationInfoVO {
     private Integer carrierOth;
 
     @ApiModelProperty("动态数字内容百分比,动态")
-    private Integer categoryDyN;
+    private Integer categoryDyn;
 
     @ApiModelProperty("动态数字内容百分比,静态")
-    private Integer categoryStatic;
+    private Integer categorySta;
 
     @ApiModelProperty("动态数字内容百分比,其它")
     private Integer categoryOth;
