@@ -40,23 +40,38 @@ public class SituationInfoVO {
     @ApiModelProperty("动态数字内容百分比,其它")
     private Integer categoryOth;
 
-    @ApiModelProperty("新增低风险账户数量")
-    private Integer lowAccountNum;
+    @ApiModelProperty("低风险交易变化百分比")
+    private Integer lowTxRatio;
 
-    @ApiModelProperty("热度第一的NFT名字")
-    private String nftName;
+    @ApiModelProperty("中风险交易变化百分比")
+    private Integer midTxRatio;
 
-    @ApiModelProperty("热度第一的NFT平台，感知到风险数字内容的数量")
-    private Integer nftNum;
+    @ApiModelProperty("高风险交易变化百分比")
+    private Integer highTxRatio;
 
-    @ApiModelProperty("热度第一的WEB3平台名字")
-    private String web3Name;
+    @ApiModelProperty("风险类别词最多的名字")
+    private String riskWordMostName;
 
-    @ApiModelProperty("热度第一的WEB3平台，感知到风险数字内容的数量")
-    private Integer web3Num;
+    @ApiModelProperty("风险类别词最多的数量")
+    private Integer riskWordMostNum;
 
-    @ApiModelProperty("高风险数字内容数量")
-    private Integer highContentNum;
+    @ApiModelProperty("风险类别词最少的名字")
+    private String riskWordLeastName;
+
+    @ApiModelProperty("风险类别词最少的数量")
+    private Integer riskWordLeastNum;
+
+    @ApiModelProperty("风险数字内容数量变化趋势")
+    private Integer contentNumRatio;
+
+    @ApiModelProperty("内容平台最热门的的5个话题")
+    private String top5TopicsContent;
+
+    @ApiModelProperty("社交平台最热门的的5个话题")
+    private String top5TopicsSocial;
+
+    @ApiModelProperty("最热门的3个话题词")
+    private String top3Words;
 
     @ApiModelProperty("中风险数字内容数量")
     private Integer midContentNum;
