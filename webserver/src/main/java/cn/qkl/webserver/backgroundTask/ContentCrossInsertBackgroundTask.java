@@ -43,6 +43,7 @@ public class ContentCrossInsertBackgroundTask implements BackgroundTask {
 
         //延迟23点开始执行
         return end.getTime() - start.getTime();
+//        return 0;
     }
 
     @Override
