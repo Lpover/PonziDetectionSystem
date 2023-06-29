@@ -7,29 +7,20 @@ import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dto.board.CockpitIntegratedQueryDTO;
 import cn.qkl.webserver.dto.board.CrossContentRiskViewDTO;
+import cn.qkl.webserver.dto.board.CrossContentTxDTO;
 import cn.qkl.webserver.dto.board.TimePlatformSelecteDTO;
 import cn.qkl.webserver.dto.carrier.CarrierViewDTO;
 import cn.qkl.webserver.dto.category.CategoryViewDTO;
 import cn.qkl.webserver.dto.platformview.HotnessRankingViewDTO;
 import cn.qkl.webserver.dto.platformview.PlatformAndTimeSelectionDTO;
 import cn.qkl.webserver.dto.platformview.PlatformSelectionDTO;
-import cn.qkl.webserver.dto.board.TimePlatformSelecteDTO;
-import cn.qkl.webserver.dto.carrier.CarrierViewDTO;
-import cn.qkl.webserver.dto.category.CategoryViewDTO;
-import cn.qkl.webserver.service.CrossContentDailyStatisticsService;
-import cn.qkl.webserver.service.PlatformViewService;
 import cn.qkl.webserver.dto.stroage.StorageViewDTO;
 import cn.qkl.webserver.service.*;
-import cn.qkl.webserver.vo.board.CrossContentRiskViewVO;
-import cn.qkl.webserver.vo.board.RiskNumViewVO;
-import cn.qkl.webserver.vo.board.RiskTxViewVO;
-import cn.qkl.webserver.vo.board.WordCloudViewVO;
+import cn.qkl.webserver.vo.board.*;
 import cn.qkl.webserver.vo.carrier.CarrierViewVO;
 import cn.qkl.webserver.vo.category.CategoryViewVO;
-import cn.qkl.webserver.vo.platform.PlatformNameListVO;
 import cn.qkl.webserver.vo.cockpit.integrated.CockpitIntegratedMultipleChoiceVO;
 import cn.qkl.webserver.vo.cockpit.integrated.CockpitIntegratedResponseVO;
-import cn.qkl.webserver.vo.stroage.StorageViewVO;
 import cn.qkl.webserver.vo.platform.PlatformNameListVO;
 import cn.qkl.webserver.vo.platformview.*;
 import cn.qkl.webserver.vo.stroage.StorageViewVO;
@@ -42,7 +33,6 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -97,6 +87,12 @@ public class BoardController {
         return BaseResult.ok(crossContentDailyStatisticsService.getCrossContentRiskView(dto));
     }
 
+    @ApiOperation("跨链交易数量变化趋势视图")
+    @GetMapping("cross/tx/view")
+    public BaseResult<CrossContentTxViewVO> getCrossContentTxView(@Validated CrossContentTxDTO dto) {
+        return BaseResult.ok(crossContentDailyStatisticsService.getCrossContentTxView(dto));
+    }
+
     @ApiOperation("存储视图")
     @GetMapping("storage/view")
     public BaseResult<StorageViewVO> getStorageView(@Validated StorageViewDTO dto) {
@@ -123,6 +119,7 @@ public class BoardController {
         return BaseResult.ok(cockpitIntegratedService.getCockpitIntegratedResponseAll());
     }
 
+
     @ApiOperation("综合风险驾驶舱动态接口")
     @PostMapping("/cockpit/integrated/dynamic")
     public BaseResult<CockpitIntegratedResponseVO> getCockpitIntegratedResponseDynamic(@RequestBody(required = true) CockpitIntegratedQueryDTO dto) {
@@ -134,6 +131,7 @@ public class BoardController {
     public BaseResult<CockpitIntegratedMultipleChoiceVO> getCockpitIntegratedMultipleChoice() {
         return BaseResult.ok(cockpitIntegratedService.getCockpitIntegratedMultipleChoice());
     }
+
     @ApiOperation("获取正在监测中的平台列表")
     @GetMapping("monitoring/platform")
     public BaseResult<List<PlatformNameListVO>> getMonitoringPlatform() {
@@ -157,6 +155,7 @@ public class BoardController {
     public BaseResult<RiskNumViewVO> getRiskNumView(@Validated TimePlatformSelecteDTO dto) {
         return BaseResult.ok(riskNumViewService.getRiskNumView(dto));
     }
+
     //平台风险内容数量变化趋势视图
     @ApiOperation("平台风险内容数量变化趋势视图")
     @GetMapping("volumetrends")
@@ -191,7 +190,6 @@ public class BoardController {
     public BaseResult<PageVO<HotnessRankingViewVO>> getHotnessRankingView(@Validated HotnessRankingViewDTO dto) {
         return BaseResult.ok(platformViewService.getHotnessRankingView(dto));
     }
-
 
 
 }

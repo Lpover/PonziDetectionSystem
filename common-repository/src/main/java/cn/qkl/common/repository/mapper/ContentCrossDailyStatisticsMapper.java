@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface ContentCrossDailyStatisticsMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, chainId, riskAccountNum, txNum, createTime, updateTime);
+    BasicColumn[] selectList = BasicColumn.columnList(id, chainId, bridge, riskAccountNum, txNum, createTime, updateTime);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -63,6 +63,7 @@ public interface ContentCrossDailyStatisticsMapper {
     @Results(id="ContentCrossDailyStatisticsResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="chain_id", property="chainId", jdbcType=JdbcType.BIGINT),
+        @Result(column="bridge", property="bridge", jdbcType=JdbcType.INTEGER),
         @Result(column="risk_account_num", property="riskAccountNum", jdbcType=JdbcType.INTEGER),
         @Result(column="tx_num", property="txNum", jdbcType=JdbcType.INTEGER),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
@@ -96,6 +97,7 @@ public interface ContentCrossDailyStatisticsMapper {
         return MyBatis3Utils.insert(this::insert, record, contentCrossDailyStatistics, c ->
             c.map(id).toProperty("id")
             .map(chainId).toProperty("chainId")
+            .map(bridge).toProperty("bridge")
             .map(riskAccountNum).toProperty("riskAccountNum")
             .map(txNum).toProperty("txNum")
             .map(createTime).toProperty("createTime")
@@ -108,6 +110,7 @@ public interface ContentCrossDailyStatisticsMapper {
         return MyBatis3Utils.insertMultiple(this::insertMultiple, records, contentCrossDailyStatistics, c ->
             c.map(id).toProperty("id")
             .map(chainId).toProperty("chainId")
+            .map(bridge).toProperty("bridge")
             .map(riskAccountNum).toProperty("riskAccountNum")
             .map(txNum).toProperty("txNum")
             .map(createTime).toProperty("createTime")
@@ -120,6 +123,7 @@ public interface ContentCrossDailyStatisticsMapper {
         return MyBatis3Utils.insert(this::insert, record, contentCrossDailyStatistics, c ->
             c.map(id).toPropertyWhenPresent("id", record::getId)
             .map(chainId).toPropertyWhenPresent("chainId", record::getChainId)
+            .map(bridge).toPropertyWhenPresent("bridge", record::getBridge)
             .map(riskAccountNum).toPropertyWhenPresent("riskAccountNum", record::getRiskAccountNum)
             .map(txNum).toPropertyWhenPresent("txNum", record::getTxNum)
             .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
@@ -158,6 +162,7 @@ public interface ContentCrossDailyStatisticsMapper {
     static UpdateDSL<UpdateModel> updateAllColumns(ContentCrossDailyStatistics record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalTo(record::getId)
                 .set(chainId).equalTo(record::getChainId)
+                .set(bridge).equalTo(record::getBridge)
                 .set(riskAccountNum).equalTo(record::getRiskAccountNum)
                 .set(txNum).equalTo(record::getTxNum)
                 .set(createTime).equalTo(record::getCreateTime)
@@ -168,6 +173,7 @@ public interface ContentCrossDailyStatisticsMapper {
     static UpdateDSL<UpdateModel> updateSelectiveColumns(ContentCrossDailyStatistics record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalToWhenPresent(record::getId)
                 .set(chainId).equalToWhenPresent(record::getChainId)
+                .set(bridge).equalToWhenPresent(record::getBridge)
                 .set(riskAccountNum).equalToWhenPresent(record::getRiskAccountNum)
                 .set(txNum).equalToWhenPresent(record::getTxNum)
                 .set(createTime).equalToWhenPresent(record::getCreateTime)
@@ -178,6 +184,7 @@ public interface ContentCrossDailyStatisticsMapper {
     default int updateByPrimaryKey(ContentCrossDailyStatistics record) {
         return update(c ->
             c.set(chainId).equalTo(record::getChainId)
+            .set(bridge).equalTo(record::getBridge)
             .set(riskAccountNum).equalTo(record::getRiskAccountNum)
             .set(txNum).equalTo(record::getTxNum)
             .set(createTime).equalTo(record::getCreateTime)
@@ -190,6 +197,7 @@ public interface ContentCrossDailyStatisticsMapper {
     default int updateByPrimaryKeySelective(ContentCrossDailyStatistics record) {
         return update(c ->
             c.set(chainId).equalToWhenPresent(record::getChainId)
+            .set(bridge).equalToWhenPresent(record::getBridge)
             .set(riskAccountNum).equalToWhenPresent(record::getRiskAccountNum)
             .set(txNum).equalToWhenPresent(record::getTxNum)
             .set(createTime).equalToWhenPresent(record::getCreateTime)

@@ -8,7 +8,9 @@ import cn.qkl.common.repository.model.ContentCrossDailyStatistics;
 import cn.qkl.webserver.dao.ContentCrossDailyStatisticsDao;
 import cn.qkl.webserver.dao.ContentCrossDao;
 import cn.qkl.webserver.dto.board.CrossContentRiskViewDTO;
+import cn.qkl.webserver.dto.board.CrossContentTxDTO;
 import cn.qkl.webserver.vo.board.CrossContentRiskViewVO;
+import cn.qkl.webserver.vo.board.CrossContentTxViewVO;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
 import org.mybatis.dynamic.sql.select.QueryExpressionDSL;
@@ -52,31 +54,36 @@ public class CrossContentDailyStatisticsService {
                 .where(Tables.contentCross.createTime, isGreaterThan(start))
                 .and(Tables.contentCross.createTime, isLessThan(end))
         );
-        Map<Long, Set<Long>> chainToAccountNumMap = new HashMap<>();
-        Map<Long, Integer> chainToTxNunMap = new HashMap<>();
+        Map<String, Set<Long>> chainToAccountNumMap = new HashMap<>();
+        Map<String, Integer> chainToTxNunMap = new HashMap<>();
         List<ContentCrossDailyStatistics> list = new ArrayList<>();
         for (ContentCross contentCross : contentCrossList) {
             //账号集合
             Set<Long> accountSet;
             //源链 chainId与account映射
-            accountSet = chainToAccountNumMap.getOrDefault(contentCross.getChainId(), new HashSet<>());
+            String chainKey = contentCross.getChainId() + "-" + contentCross.getBridge();
+            accountSet = chainToAccountNumMap.getOrDefault(chainKey, new HashSet<>());
             accountSet.add(contentCross.getAccountId());
-            chainToAccountNumMap.put(contentCross.getChainId(), accountSet);
+            chainToAccountNumMap.put(chainKey, accountSet);
             //目标链 chainId与account映射
-            accountSet = chainToAccountNumMap.getOrDefault(contentCross.getDstChainId(), new HashSet<>());
+            String dstChainKey = contentCross.getDstChainId() + "-" + contentCross.getBridge();
+            accountSet = chainToAccountNumMap.getOrDefault(dstChainKey, new HashSet<>());
             accountSet.add(contentCross.getDstAccountId());
-            chainToAccountNumMap.put(contentCross.getDstChainId(), accountSet);
+            chainToAccountNumMap.put(dstChainKey, accountSet);
             //源链交易数量+1
-            chainToTxNunMap.put(contentCross.getChainId(), chainToTxNunMap.getOrDefault(contentCross.getChainId(), 0) + 1);
+            chainToTxNunMap.put(chainKey, chainToTxNunMap.getOrDefault(chainKey, 0) + 1);
             //目标链交易数量+1
-            chainToTxNunMap.put(contentCross.getDstChainId(), chainToTxNunMap.getOrDefault(contentCross.getDstChainId(), 0) + 1);
+            chainToTxNunMap.put(dstChainKey, chainToTxNunMap.getOrDefault(dstChainKey, 0) + 1);
         }
-        for (Map.Entry<Long, Set<Long>> entry : chainToAccountNumMap.entrySet()) {
+        for (Map.Entry<String, Set<Long>> entry : chainToAccountNumMap.entrySet()) {
             ContentCrossDailyStatistics statistics = new ContentCrossDailyStatistics();
+            String key = entry.getKey();
             statistics.setId(IdUtil.getSnowflakeNextId());
-            statistics.setChainId(entry.getKey());
+            String[] split = key.split("-");
+            statistics.setChainId(Long.valueOf(split[0]));
+            statistics.setBridge(Integer.valueOf(split[1]));
             statistics.setRiskAccountNum(entry.getValue().size());
-            statistics.setTxNum(chainToTxNunMap.get(entry.getKey()));
+            statistics.setTxNum(chainToTxNunMap.get(key));
             statistics.setCreateTime(date);
             statistics.setUpdateTime(date);
             list.add(statistics);
@@ -103,6 +110,14 @@ public class CrossContentDailyStatisticsService {
                         .build()
                         .render(RenderingStrategies.MYBATIS3)
         );
+    }
+
+    public CrossContentTxViewVO getCrossContentTxView(CrossContentTxDTO dto) {
+        List<ContentCrossDailyStatistics> list = contentCrossDailyStatisticsDao.select(c -> c
+                .where(Tables.contentCrossDailyStatistics.chainId, isEqualTo(dto.getChainId()))
+                .and(Tables.contentCrossDailyStatistics.bridge, isEqualTo(dto.getBridge()))
+        );
+        return CrossContentTxViewVO.transform(list);
     }
 
 }

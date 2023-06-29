@@ -33,6 +33,9 @@ public class Algorithm {
     private Date updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String fileUrl;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
@@ -176,6 +179,22 @@ public class Algorithm {
         this.updateTime = updateTime;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getFileUrl() {
+        return fileUrl;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Algorithm withFileUrl(String fileUrl) {
+        this.setFileUrl(fileUrl);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -192,6 +211,7 @@ public class Algorithm {
         sb.append(", type=").append(type);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", fileUrl=").append(fileUrl);
         sb.append("]");
         return sb.toString();
     }
