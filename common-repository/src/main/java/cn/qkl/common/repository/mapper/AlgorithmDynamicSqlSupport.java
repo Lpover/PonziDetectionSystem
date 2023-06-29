@@ -39,6 +39,9 @@ public final class AlgorithmDynamicSqlSupport {
     public static final SqlColumn<Date> updateTime = algorithm.updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> fileUrl = algorithm.fileUrl;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class Algorithm extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -57,6 +60,8 @@ public final class AlgorithmDynamicSqlSupport {
         public final SqlColumn<Date> createTime = column("create_time", JDBCType.TIMESTAMP);
 
         public final SqlColumn<Date> updateTime = column("update_time", JDBCType.TIMESTAMP);
+
+        public final SqlColumn<String> fileUrl = column("file_url", JDBCType.VARCHAR);
 
         public Algorithm() {
             super("algorithm");

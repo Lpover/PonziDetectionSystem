@@ -11,6 +11,9 @@ public class ContentCrossDailyStatistics {
     private Long chainId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer bridge;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer riskAccountNum;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -52,6 +55,22 @@ public class ContentCrossDailyStatistics {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setChainId(Long chainId) {
         this.chainId = chainId;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getBridge() {
+        return bridge;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public ContentCrossDailyStatistics withBridge(Integer bridge) {
+        this.setBridge(bridge);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setBridge(Integer bridge) {
+        this.bridge = bridge;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -127,6 +146,7 @@ public class ContentCrossDailyStatistics {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", chainId=").append(chainId);
+        sb.append(", bridge=").append(bridge);
         sb.append(", riskAccountNum=").append(riskAccountNum);
         sb.append(", txNum=").append(txNum);
         sb.append(", createTime=").append(createTime);

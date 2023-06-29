@@ -40,7 +40,7 @@ public class SettingsController {
     }
 
     @ApiOperation("修改监测规则")
-    @PutMapping("monitor/rules/modify")
+    @PutMapping("monitor/rules")
     public BaseResult<Void> modifyMonitorRules(@Validated List<MonitorRulesModifyDTO> dto) {
         monitorRulesService.modifyMonitorRules(dto);
         return BaseResult.ok();

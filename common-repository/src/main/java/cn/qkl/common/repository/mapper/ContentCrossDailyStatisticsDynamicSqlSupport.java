@@ -17,6 +17,9 @@ public final class ContentCrossDailyStatisticsDynamicSqlSupport {
     public static final SqlColumn<Long> chainId = contentCrossDailyStatistics.chainId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Integer> bridge = contentCrossDailyStatistics.bridge;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Integer> riskAccountNum = contentCrossDailyStatistics.riskAccountNum;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -33,6 +36,8 @@ public final class ContentCrossDailyStatisticsDynamicSqlSupport {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
         public final SqlColumn<Long> chainId = column("chain_id", JDBCType.BIGINT);
+
+        public final SqlColumn<Integer> bridge = column("bridge", JDBCType.INTEGER);
 
         public final SqlColumn<Integer> riskAccountNum = column("risk_account_num", JDBCType.INTEGER);
 
