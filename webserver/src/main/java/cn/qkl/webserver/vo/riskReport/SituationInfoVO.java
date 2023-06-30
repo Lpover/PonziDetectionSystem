@@ -73,56 +73,70 @@ public class SituationInfoVO {
     @ApiModelProperty("最热门的3个话题词")
     private String top3Words;
 
-    @ApiModelProperty("中风险数字内容数量")
-    private Integer midContentNum;
+    @ApiModelProperty("正面情绪的比例")
+    private Integer positive_ratio;
 
-    @ApiModelProperty("低风险数字内容数量")
-    private Integer lowContentNum;
+    @ApiModelProperty("负面情绪的比例")
+    private Integer negative_ratio;
 
-    @ApiModelProperty("新增动态数字内容数量")
-    private Integer dynNum;
+    @ApiModelProperty("热度排名第一的NFT平台名字")
+    private String nftPlatformName;
 
-    @ApiModelProperty("监测平台的次数")
-    private Integer monitorNum;
+    @ApiModelProperty("热度排名第一的NFT平台24h热度")
+    private Long nftPlatformHotness;
 
-    @ApiModelProperty("高风险平台的名字")
-    private String highRiskPlat;
+    @ApiModelProperty("热度排名第一的NFT平台7D变化百分比")
+    private BigDecimal nftPlatformHotnessChange;
 
-    @ApiModelProperty("中风险平台的名字")
-    private String midRiskPlat;
+    @ApiModelProperty("热度排名第一的WEB3平台名字")
+    private String web3PlatformName;
 
-    @ApiModelProperty("低风险平台的名字")
-    private String lowRiskPlat;
+    @ApiModelProperty("热度排名第一的WEB3平台24h热度")
+    private Long web3PlatformHotness;
 
-    @ApiModelProperty("高风险平台的高风险数字内容占比")
-    private BigDecimal highRiskPlatPer;
+    @ApiModelProperty("热度排名第一的WEB3平台7D变化百分比")
+    private BigDecimal web3PlatformHotnessChange;
 
-    @ApiModelProperty("中风险平台的高风险数字内容占比")
-    private BigDecimal midRiskPlatPer;
+    @ApiModelProperty("风险指数最高的平台名字")
+    private String highRiskName;
 
-    @ApiModelProperty("低风险平台的高风险数字内容占比")
-    private BigDecimal lowRiskPlatPer;
+    @ApiModelProperty("风险指数最高的平台风险指数")
+    private Integer highRiskIndex;
 
-    @ApiModelProperty("感知到最多风险的平台的名字")
-    private String highNamePlat;
+    @ApiModelProperty("风险指数最低的平台名字")
+    private String lowRiskName;
 
-    @ApiModelProperty("感知到最多风险的平台的数量")
-    private Integer highNumPlat;
+    @ApiModelProperty("风险指数最低的平台风险指数")
+    private Integer lowRiskIndex;
 
-    @ApiModelProperty("报表创建时间")
-    private Date createTime;
+    @ApiModelProperty("高风险平台监控个数")
+    private Integer monitorNumHigh;
 
-    @ApiModelProperty("每日风险类别数据")
-    private List<RiskCategoryVO> riskCategoryVOList;
+    @ApiModelProperty("中风险平台监控个数")
+    private Integer monitorNumMid;
 
-    @ApiModelProperty("每日平台数据")
-    private List<PlatformReportVO> dailyPlatformList;
+    @ApiModelProperty("低风险平台监控个数")
+    private Integer monitorNumLow;
 
-    public static SituationInfoVO transform(RiskReport report, List<RiskCategoryVO> riskCategoryVOList, List<PlatformReportVO> platformReportVOList) {
-        SituationInfoVO vo = new SituationInfoVO();
-        BeanUtil.copyProperties(report, vo);
-        vo.setRiskCategoryVOList(riskCategoryVOList);
-        vo.setDailyPlatformList(platformReportVOList);
-        return vo;
-    }
+    @ApiModelProperty("高风险平台中热度最高平台名字")
+    private String highPlatName;
+
+    @ApiModelProperty("中风险平台中热度最高平台名字")
+    private String midPlatName;
+
+    @ApiModelProperty("低风险平台中热度最高平台名字")
+    private String lowPlatName;
+
+    @ApiModelProperty("高风险平台高风险数字内容占比")
+    private Integer highPlatRatio;
+
+    @ApiModelProperty("中风险平台高风险数字内容占比")
+    private Integer midPlatRatio;
+
+    @ApiModelProperty("低风险平台高风险数字内容占比")
+    private Integer lowPlatRatio;
+
+    @ApiModelProperty("预警次数")
+    private Integer warningNum;
+
 }
