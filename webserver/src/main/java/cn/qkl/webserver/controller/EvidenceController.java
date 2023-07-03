@@ -8,13 +8,20 @@ import cn.qkl.webserver.dto.evidence.EvidenceRecordListDTO;
 import cn.qkl.webserver.service.EvidenceService;
 import cn.qkl.webserver.vo.evidence.EvidenceRecordItemVO;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
-import freemarker.template.TemplateException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import cn.qkl.webserver.dto.evidence.*;
+import cn.qkl.webserver.dto.evidence.EvidenceRecordListDTO;
+import cn.qkl.webserver.vo.evidence.*;
+import cn.qkl.webserver.vo.evidence.EvidenceRecordItemVO;
+import freemarker.template.TemplateException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,6 +48,42 @@ public class EvidenceController {
 
     @Autowired
     EvidenceService evidenceService;
+
+    @ApiOperation("获取风险类型的列表")
+    @GetMapping("risk/type")
+    public BaseResult<EvidenceRiskTypeVO> getRiskTypeList() {
+        return BaseResult.ok(new EvidenceRiskTypeVO());
+    }
+
+    @ApiOperation("网页取证")
+    @PutMapping("web")
+    public BaseResult<EvidencePhaseVO> webEvidence(@Validated @RequestBody WebEvidenceDTO dto) {
+        return BaseResult.ok(new EvidencePhaseVO());
+    }
+
+    @ApiOperation("固证")
+    @PutMapping("reinforce")
+    public BaseResult<EvidencePhaseVO> reinforceEvidence(@Validated @RequestBody ReinforceEvidenceDTO dto) {
+        return BaseResult.ok(new EvidencePhaseVO());
+    }
+
+    @ApiOperation("取证固证情况统计")
+    @GetMapping("statistics")
+    public BaseResult<StatisticsEvidenceVO> getEvidenceStatistics(@Validated StatisticsEvidenceDTO dto) {
+        return BaseResult.ok(new StatisticsEvidenceVO());
+    }
+
+    @ApiOperation("证据详情")
+    @GetMapping("detail/info")
+    public BaseResult<EvidenceDetailVO> getEvidenceDetail(@Validated EvidenceDetailDTO dto) {
+        return BaseResult.ok(new EvidenceDetailVO());
+    }
+
+    @ApiOperation("证据包下载")
+    @PostMapping("pack/download")
+    public BaseResult<Void> downloadEvidencePack(@Validated @RequestBody EvidenceDetailDTO dto) {
+        return BaseResult.ok();
+    }
 
     @ApiOperation("取证记录列表")
     @GetMapping("/record/list")
