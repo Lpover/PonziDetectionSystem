@@ -47,21 +47,21 @@ public class AlgorithmController {
 
     @ApiOperation("更改使用的算法")
     @PutMapping("state/id")
-    public BaseResult<Void> modifyAlgorithmState(@Validated AlgorithmStateModifyDTO dto) {
+    public BaseResult<Void> modifyAlgorithmState(@RequestBody @Validated AlgorithmStateModifyDTO dto) {
         algorithmService.modifyAlgorithmState(dto);
         return BaseResult.ok();
     }
 
     @ApiOperation("添加算法")
     @PostMapping("")
-    public BaseResult<Void> addAlgorithm(@Validated AlgorithmAddDTO dto) {
+    public BaseResult<Void> addAlgorithm(@RequestBody @Validated AlgorithmAddDTO dto) {
         algorithmService.addAlgorithm(dto);
         return BaseResult.ok();
     }
 
     @ApiOperation("修改算法")
     @PutMapping("id")
-    public BaseResult<Void> modifyAlgorithm(@Validated AlgorithmModifyDTO dto) {
+    public BaseResult<Void> modifyAlgorithm(@RequestBody @Validated AlgorithmModifyDTO dto) {
         algorithmService.modifyAlgorithm(dto);
         return BaseResult.ok();
     }
