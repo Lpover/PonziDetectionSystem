@@ -22,13 +22,13 @@ public class SituationInfoVO {
     @ApiModelProperty("储存量最大的平台名字")
     private String platformName;
 
-    @ApiModelProperty("载体形式百分比,图片")
+    @ApiModelProperty("风险载体形式百分比,图片")
     private Integer carrierPic;
 
-    @ApiModelProperty("载体形式百分比,视频")
+    @ApiModelProperty("风险载体形式百分比,视频")
     private Integer carrierVie;
 
-    @ApiModelProperty("载体形式百分比,其它")
+    @ApiModelProperty("风险载体形式百分比,其它")
     private Integer carrierOth;
 
     @ApiModelProperty("动态数字内容百分比,动态")
@@ -40,14 +40,14 @@ public class SituationInfoVO {
     @ApiModelProperty("动态数字内容百分比,其它")
     private Integer categoryOth;
 
-    @ApiModelProperty("低风险交易变化百分比")
-    private Integer lowTxRatio;
+    @ApiModelProperty("低风险交易变化趋势百分比")
+    private Integer txRatioLow;
 
-    @ApiModelProperty("中风险交易变化百分比")
-    private Integer midTxRatio;
+    @ApiModelProperty("中风险交易变化趋势百分比")
+    private Integer txRatioMid;
 
-    @ApiModelProperty("高风险交易变化百分比")
-    private Integer highTxRatio;
+    @ApiModelProperty("高风险交易变化趋势百分比")
+    private Integer txRatioHigh;
 
     @ApiModelProperty("风险类别词最多的名字")
     private String riskWordMostName;
@@ -64,20 +64,20 @@ public class SituationInfoVO {
     @ApiModelProperty("风险数字内容数量变化趋势")
     private Integer contentNumRatio;
 
-    @ApiModelProperty("内容平台最热门的的5个话题")
+    @ApiModelProperty("内容平台最热门的的5个话题名字")
     private String top5TopicsContent;
 
-    @ApiModelProperty("社交平台最热门的的5个话题")
+    @ApiModelProperty("社交平台最热门的的5个话题名字")
     private String top5TopicsSocial;
 
-    @ApiModelProperty("最热门的3个话题词")
+    @ApiModelProperty("最热门的3个话题词名字")
     private String top3Words;
 
     @ApiModelProperty("正面情绪的比例")
-    private Integer positive_ratio;
+    private Integer ratioPositive;
 
     @ApiModelProperty("负面情绪的比例")
-    private Integer negative_ratio;
+    private Integer ratioNegative;
 
     @ApiModelProperty("热度排名第一的NFT平台名字")
     private String nftPlatformName;
@@ -98,16 +98,16 @@ public class SituationInfoVO {
     private BigDecimal web3PlatformHotnessChange;
 
     @ApiModelProperty("风险指数最高的平台名字")
-    private String highRiskName;
+    private String riskNameHigh;
 
     @ApiModelProperty("风险指数最高的平台风险指数")
-    private Integer highRiskIndex;
+    private Integer riskIndexHigh;
 
     @ApiModelProperty("风险指数最低的平台名字")
-    private String lowRiskName;
+    private String riskNamelow;
 
     @ApiModelProperty("风险指数最低的平台风险指数")
-    private Integer lowRiskIndex;
+    private Integer riskIndexLow;
 
     @ApiModelProperty("高风险平台监控个数")
     private Integer monitorNumHigh;
@@ -119,22 +119,22 @@ public class SituationInfoVO {
     private Integer monitorNumLow;
 
     @ApiModelProperty("高风险平台中热度最高平台名字")
-    private String highPlatName;
+    private String platNameHigh;
 
     @ApiModelProperty("中风险平台中热度最高平台名字")
-    private String midPlatName;
+    private String platNameMid;
 
     @ApiModelProperty("低风险平台中热度最高平台名字")
-    private String lowPlatName;
+    private String platNameLow;
 
     @ApiModelProperty("高风险平台高风险数字内容占比")
-    private Integer highPlatRatio;
+    private Integer platRatioHigh;
 
     @ApiModelProperty("中风险平台高风险数字内容占比")
-    private Integer midPlatRatio;
+    private Integer platRatioMid;
 
     @ApiModelProperty("低风险平台高风险数字内容占比")
-    private Integer lowPlatRatio;
+    private Integer platRatioLow;
 
     @ApiModelProperty("预警次数")
     private Integer warningNum;
