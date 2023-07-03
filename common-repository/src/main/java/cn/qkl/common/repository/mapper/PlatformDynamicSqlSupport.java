@@ -87,6 +87,15 @@ public final class PlatformDynamicSqlSupport {
     public static final SqlColumn<Long> hotness = platform.hotness;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Integer> webEvidenceCount = platform.webEvidenceCount;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Integer> mobileEvidenceCount = platform.mobileEvidenceCount;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Integer> reinforceEvidenceCount = platform.reinforceEvidenceCount;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class Platform extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -137,6 +146,12 @@ public final class PlatformDynamicSqlSupport {
         public final SqlColumn<BigDecimal> riskIndexOversea = column("risk_index_oversea", JDBCType.DECIMAL);
 
         public final SqlColumn<Long> hotness = column("hotness", JDBCType.BIGINT);
+
+        public final SqlColumn<Integer> webEvidenceCount = column("web_evidence_count", JDBCType.INTEGER);
+
+        public final SqlColumn<Integer> mobileEvidenceCount = column("mobile_evidence_count", JDBCType.INTEGER);
+
+        public final SqlColumn<Integer> reinforceEvidenceCount = column("reinforce_evidence_count", JDBCType.INTEGER);
 
         public Platform() {
             super("platform");

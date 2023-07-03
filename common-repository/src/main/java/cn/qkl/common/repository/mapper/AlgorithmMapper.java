@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface AlgorithmMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, version, state, describe, name, recognitionRate, type, createTime, updateTime);
+    BasicColumn[] selectList = BasicColumn.columnList(id, version, state, describe, name, recognitionRate, type, createTime, updateTime, fileUrl);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -69,7 +69,8 @@ public interface AlgorithmMapper {
         @Result(column="recognition_rate", property="recognitionRate", jdbcType=JdbcType.DECIMAL),
         @Result(column="type", property="type", jdbcType=JdbcType.INTEGER),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
+        @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="file_url", property="fileUrl", jdbcType=JdbcType.VARCHAR)
     })
     List<Algorithm> selectMany(SelectStatementProvider selectStatement);
 
@@ -106,6 +107,7 @@ public interface AlgorithmMapper {
             .map(type).toProperty("type")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
+            .map(fileUrl).toProperty("fileUrl")
         );
     }
 
@@ -121,6 +123,7 @@ public interface AlgorithmMapper {
             .map(type).toProperty("type")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
+            .map(fileUrl).toProperty("fileUrl")
         );
     }
 
@@ -136,6 +139,7 @@ public interface AlgorithmMapper {
             .map(type).toPropertyWhenPresent("type", record::getType)
             .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
             .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
+            .map(fileUrl).toPropertyWhenPresent("fileUrl", record::getFileUrl)
         );
     }
 
@@ -176,7 +180,8 @@ public interface AlgorithmMapper {
                 .set(recognitionRate).equalTo(record::getRecognitionRate)
                 .set(type).equalTo(record::getType)
                 .set(createTime).equalTo(record::getCreateTime)
-                .set(updateTime).equalTo(record::getUpdateTime);
+                .set(updateTime).equalTo(record::getUpdateTime)
+                .set(fileUrl).equalTo(record::getFileUrl);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -189,7 +194,8 @@ public interface AlgorithmMapper {
                 .set(recognitionRate).equalToWhenPresent(record::getRecognitionRate)
                 .set(type).equalToWhenPresent(record::getType)
                 .set(createTime).equalToWhenPresent(record::getCreateTime)
-                .set(updateTime).equalToWhenPresent(record::getUpdateTime);
+                .set(updateTime).equalToWhenPresent(record::getUpdateTime)
+                .set(fileUrl).equalToWhenPresent(record::getFileUrl);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -203,6 +209,7 @@ public interface AlgorithmMapper {
             .set(type).equalTo(record::getType)
             .set(createTime).equalTo(record::getCreateTime)
             .set(updateTime).equalTo(record::getUpdateTime)
+            .set(fileUrl).equalTo(record::getFileUrl)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -218,6 +225,7 @@ public interface AlgorithmMapper {
             .set(type).equalToWhenPresent(record::getType)
             .set(createTime).equalToWhenPresent(record::getCreateTime)
             .set(updateTime).equalToWhenPresent(record::getUpdateTime)
+            .set(fileUrl).equalToWhenPresent(record::getFileUrl)
             .where(id, isEqualTo(record::getId))
         );
     }

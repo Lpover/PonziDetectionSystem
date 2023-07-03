@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class TsgzAsyncImpl implements TsgzAsyncService {
     @Override
     //使用@Async，并将前面的注册的bean，填写到Async的value中
+    //源码AsyncExecutionAspectSupport
     @Async
     public void doAsync() {
         log.info("== async start==");

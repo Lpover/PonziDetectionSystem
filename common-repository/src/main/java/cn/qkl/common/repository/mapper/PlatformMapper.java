@@ -8,8 +8,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import javax.annotation.Generated;
-
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.DeleteProvider;
+import org.apache.ibatis.annotations.InsertProvider;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.ResultMap;
+import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.type.JdbcType;
 import org.mybatis.dynamic.sql.BasicColumn;
 import org.mybatis.dynamic.sql.delete.DeleteDSLCompleter;
@@ -29,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface PlatformMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, name, url, monitor, riskContentNum, activation, riskLevel, platformType, logo, location, frequency, crawlerFile, web3Type, contentNum, highAccountNum, midAccountNum, lowAccountNum, highContentNum, midContentNum, lowContentNum, createTime, updateTime, riskIndexChina, riskIndexOversea, hotness);
+    BasicColumn[] selectList = BasicColumn.columnList(id, name, url, monitor, riskContentNum, activation, riskLevel, platformType, logo, location, frequency, crawlerFile, web3Type, contentNum, highAccountNum, midAccountNum, lowAccountNum, highContentNum, midContentNum, lowContentNum, createTime, updateTime, riskIndexChina, riskIndexOversea, hotness, webEvidenceCount, mobileEvidenceCount, reinforceEvidenceCount);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -79,7 +85,10 @@ public interface PlatformMapper {
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="risk_index_china", property="riskIndexChina", jdbcType=JdbcType.DECIMAL),
         @Result(column="risk_index_oversea", property="riskIndexOversea", jdbcType=JdbcType.DECIMAL),
-        @Result(column="hotness", property="hotness", jdbcType=JdbcType.BIGINT)
+        @Result(column="hotness", property="hotness", jdbcType=JdbcType.BIGINT),
+        @Result(column="web_evidence_count", property="webEvidenceCount", jdbcType=JdbcType.INTEGER),
+        @Result(column="mobile_evidence_count", property="mobileEvidenceCount", jdbcType=JdbcType.INTEGER),
+        @Result(column="reinforce_evidence_count", property="reinforceEvidenceCount", jdbcType=JdbcType.INTEGER)
     })
     List<Platform> selectMany(SelectStatementProvider selectStatement);
 
@@ -132,6 +141,9 @@ public interface PlatformMapper {
             .map(riskIndexChina).toProperty("riskIndexChina")
             .map(riskIndexOversea).toProperty("riskIndexOversea")
             .map(hotness).toProperty("hotness")
+            .map(webEvidenceCount).toProperty("webEvidenceCount")
+            .map(mobileEvidenceCount).toProperty("mobileEvidenceCount")
+            .map(reinforceEvidenceCount).toProperty("reinforceEvidenceCount")
         );
     }
 
@@ -163,6 +175,9 @@ public interface PlatformMapper {
             .map(riskIndexChina).toProperty("riskIndexChina")
             .map(riskIndexOversea).toProperty("riskIndexOversea")
             .map(hotness).toProperty("hotness")
+            .map(webEvidenceCount).toProperty("webEvidenceCount")
+            .map(mobileEvidenceCount).toProperty("mobileEvidenceCount")
+            .map(reinforceEvidenceCount).toProperty("reinforceEvidenceCount")
         );
     }
 
@@ -194,6 +209,9 @@ public interface PlatformMapper {
             .map(riskIndexChina).toPropertyWhenPresent("riskIndexChina", record::getRiskIndexChina)
             .map(riskIndexOversea).toPropertyWhenPresent("riskIndexOversea", record::getRiskIndexOversea)
             .map(hotness).toPropertyWhenPresent("hotness", record::getHotness)
+            .map(webEvidenceCount).toPropertyWhenPresent("webEvidenceCount", record::getWebEvidenceCount)
+            .map(mobileEvidenceCount).toPropertyWhenPresent("mobileEvidenceCount", record::getMobileEvidenceCount)
+            .map(reinforceEvidenceCount).toPropertyWhenPresent("reinforceEvidenceCount", record::getReinforceEvidenceCount)
         );
     }
 
@@ -250,7 +268,10 @@ public interface PlatformMapper {
                 .set(updateTime).equalTo(record::getUpdateTime)
                 .set(riskIndexChina).equalTo(record::getRiskIndexChina)
                 .set(riskIndexOversea).equalTo(record::getRiskIndexOversea)
-                .set(hotness).equalTo(record::getHotness);
+                .set(hotness).equalTo(record::getHotness)
+                .set(webEvidenceCount).equalTo(record::getWebEvidenceCount)
+                .set(mobileEvidenceCount).equalTo(record::getMobileEvidenceCount)
+                .set(reinforceEvidenceCount).equalTo(record::getReinforceEvidenceCount);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -279,7 +300,10 @@ public interface PlatformMapper {
                 .set(updateTime).equalToWhenPresent(record::getUpdateTime)
                 .set(riskIndexChina).equalToWhenPresent(record::getRiskIndexChina)
                 .set(riskIndexOversea).equalToWhenPresent(record::getRiskIndexOversea)
-                .set(hotness).equalToWhenPresent(record::getHotness);
+                .set(hotness).equalToWhenPresent(record::getHotness)
+                .set(webEvidenceCount).equalToWhenPresent(record::getWebEvidenceCount)
+                .set(mobileEvidenceCount).equalToWhenPresent(record::getMobileEvidenceCount)
+                .set(reinforceEvidenceCount).equalToWhenPresent(record::getReinforceEvidenceCount);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -309,6 +333,9 @@ public interface PlatformMapper {
             .set(riskIndexChina).equalTo(record::getRiskIndexChina)
             .set(riskIndexOversea).equalTo(record::getRiskIndexOversea)
             .set(hotness).equalTo(record::getHotness)
+            .set(webEvidenceCount).equalTo(record::getWebEvidenceCount)
+            .set(mobileEvidenceCount).equalTo(record::getMobileEvidenceCount)
+            .set(reinforceEvidenceCount).equalTo(record::getReinforceEvidenceCount)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -340,10 +367,10 @@ public interface PlatformMapper {
             .set(riskIndexChina).equalToWhenPresent(record::getRiskIndexChina)
             .set(riskIndexOversea).equalToWhenPresent(record::getRiskIndexOversea)
             .set(hotness).equalToWhenPresent(record::getHotness)
+            .set(webEvidenceCount).equalToWhenPresent(record::getWebEvidenceCount)
+            .set(mobileEvidenceCount).equalToWhenPresent(record::getMobileEvidenceCount)
+            .set(reinforceEvidenceCount).equalToWhenPresent(record::getReinforceEvidenceCount)
             .where(id, isEqualTo(record::getId))
         );
     }
-
-    @Select("SELECT COUNT(*) FROM platform")
-    int countPlatforms();
 }

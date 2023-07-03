@@ -46,6 +46,7 @@ public class PageVO<T> {
         if (pageSize <= 0) {
             pageSize = 10;
         }
+
         PageInfo<T> pageInfo = PageHelper.startPage(pageId, pageSize).doSelectPageInfo(supplier::get);
         this.pageId = pageId;
         this.pageSize = pageSize;

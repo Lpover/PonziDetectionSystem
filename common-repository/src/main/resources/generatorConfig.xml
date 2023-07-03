@@ -73,6 +73,12 @@
         </table>
         <table tableName="vocab_cloud" domainObjectName="VocabCloud">
         </table>
+        <table tableName="notify_record" domainObjectName="NotifyRecord">
+        </table>
+        <table tableName="evidence_web" domainObjectName="EvidenceWeb">
+        </table>
+        <table tableName="thresholds" domainObjectName="Thresholds">
+        </table>
 
     </context>
 </generatorConfiguration>

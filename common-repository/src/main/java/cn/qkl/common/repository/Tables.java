@@ -30,4 +30,7 @@ public class Tables {
     public static final StorageDynamicSqlSupport.Storage storage = StorageDynamicSqlSupport.storage;
     public static final UserDynamicSqlSupport.User user = UserDynamicSqlSupport.user;
     public static final VocabCloudDynamicSqlSupport.VocabCloud vocabCloud = VocabCloudDynamicSqlSupport.vocabCloud;
+    public static final EvidenceWebDynamicSqlSupport.EvidenceWeb evidenceWeb = EvidenceWebDynamicSqlSupport.evidenceWeb;
+    public static final ThresholdsDynamicSqlSupport.Thresholds thresholds = ThresholdsDynamicSqlSupport.thresholds;
+    public static final NotifyRecordDynamicSqlSupport.NotifyRecord notifyRecord = NotifyRecordDynamicSqlSupport.notifyRecord;
 }

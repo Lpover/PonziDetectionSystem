@@ -81,6 +81,15 @@ public class Platform {
     private Long hotness;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer webEvidenceCount;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer mobileEvidenceCount;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer reinforceEvidenceCount;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
@@ -480,6 +489,54 @@ public class Platform {
         this.hotness = hotness;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getWebEvidenceCount() {
+        return webEvidenceCount;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Platform withWebEvidenceCount(Integer webEvidenceCount) {
+        this.setWebEvidenceCount(webEvidenceCount);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setWebEvidenceCount(Integer webEvidenceCount) {
+        this.webEvidenceCount = webEvidenceCount;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getMobileEvidenceCount() {
+        return mobileEvidenceCount;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Platform withMobileEvidenceCount(Integer mobileEvidenceCount) {
+        this.setMobileEvidenceCount(mobileEvidenceCount);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setMobileEvidenceCount(Integer mobileEvidenceCount) {
+        this.mobileEvidenceCount = mobileEvidenceCount;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getReinforceEvidenceCount() {
+        return reinforceEvidenceCount;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Platform withReinforceEvidenceCount(Integer reinforceEvidenceCount) {
+        this.setReinforceEvidenceCount(reinforceEvidenceCount);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setReinforceEvidenceCount(Integer reinforceEvidenceCount) {
+        this.reinforceEvidenceCount = reinforceEvidenceCount;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -512,6 +569,9 @@ public class Platform {
         sb.append(", riskIndexChina=").append(riskIndexChina);
         sb.append(", riskIndexOversea=").append(riskIndexOversea);
         sb.append(", hotness=").append(hotness);
+        sb.append(", webEvidenceCount=").append(webEvidenceCount);
+        sb.append(", mobileEvidenceCount=").append(mobileEvidenceCount);
+        sb.append(", reinforceEvidenceCount=").append(reinforceEvidenceCount);
         sb.append("]");
         return sb.toString();
     }

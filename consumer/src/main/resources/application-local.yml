@@ -1,0 +1,82 @@
+server:
+  port: 8080
+qkl:
+  framework:
+    show-exception-detail: true
+    auth:
+      secret: secret
+      # 90天
+      expiration: 90
+    ossutil:
+      endpoint: https://obs.cn-east-3.myhuaweicloud.com
+      ak: MUIBG1CQ5TLHIF5NHER2
+      sk: BMNCoYbF4vd9Pv5LCHFCgz0xnFHLp8oUu8mmJXXV
+    thread:
+      pool:
+        executor:
+          corePoolSize: 10 # 核心线程数量
+          maxPoolSize: 30 # 最大线程数量
+          queueCapacity: 100 # 队列长度
+          keppAliveSeconds: 60 # 存活时间
+          prefixName: threadPool-Thread-No-      # 线程名称前缀
+spring:
+  application:
+    name: webserver-customer
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://192.168.1.102:8848
+        fail-fast: true
+        enabled: false
+      config:
+        server-addr: http://192.168.1.102:8848
+        #指定文件名，没有则默认${spring.application.name}
+        #指定文件后缀
+        file-extension: yml
+        refresh-enabled: true
+        enabled: false
+  config:
+    import: optional:nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+  # optional:nacos:${spring.application.name}.${spring.cloud.nacos.config.file-extension} 启动出错非中断
+#    import: nacos:${spring.application.name}.${spring.cloud.nacos.config.file-extension} #启动出错直接中断
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://sh-cynosdbmysql-grp-6y5peoca.sql.tencentcdb.com:21798/tsgz-dev?characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: Lianshang@N404
+  kafka:
+    bootstrap-servers: 43.142.160.143:9092 #这个是你server.properties中配置的
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: test-consumer-group
+
+#  redis:
+#    host:
+#    port: 6379
+#    password:
+#    database:
+#    timeout:
+
+mybatis:
+  configuration:
+    # 自动转驼峰
+    map-underscore-to-camel-case: true
+
+
+logging:
+  config: classpath:logback-spring-local.xml
+
+
