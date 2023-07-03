@@ -16,7 +16,7 @@
     <modules>
         <!--webserver业务层-->
         <module>webserver</module>
-        <module>webserver-customer</module>
+        <module>consumer</module>
         <!--公共数据库访问层-->
         <module>common-repository</module>
         <!--公共框架处理层-->

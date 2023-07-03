@@ -19,6 +19,12 @@ public class User {
     private Integer state;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String name;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String email;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
@@ -98,6 +104,38 @@ public class User {
         this.state = state;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getName() {
+        return name;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public User withName(String name) {
+        this.setName(name);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getEmail() {
+        return email;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public User withEmail(String email) {
+        this.setEmail(email);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -110,6 +148,8 @@ public class User {
         sb.append(", pwd=").append(pwd);
         sb.append(", role=").append(role);
         sb.append(", state=").append(state);
+        sb.append(", name=").append(name);
+        sb.append(", email=").append(email);
         sb.append("]");
         return sb.toString();
     }

@@ -19,7 +19,7 @@ class TsgzAsyncImplTest {
     @Test
     void doAsync() {
         for (int i = 0; i < 10; i++) {
-            boardController.getCockpitIntegratedMultipleChoice();
+//            boardController.getCockpitIntegratedMultipleChoice();
             tsgzAsyncService.doAsync();
         }
     }

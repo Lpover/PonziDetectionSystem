@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface UserMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, phone, pwd, role, state);
+    BasicColumn[] selectList = BasicColumn.columnList(id, phone, pwd, role, state, name, email);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -65,7 +65,9 @@ public interface UserMapper {
         @Result(column="phone", property="phone", jdbcType=JdbcType.VARCHAR),
         @Result(column="pwd", property="pwd", jdbcType=JdbcType.VARCHAR),
         @Result(column="role", property="role", jdbcType=JdbcType.INTEGER),
-        @Result(column="state", property="state", jdbcType=JdbcType.INTEGER)
+        @Result(column="state", property="state", jdbcType=JdbcType.INTEGER),
+        @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
+        @Result(column="email", property="email", jdbcType=JdbcType.VARCHAR)
     })
     List<User> selectMany(SelectStatementProvider selectStatement);
 
@@ -98,6 +100,8 @@ public interface UserMapper {
             .map(pwd).toProperty("pwd")
             .map(role).toProperty("role")
             .map(state).toProperty("state")
+            .map(name).toProperty("name")
+            .map(email).toProperty("email")
         );
     }
 
@@ -109,6 +113,8 @@ public interface UserMapper {
             .map(pwd).toProperty("pwd")
             .map(role).toProperty("role")
             .map(state).toProperty("state")
+            .map(name).toProperty("name")
+            .map(email).toProperty("email")
         );
     }
 
@@ -120,6 +126,8 @@ public interface UserMapper {
             .map(pwd).toPropertyWhenPresent("pwd", record::getPwd)
             .map(role).toPropertyWhenPresent("role", record::getRole)
             .map(state).toPropertyWhenPresent("state", record::getState)
+            .map(name).toPropertyWhenPresent("name", record::getName)
+            .map(email).toPropertyWhenPresent("email", record::getEmail)
         );
     }
 
@@ -156,7 +164,9 @@ public interface UserMapper {
                 .set(phone).equalTo(record::getPhone)
                 .set(pwd).equalTo(record::getPwd)
                 .set(role).equalTo(record::getRole)
-                .set(state).equalTo(record::getState);
+                .set(state).equalTo(record::getState)
+                .set(name).equalTo(record::getName)
+                .set(email).equalTo(record::getEmail);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -165,7 +175,9 @@ public interface UserMapper {
                 .set(phone).equalToWhenPresent(record::getPhone)
                 .set(pwd).equalToWhenPresent(record::getPwd)
                 .set(role).equalToWhenPresent(record::getRole)
-                .set(state).equalToWhenPresent(record::getState);
+                .set(state).equalToWhenPresent(record::getState)
+                .set(name).equalToWhenPresent(record::getName)
+                .set(email).equalToWhenPresent(record::getEmail);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -175,6 +187,8 @@ public interface UserMapper {
             .set(pwd).equalTo(record::getPwd)
             .set(role).equalTo(record::getRole)
             .set(state).equalTo(record::getState)
+            .set(name).equalTo(record::getName)
+            .set(email).equalTo(record::getEmail)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -186,6 +200,8 @@ public interface UserMapper {
             .set(pwd).equalToWhenPresent(record::getPwd)
             .set(role).equalToWhenPresent(record::getRole)
             .set(state).equalToWhenPresent(record::getState)
+            .set(name).equalToWhenPresent(record::getName)
+            .set(email).equalToWhenPresent(record::getEmail)
             .where(id, isEqualTo(record::getId))
         );
     }
