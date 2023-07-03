@@ -69,7 +69,11 @@ public class CrossContentService {
             contentCross.setDstTokenId("" + random.nextInt(10000));
             contentCross.setDstAccountId(accountIdlist.get(random.nextInt(accountIdlist.size())));
             contentCross.setEndTime(DateUtil.offsetHour(end, -2));
-            contentCross.setBridge(random.nextInt(2) + 1);
+            if (contentCross.getChainId() == 4 || contentCross.getDstChainId() == 4) {
+                contentCross.setBridge(1);
+            } else {
+                contentCross.setBridge(random.nextInt(2) + 1);
+            }
             contentCross.setDynamicType(random.nextInt(2));
             contentCross.setRiskLevel(random.nextInt(4));
             contentCross.setCreateTime(end);
