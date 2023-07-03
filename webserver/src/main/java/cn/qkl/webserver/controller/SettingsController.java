@@ -13,10 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -41,7 +38,7 @@ public class SettingsController {
 
     @ApiOperation("修改监测规则")
     @PutMapping("monitor/rules")
-    public BaseResult<Void> modifyMonitorRules(@Validated List<MonitorRulesModifyDTO> dto) {
+    public BaseResult<Void> modifyMonitorRules(@RequestBody @Validated List<MonitorRulesModifyDTO> dto) {
         monitorRulesService.modifyMonitorRules(dto);
         return BaseResult.ok();
     }
