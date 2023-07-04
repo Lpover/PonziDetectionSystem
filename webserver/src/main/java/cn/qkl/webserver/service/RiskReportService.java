@@ -8,9 +8,12 @@ import cn.qkl.webserver.dao.ContentRiskStatisticsDao;
 import cn.qkl.webserver.dao.PlatformDailyStatisticsDao;
 import cn.qkl.webserver.dao.RiskReportDao;
 import cn.qkl.webserver.dto.riskreport.RiskReportListQueryDTO;
+import cn.qkl.webserver.dto.riskreport.SituationReportDTO;
 import cn.qkl.webserver.vo.contentRiskStatictics.RiskCategoryVO;
+import cn.qkl.webserver.vo.platformview.IndexTrendsVO;
 import cn.qkl.webserver.vo.riskContentStatictics.PlatformReportVO;
 import cn.qkl.webserver.vo.riskReport.RiskReportInfoVO;
+import cn.qkl.webserver.vo.riskReport.SituationInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
 import org.mybatis.dynamic.sql.select.SimpleSortSpecification;
@@ -78,6 +81,13 @@ public class RiskReportService {
         return RiskReportInfoVO.transform(riskReport,riskContentStatistics,contentRiskStatistics);
     }
 
+    public SituationInfoVO getSituationInfo(SituationReportDTO dto){
+//        SituationInfo = reportDao.getSituationInfo(Tables.
+//
+//        )
+        SituationInfoVO vo=new SituationInfoVO();
+        return vo;
+    }
 
 
 }
