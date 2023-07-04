@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,13 +50,13 @@ public class ThresholdController {
 
     @ApiOperation("多维度指数")
     @GetMapping("indexreport")
-    public BaseResult<List<IndexReportVO>> getIndexReport(IndexReportDTO dto) {
+    public BaseResult<List<IndexReportVO>> getIndexReport(@Validated IndexReportDTO dto) {
         return BaseResult.ok(Collections.singletonList(new IndexReportVO()));
     }//获得报表信息
 
     @ApiOperation("修改阈值")
-    @GetMapping("indexchange")
-    public BaseResult<IndexChangeVO> getIndexChange(IndexChangeDTO dto) {
+    @PutMapping("indexchange")
+    public BaseResult<IndexChangeVO> getIndexChange(@Validated IndexChangeDTO dto) {
         return BaseResult.ok(new IndexChangeVO());
     }//获得报表信息
 

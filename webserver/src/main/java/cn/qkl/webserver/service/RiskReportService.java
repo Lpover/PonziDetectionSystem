@@ -76,8 +76,8 @@ public class RiskReportService {
                         .render(RenderingStrategies.MYBATIS3)
         );
         return RiskReportInfoVO.transform(riskReport,riskContentStatistics,contentRiskStatistics);
-
-
     }
+
+
 
 }

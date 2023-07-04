@@ -1,4 +1,4 @@
-package cn.qkl.webserver.dto.Notification;
+package cn.qkl.webserver.dto.noticification;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
