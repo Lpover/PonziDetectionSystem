@@ -82,9 +82,12 @@ public class RiskReportService {
     }
 
     public SituationInfoVO getSituationInfo(SituationReportDTO dto){
-//        SituationInfo = reportDao.getSituationInfo(Tables.
-//
-//        )
+        SituationInfo = reportDao.getSituationInfo(Tables.situationReport.platformName,Tables.situationReport.carrierPic,
+                Tables.situationReport.carrierVie,Tables.situationReport.carrierOth,Tables.situationReport.categoryDyn,Tables.situationReport.categoryOth,
+                Tables.situationReport.categorySta,Tables.situationReport.txRatioLow,Tables.situationReport.txRatioMid,Tables.situationReport.txRatioHigh,
+
+
+        );
         SituationInfoVO vo=new SituationInfoVO();
         return vo;
     }
