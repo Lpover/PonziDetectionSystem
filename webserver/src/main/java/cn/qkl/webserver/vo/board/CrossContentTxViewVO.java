@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Data
 public class CrossContentTxViewVO {
-    @ApiModelProperty("高风险交易数量的列表")
+    @ApiModelProperty("风险交易数量的列表")
     List<Integer> txNum;
 
     @ApiModelProperty("时间列表")
