@@ -13,6 +13,9 @@ import java.util.Date;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EvidenceRecordItemVO {
+    @ApiModelProperty("取证记录ID")
+    private Long id;
+
     @ApiModelProperty("取证名称")
     private String name;
 

@@ -12,6 +12,7 @@ import cn.qkl.webserver.vo.evidence.EvidenceRecordItemVO;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
+import org.mybatis.dynamic.sql.select.SimpleSortSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -27,7 +28,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
@@ -51,39 +51,50 @@ public class EvidenceService {
     @Autowired
     OssUtil ossUtil;
 
-    public String getEvidenceCert(Long id) {
-        return evidenceWebDao.getEvidenceCert(
+    public String getEvidenceCert(Long id) throws TemplateException, IOException, ParserConfigurationException, FontFormatException, SAXException {
+        //如果没有就要生成
+        String certOss = evidenceWebDao.getEvidenceCert(
                 select(Tables.evidenceWeb.certOssPath).from(Tables.evidenceWeb)
                         .where(Tables.evidenceWeb.id,isEqualTo(id))
                         .build().render(RenderingStrategies.MYBATIS3)
         );
+        if (certOss == null || certOss.isEmpty()) {
+            certOss = generateEvidenceCert(id);
+            String finalCertOss = certOss;
+            int status = evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.certOssPath).equalTo(finalCertOss).where(Tables.evidenceWeb.id,isEqualTo(id)));
+        }
+        return certOss;
     }
 
     public int markDeleteEvidence(Long id) {
         return evidenceWebDao.markDeleteEvidence(
-                update(Tables.evidenceWeb).set(Tables.evidenceWeb.deleteStatus).equalTo(1).set(Tables.evidenceWeb.updateTime).equalTo(new Date()).where(Tables.evidenceWeb.id,isEqualTo(id))
+                update(Tables.evidenceWeb).set(Tables.evidenceWeb.deleteStatus).equalTo(1).set(Tables.evidenceWeb.updateTime).equalTo(new Date())
+                        .where(Tables.evidenceWeb.id,isEqualTo(id))
+                        .and(Tables.evidenceWeb.deleteStatus,isEqualTo(0))
                         .build().render(RenderingStrategies.MYBATIS3)
         );
     }
 
     public PageVO<EvidenceRecordItemVO> getRecordList(EvidenceRecordListDTO dto) {
         return new PageVO<>(dto.getPageId(),dto.getPageSize(),()->evidenceWebDao.getRecordList(
-                select(Tables.evidenceWeb.name,
+                select(Tables.evidenceWeb.id,
+                        Tables.evidenceWeb.name,
                         Tables.evidenceWeb.riskType,
                         Tables.evidenceWeb.evidenceType,
                         Tables.evidenceWeb.evidencePhase,
                         Tables.evidenceWeb.webOssPath,
                         Tables.evidenceWeb.createTime.as("time"),
                         Tables.platform.name.as("platform_name"),
-                        Tables.platform.platformType).from(Tables.evidenceWeb)
+                        Tables.platform.platformType).from(Tables.evidenceWeb,"ew")
                         .leftJoin(Tables.platform).on(Tables.evidenceWeb.platformId,equalTo(Tables.platform.id))
-                        .orderBy(Tables.evidenceWeb.createTime)
+                        .where(Tables.evidenceWeb.deleteStatus,isEqualTo(0))
+                        .orderBy(SimpleSortSpecification.of("time"))
                         .build().render(RenderingStrategies.MYBATIS3)
         ));
     }
 
-    //根据字段生成证书
-    protected String generateEvidenceCert(Long id) throws TemplateException, IOException, ParserConfigurationException, SAXException, FontFormatException, URISyntaxException {
+    //根据字段生成证书 返回Oss地址
+    protected String generateEvidenceCert(Long id) throws TemplateException, IOException, ParserConfigurationException, SAXException, FontFormatException {
         //H5模板,填入参数
         EvidenceCertParamsVO evidenceCertParamsVO = evidenceWebDao.getEvidenceCertParams(select(
                     Tables.evidenceWeb.personnel,
@@ -121,7 +132,7 @@ public class EvidenceService {
         Document document = builder.parse(bin);
         //加载自定义字体，解决生成图片title处汉字展示不正常问题
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("font/PingFangSC-Regular.ttf");
-        BufferedImage img = null;
+        BufferedImage img;
         if (inputStream != null){
             Font font = Font.createFont(TRUETYPE_FONT, inputStream);
             AWTFontResolver awtFontResolver = new AWTFontResolver();

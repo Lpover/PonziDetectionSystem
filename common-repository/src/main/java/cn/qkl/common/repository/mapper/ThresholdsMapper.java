@@ -67,7 +67,7 @@ public interface ThresholdsMapper {
         @Result(column="set_index", property="setIndex", jdbcType=JdbcType.INTEGER),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="on", property="on", jdbcType=JdbcType.TINYINT),
+        @Result(column="on", property="on", jdbcType=JdbcType.INTEGER),
         @Result(column="num", property="num", jdbcType=JdbcType.INTEGER)
     })
     List<Thresholds> selectMany(SelectStatementProvider selectStatement);

@@ -29,7 +29,7 @@ public final class ThresholdsDynamicSqlSupport {
     public static final SqlColumn<Date> createTime = thresholds.createTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Byte> on = thresholds.on;
+    public static final SqlColumn<Integer> on = thresholds.on;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Integer> num = thresholds.num;
@@ -48,7 +48,7 @@ public final class ThresholdsDynamicSqlSupport {
 
         public final SqlColumn<Date> createTime = column("create_time", JDBCType.TIMESTAMP);
 
-        public final SqlColumn<Byte> on = column("`on`", JDBCType.TINYINT);
+        public final SqlColumn<Integer> on = column("`on`", JDBCType.INTEGER);
 
         public final SqlColumn<Integer> num = column("num", JDBCType.INTEGER);
 

@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.util.List;
-
 /**
  * @Author sunxiaen
  * @Date 2023/6/30 16:30
@@ -20,7 +18,7 @@ public class NotificationItemVO {
         @ApiModelProperty("通知项名字")
         String name;
         @ApiModelProperty("目前状态 1开 0关")
-        Byte on;
+        Integer on;
 
         public static NotificationItemVO transformFromThreshold(Thresholds threshold) {
                 return FunctionUtil.apply(new NotificationItemVO(), it -> {
