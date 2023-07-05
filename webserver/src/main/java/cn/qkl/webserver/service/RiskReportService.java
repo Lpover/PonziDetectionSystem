@@ -82,14 +82,25 @@ public class RiskReportService {
     }
 
     public SituationInfoVO getSituationInfo(SituationReportDTO dto){
-        SituationInfo = reportDao.getSituationInfo(Tables.situationReport.platformName,Tables.situationReport.carrierPic,
-                Tables.situationReport.carrierVie,Tables.situationReport.carrierOth,Tables.situationReport.categoryDyn,Tables.situationReport.categoryOth,
-                Tables.situationReport.categorySta,Tables.situationReport.txRatioLow,Tables.situationReport.txRatioMid,Tables.situationReport.txRatioHigh,
-
-
+        SituationInfoVO SituationInfo = reportDao.getSituationInfo(
+                select(Tables.situationReport.platformName,Tables.situationReport.carrierPic,
+                        Tables.situationReport.carrierVie,Tables.situationReport.carrierOth,Tables.situationReport.categoryDyn,Tables.situationReport.categoryOth,
+                        Tables.situationReport.categorySta,Tables.situationReport.txRatioLow,Tables.situationReport.txRatioMid,Tables.situationReport.txRatioHigh,
+                        Tables.situationReport.riskWordMostName,Tables.situationReport.riskWordMostNum,Tables.situationReport.riskWordLeastName,Tables.situationReport.riskWordLeastNum,
+                        Tables.situationReport.contentNumRatio,Tables.situationReport.ratioPositive,Tables.situationReport.ratioNegative,Tables.situationReport.platNameLow,
+                        Tables.situationReport.platNameMid,Tables.situationReport.platNameHigh,Tables.situationReport.warningNum,Tables.situationReport.top5TopicsContent,
+                        Tables.situationReport.top5TopicsSocial,Tables.situationReport.top3Words,Tables.situationReport.monitorNumHigh,Tables.situationReport.monitorNumLow,
+                        Tables.situationReport.monitorNumHigh,Tables.situationReport.monitorNumMid,Tables.situationReport.monitorNumLow,Tables.situationReport.platRatioLow,
+                        Tables.situationReport.platRatioMid,Tables.situationReport.platRatioLow,Tables.situationReport.platRatioHigh,Tables.situationReport.nftPlatformName,
+                        Tables.situationReport.nftPlatformHotness,Tables.situationReport.nftPlatformHotnessChange,Tables.situationReport.web3PlatformHotness,
+                        Tables.situationReport.web3PlatformHotnessChange,Tables.situationReport.web3PlatformName,Tables.situationReport.riskNameHigh,
+                        Tables.situationReport.riskNameLow,Tables.situationReport.riskIndexLow,Tables.situationReport.riskIndexHigh)
+                        .from(Tables.situationReport)
+                        .limit(1)
+                        .build()
+                        .render(RenderingStrategies.MYBATIS3)
         );
-        SituationInfoVO vo=new SituationInfoVO();
-        return vo;
+        return SituationInfo;
     }
 
 

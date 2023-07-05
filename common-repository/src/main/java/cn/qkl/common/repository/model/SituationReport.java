@@ -1,5 +1,6 @@
 package cn.qkl.common.repository.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.annotation.Generated;
 
@@ -38,16 +39,16 @@ public class SituationReport {
     private Integer txRatioHigh;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long riskWordMostId;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer riskWordMostNum;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long riskWordLeastId;
+    private String riskWordMostName;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Integer riskWordLeastNum;
+    private Long riskWordLeastNum;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String riskWordLeastName;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer contentNumRatio;
@@ -102,6 +103,36 @@ public class SituationReport {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String platNameHigh;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String nftPlatformName;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Long nftPlatformHotness;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private BigDecimal nftPlatformHotnessChange;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String web3PlatformName;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Long web3PlatformHotness;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private BigDecimal web3PlatformHotnessChange;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String riskNameHigh;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer riskIndexHigh;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String riskNameLow;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer riskIndexLow;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
@@ -280,22 +311,6 @@ public class SituationReport {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getRiskWordMostId() {
-        return riskWordMostId;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public SituationReport withRiskWordMostId(Long riskWordMostId) {
-        this.setRiskWordMostId(riskWordMostId);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setRiskWordMostId(Long riskWordMostId) {
-        this.riskWordMostId = riskWordMostId;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Integer getRiskWordMostNum() {
         return riskWordMostNum;
     }
@@ -312,35 +327,51 @@ public class SituationReport {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getRiskWordLeastId() {
-        return riskWordLeastId;
+    public String getRiskWordMostName() {
+        return riskWordMostName;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public SituationReport withRiskWordLeastId(Long riskWordLeastId) {
-        this.setRiskWordLeastId(riskWordLeastId);
+    public SituationReport withRiskWordMostName(String riskWordMostName) {
+        this.setRiskWordMostName(riskWordMostName);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setRiskWordLeastId(Long riskWordLeastId) {
-        this.riskWordLeastId = riskWordLeastId;
+    public void setRiskWordMostName(String riskWordMostName) {
+        this.riskWordMostName = riskWordMostName;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Integer getRiskWordLeastNum() {
+    public Long getRiskWordLeastNum() {
         return riskWordLeastNum;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public SituationReport withRiskWordLeastNum(Integer riskWordLeastNum) {
+    public SituationReport withRiskWordLeastNum(Long riskWordLeastNum) {
         this.setRiskWordLeastNum(riskWordLeastNum);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setRiskWordLeastNum(Integer riskWordLeastNum) {
+    public void setRiskWordLeastNum(Long riskWordLeastNum) {
         this.riskWordLeastNum = riskWordLeastNum;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getRiskWordLeastName() {
+        return riskWordLeastName;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public SituationReport withRiskWordLeastName(String riskWordLeastName) {
+        this.setRiskWordLeastName(riskWordLeastName);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setRiskWordLeastName(String riskWordLeastName) {
+        this.riskWordLeastName = riskWordLeastName;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -631,6 +662,166 @@ public class SituationReport {
         this.platNameHigh = platNameHigh;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getNftPlatformName() {
+        return nftPlatformName;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public SituationReport withNftPlatformName(String nftPlatformName) {
+        this.setNftPlatformName(nftPlatformName);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setNftPlatformName(String nftPlatformName) {
+        this.nftPlatformName = nftPlatformName;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Long getNftPlatformHotness() {
+        return nftPlatformHotness;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public SituationReport withNftPlatformHotness(Long nftPlatformHotness) {
+        this.setNftPlatformHotness(nftPlatformHotness);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setNftPlatformHotness(Long nftPlatformHotness) {
+        this.nftPlatformHotness = nftPlatformHotness;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public BigDecimal getNftPlatformHotnessChange() {
+        return nftPlatformHotnessChange;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public SituationReport withNftPlatformHotnessChange(BigDecimal nftPlatformHotnessChange) {
+        this.setNftPlatformHotnessChange(nftPlatformHotnessChange);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setNftPlatformHotnessChange(BigDecimal nftPlatformHotnessChange) {
+        this.nftPlatformHotnessChange = nftPlatformHotnessChange;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getWeb3PlatformName() {
+        return web3PlatformName;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public SituationReport withWeb3PlatformName(String web3PlatformName) {
+        this.setWeb3PlatformName(web3PlatformName);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setWeb3PlatformName(String web3PlatformName) {
+        this.web3PlatformName = web3PlatformName;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Long getWeb3PlatformHotness() {
+        return web3PlatformHotness;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public SituationReport withWeb3PlatformHotness(Long web3PlatformHotness) {
+        this.setWeb3PlatformHotness(web3PlatformHotness);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setWeb3PlatformHotness(Long web3PlatformHotness) {
+        this.web3PlatformHotness = web3PlatformHotness;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public BigDecimal getWeb3PlatformHotnessChange() {
+        return web3PlatformHotnessChange;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public SituationReport withWeb3PlatformHotnessChange(BigDecimal web3PlatformHotnessChange) {
+        this.setWeb3PlatformHotnessChange(web3PlatformHotnessChange);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setWeb3PlatformHotnessChange(BigDecimal web3PlatformHotnessChange) {
+        this.web3PlatformHotnessChange = web3PlatformHotnessChange;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getRiskNameHigh() {
+        return riskNameHigh;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public SituationReport withRiskNameHigh(String riskNameHigh) {
+        this.setRiskNameHigh(riskNameHigh);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setRiskNameHigh(String riskNameHigh) {
+        this.riskNameHigh = riskNameHigh;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getRiskIndexHigh() {
+        return riskIndexHigh;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public SituationReport withRiskIndexHigh(Integer riskIndexHigh) {
+        this.setRiskIndexHigh(riskIndexHigh);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setRiskIndexHigh(Integer riskIndexHigh) {
+        this.riskIndexHigh = riskIndexHigh;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getRiskNameLow() {
+        return riskNameLow;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public SituationReport withRiskNameLow(String riskNameLow) {
+        this.setRiskNameLow(riskNameLow);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setRiskNameLow(String riskNameLow) {
+        this.riskNameLow = riskNameLow;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getRiskIndexLow() {
+        return riskIndexLow;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public SituationReport withRiskIndexLow(Integer riskIndexLow) {
+        this.setRiskIndexLow(riskIndexLow);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setRiskIndexLow(Integer riskIndexLow) {
+        this.riskIndexLow = riskIndexLow;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -649,10 +840,10 @@ public class SituationReport {
         sb.append(", txRatioLow=").append(txRatioLow);
         sb.append(", txRatioMid=").append(txRatioMid);
         sb.append(", txRatioHigh=").append(txRatioHigh);
-        sb.append(", riskWordMostId=").append(riskWordMostId);
         sb.append(", riskWordMostNum=").append(riskWordMostNum);
-        sb.append(", riskWordLeastId=").append(riskWordLeastId);
+        sb.append(", riskWordMostName=").append(riskWordMostName);
         sb.append(", riskWordLeastNum=").append(riskWordLeastNum);
+        sb.append(", riskWordLeastName=").append(riskWordLeastName);
         sb.append(", contentNumRatio=").append(contentNumRatio);
         sb.append(", ratioPositive=").append(ratioPositive);
         sb.append(", ratioNegative=").append(ratioNegative);
@@ -671,6 +862,16 @@ public class SituationReport {
         sb.append(", platNameLow=").append(platNameLow);
         sb.append(", platNameMid=").append(platNameMid);
         sb.append(", platNameHigh=").append(platNameHigh);
+        sb.append(", nftPlatformName=").append(nftPlatformName);
+        sb.append(", nftPlatformHotness=").append(nftPlatformHotness);
+        sb.append(", nftPlatformHotnessChange=").append(nftPlatformHotnessChange);
+        sb.append(", web3PlatformName=").append(web3PlatformName);
+        sb.append(", web3PlatformHotness=").append(web3PlatformHotness);
+        sb.append(", web3PlatformHotnessChange=").append(web3PlatformHotnessChange);
+        sb.append(", riskNameHigh=").append(riskNameHigh);
+        sb.append(", riskIndexHigh=").append(riskIndexHigh);
+        sb.append(", riskNameLow=").append(riskNameLow);
+        sb.append(", riskIndexLow=").append(riskIndexLow);
         sb.append("]");
         return sb.toString();
     }

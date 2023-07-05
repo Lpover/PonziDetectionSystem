@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface SituationReportMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, platformName, carrierPic, carrierVie, carrierOth, categoryDyn, categorySta, categoryOth, txRatioLow, txRatioMid, txRatioHigh, riskWordMostId, riskWordMostNum, riskWordLeastId, riskWordLeastNum, contentNumRatio, ratioPositive, ratioNegative, platRatioHigh, platRatioMid, platRatioLow, warningNum, top5TopicsContent, top5TopicsSocial, top3Words, updateTime, createTime, monitorNumHigh, monitorNumMid, monitorNumLow, platNameLow, platNameMid, platNameHigh);
+    BasicColumn[] selectList = BasicColumn.columnList(id, platformName, carrierPic, carrierVie, carrierOth, categoryDyn, categorySta, categoryOth, txRatioLow, txRatioMid, txRatioHigh, riskWordMostNum, riskWordMostName, riskWordLeastNum, riskWordLeastName, contentNumRatio, ratioPositive, ratioNegative, platRatioHigh, platRatioMid, platRatioLow, warningNum, top5TopicsContent, top5TopicsSocial, top3Words, updateTime, createTime, monitorNumHigh, monitorNumMid, monitorNumLow, platNameLow, platNameMid, platNameHigh, nftPlatformName, nftPlatformHotness, nftPlatformHotnessChange, web3PlatformName, web3PlatformHotness, web3PlatformHotnessChange, riskNameHigh, riskIndexHigh, riskNameLow, riskIndexLow);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -72,10 +72,10 @@ public interface SituationReportMapper {
         @Result(column="tx_ratio_low", property="txRatioLow", jdbcType=JdbcType.INTEGER),
         @Result(column="tx_ratio_mid", property="txRatioMid", jdbcType=JdbcType.INTEGER),
         @Result(column="tx_ratio_high", property="txRatioHigh", jdbcType=JdbcType.INTEGER),
-        @Result(column="risk_word_most_id", property="riskWordMostId", jdbcType=JdbcType.BIGINT),
         @Result(column="risk_word_most_num", property="riskWordMostNum", jdbcType=JdbcType.INTEGER),
-        @Result(column="risk_word_least_id", property="riskWordLeastId", jdbcType=JdbcType.BIGINT),
-        @Result(column="risk_word_least_num", property="riskWordLeastNum", jdbcType=JdbcType.INTEGER),
+        @Result(column="risk_word_most_name", property="riskWordMostName", jdbcType=JdbcType.VARCHAR),
+        @Result(column="risk_word_least_num", property="riskWordLeastNum", jdbcType=JdbcType.BIGINT),
+        @Result(column="risk_word_least_name", property="riskWordLeastName", jdbcType=JdbcType.VARCHAR),
         @Result(column="content_num_ratio", property="contentNumRatio", jdbcType=JdbcType.INTEGER),
         @Result(column="ratio_positive", property="ratioPositive", jdbcType=JdbcType.INTEGER),
         @Result(column="ratio_negative", property="ratioNegative", jdbcType=JdbcType.INTEGER),
@@ -93,7 +93,17 @@ public interface SituationReportMapper {
         @Result(column="monitor_num_low", property="monitorNumLow", jdbcType=JdbcType.INTEGER),
         @Result(column="plat_name_low", property="platNameLow", jdbcType=JdbcType.VARCHAR),
         @Result(column="plat_name_mid", property="platNameMid", jdbcType=JdbcType.VARCHAR),
-        @Result(column="plat_name_high", property="platNameHigh", jdbcType=JdbcType.VARCHAR)
+        @Result(column="plat_name_high", property="platNameHigh", jdbcType=JdbcType.VARCHAR),
+        @Result(column="nft_platform_name", property="nftPlatformName", jdbcType=JdbcType.VARCHAR),
+        @Result(column="nft_platform_hotness", property="nftPlatformHotness", jdbcType=JdbcType.BIGINT),
+        @Result(column="nft_platform_hotness_change", property="nftPlatformHotnessChange", jdbcType=JdbcType.DECIMAL),
+        @Result(column="web3_platform_name", property="web3PlatformName", jdbcType=JdbcType.VARCHAR),
+        @Result(column="web3_platform_hotness", property="web3PlatformHotness", jdbcType=JdbcType.BIGINT),
+        @Result(column="web3_platform_hotness_change", property="web3PlatformHotnessChange", jdbcType=JdbcType.DECIMAL),
+        @Result(column="risk_name_high", property="riskNameHigh", jdbcType=JdbcType.VARCHAR),
+        @Result(column="risk_index_high", property="riskIndexHigh", jdbcType=JdbcType.INTEGER),
+        @Result(column="risk_name_low", property="riskNameLow", jdbcType=JdbcType.VARCHAR),
+        @Result(column="risk_index_low", property="riskIndexLow", jdbcType=JdbcType.INTEGER)
     })
     List<SituationReport> selectMany(SelectStatementProvider selectStatement);
 
@@ -132,10 +142,10 @@ public interface SituationReportMapper {
             .map(txRatioLow).toProperty("txRatioLow")
             .map(txRatioMid).toProperty("txRatioMid")
             .map(txRatioHigh).toProperty("txRatioHigh")
-            .map(riskWordMostId).toProperty("riskWordMostId")
             .map(riskWordMostNum).toProperty("riskWordMostNum")
-            .map(riskWordLeastId).toProperty("riskWordLeastId")
+            .map(riskWordMostName).toProperty("riskWordMostName")
             .map(riskWordLeastNum).toProperty("riskWordLeastNum")
+            .map(riskWordLeastName).toProperty("riskWordLeastName")
             .map(contentNumRatio).toProperty("contentNumRatio")
             .map(ratioPositive).toProperty("ratioPositive")
             .map(ratioNegative).toProperty("ratioNegative")
@@ -154,6 +164,16 @@ public interface SituationReportMapper {
             .map(platNameLow).toProperty("platNameLow")
             .map(platNameMid).toProperty("platNameMid")
             .map(platNameHigh).toProperty("platNameHigh")
+            .map(nftPlatformName).toProperty("nftPlatformName")
+            .map(nftPlatformHotness).toProperty("nftPlatformHotness")
+            .map(nftPlatformHotnessChange).toProperty("nftPlatformHotnessChange")
+            .map(web3PlatformName).toProperty("web3PlatformName")
+            .map(web3PlatformHotness).toProperty("web3PlatformHotness")
+            .map(web3PlatformHotnessChange).toProperty("web3PlatformHotnessChange")
+            .map(riskNameHigh).toProperty("riskNameHigh")
+            .map(riskIndexHigh).toProperty("riskIndexHigh")
+            .map(riskNameLow).toProperty("riskNameLow")
+            .map(riskIndexLow).toProperty("riskIndexLow")
         );
     }
 
@@ -171,10 +191,10 @@ public interface SituationReportMapper {
             .map(txRatioLow).toProperty("txRatioLow")
             .map(txRatioMid).toProperty("txRatioMid")
             .map(txRatioHigh).toProperty("txRatioHigh")
-            .map(riskWordMostId).toProperty("riskWordMostId")
             .map(riskWordMostNum).toProperty("riskWordMostNum")
-            .map(riskWordLeastId).toProperty("riskWordLeastId")
+            .map(riskWordMostName).toProperty("riskWordMostName")
             .map(riskWordLeastNum).toProperty("riskWordLeastNum")
+            .map(riskWordLeastName).toProperty("riskWordLeastName")
             .map(contentNumRatio).toProperty("contentNumRatio")
             .map(ratioPositive).toProperty("ratioPositive")
             .map(ratioNegative).toProperty("ratioNegative")
@@ -193,6 +213,16 @@ public interface SituationReportMapper {
             .map(platNameLow).toProperty("platNameLow")
             .map(platNameMid).toProperty("platNameMid")
             .map(platNameHigh).toProperty("platNameHigh")
+            .map(nftPlatformName).toProperty("nftPlatformName")
+            .map(nftPlatformHotness).toProperty("nftPlatformHotness")
+            .map(nftPlatformHotnessChange).toProperty("nftPlatformHotnessChange")
+            .map(web3PlatformName).toProperty("web3PlatformName")
+            .map(web3PlatformHotness).toProperty("web3PlatformHotness")
+            .map(web3PlatformHotnessChange).toProperty("web3PlatformHotnessChange")
+            .map(riskNameHigh).toProperty("riskNameHigh")
+            .map(riskIndexHigh).toProperty("riskIndexHigh")
+            .map(riskNameLow).toProperty("riskNameLow")
+            .map(riskIndexLow).toProperty("riskIndexLow")
         );
     }
 
@@ -210,10 +240,10 @@ public interface SituationReportMapper {
             .map(txRatioLow).toPropertyWhenPresent("txRatioLow", record::getTxRatioLow)
             .map(txRatioMid).toPropertyWhenPresent("txRatioMid", record::getTxRatioMid)
             .map(txRatioHigh).toPropertyWhenPresent("txRatioHigh", record::getTxRatioHigh)
-            .map(riskWordMostId).toPropertyWhenPresent("riskWordMostId", record::getRiskWordMostId)
             .map(riskWordMostNum).toPropertyWhenPresent("riskWordMostNum", record::getRiskWordMostNum)
-            .map(riskWordLeastId).toPropertyWhenPresent("riskWordLeastId", record::getRiskWordLeastId)
+            .map(riskWordMostName).toPropertyWhenPresent("riskWordMostName", record::getRiskWordMostName)
             .map(riskWordLeastNum).toPropertyWhenPresent("riskWordLeastNum", record::getRiskWordLeastNum)
+            .map(riskWordLeastName).toPropertyWhenPresent("riskWordLeastName", record::getRiskWordLeastName)
             .map(contentNumRatio).toPropertyWhenPresent("contentNumRatio", record::getContentNumRatio)
             .map(ratioPositive).toPropertyWhenPresent("ratioPositive", record::getRatioPositive)
             .map(ratioNegative).toPropertyWhenPresent("ratioNegative", record::getRatioNegative)
@@ -232,6 +262,16 @@ public interface SituationReportMapper {
             .map(platNameLow).toPropertyWhenPresent("platNameLow", record::getPlatNameLow)
             .map(platNameMid).toPropertyWhenPresent("platNameMid", record::getPlatNameMid)
             .map(platNameHigh).toPropertyWhenPresent("platNameHigh", record::getPlatNameHigh)
+            .map(nftPlatformName).toPropertyWhenPresent("nftPlatformName", record::getNftPlatformName)
+            .map(nftPlatformHotness).toPropertyWhenPresent("nftPlatformHotness", record::getNftPlatformHotness)
+            .map(nftPlatformHotnessChange).toPropertyWhenPresent("nftPlatformHotnessChange", record::getNftPlatformHotnessChange)
+            .map(web3PlatformName).toPropertyWhenPresent("web3PlatformName", record::getWeb3PlatformName)
+            .map(web3PlatformHotness).toPropertyWhenPresent("web3PlatformHotness", record::getWeb3PlatformHotness)
+            .map(web3PlatformHotnessChange).toPropertyWhenPresent("web3PlatformHotnessChange", record::getWeb3PlatformHotnessChange)
+            .map(riskNameHigh).toPropertyWhenPresent("riskNameHigh", record::getRiskNameHigh)
+            .map(riskIndexHigh).toPropertyWhenPresent("riskIndexHigh", record::getRiskIndexHigh)
+            .map(riskNameLow).toPropertyWhenPresent("riskNameLow", record::getRiskNameLow)
+            .map(riskIndexLow).toPropertyWhenPresent("riskIndexLow", record::getRiskIndexLow)
         );
     }
 
@@ -275,10 +315,10 @@ public interface SituationReportMapper {
                 .set(txRatioLow).equalTo(record::getTxRatioLow)
                 .set(txRatioMid).equalTo(record::getTxRatioMid)
                 .set(txRatioHigh).equalTo(record::getTxRatioHigh)
-                .set(riskWordMostId).equalTo(record::getRiskWordMostId)
                 .set(riskWordMostNum).equalTo(record::getRiskWordMostNum)
-                .set(riskWordLeastId).equalTo(record::getRiskWordLeastId)
+                .set(riskWordMostName).equalTo(record::getRiskWordMostName)
                 .set(riskWordLeastNum).equalTo(record::getRiskWordLeastNum)
+                .set(riskWordLeastName).equalTo(record::getRiskWordLeastName)
                 .set(contentNumRatio).equalTo(record::getContentNumRatio)
                 .set(ratioPositive).equalTo(record::getRatioPositive)
                 .set(ratioNegative).equalTo(record::getRatioNegative)
@@ -296,7 +336,17 @@ public interface SituationReportMapper {
                 .set(monitorNumLow).equalTo(record::getMonitorNumLow)
                 .set(platNameLow).equalTo(record::getPlatNameLow)
                 .set(platNameMid).equalTo(record::getPlatNameMid)
-                .set(platNameHigh).equalTo(record::getPlatNameHigh);
+                .set(platNameHigh).equalTo(record::getPlatNameHigh)
+                .set(nftPlatformName).equalTo(record::getNftPlatformName)
+                .set(nftPlatformHotness).equalTo(record::getNftPlatformHotness)
+                .set(nftPlatformHotnessChange).equalTo(record::getNftPlatformHotnessChange)
+                .set(web3PlatformName).equalTo(record::getWeb3PlatformName)
+                .set(web3PlatformHotness).equalTo(record::getWeb3PlatformHotness)
+                .set(web3PlatformHotnessChange).equalTo(record::getWeb3PlatformHotnessChange)
+                .set(riskNameHigh).equalTo(record::getRiskNameHigh)
+                .set(riskIndexHigh).equalTo(record::getRiskIndexHigh)
+                .set(riskNameLow).equalTo(record::getRiskNameLow)
+                .set(riskIndexLow).equalTo(record::getRiskIndexLow);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -312,10 +362,10 @@ public interface SituationReportMapper {
                 .set(txRatioLow).equalToWhenPresent(record::getTxRatioLow)
                 .set(txRatioMid).equalToWhenPresent(record::getTxRatioMid)
                 .set(txRatioHigh).equalToWhenPresent(record::getTxRatioHigh)
-                .set(riskWordMostId).equalToWhenPresent(record::getRiskWordMostId)
                 .set(riskWordMostNum).equalToWhenPresent(record::getRiskWordMostNum)
-                .set(riskWordLeastId).equalToWhenPresent(record::getRiskWordLeastId)
+                .set(riskWordMostName).equalToWhenPresent(record::getRiskWordMostName)
                 .set(riskWordLeastNum).equalToWhenPresent(record::getRiskWordLeastNum)
+                .set(riskWordLeastName).equalToWhenPresent(record::getRiskWordLeastName)
                 .set(contentNumRatio).equalToWhenPresent(record::getContentNumRatio)
                 .set(ratioPositive).equalToWhenPresent(record::getRatioPositive)
                 .set(ratioNegative).equalToWhenPresent(record::getRatioNegative)
@@ -333,7 +383,17 @@ public interface SituationReportMapper {
                 .set(monitorNumLow).equalToWhenPresent(record::getMonitorNumLow)
                 .set(platNameLow).equalToWhenPresent(record::getPlatNameLow)
                 .set(platNameMid).equalToWhenPresent(record::getPlatNameMid)
-                .set(platNameHigh).equalToWhenPresent(record::getPlatNameHigh);
+                .set(platNameHigh).equalToWhenPresent(record::getPlatNameHigh)
+                .set(nftPlatformName).equalToWhenPresent(record::getNftPlatformName)
+                .set(nftPlatformHotness).equalToWhenPresent(record::getNftPlatformHotness)
+                .set(nftPlatformHotnessChange).equalToWhenPresent(record::getNftPlatformHotnessChange)
+                .set(web3PlatformName).equalToWhenPresent(record::getWeb3PlatformName)
+                .set(web3PlatformHotness).equalToWhenPresent(record::getWeb3PlatformHotness)
+                .set(web3PlatformHotnessChange).equalToWhenPresent(record::getWeb3PlatformHotnessChange)
+                .set(riskNameHigh).equalToWhenPresent(record::getRiskNameHigh)
+                .set(riskIndexHigh).equalToWhenPresent(record::getRiskIndexHigh)
+                .set(riskNameLow).equalToWhenPresent(record::getRiskNameLow)
+                .set(riskIndexLow).equalToWhenPresent(record::getRiskIndexLow);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -349,10 +409,10 @@ public interface SituationReportMapper {
             .set(txRatioLow).equalTo(record::getTxRatioLow)
             .set(txRatioMid).equalTo(record::getTxRatioMid)
             .set(txRatioHigh).equalTo(record::getTxRatioHigh)
-            .set(riskWordMostId).equalTo(record::getRiskWordMostId)
             .set(riskWordMostNum).equalTo(record::getRiskWordMostNum)
-            .set(riskWordLeastId).equalTo(record::getRiskWordLeastId)
+            .set(riskWordMostName).equalTo(record::getRiskWordMostName)
             .set(riskWordLeastNum).equalTo(record::getRiskWordLeastNum)
+            .set(riskWordLeastName).equalTo(record::getRiskWordLeastName)
             .set(contentNumRatio).equalTo(record::getContentNumRatio)
             .set(ratioPositive).equalTo(record::getRatioPositive)
             .set(ratioNegative).equalTo(record::getRatioNegative)
@@ -371,6 +431,16 @@ public interface SituationReportMapper {
             .set(platNameLow).equalTo(record::getPlatNameLow)
             .set(platNameMid).equalTo(record::getPlatNameMid)
             .set(platNameHigh).equalTo(record::getPlatNameHigh)
+            .set(nftPlatformName).equalTo(record::getNftPlatformName)
+            .set(nftPlatformHotness).equalTo(record::getNftPlatformHotness)
+            .set(nftPlatformHotnessChange).equalTo(record::getNftPlatformHotnessChange)
+            .set(web3PlatformName).equalTo(record::getWeb3PlatformName)
+            .set(web3PlatformHotness).equalTo(record::getWeb3PlatformHotness)
+            .set(web3PlatformHotnessChange).equalTo(record::getWeb3PlatformHotnessChange)
+            .set(riskNameHigh).equalTo(record::getRiskNameHigh)
+            .set(riskIndexHigh).equalTo(record::getRiskIndexHigh)
+            .set(riskNameLow).equalTo(record::getRiskNameLow)
+            .set(riskIndexLow).equalTo(record::getRiskIndexLow)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -388,10 +458,10 @@ public interface SituationReportMapper {
             .set(txRatioLow).equalToWhenPresent(record::getTxRatioLow)
             .set(txRatioMid).equalToWhenPresent(record::getTxRatioMid)
             .set(txRatioHigh).equalToWhenPresent(record::getTxRatioHigh)
-            .set(riskWordMostId).equalToWhenPresent(record::getRiskWordMostId)
             .set(riskWordMostNum).equalToWhenPresent(record::getRiskWordMostNum)
-            .set(riskWordLeastId).equalToWhenPresent(record::getRiskWordLeastId)
+            .set(riskWordMostName).equalToWhenPresent(record::getRiskWordMostName)
             .set(riskWordLeastNum).equalToWhenPresent(record::getRiskWordLeastNum)
+            .set(riskWordLeastName).equalToWhenPresent(record::getRiskWordLeastName)
             .set(contentNumRatio).equalToWhenPresent(record::getContentNumRatio)
             .set(ratioPositive).equalToWhenPresent(record::getRatioPositive)
             .set(ratioNegative).equalToWhenPresent(record::getRatioNegative)
@@ -410,6 +480,16 @@ public interface SituationReportMapper {
             .set(platNameLow).equalToWhenPresent(record::getPlatNameLow)
             .set(platNameMid).equalToWhenPresent(record::getPlatNameMid)
             .set(platNameHigh).equalToWhenPresent(record::getPlatNameHigh)
+            .set(nftPlatformName).equalToWhenPresent(record::getNftPlatformName)
+            .set(nftPlatformHotness).equalToWhenPresent(record::getNftPlatformHotness)
+            .set(nftPlatformHotnessChange).equalToWhenPresent(record::getNftPlatformHotnessChange)
+            .set(web3PlatformName).equalToWhenPresent(record::getWeb3PlatformName)
+            .set(web3PlatformHotness).equalToWhenPresent(record::getWeb3PlatformHotness)
+            .set(web3PlatformHotnessChange).equalToWhenPresent(record::getWeb3PlatformHotnessChange)
+            .set(riskNameHigh).equalToWhenPresent(record::getRiskNameHigh)
+            .set(riskIndexHigh).equalToWhenPresent(record::getRiskIndexHigh)
+            .set(riskNameLow).equalToWhenPresent(record::getRiskNameLow)
+            .set(riskIndexLow).equalToWhenPresent(record::getRiskIndexLow)
             .where(id, isEqualTo(record::getId))
         );
     }

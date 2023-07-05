@@ -79,8 +79,8 @@
 <!--        </table>-->
 <!--        <table tableName="thresholds" domainObjectName="Thresholds">-->
 <!--        </table>-->
-<!--        <table tableName="situation_report" domainObjectName="SituationReport">-->
-<!--        </table>-->
+        <table tableName="situation_report" domainObjectName="SituationReport">
+        </table>
 
     </context>
 </generatorConfiguration>

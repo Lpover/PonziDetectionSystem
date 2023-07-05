@@ -50,6 +50,6 @@ public class RiskReportController {
     @ApiOperation("态势感知驾驶舱每日报告")
     @GetMapping("situationreport")
     public BaseResult<SituationInfoVO> getSituationInfo(@Validated SituationReportDTO dto) {
-        return BaseResult.ok(new SituationInfoVO());
+        return BaseResult.ok(riskReportService.getSituationInfo(dto));
     }//获得报表信息
 }

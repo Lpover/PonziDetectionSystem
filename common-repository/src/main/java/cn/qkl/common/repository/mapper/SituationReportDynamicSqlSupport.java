@@ -1,5 +1,6 @@
 package cn.qkl.common.repository.mapper;
 
+import java.math.BigDecimal;
 import java.sql.JDBCType;
 import java.util.Date;
 import javax.annotation.Generated;
@@ -44,16 +45,16 @@ public final class SituationReportDynamicSqlSupport {
     public static final SqlColumn<Integer> txRatioHigh = situationReport.txRatioHigh;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Long> riskWordMostId = situationReport.riskWordMostId;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Integer> riskWordMostNum = situationReport.riskWordMostNum;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Long> riskWordLeastId = situationReport.riskWordLeastId;
+    public static final SqlColumn<String> riskWordMostName = situationReport.riskWordMostName;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Integer> riskWordLeastNum = situationReport.riskWordLeastNum;
+    public static final SqlColumn<Long> riskWordLeastNum = situationReport.riskWordLeastNum;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> riskWordLeastName = situationReport.riskWordLeastName;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Integer> contentNumRatio = situationReport.contentNumRatio;
@@ -110,6 +111,36 @@ public final class SituationReportDynamicSqlSupport {
     public static final SqlColumn<String> platNameHigh = situationReport.platNameHigh;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> nftPlatformName = situationReport.nftPlatformName;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Long> nftPlatformHotness = situationReport.nftPlatformHotness;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<BigDecimal> nftPlatformHotnessChange = situationReport.nftPlatformHotnessChange;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> web3PlatformName = situationReport.web3PlatformName;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Long> web3PlatformHotness = situationReport.web3PlatformHotness;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<BigDecimal> web3PlatformHotnessChange = situationReport.web3PlatformHotnessChange;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> riskNameHigh = situationReport.riskNameHigh;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Integer> riskIndexHigh = situationReport.riskIndexHigh;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> riskNameLow = situationReport.riskNameLow;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Integer> riskIndexLow = situationReport.riskIndexLow;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class SituationReport extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -133,13 +164,13 @@ public final class SituationReportDynamicSqlSupport {
 
         public final SqlColumn<Integer> txRatioHigh = column("tx_ratio_high", JDBCType.INTEGER);
 
-        public final SqlColumn<Long> riskWordMostId = column("risk_word_most_id", JDBCType.BIGINT);
-
         public final SqlColumn<Integer> riskWordMostNum = column("risk_word_most_num", JDBCType.INTEGER);
 
-        public final SqlColumn<Long> riskWordLeastId = column("risk_word_least_id", JDBCType.BIGINT);
+        public final SqlColumn<String> riskWordMostName = column("risk_word_most_name", JDBCType.VARCHAR);
 
-        public final SqlColumn<Integer> riskWordLeastNum = column("risk_word_least_num", JDBCType.INTEGER);
+        public final SqlColumn<Long> riskWordLeastNum = column("risk_word_least_num", JDBCType.BIGINT);
+
+        public final SqlColumn<String> riskWordLeastName = column("risk_word_least_name", JDBCType.VARCHAR);
 
         public final SqlColumn<Integer> contentNumRatio = column("content_num_ratio", JDBCType.INTEGER);
 
@@ -176,6 +207,26 @@ public final class SituationReportDynamicSqlSupport {
         public final SqlColumn<String> platNameMid = column("plat_name_mid", JDBCType.VARCHAR);
 
         public final SqlColumn<String> platNameHigh = column("plat_name_high", JDBCType.VARCHAR);
+
+        public final SqlColumn<String> nftPlatformName = column("nft_platform_name", JDBCType.VARCHAR);
+
+        public final SqlColumn<Long> nftPlatformHotness = column("nft_platform_hotness", JDBCType.BIGINT);
+
+        public final SqlColumn<BigDecimal> nftPlatformHotnessChange = column("nft_platform_hotness_change", JDBCType.DECIMAL);
+
+        public final SqlColumn<String> web3PlatformName = column("web3_platform_name", JDBCType.VARCHAR);
+
+        public final SqlColumn<Long> web3PlatformHotness = column("web3_platform_hotness", JDBCType.BIGINT);
+
+        public final SqlColumn<BigDecimal> web3PlatformHotnessChange = column("web3_platform_hotness_change", JDBCType.DECIMAL);
+
+        public final SqlColumn<String> riskNameHigh = column("risk_name_high", JDBCType.VARCHAR);
+
+        public final SqlColumn<Integer> riskIndexHigh = column("risk_index_high", JDBCType.INTEGER);
+
+        public final SqlColumn<String> riskNameLow = column("risk_name_low", JDBCType.VARCHAR);
+
+        public final SqlColumn<Integer> riskIndexLow = column("risk_index_low", JDBCType.INTEGER);
 
         public SituationReport() {
             super("situation_report");
