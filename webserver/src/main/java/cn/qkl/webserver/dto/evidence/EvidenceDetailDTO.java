@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 public class EvidenceDetailDTO {
     @ApiModelProperty("证据ID")
-    private Integer evidenceID;
+    private Long evidenceID;
 }

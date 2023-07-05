@@ -2,6 +2,7 @@ package cn.qkl.common.framework.util;
 
 import cn.qkl.common.framework.config.OssProperties;
 import com.obs.services.ObsClient;
+import com.obs.services.model.ObsObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -55,4 +56,16 @@ public class OssUtil {
         return "https://digital-content.obs.cn-east-3.myhuaweicloud.com/" + fileName;
     }
 
+    // 文件对象下载，取证固证的目录为evidence
+    public ObsObject downloadFile(String dir, String fileName) {
+        ObsObject obsObject = null;
+        try {
+            obsObject = obsClient.getObject("digital-content", dir + fileName);
+            log.info("下载文件ObsObject: " + obsObject);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("OBS下载文件报错Exception: " + e.getMessage());
+        }
+        return obsObject;
+    }
 }

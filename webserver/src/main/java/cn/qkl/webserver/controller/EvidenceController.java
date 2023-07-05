@@ -28,6 +28,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.xml.sax.SAXException;
 
 import javax.validation.constraints.NotNull;
+import java.awt.*;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.io.IOException;
@@ -57,14 +60,14 @@ public class EvidenceController {
 
     @ApiOperation("网页取证")
     @PutMapping("web")
-    public BaseResult<EvidencePhaseVO> webEvidence(@Validated @RequestBody WebEvidenceDTO dto) {
-        return BaseResult.ok(new EvidencePhaseVO());
+    public BaseResult<EvidencePhaseVO> webEvidence(@Validated @RequestBody WebEvidenceDTO dto) throws IOException, URISyntaxException, AWTException {
+        return BaseResult.ok(evidenceService.webEvidence(dto));
     }
 
     @ApiOperation("固证")
     @PutMapping("reinforce")
-    public BaseResult<EvidencePhaseVO> reinforceEvidence(@Validated @RequestBody ReinforceEvidenceDTO dto) {
-        return BaseResult.ok(new EvidencePhaseVO());
+    public BaseResult<EvidencePhaseVO> reinforceEvidence(@Validated @RequestBody ReinforceEvidenceDTO dto) throws IOException {
+        return BaseResult.ok(evidenceService.reinforceEvidence(dto));
     }
 
     @ApiOperation("取证固证情况统计")
@@ -76,7 +79,7 @@ public class EvidenceController {
     @ApiOperation("证据详情")
     @GetMapping("detail/info")
     public BaseResult<EvidenceDetailVO> getEvidenceDetail(@Validated EvidenceDetailDTO dto) {
-        return BaseResult.ok(new EvidenceDetailVO());
+        return BaseResult.ok(evidenceService.getEvidenceDetail(dto));
     }
 
     @ApiOperation("证据包下载")

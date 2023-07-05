@@ -5,10 +5,12 @@ import lombok.Data;
 
 @Data
 public class ReinforceEvidenceDTO {
+    @ApiModelProperty("主键id")
+    private Long id;
     @ApiModelProperty("取证名称")
     private String name;
     @ApiModelProperty("风险类型")
-    private String type;
+    private String riskType;
     @ApiModelProperty("情况概要")
     private String introduction;
     @ApiModelProperty("取证人员")
@@ -18,5 +20,5 @@ public class ReinforceEvidenceDTO {
     @ApiModelProperty("上传文件的数据")
     private byte[] fileData;
     @ApiModelProperty("所属平台的id")
-    private Integer platformID;
+    private Long platformID;
 }

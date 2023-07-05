@@ -1,13 +1,22 @@
 package cn.qkl.webserver.service;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.IdUtil;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.framework.util.OssUtil;
+import cn.qkl.common.framework.util.WebCaptureUtil;
 import cn.qkl.common.repository.Tables;
+import cn.qkl.common.repository.model.EvidenceWeb;
 import cn.qkl.webserver.common.cert.FreemarkerUtils;
 import cn.qkl.webserver.common.enums.EvidenceTypeEnum;
 import cn.qkl.webserver.dao.EvidenceWebDao;
+import cn.qkl.webserver.dto.evidence.EvidenceDetailDTO;
 import cn.qkl.webserver.dto.evidence.EvidenceRecordListDTO;
+import cn.qkl.webserver.dto.evidence.ReinforceEvidenceDTO;
+import cn.qkl.webserver.dto.evidence.WebEvidenceDTO;
 import cn.qkl.webserver.vo.evidence.EvidenceCertParamsVO;
+import cn.qkl.webserver.vo.evidence.EvidenceDetailVO;
+import cn.qkl.webserver.vo.evidence.EvidencePhaseVO;
 import cn.qkl.webserver.vo.evidence.EvidenceRecordItemVO;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
@@ -20,11 +29,13 @@ import org.xhtmlrenderer.context.AWTFontResolver;
 import org.xhtmlrenderer.swing.Java2DRenderer;
 import org.xml.sax.SAXException;
 
+import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,6 +62,81 @@ public class EvidenceService {
     @Autowired
     OssUtil ossUtil;
 
+    @Autowired
+    WebCaptureUtil webCaptureUtil;
+
+    public EvidencePhaseVO webEvidence(WebEvidenceDTO dto) throws IOException, URISyntaxException, AWTException {
+        EvidenceWeb evidenceWeb = new EvidenceWeb();
+        BeanUtil.copyProperties(dto, evidenceWeb);
+        evidenceWeb.setId(IdUtil.getSnowflakeNextId());
+        evidenceWeb.setInstitution("机构名");
+        evidenceWeb.setDepartment("部门名");
+        evidenceWeb.setCreateTime(new Date());
+        evidenceWeb.setUpdateTime(new Date());
+        evidenceWeb.setDeleteStatus(0);
+        evidenceWeb.setEvidenceType(0);
+        evidenceWeb.setEvidencePhase(0);
+        // 网页截图功能
+//        RenderedImage img = webCaptureUtil.webCapture(dto.getUrl());
+//        evidenceWeb.setWebOssPath(ossUtil.uploadImage(img, dto.getUrl()));
+        evidenceWebDao.insert(evidenceWeb);
+
+        EvidencePhaseVO vo = new EvidencePhaseVO();
+        vo.setId(dto.getId());
+        vo.setPhase(0);
+        return vo;
+    }
+
+    public EvidencePhaseVO reinforceEvidence(ReinforceEvidenceDTO dto) throws IOException {
+        EvidenceWeb evidenceWeb = new EvidenceWeb();
+        BeanUtil.copyProperties(dto, evidenceWeb);
+
+        evidenceWeb.setId(IdUtil.getSnowflakeNextId());
+        evidenceWeb.setInstitution("机构名");
+        evidenceWeb.setDepartment("部门名");
+        evidenceWeb.setCreateTime(new Date());
+        evidenceWeb.setUpdateTime(new Date());
+        evidenceWeb.setDeleteStatus(0);
+        evidenceWeb.setEvidenceType(2);
+        evidenceWeb.setEvidencePhase(0);
+        // 文件上传oss
+        try {
+            byte[] imageData = dto.getFileData();
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(imageData);
+            RenderedImage renderedImage = ImageIO.read(byteArrayInputStream);
+            evidenceWeb.setWebOssPath(ossUtil.uploadImage(renderedImage, dto.getFileName()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        evidenceWebDao.insert(evidenceWeb);
+
+        EvidencePhaseVO vo = new EvidencePhaseVO();
+        vo.setId(dto.getId());
+        vo.setPhase(1);
+        return vo;
+    }
+
+    public EvidenceDetailVO getEvidenceDetail(EvidenceDetailDTO dto) {
+//        Optional<EvidenceWeb> evidenceWeb = evidenceWebDao.selectOne(c -> c
+//                .leftJoin(Tables.platform).on(Tables.evidenceWeb.platformId, equalTo(Tables.platform.id))
+//                .where(Tables.evidenceWeb.id, isEqualTo(dto.getEvidenceID()))
+//        );
+//        EvidenceDetailVO vo = new EvidenceDetailVO();
+//        BeanUtil.copyProperties(evidenceWeb, vo);
+
+// todo: 外联表的copyProperties
+        return evidenceWebDao.getEvidenceDetail(select(Tables.evidenceWeb.id.as("evidenceID"), Tables.evidenceWeb.name, Tables.evidenceWeb.riskType,
+                Tables.evidenceWeb.introduction, Tables.evidenceWeb.institution, Tables.evidenceWeb.department, Tables.evidenceWeb.personnel,
+                Tables.evidenceWeb.url, Tables.platform.name.as("platformName"), Tables.evidenceWeb.evidencePhase)
+                .from(Tables.evidenceWeb)
+                .leftJoin(Tables.platform).on(Tables.evidenceWeb.platformId, equalTo(Tables.platform.id))
+                .where(Tables.evidenceWeb.id, isEqualTo(dto.getEvidenceID()))
+                .build()
+                .render(RenderingStrategies.MYBATIS3));
+    }
+
+    public String getEvidenceCert(Long id) {
+        return evidenceWebDao.getEvidenceCert(
     public String getEvidenceCert(Long id) throws TemplateException, IOException, ParserConfigurationException, FontFormatException, SAXException {
         //如果没有就要生成
         String certOss = evidenceWebDao.getEvidenceCert(
