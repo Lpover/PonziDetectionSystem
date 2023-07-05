@@ -19,8 +19,8 @@ public class IndexReportVO {
     private Long id;
 
     @ApiModelProperty("当前的阈值")
-    private Integer now_index;
+    private Integer nowIndex;
 
     @ApiModelProperty("设定的阈值")
-    private Integer set_index;
+    private Integer setIndex;
 }

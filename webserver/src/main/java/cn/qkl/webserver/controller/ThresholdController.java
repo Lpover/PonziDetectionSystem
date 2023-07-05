@@ -9,6 +9,7 @@ import cn.qkl.webserver.dto.riskreport.SituationReportDTO;
 import cn.qkl.webserver.dto.threhold.IndexChangeDTO;
 import cn.qkl.webserver.dto.threhold.IndexReportDTO;
 import cn.qkl.webserver.service.RiskReportService;
+import cn.qkl.webserver.service.ThresholdService;
 import cn.qkl.webserver.vo.riskReport.RiskReportInfoVO;
 import cn.qkl.webserver.vo.riskReport.SituationInfoVO;
 import cn.qkl.webserver.vo.threshold.IndexChangeVO;
@@ -46,18 +47,18 @@ public class ThresholdController {
 
 //    @LoadBalanced
     @Autowired
-        private RiskReportService riskReportService;
+        private ThresholdService thresholdService;
 
     @ApiOperation("多维度指数")
     @GetMapping("indexreport")
     public BaseResult<List<IndexReportVO>> getIndexReport(@Validated IndexReportDTO dto) {
-        return BaseResult.ok(Collections.singletonList(new IndexReportVO()));
-    }//获得报表信息
+        return BaseResult.ok(thresholdService.getIndexReport(dto));
+    }//多维度指数
 
     @ApiOperation("修改阈值")
     @PutMapping("indexchange")
-    public BaseResult<IndexChangeVO> getIndexChange(@Validated IndexChangeDTO dto) {
-        return BaseResult.ok(new IndexChangeVO());
-    }//获得报表信息
+    public void getIndexChange(@Validated IndexChangeDTO dto) {
+        thresholdService.indexChange(dto);
+    }//修改阈值
 
 }
