@@ -8,12 +8,15 @@ import cn.qkl.webserver.dto.evidence.EvidenceRecordListDTO;
 import cn.qkl.webserver.service.EvidenceService;
 import cn.qkl.webserver.vo.evidence.EvidenceRecordItemVO;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
+import freemarker.template.TemplateException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.xml.sax.SAXException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.xml.sax.SAXException;
 
 import javax.validation.constraints.NotNull;
+import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -60,13 +64,13 @@ public class EvidenceController {
 
     @ApiOperation("网页取证")
     @PutMapping("web")
-    public BaseResult<EvidencePhaseVO> webEvidence(@Validated @RequestBody WebEvidenceDTO dto) throws IOException, URISyntaxException, AWTException {
+    public BaseResult<EvidencePhaseVO> webEvidence(@Validated @RequestBody WebEvidenceDTO dto) throws IOException, URISyntaxException, AWTException, InterruptedException {
         return BaseResult.ok(evidenceService.webEvidence(dto));
     }
 
     @ApiOperation("固证")
     @PutMapping("reinforce")
-    public BaseResult<EvidencePhaseVO> reinforceEvidence(@Validated @RequestBody ReinforceEvidenceDTO dto) throws IOException {
+    public BaseResult<EvidencePhaseVO> reinforceEvidence(@Validated @RequestBody ReinforceEvidenceDTO dto) throws IOException, TemplateException, ParserConfigurationException, URISyntaxException, FontFormatException, SAXException {
         return BaseResult.ok(evidenceService.reinforceEvidence(dto));
     }
 

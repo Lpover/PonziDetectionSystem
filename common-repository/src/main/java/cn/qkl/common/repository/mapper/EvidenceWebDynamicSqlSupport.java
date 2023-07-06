@@ -1,11 +1,10 @@
 package cn.qkl.common.repository.mapper;
 
-import org.mybatis.dynamic.sql.SqlColumn;
-import org.mybatis.dynamic.sql.SqlTable;
-
-import javax.annotation.Generated;
 import java.sql.JDBCType;
 import java.util.Date;
+import javax.annotation.Generated;
+import org.mybatis.dynamic.sql.SqlColumn;
+import org.mybatis.dynamic.sql.SqlTable;
 
 public final class EvidenceWebDynamicSqlSupport {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")

@@ -15,10 +15,12 @@ public class ReinforceEvidenceDTO {
     private String introduction;
     @ApiModelProperty("取证人员")
     private String personnel;
-    @ApiModelProperty("上传文件的名称")
-    private String fileName;
-    @ApiModelProperty("上传文件的数据")
-    private byte[] fileData;
+//    @ApiModelProperty("文件的名称")
+//    private String fileName;
+//    @ApiModelProperty("上传文件的数据")
+//    private String fileData;
+    @ApiModelProperty("上传文件的oss url")
+    private String url;
     @ApiModelProperty("所属平台的id")
     private Long platformID;
 }

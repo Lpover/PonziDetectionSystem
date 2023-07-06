@@ -4,7 +4,6 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.framework.util.OssUtil;
-import cn.qkl.common.framework.util.WebCaptureUtil;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.EvidenceWeb;
 import cn.qkl.webserver.common.cert.FreemarkerUtils;
@@ -20,10 +19,14 @@ import cn.qkl.webserver.vo.evidence.EvidencePhaseVO;
 import cn.qkl.webserver.vo.evidence.EvidenceRecordItemVO;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.entity.ContentType;
+import org.fit.cssbox.demo.ImageRenderer;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
 import org.mybatis.dynamic.sql.select.SimpleSortSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.w3c.dom.Document;
 import org.xhtmlrenderer.context.AWTFontResolver;
 import org.xhtmlrenderer.swing.Java2DRenderer;
@@ -39,10 +42,15 @@ import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.*;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import static java.awt.Font.TRUETYPE_FONT;
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
@@ -62,9 +70,6 @@ public class EvidenceService {
     @Autowired
     OssUtil ossUtil;
 
-    @Autowired
-    WebCaptureUtil webCaptureUtil;
-
     public EvidencePhaseVO webEvidence(WebEvidenceDTO dto) throws IOException, URISyntaxException, AWTException {
         EvidenceWeb evidenceWeb = new EvidenceWeb();
         BeanUtil.copyProperties(dto, evidenceWeb);
@@ -76,10 +81,23 @@ public class EvidenceService {
         evidenceWeb.setDeleteStatus(0);
         evidenceWeb.setEvidenceType(0);
         evidenceWeb.setEvidencePhase(0);
-        // 网页截图功能
-//        RenderedImage img = webCaptureUtil.webCapture(dto.getUrl());
-//        evidenceWeb.setWebOssPath(ossUtil.uploadImage(img, dto.getUrl()));
-        evidenceWebDao.insert(evidenceWeb);
+        // 网页截图
+        try {
+            ImageRenderer render = new ImageRenderer();
+            String url = dto.getUrl();
+            String imagePath = dto.getName()+".png";
+            FileOutputStream out = new FileOutputStream(new File(imagePath));
+            render.renderURL(url, out, ImageRenderer.Type.PNG);
+            File imageFile = new File(imagePath);
+            InputStream inputStream = new FileInputStream(imageFile);
+            BufferedImage bufferedImage = ImageIO.read(inputStream);
+            inputStream.close();
+            String fileName = "web"+dto.getId().toString()+".png";
+            evidenceWeb.setWebOssPath(ossUtil.uploadImage(bufferedImage, fileName));
+            imageFile.delete();     // 删除本地图片
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         EvidencePhaseVO vo = new EvidencePhaseVO();
         vo.setId(dto.getId());
@@ -87,7 +105,7 @@ public class EvidenceService {
         return vo;
     }
 
-    public EvidencePhaseVO reinforceEvidence(ReinforceEvidenceDTO dto) throws IOException {
+    public EvidencePhaseVO reinforceEvidence(ReinforceEvidenceDTO dto) throws IOException, TemplateException, ParserConfigurationException, URISyntaxException, FontFormatException, SAXException {
         EvidenceWeb evidenceWeb = new EvidenceWeb();
         BeanUtil.copyProperties(dto, evidenceWeb);
 
@@ -99,16 +117,11 @@ public class EvidenceService {
         evidenceWeb.setDeleteStatus(0);
         evidenceWeb.setEvidenceType(2);
         evidenceWeb.setEvidencePhase(0);
-        // 文件上传oss
-        try {
-            byte[] imageData = dto.getFileData();
-            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(imageData);
-            RenderedImage renderedImage = ImageIO.read(byteArrayInputStream);
-            evidenceWeb.setWebOssPath(ossUtil.uploadImage(renderedImage, dto.getFileName()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        evidenceWeb.setWebOssPath(dto.getUrl());
         evidenceWebDao.insert(evidenceWeb);
+
+        // 生成证书并上传oss
+        evidenceWeb.setCertOssPath(generateEvidenceCert(dto.getId()));
 
         EvidencePhaseVO vo = new EvidencePhaseVO();
         vo.setId(dto.getId());
@@ -117,14 +130,6 @@ public class EvidenceService {
     }
 
     public EvidenceDetailVO getEvidenceDetail(EvidenceDetailDTO dto) {
-//        Optional<EvidenceWeb> evidenceWeb = evidenceWebDao.selectOne(c -> c
-//                .leftJoin(Tables.platform).on(Tables.evidenceWeb.platformId, equalTo(Tables.platform.id))
-//                .where(Tables.evidenceWeb.id, isEqualTo(dto.getEvidenceID()))
-//        );
-//        EvidenceDetailVO vo = new EvidenceDetailVO();
-//        BeanUtil.copyProperties(evidenceWeb, vo);
-
-// todo: 外联表的copyProperties
         return evidenceWebDao.getEvidenceDetail(select(Tables.evidenceWeb.id.as("evidenceID"), Tables.evidenceWeb.name, Tables.evidenceWeb.riskType,
                 Tables.evidenceWeb.introduction, Tables.evidenceWeb.institution, Tables.evidenceWeb.department, Tables.evidenceWeb.personnel,
                 Tables.evidenceWeb.url, Tables.platform.name.as("platformName"), Tables.evidenceWeb.evidencePhase)
@@ -133,6 +138,59 @@ public class EvidenceService {
                 .where(Tables.evidenceWeb.id, isEqualTo(dto.getEvidenceID()))
                 .build()
                 .render(RenderingStrategies.MYBATIS3));
+    }
+
+    public void downloadEvidencePack(EvidenceDetailDTO dto) {
+
+
+    }
+
+    public void getEvidencePack(Long id) throws IOException {
+        Optional<EvidenceWeb> evidenceWeb = evidenceWebDao.selectOne(c->c
+                .where(Tables.evidenceWeb.id, isEqualTo(id)));
+        InputStream webStream = ossUtil.downloadFileByURL(evidenceWeb.get().getWebOssPath());
+        InputStream certStream = ossUtil.downloadFileByURL(evidenceWeb.get().getCertOssPath());
+        String zipFilePath = "pack" + id + ".zip";
+        FileOutputStream fos = new FileOutputStream(zipFilePath);
+        ZipOutputStream zipOut = new ZipOutputStream(fos);
+        compressPack(webStream, certStream, zipOut, id);
+        fos.close();
+        zipOut.close();
+
+        File zipFile = new File(zipFilePath);
+        FileInputStream fileInputStream = null;
+        MultipartFile multipartFile = null;
+        try {
+            fileInputStream = new FileInputStream(zipFile);
+            multipartFile = new MockMultipartFile(zipFile.getName(),zipFile.getName(),
+                    ContentType.APPLICATION_OCTET_STREAM.toString(),fileInputStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String packOssPath = ossUtil.uploadMultipartFile(multipartFile, zipFilePath);
+        evidenceWebDao.update(c->c
+                .set(Tables.evidenceWeb.packOssPath).equalTo(packOssPath)
+                .where(Tables.evidenceWeb.id, isEqualTo(id)));
+        fileInputStream.close();
+        zipFile.delete();
+    }
+
+    private void compressPack(InputStream webStream, InputStream certStream, ZipOutputStream zipOut, Long id) throws IOException {
+        zipOut.putNextEntry(new ZipEntry("web" + id + ".png"));
+        byte[] buffer = new byte[1024];
+        int len;
+        while ((len = webStream.read(buffer)) > 0) {
+            zipOut.write(buffer, 0, len);
+        }
+        webStream.close();
+        zipOut.closeEntry();
+
+        zipOut.putNextEntry(new ZipEntry("cert" + id + ".png"));
+        while ((len = certStream.read(buffer)) > 0) {
+            zipOut.write(buffer, 0, len);
+        }
+        certStream.close();
+        zipOut.closeEntry();
     }
 
     public String getEvidenceCert(Long id) {
