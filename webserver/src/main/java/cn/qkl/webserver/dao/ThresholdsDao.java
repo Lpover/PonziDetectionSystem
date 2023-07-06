@@ -22,8 +22,6 @@ import java.util.List;
 public interface ThresholdsDao extends ThresholdsMapper {
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     List<IndexReportVO> getIndexReport(SelectStatementProvider selectStatementProvider);
-    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
-    List<IndexReportVO> getIndexReport(SelectStatementProvider selectStatementProvider);
 
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     List<TextPreviewVO> getTextPreview(SelectStatementProvider selectStatementProvider);

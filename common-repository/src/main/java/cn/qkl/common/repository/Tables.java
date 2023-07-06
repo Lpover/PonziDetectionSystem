@@ -33,8 +33,6 @@ public class Tables {
     public static final EvidenceWebDynamicSqlSupport.EvidenceWeb evidenceWeb = EvidenceWebDynamicSqlSupport.evidenceWeb;
     public static final ThresholdsDynamicSqlSupport.Thresholds thresholds = ThresholdsDynamicSqlSupport.thresholds;
     public static final NotifyRecordDynamicSqlSupport.NotifyRecord notifyRecord = NotifyRecordDynamicSqlSupport.notifyRecord;
-    public static final SituationReportDynamicSqlSupport.SituationReport situationReport = SituationReportDynamicSqlSupport.situationReport;
-
     public static final SwitchTableDynamicSqlSupport.SwitchTable switchTable = SwitchTableDynamicSqlSupport.switchTable;
     public static final SituationReportDynamicSqlSupport.SituationReport situationReport = SituationReportDynamicSqlSupport.situationReport;
 }

@@ -1,4 +1,4 @@
-package cn.qkl.webserver.vo.Notification;
+package cn.qkl.webserver.vo.notification;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

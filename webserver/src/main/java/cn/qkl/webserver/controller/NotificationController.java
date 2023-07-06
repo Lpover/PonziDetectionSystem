@@ -12,8 +12,7 @@ import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.dto.noticification.*;
 import cn.qkl.webserver.dto.threhold.IndexChangeDTO;
 import cn.qkl.webserver.service.RiskReportService;
-import cn.qkl.webserver.vo.Notification.NotificationVO;
-import cn.qkl.webserver.vo.Notification.TextPreviewVO;
+
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.service.NotificationService;
 import cn.qkl.webserver.vo.notification.CurrentStatusVO;
@@ -77,23 +76,6 @@ public class NotificationController {
     @Autowired
         private RiskReportService riskReportService;
 
-    @ApiOperation("通知开关")
-    @PutMapping("open")
-    public BaseResult<NotificationVO> getOpen(OpenDTO dto) {
-        return BaseResult.ok(new NotificationVO());
-    }//获得报表信息
-
-    @ApiOperation("周末预警")
-    @PutMapping("openweek")
-    public BaseResult<NotificationVO> getOpenWeek(@Validated OpenWeekDTO dto) {
-        return BaseResult.ok(new NotificationVO());
-    }//获得报表信息
-
-    @ApiOperation("接收时间")
-    @PutMapping("Receivetime")
-    public BaseResult<NotificationVO> getReceivetime(@Validated ReceiveTimeDTO dto) {
-        return BaseResult.ok(new NotificationVO());
-    }//获得报表信息
 
     @ApiOperation("文本预览")
     @GetMapping("TextPreview")

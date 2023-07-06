@@ -1,7 +1,10 @@
-package cn.qkl.webserver.vo.Notification;
+package cn.qkl.webserver.vo.notification;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.sql.Time;
+import java.util.Date;
 
 /**
  * @title:
@@ -10,9 +13,19 @@ import lombok.Data;
  * @wiki
  */
 @Data
-public class TextPreviewVO {
+public class CurrentStatusVO {
 
-    @ApiModelProperty("文本预览的文字")
-    private String text;
+    @ApiModelProperty("通知开关状态，0-关闭，1-打开")
+    private Integer open;
+
+    @ApiModelProperty("周末通知开关状态，0-关闭，1-打开")
+    private Integer openWeek;
+
+    @ApiModelProperty("接收开启的时间")
+    private Time startTime;
+
+    @ApiModelProperty("接收关闭的时间")
+    private Time endTime;
+
 
 }
