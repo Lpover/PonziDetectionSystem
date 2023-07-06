@@ -1,13 +1,16 @@
 package cn.qkl.webserver.service;
 
+import cn.qkl.common.framework.exception.BusinessException;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.framework.util.OssUtil;
 import cn.qkl.common.repository.Tables;
+import cn.qkl.webserver.common.BusinessStatus;
 import cn.qkl.webserver.common.cert.FreemarkerUtils;
 import cn.qkl.webserver.common.enums.EvidenceTypeEnum;
 import cn.qkl.webserver.dao.EvidenceWebDao;
 import cn.qkl.webserver.dto.evidence.EvidenceRecordListDTO;
 import cn.qkl.webserver.vo.evidence.EvidenceCertParamsVO;
+import cn.qkl.webserver.vo.evidence.EvidenceCertVO;
 import cn.qkl.webserver.vo.evidence.EvidenceRecordItemVO;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +54,7 @@ public class EvidenceService {
     @Autowired
     OssUtil ossUtil;
 
-    public String getEvidenceCert(Long id) throws TemplateException, IOException, ParserConfigurationException, FontFormatException, SAXException {
+    public EvidenceCertVO getEvidenceCert(Long id) throws TemplateException, IOException, ParserConfigurationException, FontFormatException, SAXException {
         //如果没有就要生成
         String certOss = evidenceWebDao.getEvidenceCert(
                 select(Tables.evidenceWeb.certOssPath).from(Tables.evidenceWeb)
@@ -63,16 +66,20 @@ public class EvidenceService {
             String finalCertOss = certOss;
             int status = evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.certOssPath).equalTo(finalCertOss).where(Tables.evidenceWeb.id,isEqualTo(id)));
         }
-        return certOss;
+        EvidenceCertVO vo = new EvidenceCertVO();
+        vo.setUrl(certOss);
+        return vo;
     }
 
-    public int markDeleteEvidence(Long id) {
-        return evidenceWebDao.markDeleteEvidence(
+    public void markDeleteEvidence(Long id) {
+        if(evidenceWebDao.markDeleteEvidence(
                 update(Tables.evidenceWeb).set(Tables.evidenceWeb.deleteStatus).equalTo(1).set(Tables.evidenceWeb.updateTime).equalTo(new Date())
                         .where(Tables.evidenceWeb.id,isEqualTo(id))
                         .and(Tables.evidenceWeb.deleteStatus,isEqualTo(0))
                         .build().render(RenderingStrategies.MYBATIS3)
-        );
+        )== 0 ) {
+            throw new BusinessException(BusinessStatus.DELETE_FAILED);
+        }
     }
 
     public PageVO<EvidenceRecordItemVO> getRecordList(EvidenceRecordListDTO dto) {

@@ -17,9 +17,11 @@ import cn.qkl.webserver.vo.notification.NotificationRecordVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -98,7 +100,7 @@ public class NotificationService {
     public PageVO<NotificationRecordVO> getNotificationRecord(NotificationRecordDTO dto) {
 
         PageVO<NotifyRecord> notifyRecordList = new PageVO<>(dto.getPageId(),dto.getPageSize(),() ->
-            notifyRecordDao.select(c -> c)
+            notifyRecordDao.select(c -> c.orderBy(Tables.notifyRecord.createTime.descending()))
         );
 
         if (notifyRecordList.getData() == null || notifyRecordList.getData().isEmpty()) return new PageVO<>(notifyRecordList.getPageId(), notifyRecordList.getPageSize(), notifyRecordList.getTotalCount(), new ArrayList<>());
@@ -111,9 +113,8 @@ public class NotificationService {
         return FunctionUtil.apply(new PageVO<>(notifyRecordList.getPageId(), notifyRecordList.getPageSize(), notifyRecordList.getTotalCount(), new ArrayList<>()), pagevo -> pagevo.setData(notifyRecordList.getData().stream().map((model) -> FunctionUtil.apply(new NotificationRecordVO(), it -> {
             it.setCreateTime(model.getCreateTime());
             it.setStatus(model.getStatus());
-
-            List<String> userNames = Arrays.stream(Objects.requireNonNull(StringUtils.split(model.getUserIds(), ","))).map(Long::valueOf).map(userId2Name::get).collect(Collectors.toList());
-            List<String> notifyNames = Arrays.stream(Objects.requireNonNull(StringUtils.split(model.getNotifyItemIds(), ","))).map(Long::valueOf).map(thresholdId2Name::get).collect(Collectors.toList());
+            List<String> userNames = Arrays.stream(model.getUserIds().split(",")).map(Long::valueOf).map(userId2Name::get).collect(Collectors.toList());
+            List<String> notifyNames = Arrays.stream(model.getNotifyItemIds().split(",")).map(Long::valueOf).map(thresholdId2Name::get).collect(Collectors.toList());
             it.setUsers(userNames);
             it.setNotifyItems(notifyNames);
         })).collect(Collectors.toList())));

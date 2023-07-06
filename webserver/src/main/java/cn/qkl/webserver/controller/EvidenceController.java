@@ -6,6 +6,7 @@ import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dto.evidence.EvidenceRecordListDTO;
 import cn.qkl.webserver.service.EvidenceService;
+import cn.qkl.webserver.vo.evidence.EvidenceCertVO;
 import cn.qkl.webserver.vo.evidence.EvidenceRecordItemVO;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import freemarker.template.TemplateException;
@@ -50,14 +51,15 @@ public class EvidenceController {
 
     @ApiOperation("查看固证文书")
     @GetMapping("/cert")
-    public BaseResult<String> getEvidenceCert(@Validated @NotNull Long id) throws TemplateException, IOException, ParserConfigurationException, FontFormatException, SAXException {
+    public BaseResult<EvidenceCertVO> getEvidenceCert(@Validated @NotNull Long id) throws TemplateException, IOException, ParserConfigurationException, FontFormatException, SAXException {
         return BaseResult.ok(evidenceService.getEvidenceCert(id));
     }
 
     @ApiOperation("删除取证记录 1删除成功 0删除失败")
     @GetMapping("/record")
-    public BaseResult<Integer> markDeleteEvidence(@Validated @NotNull Long id) {
-        return BaseResult.ok(evidenceService.markDeleteEvidence(id));
+    public BaseResult<Void> markDeleteEvidence(@Validated @NotNull Long id) {
+        evidenceService.markDeleteEvidence(id);
+        return BaseResult.ok();
     }
 
 
