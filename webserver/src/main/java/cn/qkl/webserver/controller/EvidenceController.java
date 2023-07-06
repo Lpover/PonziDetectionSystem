@@ -16,12 +16,26 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.xml.sax.SAXException;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import cn.qkl.webserver.dto.evidence.*;
+import cn.qkl.webserver.dto.evidence.EvidenceRecordListDTO;
+import cn.qkl.webserver.vo.evidence.*;
+import cn.qkl.webserver.vo.evidence.EvidenceRecordItemVO;
+import freemarker.template.TemplateException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.xml.sax.SAXException;
 
 import javax.validation.constraints.NotNull;
+import javax.xml.parsers.ParserConfigurationException;
+import java.awt.*;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.io.IOException;
@@ -42,6 +56,42 @@ public class EvidenceController {
 
     @Autowired
     EvidenceService evidenceService;
+
+    @ApiOperation("获取风险类型的列表")
+    @GetMapping("risk/type")
+    public BaseResult<EvidenceRiskTypeVO> getRiskTypeList() {
+        return BaseResult.ok(new EvidenceRiskTypeVO());
+    }
+
+    @ApiOperation("网页取证")
+    @PutMapping("web")
+    public BaseResult<EvidencePhaseVO> webEvidence(@Validated @RequestBody WebEvidenceDTO dto) throws IOException, URISyntaxException, AWTException, InterruptedException {
+        return BaseResult.ok(evidenceService.webEvidence(dto));
+    }
+
+    @ApiOperation("固证")
+    @PutMapping("reinforce")
+    public BaseResult<EvidencePhaseVO> reinforceEvidence(@Validated @RequestBody ReinforceEvidenceDTO dto) throws IOException, TemplateException, ParserConfigurationException, URISyntaxException, FontFormatException, SAXException {
+        return BaseResult.ok(evidenceService.reinforceEvidence(dto));
+    }
+
+    @ApiOperation("取证固证情况统计")
+    @GetMapping("statistics")
+    public BaseResult<StatisticsEvidenceVO> getEvidenceStatistics(@Validated StatisticsEvidenceDTO dto) {
+        return BaseResult.ok(new StatisticsEvidenceVO());
+    }
+
+    @ApiOperation("证据详情")
+    @GetMapping("detail/info")
+    public BaseResult<EvidenceDetailVO> getEvidenceDetail(@Validated EvidenceDetailDTO dto) {
+        return BaseResult.ok(evidenceService.getEvidenceDetail(dto));
+    }
+
+    @ApiOperation("证据包下载")
+    @PostMapping("pack/download")
+    public BaseResult<Void> downloadEvidencePack(@Validated @RequestBody EvidenceDetailDTO dto) {
+        return BaseResult.ok();
+    }
 
     @ApiOperation("取证记录列表")
     @GetMapping("/record/list")

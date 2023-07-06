@@ -2,13 +2,17 @@ package cn.qkl.common.framework.util;
 
 import cn.qkl.common.framework.config.OssProperties;
 import com.obs.services.ObsClient;
+import com.obs.services.model.ObsObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.RenderedImage;
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * @param
@@ -52,6 +56,40 @@ public class OssUtil {
         ImageIO.write(image,"png",os);
         ByteArrayInputStream in = new ByteArrayInputStream(os.toByteArray());
         obsClient.putObject("digital-content", fileName,in);
+        return "https://digital-content.obs.cn-east-3.myhuaweicloud.com/" + fileName;
+    }
+
+    // 文件对象下载
+    public ObsObject downloadFile(String dir, String fileName) {
+        ObsObject obsObject = null;
+        try {
+            obsObject = obsClient.getObject("digital-content", dir + fileName);
+            log.info("下载文件ObsObject: " + obsObject);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("OBS下载文件报错Exception: " + e.getMessage());
+        }
+        return obsObject;
+    }
+
+    // 根据访问链接进行文件对象下载
+    public InputStream  downloadFileByURL(String fileUrl) throws IOException {
+        URL url = new URL(fileUrl);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+
+        // 获取文件流
+        InputStream inputStream = connection.getInputStream();
+        // 使用 BufferedInputStream 对文件流进行缓冲
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+
+        return bufferedInputStream;
+    }
+
+    public String uploadMultipartFile(MultipartFile file, String fileName) throws IOException {
+        byte[] bytes = file.getBytes();
+        ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+        obsClient.putObject("digital-content", fileName, in);
         return "https://digital-content.obs.cn-east-3.myhuaweicloud.com/" + fileName;
     }
 
