@@ -50,10 +50,10 @@ public class EvidenceWeb {
     private String packOssPath;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long evidencePhase;
+    private Integer evidencePhase;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long evidenceType;
+    private Integer evidenceType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String hash;
@@ -314,34 +314,34 @@ public class EvidenceWeb {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getEvidencePhase() {
+    public Integer getEvidencePhase() {
         return evidencePhase;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public EvidenceWeb withEvidencePhase(Long evidencePhase) {
+    public EvidenceWeb withEvidencePhase(Integer evidencePhase) {
         this.setEvidencePhase(evidencePhase);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setEvidencePhase(Long evidencePhase) {
+    public void setEvidencePhase(Integer evidencePhase) {
         this.evidencePhase = evidencePhase;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getEvidenceType() {
+    public Integer getEvidenceType() {
         return evidenceType;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public EvidenceWeb withEvidenceType(Long evidenceType) {
+    public EvidenceWeb withEvidenceType(Integer evidenceType) {
         this.setEvidenceType(evidenceType);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setEvidenceType(Long evidenceType) {
+    public void setEvidenceType(Integer evidenceType) {
         this.evidenceType = evidenceType;
     }
 

@@ -5,8 +5,6 @@ import cn.qkl.common.repository.model.User;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.annotation.Generated;
-
 /**
  * @title:
  * @Author wang xin
@@ -23,6 +21,10 @@ public class UserInfoVO {
 
     @ApiModelProperty("用户角色 0管理员 5 用户")
     private int role;
+
+    @ApiModelProperty("用户名字")
+    private String name;
+
     public static UserInfoVO transform(User user) {
         UserInfoVO vo = new UserInfoVO();
         BeanUtil.copyProperties(user, vo);

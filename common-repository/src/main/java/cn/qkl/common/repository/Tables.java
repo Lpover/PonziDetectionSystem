@@ -36,4 +36,5 @@ public class Tables {
     public static final SituationReportDynamicSqlSupport.SituationReport situationReport = SituationReportDynamicSqlSupport.situationReport;
 
     public static final SwitchTableDynamicSqlSupport.SwitchTable switchTable = SwitchTableDynamicSqlSupport.switchTable;
+    public static final SituationReportDynamicSqlSupport.SituationReport situationReport = SituationReportDynamicSqlSupport.situationReport;
 }

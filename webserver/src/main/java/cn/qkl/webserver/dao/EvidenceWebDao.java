@@ -1,8 +1,8 @@
 package cn.qkl.webserver.dao;
 
 import cn.qkl.common.repository.mapper.EvidenceWebMapper;
-import cn.qkl.common.repository.model.EvidenceWeb;
 import cn.qkl.webserver.vo.evidence.EvidenceCertParamsVO;
+import cn.qkl.webserver.vo.evidence.EvidenceDetailVO;
 import cn.qkl.webserver.vo.evidence.EvidenceRecordItemVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.SelectProvider;
@@ -27,4 +27,7 @@ public interface EvidenceWebDao extends EvidenceWebMapper {
 
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     List<EvidenceRecordItemVO> getRecordList(SelectStatementProvider selectStatementProvider);
+
+    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
+    EvidenceDetailVO getEvidenceDetail(SelectStatementProvider selectStatementProvider);
 }

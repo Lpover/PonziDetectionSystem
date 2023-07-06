@@ -20,6 +20,9 @@ public enum BusinessStatus implements BaseCode {
     LOGIN_EXCEPTION("2003", "The account has been forced offline or multi-login"),
     UNAUTHORIZED("2004", "未授权"),
 
+    //删除问题
+    DELETE_FAILED("4001","[DELETE] NO SUCH ROW")
+
     ;
     private static final String PREFIX = "USER";
     private final String code;

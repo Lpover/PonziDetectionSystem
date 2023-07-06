@@ -31,6 +31,9 @@ public class AlgorithmVO {
     @ApiModelProperty("算法更新时间")
     private Date updateTime;
 
+    @ApiModelProperty("算法状态 1表示使用中 0表示未使用")
+    private Integer state;
+
     public static AlgorithmVO transform(Algorithm algorithm) {
         AlgorithmVO vo = new AlgorithmVO();
         BeanUtil.copyProperties(algorithm, vo);

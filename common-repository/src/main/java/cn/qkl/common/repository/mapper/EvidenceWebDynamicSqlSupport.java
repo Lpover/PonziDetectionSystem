@@ -56,10 +56,10 @@ public final class EvidenceWebDynamicSqlSupport {
     public static final SqlColumn<String> packOssPath = evidenceWeb.packOssPath;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Long> evidencePhase = evidenceWeb.evidencePhase;
+    public static final SqlColumn<Integer> evidencePhase = evidenceWeb.evidencePhase;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Long> evidenceType = evidenceWeb.evidenceType;
+    public static final SqlColumn<Integer> evidenceType = evidenceWeb.evidenceType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> hash = evidenceWeb.hash;
@@ -111,9 +111,9 @@ public final class EvidenceWebDynamicSqlSupport {
 
         public final SqlColumn<String> packOssPath = column("pack_oss_path", JDBCType.VARCHAR);
 
-        public final SqlColumn<Long> evidencePhase = column("evidence_phase", JDBCType.BIGINT);
+        public final SqlColumn<Integer> evidencePhase = column("evidence_phase", JDBCType.INTEGER);
 
-        public final SqlColumn<Long> evidenceType = column("evidence_type", JDBCType.BIGINT);
+        public final SqlColumn<Integer> evidenceType = column("evidence_type", JDBCType.INTEGER);
 
         public final SqlColumn<String> hash = column("hash", JDBCType.VARCHAR);
 
