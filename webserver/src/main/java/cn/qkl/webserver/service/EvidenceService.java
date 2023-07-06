@@ -38,10 +38,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
@@ -193,8 +189,6 @@ public class EvidenceService {
         zipOut.closeEntry();
     }
 
-    public String getEvidenceCert(Long id) {
-        return evidenceWebDao.getEvidenceCert(
     public String getEvidenceCert(Long id) throws TemplateException, IOException, ParserConfigurationException, FontFormatException, SAXException {
         //如果没有就要生成
         String certOss = evidenceWebDao.getEvidenceCert(
