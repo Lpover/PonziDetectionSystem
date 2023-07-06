@@ -7,23 +7,27 @@ import cn.qkl.common.repository.model.NotifyRecord;
 import cn.qkl.common.repository.model.Thresholds;
 import cn.qkl.common.repository.model.User;
 import cn.qkl.webserver.dao.NotifyRecordDao;
+import cn.qkl.webserver.dao.SwitchTableDao;
 import cn.qkl.webserver.dao.ThresholdsDao;
 import cn.qkl.webserver.dao.UserDao;
-import cn.qkl.webserver.dto.noticification.ChooseNotificationDTO;
-import cn.qkl.webserver.dto.noticification.NotificationRecordDTO;
-import cn.qkl.webserver.vo.notification.NotificationItemVO;
-import cn.qkl.webserver.vo.notification.NotificationNumbersVO;
-import cn.qkl.webserver.vo.notification.NotificationRecordVO;
+import cn.qkl.webserver.dto.noticification.*;
+import cn.qkl.webserver.dto.threhold.IndexChangeDTO;
+import cn.qkl.webserver.dto.threhold.IndexReportDTO;
+import cn.qkl.webserver.vo.notification.*;
+import cn.qkl.webserver.vo.threshold.IndexReportVO;
+import org.mybatis.dynamic.sql.render.RenderingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.sql.Time;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
+import static org.mybatis.dynamic.sql.SqlBuilder.select;
 
 /**
  * @Author sunxiaen
@@ -41,6 +45,9 @@ public class NotificationService {
 
     @Autowired
     UserDao userDao;
+
+    @Autowired
+    SwitchTableDao switchTableDao;
 
     //遍历通知项，返回全部
     public NotificationNumbersVO getNotificationNumbers() {
@@ -118,4 +125,55 @@ public class NotificationService {
             it.setNotifyItems(notifyNames);
         })).collect(Collectors.toList())));
     }
+
+    //当前通知状态获取
+    public CurrentStatusVO getCurrentStatus(){
+        CurrentStatusVO CurrentStatus= switchTableDao.getCurrentStatus(select(
+                Tables.switchTable.open,Tables.switchTable.openWeek,Tables.switchTable.startTime,Tables.switchTable.endTime)
+                .from(Tables.switchTable)
+                .build()
+                .render(RenderingStrategies.MYBATIS3)
+        );
+        return CurrentStatus;
+    }
+
+    //通知开关修改
+    public void openChange(OpenDTO dto){
+        int cvalue=dto.getOpenValue();
+        switchTableDao.update(
+                    c->c.set(Tables.switchTable.open).equalTo(cvalue)
+            );
+    }
+
+    //周末预警修改
+    public void openWeekChange(OpenWeekDTO dto){
+        int cvalue=dto.getOpenWeekValue();
+        switchTableDao.update(
+                c->c.set(Tables.switchTable.openWeek).equalTo(cvalue)
+        );
+    }
+
+    //接收时间修改
+    public void receivetimeChange(ReceiveTimeDTO dto){
+        Date cstart=dto.getStartTime();
+        Date cend=dto.getEndTime();
+        switchTableDao.update(
+                c->c.set(Tables.switchTable.startTime).equalTo(cstart)
+                        .set(Tables.switchTable.endTime).equalTo(cend)
+        );
+    }
+
+    //文本预览
+    public List<TextPreviewVO> getTextPreview(){
+        List<TextPreviewVO> TextPreview=thresholdsDao.getTextPreview(select(
+                Tables.thresholds.id,Tables.thresholds.nowIndex,Tables.thresholds.setIndex)
+                .from(Tables.thresholds)
+                .limit(5)
+                .build()
+                .render(RenderingStrategies.MYBATIS3)
+        );
+        return TextPreview;
+    }
+
+
 }

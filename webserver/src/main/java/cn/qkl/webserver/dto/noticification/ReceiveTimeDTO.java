@@ -3,6 +3,7 @@ package cn.qkl.webserver.dto.noticification;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.sql.Time;
 import java.util.Date;
 
 @Data

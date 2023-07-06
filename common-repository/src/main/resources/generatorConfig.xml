@@ -81,6 +81,8 @@
 <!--        </table>-->
         <table tableName="situation_report" domainObjectName="SituationReport">
         </table>
+        <table tableName="switch_table" domainObjectName="SwitchTable">
+        </table>
 
     </context>
 </generatorConfiguration>

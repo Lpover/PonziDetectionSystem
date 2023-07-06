@@ -7,10 +7,10 @@ import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dto.noticification.*;
 import cn.qkl.webserver.dto.threhold.IndexChangeDTO;
 import cn.qkl.webserver.service.RiskReportService;
-import cn.qkl.webserver.vo.Notification.NotificationVO;
-import cn.qkl.webserver.vo.Notification.TextPreviewVO;
+import cn.qkl.webserver.vo.notification.TextPreviewVO;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.service.NotificationService;
+import cn.qkl.webserver.vo.notification.CurrentStatusVO;
 import cn.qkl.webserver.vo.notification.NotificationItemVO;
 import cn.qkl.webserver.vo.notification.NotificationNumbersVO;
 import cn.qkl.webserver.vo.notification.NotificationRecordVO;
@@ -67,31 +67,34 @@ public class NotificationController {
         return BaseResult.ok(notificationService.getNotificationRecord(dto));
     }
 
-//    @LoadBalanced
-    @Autowired
-        private RiskReportService riskReportService;
+
+    @ApiOperation("当前通知状态获取")
+    @GetMapping("currentstatus")
+    public BaseResult<CurrentStatusVO> getCurrentStatus() {
+        return BaseResult.ok(notificationService.getCurrentStatus());
+    }//当前通知状态获取
 
     @ApiOperation("通知开关")
     @PutMapping("open")
-    public BaseResult<NotificationVO> getOpen(OpenDTO dto) {
-        return BaseResult.ok(new NotificationVO());
-    }//获得报表信息
+    public void getOpen(@Validated OpenDTO dto) {
+        notificationService.openChange(dto);
+    }//通知开关修改
 
     @ApiOperation("周末预警")
     @PutMapping("openweek")
-    public BaseResult<NotificationVO> getOpenWeek(@Validated OpenWeekDTO dto) {
-        return BaseResult.ok(new NotificationVO());
-    }//获得报表信息
+    public void getOpenWeek(@Validated OpenWeekDTO dto) {
+        notificationService.openWeekChange(dto);
+    }//周末预警修改
 
     @ApiOperation("接收时间")
-    @PutMapping("Receivetime")
-    public BaseResult<NotificationVO> getReceivetime(@Validated ReceiveTimeDTO dto) {
-        return BaseResult.ok(new NotificationVO());
-    }//获得报表信息
+    @PutMapping("receivetime")
+    public void getReceivetime(@Validated ReceiveTimeDTO dto) {
+        notificationService.receivetimeChange(dto);
+    }//接收时间修改
 
     @ApiOperation("文本预览")
-    @GetMapping("TextPreview")
-    public BaseResult<TextPreviewVO> getTextPreview(@Validated TextPreviewDTO dto) {
-        return BaseResult.ok(new TextPreviewVO());
-    }//获得报表信息
+    @GetMapping("textpreview")
+    public BaseResult<List<TextPreviewVO>> getTextPreview() {
+        return BaseResult.ok(notificationService.getTextPreview());
+    }//文本预览
 }
