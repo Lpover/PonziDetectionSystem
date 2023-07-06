@@ -23,7 +23,7 @@ public class Thresholds {
     private Date createTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Byte on;
+    private Integer on;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer num;
@@ -125,18 +125,18 @@ public class Thresholds {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Byte getOn() {
+    public Integer getOn() {
         return on;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Thresholds withOn(Byte on) {
+    public Thresholds withOn(Integer on) {
         this.setOn(on);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setOn(Byte on) {
+    public void setOn(Integer on) {
         this.on = on;
     }
 

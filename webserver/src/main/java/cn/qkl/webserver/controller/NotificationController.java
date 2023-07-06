@@ -55,7 +55,7 @@ public class NotificationController {
         return BaseResult.ok(notificationService.getNotificationItems());
     }
 
-    @ApiOperation("提交通知项选择 注意 只会返回 data: 一个数字 表示成功，数字表示通知项被更改的行数，0也合理，说明这次配置没有改动")
+    @ApiOperation("提交通知项选择 注意 只会返回 data: 一个数字 表示成功")
     @PostMapping("/choice")
     public BaseResult<Integer> chooseNotificationItem(@RequestBody ChooseNotificationDTO dto) {
         return BaseResult.ok(notificationService.chooseNotificationItem(dto));

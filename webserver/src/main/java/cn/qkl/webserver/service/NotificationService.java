@@ -17,11 +17,9 @@ import cn.qkl.webserver.vo.notification.NotificationRecordVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -75,7 +73,7 @@ public class NotificationService {
 //        原文链接：https://blog.csdn.net/qq_42582773/article/details/126679111
         dto.getChoiceOpenList().forEach(id -> {
                 int rt = thresholdsDao.update(c ->
-                    c.set(Tables.thresholds.on).equalTo((byte) 1)
+                    c.set(Tables.thresholds.on).equalTo(1)
                     .where(Tables.thresholds.id,isEqualTo(id))
                 );
                 rows.set(rows.get() + rt);
@@ -84,7 +82,7 @@ public class NotificationService {
 
         dto.getChoiceCloseList().forEach(id -> {
                 int rt = thresholdsDao.update(c ->
-                            c.set(Tables.thresholds.on).equalTo((byte) 0)
+                            c.set(Tables.thresholds.on).equalTo(0)
                             .where(Tables.thresholds.id,isEqualTo(id))
                 );
                 rows.set(rows.get() + rt);
@@ -98,23 +96,26 @@ public class NotificationService {
 
     //通知记录
     public PageVO<NotificationRecordVO> getNotificationRecord(NotificationRecordDTO dto) {
+
+        PageVO<NotifyRecord> notifyRecordList = new PageVO<>(dto.getPageId(),dto.getPageSize(),() ->
+            notifyRecordDao.select(c -> c)
+        );
+
+        if (notifyRecordList.getData() == null || notifyRecordList.getData().isEmpty()) return new PageVO<>(notifyRecordList.getPageId(), notifyRecordList.getPageSize(), notifyRecordList.getTotalCount(), new ArrayList<>());
+
         List<User> users = userDao.select(c -> c);
         Map<Long, String> userId2Name = users.stream().collect(Collectors.toMap(User::getId, User::getName));
         List<Thresholds> thresholds = thresholdsDao.select(c -> c);
         Map<Long, String> thresholdId2Name = thresholds.stream().collect(Collectors.toMap(Thresholds::getId,Thresholds::getName));
 
-        PageVO<NotifyRecord> notifyRecordList = new PageVO<>(dto.getPageId(),dto.getPageSize(),() ->
-            notifyRecordDao.select(c -> c)
-        );
-        return FunctionUtil.apply(new PageVO<>(notifyRecordList.getPageId(), notifyRecordList.getPageSize(), notifyRecordList.getTotalCount(), null), pagevo -> {
-            pagevo.setData(notifyRecordList.getData().stream().map((model) -> FunctionUtil.apply(new NotificationRecordVO(), it -> {
-                it.setCreateTime(model.getCreateTime());
-                it.setStatus(model.getStatus());
-                List<String> userNames = Arrays.stream(model.getUserIds().split(",")).map(Long::valueOf).map(userId2Name::get).collect(Collectors.toList());
-                List<String> notifyNames = Arrays.stream(model.getNotifyItemIds().split(",")).map(Long::valueOf).map(thresholdId2Name::get).collect(Collectors.toList());
-                it.setUsers(userNames);
-                it.setNotifyItems(notifyNames);
-            })).collect(Collectors.toList()));
-        });
+        return FunctionUtil.apply(new PageVO<>(notifyRecordList.getPageId(), notifyRecordList.getPageSize(), notifyRecordList.getTotalCount(), new ArrayList<>()), pagevo -> pagevo.setData(notifyRecordList.getData().stream().map((model) -> FunctionUtil.apply(new NotificationRecordVO(), it -> {
+            it.setCreateTime(model.getCreateTime());
+            it.setStatus(model.getStatus());
+
+            List<String> userNames = Arrays.stream(Objects.requireNonNull(StringUtils.split(model.getUserIds(), ","))).map(Long::valueOf).map(userId2Name::get).collect(Collectors.toList());
+            List<String> notifyNames = Arrays.stream(Objects.requireNonNull(StringUtils.split(model.getNotifyItemIds(), ","))).map(Long::valueOf).map(thresholdId2Name::get).collect(Collectors.toList());
+            it.setUsers(userNames);
+            it.setNotifyItems(notifyNames);
+        })).collect(Collectors.toList())));
     }
 }

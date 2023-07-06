@@ -1,7 +1,5 @@
 package cn.qkl.webserver.vo.notification;
 
-import cn.qkl.common.framework.util.FunctionUtil;
-import cn.qkl.common.repository.model.NotifyRecord;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -18,10 +16,10 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 //通知记录的单条记录的数据结构
 public class NotificationRecordVO {
-    @ApiModelProperty("通知项们，逗号点开")
+    @ApiModelProperty("通知项们")
     private List<String> notifyItems;
 
-    @ApiModelProperty("被通知人们，逗号点开")
+    @ApiModelProperty("被通知人们")
     private List<String> users;
 
     @ApiModelProperty("通知时间")
