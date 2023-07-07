@@ -25,8 +25,11 @@ public class EvidenceRecordItemVO {
     @ApiModelProperty("风险类型")
     private String riskType;
 
-    @ApiModelProperty("取证内容")
-    private String webOssPath;
+    @ApiModelProperty("取证内容 原网页")
+    private String url;
+
+    @ApiModelProperty("取证内容 pack文件的地址")
+    private String packOssPath;
 
     @ApiModelProperty("取证固证状态 0 取证中 1 固证中 2 完成 3 失败")
     private Integer evidencePhase;

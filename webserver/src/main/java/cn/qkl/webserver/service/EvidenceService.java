@@ -227,7 +227,8 @@ public class EvidenceService {
                         Tables.evidenceWeb.riskType,
                         Tables.evidenceWeb.evidenceType,
                         Tables.evidenceWeb.evidencePhase,
-                        Tables.evidenceWeb.webOssPath,
+                        Tables.evidenceWeb.packOssPath,
+                        Tables.evidenceWeb.url,
                         Tables.evidenceWeb.createTime.as("time"),
                         Tables.platform.name.as("platform_name"),
                         Tables.platform.platformType).from(Tables.evidenceWeb,"ew")
