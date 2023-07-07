@@ -76,13 +76,6 @@ public class NotificationController {
     @Autowired
         private RiskReportService riskReportService;
 
-
-    @ApiOperation("文本预览")
-    @GetMapping("TextPreview")
-    public BaseResult<TextPreviewVO> getTextPreview(@Validated TextPreviewDTO dto) {
-        return BaseResult.ok(new TextPreviewVO());
-    }//获得报表信息
-
     @ApiOperation("当前通知状态获取")
     @GetMapping("currentstatus")
     public BaseResult<CurrentStatusVO> getCurrentStatus() {
@@ -90,21 +83,24 @@ public class NotificationController {
     }//当前通知状态获取
 
     @ApiOperation("通知开关")
-    @PutMapping("open")
-    public void getOpen(@Validated OpenDTO dto) {
+    @PostMapping("open")
+    public BaseResult<Void> getOpen(@RequestBody @Validated OpenDTO dto) {
         notificationService.openChange(dto);
+        return BaseResult.ok();
     }//通知开关修改
 
     @ApiOperation("周末预警")
-    @PutMapping("openweek")
-    public void getOpenWeek(@Validated OpenWeekDTO dto) {
+    @PostMapping("openweek")
+    public BaseResult<Void> getOpenWeek(@RequestBody @Validated OpenWeekDTO dto) {
         notificationService.openWeekChange(dto);
+        return BaseResult.ok();
     }//周末预警修改
 
     @ApiOperation("接收时间")
-    @PutMapping("receivetime")
-    public void getReceivetime(@Validated ReceiveTimeDTO dto) {
+    @PostMapping("receivetime")
+    public BaseResult<Void> getReceivetime(@RequestBody @Validated ReceiveTimeDTO dto) {
         notificationService.receivetimeChange(dto);
+        return BaseResult.ok();
     }//接收时间修改
 
     @ApiOperation("文本预览")
