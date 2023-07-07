@@ -53,7 +53,7 @@ public class FetchWarnService {
 
             List<Long> notifyItemIds = Arrays.stream(notifyRecord.getNotifyItemIds().split(",")).map(Long::valueOf).collect(Collectors.toList());
             thresholdsDao.select( c -> c.where(Tables.thresholds.id, SqlBuilder.isInWhenPresent(notifyItemIds))).forEach(item -> {
-                itemList.add(item.getName()+"异常!");
+                itemList.add(item.getName()+" 指标为："+item.getNowIndex()+" 异常!");
             });
             List<Long> userIds = Arrays.stream(notifyRecord.getUserIds().split(",")).map(Long::valueOf).collect(Collectors.toList());
 
@@ -66,7 +66,14 @@ public class FetchWarnService {
                     String name = user.getName();
                     String email = user.getEmail();
                     String warnings = String.join("\n",itemList);
-                    emailService.sendEmail(email,new Date()+"态势感知预警",name+"您好！\n"+warnings);
+
+                    String content = "%s，您好。\n 数字内容推感知与分析系监测到异常！\n" +
+                            "具体表现为：%s。\n" +
+                            "%s\n" +
+                            "  \n" +
+                            "若您不是我们的客户，请忽略此条。退订回复T。";
+
+                    emailService.sendEmail(email,new Date()+"态势感知预警",String.format(content,name,warnings, new Date()));
                 });
                 notifyRecordDao.update(u -> u.set(Tables.notifyRecord.status).equalTo(NotifyStatusEnum.OK.getCode()).where(Tables.notifyRecord.id,SqlBuilder.isEqualTo(finalNotifyRecord.getId())));
 

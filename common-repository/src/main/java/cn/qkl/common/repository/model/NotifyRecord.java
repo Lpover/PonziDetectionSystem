@@ -12,7 +12,6 @@ public class NotifyRecord {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String userIds;
-
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Date createTime;
 
