@@ -5,11 +5,13 @@ import cn.hutool.core.util.IdUtil;
 import cn.qkl.common.framework.exception.BusinessException;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.framework.util.OssUtil;
+import cn.qkl.common.framework.util.SchedulerUtil;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.EvidenceWeb;
 import cn.qkl.webserver.common.BusinessStatus;
 import cn.qkl.webserver.common.cert.FreemarkerUtils;
 import cn.qkl.webserver.common.enums.EvidenceTypeEnum;
+import cn.qkl.webserver.dao.ContentRiskDao;
 import cn.qkl.webserver.dao.EvidenceWebDao;
 import cn.qkl.webserver.dto.evidence.EvidenceDetailDTO;
 import cn.qkl.webserver.dto.evidence.EvidenceRecordListDTO;
@@ -25,6 +27,7 @@ import org.mybatis.dynamic.sql.select.SimpleSortSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.w3c.dom.Document;
 import org.xhtmlrenderer.context.AWTFontResolver;
@@ -32,6 +35,8 @@ import org.xhtmlrenderer.swing.Java2DRenderer;
 import org.xml.sax.SAXException;
 
 import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -40,7 +45,6 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.stream.Collectors;
@@ -383,7 +387,7 @@ public class EvidenceService {
                         Tables.platform.platformType).from(Tables.evidenceWeb,"ew")
                         .leftJoin(Tables.platform).on(Tables.evidenceWeb.platformId,equalTo(Tables.platform.id))
                         .where(Tables.evidenceWeb.deleteStatus,isEqualTo(0))
-                        .orderBy(SimpleSortSpecification.of("time"))
+                        .orderBy(SimpleSortSpecification.of("time").descending())
                         .build().render(RenderingStrategies.MYBATIS3)
         ));
     }
@@ -412,7 +416,6 @@ public class EvidenceService {
         mapper.put("who",evidenceCertParamsVO.getPersonnel());
         mapper.put("platform",evidenceCertParamsVO.getPlatformName());
         mapper.put("type", EvidenceTypeEnum.valueOf(Math.toIntExact(evidenceCertParamsVO.getEvidenceType())));
-        mapper.put("url",evidenceCertParamsVO.getUrl());
 //        mapper.put("packagehash",evidenceCertParamsVO.getPackageHash());
         mapper.put("url", StringUtils.replace(evidenceCertParamsVO.getUrl(),"&","&amp;"));
         mapper.put("packagehash",evidenceCertParamsVO.getPackageHash());
@@ -471,7 +474,7 @@ public class EvidenceService {
         mapper.put("who",evidenceCertParamsVO.getPersonnel());
         mapper.put("platform",evidenceCertParamsVO.getPlatformName());
         mapper.put("type", EvidenceTypeEnum.valueOf(Math.toIntExact(evidenceCertParamsVO.getEvidenceType())));
-        mapper.put("url",evidenceCertParamsVO.getUrl());
+        mapper.put("url", StringUtils.replace(evidenceCertParamsVO.getUrl(),"&","&amp;"));
 //        mapper.put("packagehash",evidenceCertParamsVO.getPackageHash());
         mapper.put("txhash",evidenceCertParamsVO.getHash());
         mapper.put("chain",evidenceCertParamsVO.getChainName());
