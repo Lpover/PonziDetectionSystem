@@ -1,6 +1,7 @@
 package cn.qkl.webserver.dao;
 
 import cn.qkl.common.repository.mapper.EvidenceWebMapper;
+import cn.qkl.webserver.service.EvidenceDailyStatisticsService;
 import cn.qkl.webserver.vo.evidence.EvidenceCertParamsVO;
 import cn.qkl.webserver.vo.evidence.EvidenceDetailVO;
 import cn.qkl.webserver.vo.evidence.EvidenceRecordItemVO;
@@ -30,4 +31,7 @@ public interface EvidenceWebDao extends EvidenceWebMapper {
 
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     EvidenceDetailVO getEvidenceDetail(SelectStatementProvider selectStatementProvider);
+
+    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
+    List<EvidenceDailyStatisticsService.Record> getReinforceView(SelectStatementProvider selectStatementProvider);
 }

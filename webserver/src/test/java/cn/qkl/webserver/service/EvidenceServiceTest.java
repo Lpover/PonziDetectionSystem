@@ -49,4 +49,9 @@ class EvidenceServiceTest {
 //            e.printStackTrace();
 //        }
     }
+
+    @Test
+    void generateEvidencePack() throws IOException {
+        evidenceService.generateEvidencePack(1678323360162537472L);
+    }
 }

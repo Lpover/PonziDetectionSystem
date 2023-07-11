@@ -12,6 +12,6 @@ import java.util.List;
 @Data
 public class EvidenceRiskTypeVO {
     @ApiModelProperty("风险类型列表")
-    private List<String> evidenceID;
+    private List<String> riskList;
 
 }

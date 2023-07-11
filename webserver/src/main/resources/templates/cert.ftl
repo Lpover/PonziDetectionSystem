@@ -62,10 +62,6 @@
 <#--                <div id="content-row-url" class="content-row-text"></div>-->
             </div>
             <div id="content-row" class="content-row">
-                <div id="content-row-label" class="content-row-label">证据包哈希值：${packagehash}</div>
-<#--                <div id="content-row-hash" class="content-row-text"></div>-->
-            </div>
-            <div id="content-row" class="content-row">
                 <div id="content-row-label" class="content-row-label">区块链哈希值：${txhash}</div>
 <#--                <div id="content-row-chain-hash" class="content-row-text"></div>-->
             </div>

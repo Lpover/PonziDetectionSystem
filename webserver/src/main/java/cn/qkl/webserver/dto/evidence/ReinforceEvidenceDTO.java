@@ -22,5 +22,5 @@ public class ReinforceEvidenceDTO {
     @ApiModelProperty("上传文件的oss url")
     private String url;
     @ApiModelProperty("所属平台的id")
-    private Long platformID;
+    private Long platformId;
 }

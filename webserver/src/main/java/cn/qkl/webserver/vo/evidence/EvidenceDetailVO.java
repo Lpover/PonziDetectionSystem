@@ -17,10 +17,6 @@ public class EvidenceDetailVO {
     private String riskType;
     @ApiModelProperty("情况概要")
     private String introduction;
-    @ApiModelProperty("取证机构")
-    private String institution;
-    @ApiModelProperty("取证部门")
-    private String department;
     @ApiModelProperty("取证人员")
     private String personnel;
     @ApiModelProperty("取证地址")
@@ -29,4 +25,6 @@ public class EvidenceDetailVO {
     private String platformName;
     @ApiModelProperty("取证固证阶段：0 取证中 1 固证中 2 完成 3 失败")
     private Integer evidencePhase;
+    @ApiModelProperty("证据包文件oss")
+    private String packOssPath;
 }

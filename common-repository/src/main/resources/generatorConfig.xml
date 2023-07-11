@@ -75,9 +75,15 @@
 <!--        </table>-->
 <!--        <table tableName="notify_record" domainObjectName="NotifyRecord">-->
 <!--        </table>-->
-<!--        <table tableName="evidence_web" domainObjectName="EvidenceWeb">-->
-<!--        </table>-->
+
+<!--        todo-->
+        <table tableName="evidence_web" domainObjectName="EvidenceWeb">
+        </table>
+        <table tableName="evidence_overview_daily_statistics" domainObjectName="EvidenceOverviewDailyStatistics">
+        </table>
 <!--        <table tableName="thresholds" domainObjectName="Thresholds">-->
+<!--        </table>-->
+<!--        <table tableName="situation_report" domainObjectName="SituationReport">-->
 <!--        </table>-->
         <table tableName="situation_report" domainObjectName="SituationReport">
         </table>

@@ -73,7 +73,7 @@ public class OssUtil {
     }
 
     // 根据访问链接进行文件对象下载
-    public InputStream  downloadFileByURL(String fileUrl) throws IOException {
+    public InputStream downloadFileByURL(String fileUrl) throws IOException {
         URL url = new URL(fileUrl);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
