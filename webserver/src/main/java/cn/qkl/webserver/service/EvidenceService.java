@@ -5,21 +5,21 @@ import cn.hutool.core.util.IdUtil;
 import cn.qkl.common.framework.exception.BusinessException;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.framework.util.OssUtil;
+import cn.qkl.common.framework.util.SchedulerUtil;
 import cn.qkl.common.repository.Tables;
+import cn.qkl.common.repository.model.ContentRisk;
 import cn.qkl.common.repository.model.EvidenceWeb;
 import cn.qkl.webserver.common.BusinessStatus;
 import cn.qkl.webserver.common.cert.FreemarkerUtils;
 import cn.qkl.webserver.common.enums.EvidenceTypeEnum;
+import cn.qkl.webserver.dao.ContentRiskDao;
 import cn.qkl.webserver.dao.EvidenceWebDao;
 import cn.qkl.webserver.dto.evidence.EvidenceDetailDTO;
 import cn.qkl.webserver.dto.evidence.EvidenceRecordListDTO;
 import cn.qkl.webserver.dto.evidence.ReinforceEvidenceDTO;
 import cn.qkl.webserver.dto.evidence.WebEvidenceDTO;
 import cn.qkl.webserver.vo.evidence.*;
-import cn.qkl.webserver.dao.ContentRiskDao;
-import cn.qkl.webserver.vo.evidence.*;
 import com.alibaba.nacos.common.utils.StringUtils;
-import cn.qkl.webserver.vo.evidence.*;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.entity.ContentType;
@@ -29,7 +29,6 @@ import org.mybatis.dynamic.sql.select.SimpleSortSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.w3c.dom.Document;
 import org.xhtmlrenderer.context.AWTFontResolver;
@@ -46,10 +45,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
-import java.util.concurrent.CountDownLatch;
-import java.util.stream.Collectors;
 import java.util.List;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
@@ -133,16 +130,19 @@ public class EvidenceService {
     public EvidencePhaseVO webEvidence(WebEvidenceDTO dto) {
         EvidenceWeb evidenceWeb = new EvidenceWeb();
         BeanUtil.copyProperties(dto, evidenceWeb);
+//        log.info(String.valueOf(dto.getPlatformId()));
+        evidenceWeb.setPlatformId(dto.getPlatformId());
         evidenceWeb.setId(IdUtil.getSnowflakeNextId());
         evidenceWeb.setCreateTime(new Date());
-        evidenceWeb.setUpdateTime(new Date());
         evidenceWeb.setDeleteStatus(0);
         evidenceWeb.setEvidenceType(0);     // 取证固证来源
         evidenceWeb.setEvidencePhase(0);
         evidenceWeb.setHash("hash123321");  // 上链服务返回的hash
         evidenceWeb.setChainId(1L);          // 上链服务返回的链id
+
         evidenceWebDao.insert(evidenceWeb);
 
+        evidenceWeb.setUpdateTime(new Date());
         CountDownLatch latch = new CountDownLatch(2);
 
         // 网页截图
@@ -154,7 +154,10 @@ public class EvidenceService {
         // 生成证书并上传oss
         SchedulerUtil.commonScheduler.schedule("generateCert", () -> {
             try {
-                generateEvidenceCertAndUpdate(evidenceWeb.getId());
+                String ossPath = generateEvidenceCert(evidenceWeb.getId());
+                evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.certOssPath).equalTo(ossPath).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
+                evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.updateTime).equalTo(new Date()).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
+                evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.evidencePhase).equalTo(2).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
             } catch (TemplateException | ParserConfigurationException | IOException | SAXException |
                      FontFormatException e) {
                 throw new RuntimeException(e);
@@ -187,7 +190,8 @@ public class EvidenceService {
     public EvidencePhaseVO reinforceEvidence(ReinforceEvidenceDTO dto) {
         EvidenceWeb evidenceWeb = new EvidenceWeb();
         BeanUtil.copyProperties(dto, evidenceWeb);
-
+//        log.info(String.valueOf(dto.getPlatformId()));
+        evidenceWeb.setPlatformId(dto.getPlatformId());
         evidenceWeb.setId(IdUtil.getSnowflakeNextId());
         evidenceWeb.setCreateTime(new Date());
         evidenceWeb.setUpdateTime(new Date());
@@ -205,7 +209,10 @@ public class EvidenceService {
         // 生成证书并上传oss
         SchedulerUtil.commonScheduler.schedule("generateCert", () -> {
             try {
-                generateEvidenceCertAndUpdate(evidenceWeb.getId());
+                String ossPath = generateEvidenceCert(evidenceWeb.getId());
+                evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.certOssPath).equalTo(ossPath).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
+                evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.updateTime).equalTo(new Date()).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
+                evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.evidencePhase).equalTo(2).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
             } catch (TemplateException | ParserConfigurationException | IOException | SAXException |
                      FontFormatException e) {
                 throw new RuntimeException(e);
@@ -263,38 +270,59 @@ public class EvidenceService {
 //        inputStream.close();
 //    }
 
+
+
+
     public void downloadEvidencePack(EvidenceDetailDTO dto, HttpServletResponse response) throws IOException {
         Optional<EvidenceWeb> evidenceWeb = evidenceWebDao.selectOne(c -> c
                 .where(Tables.evidenceWeb.id, isEqualTo(dto.getEvidenceID())));
         String packOssPath = evidenceWeb.get().getPackOssPath();
         if (packOssPath == null || packOssPath.equals("")) {
-            log.error("证据包不存在");    // todo: 证据包不存在是否需要返回值
+            log.error("证据包不存在");
             return;
         }
         URL url = new URL(packOssPath);
-        log.info(url.toString());
-        try (BufferedInputStream in = new BufferedInputStream(url.openStream())) {
+//        log.info(url.toString());
+
+//        try (BufferedInputStream is = new BufferedInputStream(url.openStream())) {
+        InputStream is = null;
+//        FileOutputStream os = null;
+
+        try {
+            // 打开连接
+            URLConnection con = url.openConnection();
+            // 输入流
+            is = con.getInputStream();
+            log.info(is.toString());
             String[] pathSegments = packOssPath.split("/");
             String fileName = pathSegments[pathSegments.length - 1];
 
             // 设置下载文件的响应头信息
             response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
             response.setContentType("application/octet-stream");
-            response.setContentLength(in.available());
 
             // 将文件内容写入响应输出流
             byte[] buffer = new byte[4096];
             int length = 0;
+            int totalLength = 0;
             ServletOutputStream outputStream = response.getOutputStream();
-            while ((length = in.read(buffer)) > 0) {
+            while ((length = is.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, length);
+                totalLength += length;
             }
             outputStream.flush();
-            outputStream.close();
+            // 设置文件大小
+            response.setContentLength(totalLength);
+            log.info(String.valueOf(totalLength));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (is != null) {
+                is.close();
+            }
         }
 
     }
-
 
     public void generateEvidencePack(Long id) throws IOException {
         Optional<EvidenceWeb> evidenceWeb = evidenceWebDao.selectOne(c->c
@@ -422,8 +450,6 @@ public class EvidenceService {
         mapper.put("who",evidenceCertParamsVO.getPersonnel());
         mapper.put("platform",evidenceCertParamsVO.getPlatformName());
         mapper.put("type", EvidenceTypeEnum.valueOf(Math.toIntExact(evidenceCertParamsVO.getEvidenceType())));
-        mapper.put("url",evidenceCertParamsVO.getUrl());
-//        mapper.put("packagehash",evidenceCertParamsVO.getPackageHash());
 //        mapper.put("packagehash",evidenceCertParamsVO.getPackageHash());
         mapper.put("url", StringUtils.replace(evidenceCertParamsVO.getUrl(),"&","&amp;"));
         mapper.put("packagehash",evidenceCertParamsVO.getPackageHash());
@@ -455,126 +481,5 @@ public class EvidenceService {
         //并上传到oss
         String fileName = "cert"+id.toString()+".png";
         return ossUtil.uploadImage(img.getSubimage(8,8,551,831),fileName);
-    }
-
-
-    //根据字段生成证书 oss地址直接写入库
-    protected void generateEvidenceCertAndUpdate(Long id) throws TemplateException, IOException, ParserConfigurationException, SAXException, FontFormatException {
-        //H5模板,填入参数
-        EvidenceCertParamsVO evidenceCertParamsVO = evidenceWebDao.getEvidenceCertParams(select(
-                        Tables.evidenceWeb.personnel,
-                        Tables.platform.name.as("platform_name"),
-                        Tables.evidenceWeb.evidenceType,
-                        Tables.evidenceWeb.url,
-                        Tables.evidenceWeb.packageHash,
-                        Tables.evidenceWeb.hash,
-                        Tables.chain.chainName,
-                        Tables.evidenceWeb.createTime.as("timestamp")
-                ).from(Tables.evidenceWeb)
-                        .leftJoin(Tables.platform).on(Tables.platform.id,equalTo(Tables.evidenceWeb.platformId))
-                        .leftJoin(Tables.chain).on(Tables.chain.id,equalTo(Tables.evidenceWeb.chainId))
-                        .where(Tables.evidenceWeb.id,isEqualTo(id))
-                        .build().render(RenderingStrategies.MYBATIS3)
-
-        );
-
-        Map<String,Object> mapper = new HashMap<>();
-        mapper.put("who",evidenceCertParamsVO.getPersonnel());
-        mapper.put("platform",evidenceCertParamsVO.getPlatformName());
-        mapper.put("type", EvidenceTypeEnum.valueOf(Math.toIntExact(evidenceCertParamsVO.getEvidenceType())));
-        mapper.put("url",evidenceCertParamsVO.getUrl());
-//        mapper.put("packagehash",evidenceCertParamsVO.getPackageHash());
-        mapper.put("txhash",evidenceCertParamsVO.getHash());
-        mapper.put("chain",evidenceCertParamsVO.getChainName());
-        mapper.put("timestamp",evidenceCertParamsVO.getTimestamp());
-
-        String html = FreemarkerUtils.getTemplate("cert.ftl",mapper);
-        System.out.println(html);
-        byte[] bytes = html.getBytes(StandardCharsets.UTF_8);
-        ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document document = builder.parse(bin);
-        //加载自定义字体，解决生成图片title处汉字展示不正常问题
-        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("font/PingFangSC-Regular.ttf");
-        BufferedImage img;
-        if (inputStream != null){
-            Font font = Font.createFont(TRUETYPE_FONT, inputStream);
-            AWTFontResolver awtFontResolver = new AWTFontResolver();
-            awtFontResolver.setFontMapping("Serif", font);
-            Java2DRenderer renderer = new Java2DRenderer(document, 559, 839);
-            renderer.getSharedContext().setFontResolver(awtFontResolver);
-            img = renderer.getImage();
-        } else {
-            throw new RuntimeException("no Font in classpath:font/PingFangSC-Regular.ttf");
-        }
-
-        //并上传到oss
-        String fileName = "cert"+id.toString()+".png";
-        String ossPath = ossUtil.uploadImage(img.getSubimage(8,8,551,831),fileName);
-        // 更新数据库
-        evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.certOssPath).equalTo(ossPath).where(Tables.evidenceWeb.id,isEqualTo(id)));
-        evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.updateTime).equalTo(new Date()).where(Tables.evidenceWeb.id,isEqualTo(id)));
-        evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.evidencePhase).equalTo(2).where(Tables.evidenceWeb.id,isEqualTo(id)));
-    }
-
-    //根据字段生成证书 oss地址直接写入库
-    protected void generateEvidenceCertAndUpdate(Long id) throws TemplateException, IOException, ParserConfigurationException, SAXException, FontFormatException {
-        //H5模板,填入参数
-        EvidenceCertParamsVO evidenceCertParamsVO = evidenceWebDao.getEvidenceCertParams(select(
-                        Tables.evidenceWeb.personnel,
-                        Tables.platform.name.as("platform_name"),
-                        Tables.evidenceWeb.evidenceType,
-                        Tables.evidenceWeb.url,
-                        Tables.evidenceWeb.packageHash,
-                        Tables.evidenceWeb.hash,
-                        Tables.chain.chainName,
-                        Tables.evidenceWeb.createTime.as("timestamp")
-                ).from(Tables.evidenceWeb)
-                        .leftJoin(Tables.platform).on(Tables.platform.id,equalTo(Tables.evidenceWeb.platformId))
-                        .leftJoin(Tables.chain).on(Tables.chain.id,equalTo(Tables.evidenceWeb.chainId))
-                        .where(Tables.evidenceWeb.id,isEqualTo(id))
-                        .build().render(RenderingStrategies.MYBATIS3)
-
-        );
-
-        Map<String,Object> mapper = new HashMap<>();
-        mapper.put("who",evidenceCertParamsVO.getPersonnel());
-        mapper.put("platform",evidenceCertParamsVO.getPlatformName());
-        mapper.put("type", EvidenceTypeEnum.valueOf(Math.toIntExact(evidenceCertParamsVO.getEvidenceType())));
-        mapper.put("url", StringUtils.replace(evidenceCertParamsVO.getUrl(),"&","&amp;"));
-//        mapper.put("packagehash",evidenceCertParamsVO.getPackageHash());
-        mapper.put("txhash",evidenceCertParamsVO.getHash());
-        mapper.put("chain",evidenceCertParamsVO.getChainName());
-        mapper.put("timestamp",evidenceCertParamsVO.getTimestamp());
-
-        String html = FreemarkerUtils.getTemplate("cert.ftl",mapper);
-        System.out.println(html);
-        byte[] bytes = html.getBytes(StandardCharsets.UTF_8);
-        ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document document = builder.parse(bin);
-        //加载自定义字体，解决生成图片title处汉字展示不正常问题
-        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("font/PingFangSC-Regular.ttf");
-        BufferedImage img;
-        if (inputStream != null){
-            Font font = Font.createFont(TRUETYPE_FONT, inputStream);
-            AWTFontResolver awtFontResolver = new AWTFontResolver();
-            awtFontResolver.setFontMapping("Serif", font);
-            Java2DRenderer renderer = new Java2DRenderer(document, 559, 839);
-            renderer.getSharedContext().setFontResolver(awtFontResolver);
-            img = renderer.getImage();
-        } else {
-            throw new RuntimeException("no Font in classpath:font/PingFangSC-Regular.ttf");
-        }
-
-        //并上传到oss
-        String fileName = "cert"+id.toString()+".png";
-        String ossPath = ossUtil.uploadImage(img.getSubimage(8,8,551,831),fileName);
-        // 更新数据库
-        evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.certOssPath).equalTo(ossPath).where(Tables.evidenceWeb.id,isEqualTo(id)));
-        evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.updateTime).equalTo(new Date()).where(Tables.evidenceWeb.id,isEqualTo(id)));
-        evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.evidencePhase).equalTo(2).where(Tables.evidenceWeb.id,isEqualTo(id)));
     }
 }

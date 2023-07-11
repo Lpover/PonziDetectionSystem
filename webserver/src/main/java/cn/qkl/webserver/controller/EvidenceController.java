@@ -85,9 +85,8 @@ public class EvidenceController {
 
     @ApiOperation("证据包下载")
     @PostMapping("pack/download")
-    public BaseResult<Void> downloadEvidencePack(@Validated @RequestBody EvidenceDetailDTO dto, HttpServletResponse response) throws IOException {
+    public void downloadEvidencePack(@Validated @RequestBody EvidenceDetailDTO dto, HttpServletResponse response) throws IOException {
         evidenceService.downloadEvidencePack(dto, response);
-        return BaseResult.ok();
     }
 
     @ApiOperation("取证记录列表")
