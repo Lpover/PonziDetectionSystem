@@ -22,6 +22,7 @@ import cn.qkl.webserver.vo.evidence.EvidencePhaseVO;
 import cn.qkl.webserver.vo.evidence.EvidenceRecordItemVO;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.entity.ContentType;
 import org.fit.cssbox.demo.ImageRenderer;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
@@ -263,7 +264,7 @@ public class EvidenceService {
         mapper.put("who",evidenceCertParamsVO.getPersonnel());
         mapper.put("platform",evidenceCertParamsVO.getPlatformName());
         mapper.put("type", EvidenceTypeEnum.valueOf(Math.toIntExact(evidenceCertParamsVO.getEvidenceType())));
-        mapper.put("url",evidenceCertParamsVO.getUrl());
+        mapper.put("url", StringUtils.replace(evidenceCertParamsVO.getUrl(),"&","&amp;"));
         mapper.put("packagehash",evidenceCertParamsVO.getPackageHash());
         mapper.put("txhash",evidenceCertParamsVO.getHash());
         mapper.put("chain",evidenceCertParamsVO.getChainName());
