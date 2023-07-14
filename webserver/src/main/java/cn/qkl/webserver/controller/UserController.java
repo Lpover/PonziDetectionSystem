@@ -52,21 +52,21 @@ public class UserController {
 
     @ApiOperation("获取个人信息")
     @GetMapping("info")
-    @Role(roles = { RoleEnum.AdminBaseRole.class})
+    @Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
     public BaseResult<UserInfoVO> getUserInfo() {
         return BaseResult.ok(userService.getUserInfo());
     }
 
     @ApiOperation("用户列表")
     @GetMapping("list")
-    @Role(roles = { RoleEnum.AdminBaseRole.class})
+    @Role(roles = {RoleEnum.AdminBaseRole.class})
     public BaseResult<PageVO<UserListVO>> getUserList(@Validated PageDTO dto) {
         return BaseResult.ok(userService.getUserList(dto));
     }
 
     @ApiOperation("添加普通用户")
     @PostMapping("normal")
-    @Role(roles = { RoleEnum.AdminBaseRole.class})
+    @Role(roles = {RoleEnum.AdminBaseRole.class})
     public BaseResult<Void> addUser(@Validated @RequestBody AddUserDTO dto) {
         userService.addUser(dto);
         return BaseResult.ok();
