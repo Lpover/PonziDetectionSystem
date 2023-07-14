@@ -57,14 +57,11 @@ public class RiskReportService {
         Date end = new Date();
         end = DateUtil.endOfDay(end);
         //昨天,设定的是7天以前，以免没有数据
-        DateTime start =  DateUtil.offsetDay(end, -7);
+        DateTime start =  DateUtil.offsetDay(end, -1);
         //每日标签新增
         List<RiskCategoryVO> riskContentStatistics = contentRiskStatisticsDao.getContentRiskStatistic(
-                select(Tables.contentRisk.category.as("riskName"), Tables.contentRiskDailyStatistics.num.as("riskNum"))
-                        .from(Tables.contentRiskDailyStatistics)
-                        .leftJoin(Tables.contentRisk).on(Tables.contentRiskDailyStatistics.categoryId, equalTo(Tables.contentRisk.id))
-                        .where(Tables.contentRiskDailyStatistics.createTime, isGreaterThanOrEqualToWhenPresent(start))
-                        .and(Tables.contentRiskDailyStatistics.createTime, isLessThanOrEqualToWhenPresent(end))
+                select(Tables.contentRisk.category.as("riskName"), Tables.contentRisk.num.as("riskNum"))
+                        .from(Tables.contentRisk)
                         .orderBy(SimpleSortSpecification.of("riskNum").descending())
                         .build()
                         .render(RenderingStrategies.MYBATIS3)
@@ -74,6 +71,8 @@ public class RiskReportService {
                 select(Tables.platformDailyStatistics.contentSum,Tables.platform.name.as("platformName"))
                         .from(Tables.platformDailyStatistics)
                         .leftJoin(Tables.platform).on(Tables.platformDailyStatistics.platformId,equalTo(Tables.platform.id))
+                        .where(Tables.platformDailyStatistics.createTime, isGreaterThanOrEqualToWhenPresent(start))
+                        .and(Tables.platformDailyStatistics.createTime, isLessThanOrEqualToWhenPresent(end))
                         .orderBy(Tables.platformDailyStatistics.contentSum.descending())
                         .build()
                         .render(RenderingStrategies.MYBATIS3)

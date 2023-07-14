@@ -52,12 +52,10 @@ public class ThresholdService {
 
     public void indexChange(IndexChangeDTO dto){
         int cvalue=dto.getChangeValue();
-        long cid=dto.getSelectID();
-        if( cvalue!=-999 && cid!=-999){
-            thresholdsDao.update(
+        Long cid=dto.getSelectID();
+        thresholdsDao.update(
                     c->c.set(Tables.thresholds.setIndex).equalTo(cvalue)
                             .where(Tables.thresholds.id, isEqualTo(cid))
                 );
-        }
     }
 }
