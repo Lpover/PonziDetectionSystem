@@ -69,8 +69,8 @@ public class SocialPlatformHourStatisticsBackgroundTask implements BackgroundTas
         SocialPlatformHourStatistics socialPlatformHourStatistics = FunctionUtil.apply(new SocialPlatformHourStatistics(), it -> {
             Random random = new Random();
             it.setId(IdUtil.getSnowflakeNextId());
-            it.setSocialPlatformId(collectSp.get(random.nextInt(spSize)));
-
+//            it.setSocialPlatformId(collectSp.get(random.nextInt(spSize)));
+            it.setSocialPlatformId(1L);  //only twitter now
             it.setCreateTime(date);
             it.setUpdateTime(date);
 

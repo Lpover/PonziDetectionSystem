@@ -56,7 +56,7 @@ spring:
     password: Lianshang@N404
 
   kafka:
-    bootstrap-servers: 43.142.160.143:9092 #这个是你server.properties中配置的
+    bootstrap-servers: 118.89.118.212:9092 #这个是你server.properties中配置的
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
