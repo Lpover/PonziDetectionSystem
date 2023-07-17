@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -78,9 +79,9 @@ public class EvidenceOverviewDailyStatisticsBackgroundTask implements Background
             EvidenceOverviewDailyStatistics evidenceOverviewDailyStatistics = new EvidenceOverviewDailyStatistics();
             insertCommon(evidenceOverviewDailyStatistics, platformId);
             Random random = new Random();
-            evidenceOverviewDailyStatistics.setWebEvidenceCount(random.nextInt(1000));
-            evidenceOverviewDailyStatistics.setMobileEvidenceCount(random.nextInt(1000));
-            evidenceOverviewDailyStatistics.setReinforceEvidenceCount(random.nextInt(1000));
+            evidenceOverviewDailyStatistics.setWebEvidenceCount(random.nextInt(100));
+            evidenceOverviewDailyStatistics.setMobileEvidenceCount(random.nextInt(100));
+            evidenceOverviewDailyStatistics.setReinforceEvidenceCount(random.nextInt(100));
             list.add(evidenceOverviewDailyStatistics);
         }
 
@@ -88,7 +89,9 @@ public class EvidenceOverviewDailyStatisticsBackgroundTask implements Background
     }
 
     private void insertCommon(EvidenceOverviewDailyStatistics evidenceOverviewDailyStatistics, Long platformID){
-        Date end = new Date();
+        LocalDateTime dateTime = LocalDateTime.now();
+        dateTime = dateTime.withHour(0).withMinute(0).withSecond(0);
+        Date end = java.sql.Timestamp.valueOf(dateTime);
         evidenceOverviewDailyStatistics.setId(IdUtil.getSnowflakeNextId());
         evidenceOverviewDailyStatistics.setPlatformId(platformID);
         evidenceOverviewDailyStatistics.setCreateTime(end);

@@ -74,6 +74,7 @@ public class EvidenceController {
     @ApiOperation("取证固证情况统计")
     @GetMapping("statistics")
     public BaseResult<StatisticsEvidenceVO> getEvidenceStatistics(@Validated StatisticsEvidenceDTO dto) {
+//        evidenceDailyStatisticsService.insertDaily();
         return BaseResult.ok(evidenceDailyStatisticsService.getEvidenceStatistics(dto));
     }
 

@@ -146,14 +146,14 @@ public class EvidenceDailyStatisticsService {
         LocalDateTime dateTime = LocalDateTime.now();
         dateTime = dateTime.withHour(0).withMinute(0).withSecond(0);
         Date end = java.sql.Timestamp.valueOf(dateTime);
-
+        Integer before = 40;
         List<EvidenceOverviewDailyStatistics> list = new ArrayList<>();
-        Date start = DateUtil.offsetDay(end, -30);
+        Date start = DateUtil.offsetDay(end, -before);
         // 只获取正在监测的平台id
         List<Long> platformIDList= platformDao.select(c -> c.where(Tables.platform.monitor, isEqualTo(1))).stream().map(Platform::getId).collect(Collectors.toList());
         //每天 每个平台插入一条数据
         Random random = new Random();
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < before; i++) {
             for (Long platformId : platformIDList) {
                 EvidenceOverviewDailyStatistics evidenceOverviewDailyStatistics = new EvidenceOverviewDailyStatistics();
                 evidenceOverviewDailyStatistics.setId(IdUtil.getSnowflakeNextId());
