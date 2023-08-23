@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 @Data
 public class RiskContentStatisticDataVO {
+
     @ApiModelProperty("低风险数字内容数量")
     private Integer lowRiskNumber;
     @ApiModelProperty("中风险数字内容数量")
@@ -15,4 +16,5 @@ public class RiskContentStatisticDataVO {
     private Integer highRiskNumber;
     @ApiModelProperty("时间")
     private Date updateTime;
+
 }

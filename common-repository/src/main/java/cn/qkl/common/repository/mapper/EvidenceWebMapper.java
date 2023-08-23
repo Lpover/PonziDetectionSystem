@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface EvidenceWebMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, name, riskType, introduction, personnel, url, platformId, frequency, startTime, endTime, institution, department, webOssPath, certOssPath, packOssPath, evidencePhase, evidenceType, hash, createTime, updateTime, deleteStatus, packageHash, chainId);
+    BasicColumn[] selectList = BasicColumn.columnList(id, name, riskType, introduction, personnel, url, platformId, institution, department, webOssPath, certOssPath, packOssPath, evidencePhase, evidenceType, hash, createTime, updateTime, deleteStatus, packageHash, chainId, chainHash, chainTime, frequency, startTime, endTime, dayOfWeek, dayOfMonth);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -68,9 +68,6 @@ public interface EvidenceWebMapper {
         @Result(column="personnel", property="personnel", jdbcType=JdbcType.VARCHAR),
         @Result(column="url", property="url", jdbcType=JdbcType.VARCHAR),
         @Result(column="platform_id", property="platformId", jdbcType=JdbcType.BIGINT),
-        @Result(column="frequency", property="frequency", jdbcType=JdbcType.VARCHAR),
-        @Result(column="start_time", property="startTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="end_time", property="endTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="institution", property="institution", jdbcType=JdbcType.VARCHAR),
         @Result(column="department", property="department", jdbcType=JdbcType.VARCHAR),
         @Result(column="web_oss_path", property="webOssPath", jdbcType=JdbcType.VARCHAR),
@@ -83,7 +80,14 @@ public interface EvidenceWebMapper {
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="delete_status", property="deleteStatus", jdbcType=JdbcType.INTEGER),
         @Result(column="package_hash", property="packageHash", jdbcType=JdbcType.VARCHAR),
-        @Result(column="chain_id", property="chainId", jdbcType=JdbcType.BIGINT)
+        @Result(column="chain_id", property="chainId", jdbcType=JdbcType.BIGINT),
+        @Result(column="chain_hash", property="chainHash", jdbcType=JdbcType.VARCHAR),
+        @Result(column="chain_time", property="chainTime", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="frequency", property="frequency", jdbcType=JdbcType.INTEGER),
+        @Result(column="start_time", property="startTime", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="end_time", property="endTime", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="day_of_week", property="dayOfWeek", jdbcType=JdbcType.INTEGER),
+        @Result(column="day_of_month", property="dayOfMonth", jdbcType=JdbcType.INTEGER)
     })
     List<EvidenceWeb> selectMany(SelectStatementProvider selectStatement);
 
@@ -118,9 +122,6 @@ public interface EvidenceWebMapper {
             .map(personnel).toProperty("personnel")
             .map(url).toProperty("url")
             .map(platformId).toProperty("platformId")
-            .map(frequency).toProperty("frequency")
-            .map(startTime).toProperty("startTime")
-            .map(endTime).toProperty("endTime")
             .map(institution).toProperty("institution")
             .map(department).toProperty("department")
             .map(webOssPath).toProperty("webOssPath")
@@ -134,6 +135,13 @@ public interface EvidenceWebMapper {
             .map(deleteStatus).toProperty("deleteStatus")
             .map(packageHash).toProperty("packageHash")
             .map(chainId).toProperty("chainId")
+            .map(chainHash).toProperty("chainHash")
+            .map(chainTime).toProperty("chainTime")
+            .map(frequency).toProperty("frequency")
+            .map(startTime).toProperty("startTime")
+            .map(endTime).toProperty("endTime")
+            .map(dayOfWeek).toProperty("dayOfWeek")
+            .map(dayOfMonth).toProperty("dayOfMonth")
         );
     }
 
@@ -147,9 +155,6 @@ public interface EvidenceWebMapper {
             .map(personnel).toProperty("personnel")
             .map(url).toProperty("url")
             .map(platformId).toProperty("platformId")
-            .map(frequency).toProperty("frequency")
-            .map(startTime).toProperty("startTime")
-            .map(endTime).toProperty("endTime")
             .map(institution).toProperty("institution")
             .map(department).toProperty("department")
             .map(webOssPath).toProperty("webOssPath")
@@ -163,6 +168,13 @@ public interface EvidenceWebMapper {
             .map(deleteStatus).toProperty("deleteStatus")
             .map(packageHash).toProperty("packageHash")
             .map(chainId).toProperty("chainId")
+            .map(chainHash).toProperty("chainHash")
+            .map(chainTime).toProperty("chainTime")
+            .map(frequency).toProperty("frequency")
+            .map(startTime).toProperty("startTime")
+            .map(endTime).toProperty("endTime")
+            .map(dayOfWeek).toProperty("dayOfWeek")
+            .map(dayOfMonth).toProperty("dayOfMonth")
         );
     }
 
@@ -176,9 +188,6 @@ public interface EvidenceWebMapper {
             .map(personnel).toPropertyWhenPresent("personnel", record::getPersonnel)
             .map(url).toPropertyWhenPresent("url", record::getUrl)
             .map(platformId).toPropertyWhenPresent("platformId", record::getPlatformId)
-            .map(frequency).toPropertyWhenPresent("frequency", record::getFrequency)
-            .map(startTime).toPropertyWhenPresent("startTime", record::getStartTime)
-            .map(endTime).toPropertyWhenPresent("endTime", record::getEndTime)
             .map(institution).toPropertyWhenPresent("institution", record::getInstitution)
             .map(department).toPropertyWhenPresent("department", record::getDepartment)
             .map(webOssPath).toPropertyWhenPresent("webOssPath", record::getWebOssPath)
@@ -192,6 +201,13 @@ public interface EvidenceWebMapper {
             .map(deleteStatus).toPropertyWhenPresent("deleteStatus", record::getDeleteStatus)
             .map(packageHash).toPropertyWhenPresent("packageHash", record::getPackageHash)
             .map(chainId).toPropertyWhenPresent("chainId", record::getChainId)
+            .map(chainHash).toPropertyWhenPresent("chainHash", record::getChainHash)
+            .map(chainTime).toPropertyWhenPresent("chainTime", record::getChainTime)
+            .map(frequency).toPropertyWhenPresent("frequency", record::getFrequency)
+            .map(startTime).toPropertyWhenPresent("startTime", record::getStartTime)
+            .map(endTime).toPropertyWhenPresent("endTime", record::getEndTime)
+            .map(dayOfWeek).toPropertyWhenPresent("dayOfWeek", record::getDayOfWeek)
+            .map(dayOfMonth).toPropertyWhenPresent("dayOfMonth", record::getDayOfMonth)
         );
     }
 
@@ -231,9 +247,6 @@ public interface EvidenceWebMapper {
                 .set(personnel).equalTo(record::getPersonnel)
                 .set(url).equalTo(record::getUrl)
                 .set(platformId).equalTo(record::getPlatformId)
-                .set(frequency).equalTo(record::getFrequency)
-                .set(startTime).equalTo(record::getStartTime)
-                .set(endTime).equalTo(record::getEndTime)
                 .set(institution).equalTo(record::getInstitution)
                 .set(department).equalTo(record::getDepartment)
                 .set(webOssPath).equalTo(record::getWebOssPath)
@@ -246,7 +259,14 @@ public interface EvidenceWebMapper {
                 .set(updateTime).equalTo(record::getUpdateTime)
                 .set(deleteStatus).equalTo(record::getDeleteStatus)
                 .set(packageHash).equalTo(record::getPackageHash)
-                .set(chainId).equalTo(record::getChainId);
+                .set(chainId).equalTo(record::getChainId)
+                .set(chainHash).equalTo(record::getChainHash)
+                .set(chainTime).equalTo(record::getChainTime)
+                .set(frequency).equalTo(record::getFrequency)
+                .set(startTime).equalTo(record::getStartTime)
+                .set(endTime).equalTo(record::getEndTime)
+                .set(dayOfWeek).equalTo(record::getDayOfWeek)
+                .set(dayOfMonth).equalTo(record::getDayOfMonth);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -258,9 +278,6 @@ public interface EvidenceWebMapper {
                 .set(personnel).equalToWhenPresent(record::getPersonnel)
                 .set(url).equalToWhenPresent(record::getUrl)
                 .set(platformId).equalToWhenPresent(record::getPlatformId)
-                .set(frequency).equalToWhenPresent(record::getFrequency)
-                .set(startTime).equalToWhenPresent(record::getStartTime)
-                .set(endTime).equalToWhenPresent(record::getEndTime)
                 .set(institution).equalToWhenPresent(record::getInstitution)
                 .set(department).equalToWhenPresent(record::getDepartment)
                 .set(webOssPath).equalToWhenPresent(record::getWebOssPath)
@@ -273,7 +290,14 @@ public interface EvidenceWebMapper {
                 .set(updateTime).equalToWhenPresent(record::getUpdateTime)
                 .set(deleteStatus).equalToWhenPresent(record::getDeleteStatus)
                 .set(packageHash).equalToWhenPresent(record::getPackageHash)
-                .set(chainId).equalToWhenPresent(record::getChainId);
+                .set(chainId).equalToWhenPresent(record::getChainId)
+                .set(chainHash).equalToWhenPresent(record::getChainHash)
+                .set(chainTime).equalToWhenPresent(record::getChainTime)
+                .set(frequency).equalToWhenPresent(record::getFrequency)
+                .set(startTime).equalToWhenPresent(record::getStartTime)
+                .set(endTime).equalToWhenPresent(record::getEndTime)
+                .set(dayOfWeek).equalToWhenPresent(record::getDayOfWeek)
+                .set(dayOfMonth).equalToWhenPresent(record::getDayOfMonth);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -285,9 +309,6 @@ public interface EvidenceWebMapper {
             .set(personnel).equalTo(record::getPersonnel)
             .set(url).equalTo(record::getUrl)
             .set(platformId).equalTo(record::getPlatformId)
-            .set(frequency).equalTo(record::getFrequency)
-            .set(startTime).equalTo(record::getStartTime)
-            .set(endTime).equalTo(record::getEndTime)
             .set(institution).equalTo(record::getInstitution)
             .set(department).equalTo(record::getDepartment)
             .set(webOssPath).equalTo(record::getWebOssPath)
@@ -301,6 +322,13 @@ public interface EvidenceWebMapper {
             .set(deleteStatus).equalTo(record::getDeleteStatus)
             .set(packageHash).equalTo(record::getPackageHash)
             .set(chainId).equalTo(record::getChainId)
+            .set(chainHash).equalTo(record::getChainHash)
+            .set(chainTime).equalTo(record::getChainTime)
+            .set(frequency).equalTo(record::getFrequency)
+            .set(startTime).equalTo(record::getStartTime)
+            .set(endTime).equalTo(record::getEndTime)
+            .set(dayOfWeek).equalTo(record::getDayOfWeek)
+            .set(dayOfMonth).equalTo(record::getDayOfMonth)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -314,9 +342,6 @@ public interface EvidenceWebMapper {
             .set(personnel).equalToWhenPresent(record::getPersonnel)
             .set(url).equalToWhenPresent(record::getUrl)
             .set(platformId).equalToWhenPresent(record::getPlatformId)
-            .set(frequency).equalToWhenPresent(record::getFrequency)
-            .set(startTime).equalToWhenPresent(record::getStartTime)
-            .set(endTime).equalToWhenPresent(record::getEndTime)
             .set(institution).equalToWhenPresent(record::getInstitution)
             .set(department).equalToWhenPresent(record::getDepartment)
             .set(webOssPath).equalToWhenPresent(record::getWebOssPath)
@@ -330,6 +355,13 @@ public interface EvidenceWebMapper {
             .set(deleteStatus).equalToWhenPresent(record::getDeleteStatus)
             .set(packageHash).equalToWhenPresent(record::getPackageHash)
             .set(chainId).equalToWhenPresent(record::getChainId)
+            .set(chainHash).equalToWhenPresent(record::getChainHash)
+            .set(chainTime).equalToWhenPresent(record::getChainTime)
+            .set(frequency).equalToWhenPresent(record::getFrequency)
+            .set(startTime).equalToWhenPresent(record::getStartTime)
+            .set(endTime).equalToWhenPresent(record::getEndTime)
+            .set(dayOfWeek).equalToWhenPresent(record::getDayOfWeek)
+            .set(dayOfMonth).equalToWhenPresent(record::getDayOfMonth)
             .where(id, isEqualTo(record::getId))
         );
     }

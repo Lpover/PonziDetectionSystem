@@ -23,6 +23,9 @@ public class SwitchTable {
     private String text;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer frequency;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
@@ -118,6 +121,22 @@ public class SwitchTable {
         this.text = text;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getFrequency() {
+        return frequency;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public SwitchTable withFrequency(Integer frequency) {
+        this.setFrequency(frequency);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setFrequency(Integer frequency) {
+        this.frequency = frequency;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -131,6 +150,7 @@ public class SwitchTable {
         sb.append(", startTime=").append(startTime);
         sb.append(", endTime=").append(endTime);
         sb.append(", text=").append(text);
+        sb.append(", frequency=").append(frequency);
         sb.append("]");
         return sb.toString();
     }

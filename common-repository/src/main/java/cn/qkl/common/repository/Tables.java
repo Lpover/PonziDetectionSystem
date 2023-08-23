@@ -36,5 +36,7 @@ public class Tables {
     public static final NotifyRecordDynamicSqlSupport.NotifyRecord notifyRecord = NotifyRecordDynamicSqlSupport.notifyRecord;
     public static final SwitchTableDynamicSqlSupport.SwitchTable switchTable = SwitchTableDynamicSqlSupport.switchTable;
     public static final SituationReportDynamicSqlSupport.SituationReport situationReport = SituationReportDynamicSqlSupport.situationReport;
+    public static final AccountToAccountDynamicSqlSupport.AccountToAccount accountToAccount = AccountToAccountDynamicSqlSupport.accountToAccount;
+    public static final AtaExportTaskDynamicSqlSupport.AtaExportTask ataExportTask = AtaExportTaskDynamicSqlSupport.ataExportTask;
 
 }

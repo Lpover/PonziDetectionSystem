@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -30,7 +31,7 @@ public final class BaseResult<T> implements Serializable {
         this.data = data;
     }
 
-    public static BaseResult<Void> ok() {
+    public static BaseResult<List<cn.qkl.webserver.vo.riskAccount.SmartAddressFindVO>> ok() {
         return BaseResult.OK;
     }
 

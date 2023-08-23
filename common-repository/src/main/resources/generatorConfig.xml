@@ -89,6 +89,10 @@
         </table>
         <table tableName="switch_table" domainObjectName="SwitchTable">
         </table>
+        <table tableName="account_to_account" domainObjectName="AccountToAccount">
+        </table>
+        <table tableName="ata_export_task" domainObjectName="AtaExportTask">
+        </table>
 
     </context>
 </generatorConfiguration>

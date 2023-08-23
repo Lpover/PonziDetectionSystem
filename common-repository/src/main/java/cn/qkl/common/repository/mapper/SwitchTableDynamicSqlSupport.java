@@ -29,6 +29,9 @@ public final class SwitchTableDynamicSqlSupport {
     public static final SqlColumn<String> text = switchTable.text;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Integer> frequency = switchTable.frequency;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class SwitchTable extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -41,6 +44,8 @@ public final class SwitchTableDynamicSqlSupport {
         public final SqlColumn<Date> endTime = column("end_time", JDBCType.TIME);
 
         public final SqlColumn<String> text = column("`text`", JDBCType.VARCHAR);
+
+        public final SqlColumn<Integer> frequency = column("frequency", JDBCType.INTEGER);
 
         public SwitchTable() {
             super("switch_table");
