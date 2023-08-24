@@ -1,7 +1,9 @@
-package cn.qkl.webserver.vo.riskAccount;
+package cn.qkl.webserver.dto.riskaccount;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.util.Date;
 
 /**
  * @title:
@@ -10,9 +12,6 @@ import lombok.Data;
  * @wiki
  */
 @Data
-public class AddNoteVO {
-
-    @ApiModelProperty("备注")
-    private String note;
+public class exportTaskDTO {
 
 }

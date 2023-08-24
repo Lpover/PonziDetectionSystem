@@ -12,6 +12,9 @@ import lombok.Data;
 @Data
 public class DetailNoteDTO {
 
+    @ApiModelProperty("交易哈希，是长度为66的字符串")
+    private String txHash;
+
     @ApiModelProperty("备注")
     private String note;
 

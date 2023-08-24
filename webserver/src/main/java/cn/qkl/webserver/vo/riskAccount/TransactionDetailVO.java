@@ -20,8 +20,8 @@ public class TransactionDetailVO {
     @ApiModelProperty("交易时间")
     private Date updateTime;
 
-    @ApiModelProperty("交易方向，1-转入/2-转出")
-    private Integer txDirection;
+    @ApiModelProperty("交易方向，转入/转出")
+    private String txDirection;
 
     @ApiModelProperty("对手地址")
     private String address;

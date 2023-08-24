@@ -41,6 +41,9 @@ public class AccountTxHistory {
     private Date updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String note;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
@@ -232,6 +235,22 @@ public class AccountTxHistory {
         this.updateTime = updateTime;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getNote() {
+        return note;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public AccountTxHistory withNote(String note) {
+        this.setNote(note);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setNote(String note) {
+        this.note = note;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -251,6 +270,7 @@ public class AccountTxHistory {
         sb.append(", chainId=").append(chainId);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", note=").append(note);
         sb.append("]");
         return sb.toString();
     }

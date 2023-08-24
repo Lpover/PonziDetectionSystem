@@ -27,8 +27,8 @@
 <!--        </table>-->
 <!--        <table tableName="account_content" domainObjectName="AccountContent">-->
 <!--        </table>-->
-<!--        <table tableName="account_tx_history" domainObjectName="AccountTxHistory">-->
-<!--        </table>-->
+        <table tableName="account_tx_history" domainObjectName="AccountTxHistory">
+        </table>
 <!--        <table tableName="algorithm" domainObjectName="Algorithm">-->
 <!--        </table>-->
 <!--        <table tableName="carrier" domainObjectName="Carrier">-->

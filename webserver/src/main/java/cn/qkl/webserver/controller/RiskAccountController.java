@@ -59,27 +59,33 @@ public class RiskAccountController {
 
     @ApiOperation("网状分析添加备注")
     @PostMapping("addnote")
-    public BaseResult<Void> AddNote(@RequestBody @Validated AddNoteDTO dto) {
+    public BaseResult<Void> addNote(@RequestBody @Validated AddNoteDTO dto) {
         riskAccountService.changeAddNote(dto);
         return BaseResult.ok();
     }
 
-    @ApiOperation("交易导出")
+    @ApiOperation("交易导出按钮")
     @GetMapping("transactionexport")
     public BaseResult<TransactionExportVO> transactionExport(@Validated TransactionExportDTO dto) {
         return BaseResult.ok(new TransactionExportVO());
     }
+    @ApiOperation("导出任务显示")
+    @GetMapping("exporttask")
+    public BaseResult<exportTaskVO> exportTask(@Validated exportTaskDTO dto) {
+        return BaseResult.ok(new exportTaskVO());
+    }
 
     @ApiOperation("地址全部交易详情")
     @GetMapping("transactiondetail")
-    public BaseResult<TransactionDetailVO> transactionDetail(@Validated TransactionDetailDTO dto) {
-        return BaseResult.ok(new TransactionDetailVO());
+    public BaseResult<List<TransactionDetailVO>> transactionDetail(@Validated TransactionDetailDTO dto) {
+        return BaseResult.ok(riskAccountService.getTransactionDetail(dto));
     }
 
     @ApiOperation("地址全部交易备注")
-    @GetMapping("detailnote")
-    public BaseResult<DetailNoteVO> detailNote(@Validated TransactionDetailDTO dto) {
-        return BaseResult.ok(new DetailNoteVO());
+    @PostMapping("detailnote")
+    public BaseResult<Void> detailNote(@RequestBody @Validated DetailNoteDTO dto) {
+        riskAccountService.changeDetailNote(dto);
+        return BaseResult.ok();
     }
 
 }

@@ -14,8 +14,11 @@ import java.util.Date;
 @Data
 public class TransactionDetailDTO {
 
-    @ApiModelProperty("交易哈希或者目标地址")
+    @ApiModelProperty("账户节点的地址")
     private String address;
+
+    @ApiModelProperty("交易对手地址,是长度为42的字符串")
+    private String targetAddress;
 
     @ApiModelProperty("交易开始时间")
     private Date startTime;
