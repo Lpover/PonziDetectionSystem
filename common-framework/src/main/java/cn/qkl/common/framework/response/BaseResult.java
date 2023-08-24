@@ -31,7 +31,7 @@ public final class BaseResult<T> implements Serializable {
         this.data = data;
     }
 
-    public static BaseResult<List<cn.qkl.webserver.vo.riskAccount.SmartAddressFindVO>> ok() {
+    public static BaseResult<Void> ok() {
         return BaseResult.OK;
     }
 

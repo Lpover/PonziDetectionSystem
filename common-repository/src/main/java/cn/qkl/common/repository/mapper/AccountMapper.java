@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface AccountMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, accountAddress, chainId, accountAlias, image, cryptoBalance, currencyBalance, exchangeRate, createTime, updateTime, platformId, releaseNum, riskLevel);
+    BasicColumn[] selectList = BasicColumn.columnList(id, accountAddress, chainId, accountAlias, image, cryptoBalance, currencyBalance, exchangeRate, createTime, updateTime, platformId, releaseNum, riskLevel, note, inflowAmount, actionFeatures, contentTag, riskTxNumIn, riskTxNumOut, riskContentNum, recentTxTime);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -73,7 +73,15 @@ public interface AccountMapper {
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="platform_id", property="platformId", jdbcType=JdbcType.BIGINT),
         @Result(column="release_num", property="releaseNum", jdbcType=JdbcType.INTEGER),
-        @Result(column="risk_level", property="riskLevel", jdbcType=JdbcType.INTEGER)
+        @Result(column="risk_level", property="riskLevel", jdbcType=JdbcType.INTEGER),
+        @Result(column="note", property="note", jdbcType=JdbcType.VARCHAR),
+        @Result(column="inflow_amount", property="inflowAmount", jdbcType=JdbcType.BIGINT),
+        @Result(column="action_features", property="actionFeatures", jdbcType=JdbcType.VARCHAR),
+        @Result(column="content_tag", property="contentTag", jdbcType=JdbcType.VARCHAR),
+        @Result(column="risk_tx_num_in", property="riskTxNumIn", jdbcType=JdbcType.INTEGER),
+        @Result(column="risk_tx_num_out", property="riskTxNumOut", jdbcType=JdbcType.INTEGER),
+        @Result(column="risk_content_num", property="riskContentNum", jdbcType=JdbcType.INTEGER),
+        @Result(column="recent_tx_time", property="recentTxTime", jdbcType=JdbcType.TIMESTAMP)
     })
     List<Account> selectMany(SelectStatementProvider selectStatement);
 
@@ -114,6 +122,14 @@ public interface AccountMapper {
             .map(platformId).toProperty("platformId")
             .map(releaseNum).toProperty("releaseNum")
             .map(riskLevel).toProperty("riskLevel")
+            .map(note).toProperty("note")
+            .map(inflowAmount).toProperty("inflowAmount")
+            .map(actionFeatures).toProperty("actionFeatures")
+            .map(contentTag).toProperty("contentTag")
+            .map(riskTxNumIn).toProperty("riskTxNumIn")
+            .map(riskTxNumOut).toProperty("riskTxNumOut")
+            .map(riskContentNum).toProperty("riskContentNum")
+            .map(recentTxTime).toProperty("recentTxTime")
         );
     }
 
@@ -133,6 +149,14 @@ public interface AccountMapper {
             .map(platformId).toProperty("platformId")
             .map(releaseNum).toProperty("releaseNum")
             .map(riskLevel).toProperty("riskLevel")
+            .map(note).toProperty("note")
+            .map(inflowAmount).toProperty("inflowAmount")
+            .map(actionFeatures).toProperty("actionFeatures")
+            .map(contentTag).toProperty("contentTag")
+            .map(riskTxNumIn).toProperty("riskTxNumIn")
+            .map(riskTxNumOut).toProperty("riskTxNumOut")
+            .map(riskContentNum).toProperty("riskContentNum")
+            .map(recentTxTime).toProperty("recentTxTime")
         );
     }
 
@@ -152,6 +176,14 @@ public interface AccountMapper {
             .map(platformId).toPropertyWhenPresent("platformId", record::getPlatformId)
             .map(releaseNum).toPropertyWhenPresent("releaseNum", record::getReleaseNum)
             .map(riskLevel).toPropertyWhenPresent("riskLevel", record::getRiskLevel)
+            .map(note).toPropertyWhenPresent("note", record::getNote)
+            .map(inflowAmount).toPropertyWhenPresent("inflowAmount", record::getInflowAmount)
+            .map(actionFeatures).toPropertyWhenPresent("actionFeatures", record::getActionFeatures)
+            .map(contentTag).toPropertyWhenPresent("contentTag", record::getContentTag)
+            .map(riskTxNumIn).toPropertyWhenPresent("riskTxNumIn", record::getRiskTxNumIn)
+            .map(riskTxNumOut).toPropertyWhenPresent("riskTxNumOut", record::getRiskTxNumOut)
+            .map(riskContentNum).toPropertyWhenPresent("riskContentNum", record::getRiskContentNum)
+            .map(recentTxTime).toPropertyWhenPresent("recentTxTime", record::getRecentTxTime)
         );
     }
 
@@ -196,7 +228,15 @@ public interface AccountMapper {
                 .set(updateTime).equalTo(record::getUpdateTime)
                 .set(platformId).equalTo(record::getPlatformId)
                 .set(releaseNum).equalTo(record::getReleaseNum)
-                .set(riskLevel).equalTo(record::getRiskLevel);
+                .set(riskLevel).equalTo(record::getRiskLevel)
+                .set(note).equalTo(record::getNote)
+                .set(inflowAmount).equalTo(record::getInflowAmount)
+                .set(actionFeatures).equalTo(record::getActionFeatures)
+                .set(contentTag).equalTo(record::getContentTag)
+                .set(riskTxNumIn).equalTo(record::getRiskTxNumIn)
+                .set(riskTxNumOut).equalTo(record::getRiskTxNumOut)
+                .set(riskContentNum).equalTo(record::getRiskContentNum)
+                .set(recentTxTime).equalTo(record::getRecentTxTime);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -213,7 +253,15 @@ public interface AccountMapper {
                 .set(updateTime).equalToWhenPresent(record::getUpdateTime)
                 .set(platformId).equalToWhenPresent(record::getPlatformId)
                 .set(releaseNum).equalToWhenPresent(record::getReleaseNum)
-                .set(riskLevel).equalToWhenPresent(record::getRiskLevel);
+                .set(riskLevel).equalToWhenPresent(record::getRiskLevel)
+                .set(note).equalToWhenPresent(record::getNote)
+                .set(inflowAmount).equalToWhenPresent(record::getInflowAmount)
+                .set(actionFeatures).equalToWhenPresent(record::getActionFeatures)
+                .set(contentTag).equalToWhenPresent(record::getContentTag)
+                .set(riskTxNumIn).equalToWhenPresent(record::getRiskTxNumIn)
+                .set(riskTxNumOut).equalToWhenPresent(record::getRiskTxNumOut)
+                .set(riskContentNum).equalToWhenPresent(record::getRiskContentNum)
+                .set(recentTxTime).equalToWhenPresent(record::getRecentTxTime);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -231,6 +279,14 @@ public interface AccountMapper {
             .set(platformId).equalTo(record::getPlatformId)
             .set(releaseNum).equalTo(record::getReleaseNum)
             .set(riskLevel).equalTo(record::getRiskLevel)
+            .set(note).equalTo(record::getNote)
+            .set(inflowAmount).equalTo(record::getInflowAmount)
+            .set(actionFeatures).equalTo(record::getActionFeatures)
+            .set(contentTag).equalTo(record::getContentTag)
+            .set(riskTxNumIn).equalTo(record::getRiskTxNumIn)
+            .set(riskTxNumOut).equalTo(record::getRiskTxNumOut)
+            .set(riskContentNum).equalTo(record::getRiskContentNum)
+            .set(recentTxTime).equalTo(record::getRecentTxTime)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -250,6 +306,14 @@ public interface AccountMapper {
             .set(platformId).equalToWhenPresent(record::getPlatformId)
             .set(releaseNum).equalToWhenPresent(record::getReleaseNum)
             .set(riskLevel).equalToWhenPresent(record::getRiskLevel)
+            .set(note).equalToWhenPresent(record::getNote)
+            .set(inflowAmount).equalToWhenPresent(record::getInflowAmount)
+            .set(actionFeatures).equalToWhenPresent(record::getActionFeatures)
+            .set(contentTag).equalToWhenPresent(record::getContentTag)
+            .set(riskTxNumIn).equalToWhenPresent(record::getRiskTxNumIn)
+            .set(riskTxNumOut).equalToWhenPresent(record::getRiskTxNumOut)
+            .set(riskContentNum).equalToWhenPresent(record::getRiskContentNum)
+            .set(recentTxTime).equalToWhenPresent(record::getRecentTxTime)
             .where(id, isEqualTo(record::getId))
         );
     }

@@ -21,8 +21,8 @@
                             targetProject="src/main/java"/>
         <javaClientGenerator targetPackage="cn.qkl.common.repository.mapper"
                              targetProject="src/main/java"/>
-<!--        <table tableName="account" domainObjectName="Account">-->
-<!--        </table>-->
+        <table tableName="account" domainObjectName="Account">
+        </table>
 <!--        <table tableName="account_check_history" domainObjectName="AccountCheckHistory">-->
 <!--        </table>-->
 <!--        <table tableName="account_content" domainObjectName="AccountContent">-->

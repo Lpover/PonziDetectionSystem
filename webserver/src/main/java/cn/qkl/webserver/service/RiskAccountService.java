@@ -8,6 +8,7 @@ import cn.qkl.webserver.dao.AccountToAccountDao;
 import cn.qkl.webserver.dao.PlatformDao;
 import cn.qkl.webserver.dto.riskaccount.AccountInfoListQueryDTO;
 import cn.qkl.webserver.dto.riskaccount.AccountNumDTO;
+import cn.qkl.webserver.dto.riskaccount.AddNoteDTO;
 import cn.qkl.webserver.dto.riskaccount.SmartAddressFindDTO;
 import cn.qkl.webserver.vo.riskAccount.AccountInfoVO;
 import cn.qkl.webserver.vo.riskAccount.AccountNumVO;
@@ -111,18 +112,11 @@ public class RiskAccountService {
     }
 
     //根据地址添加备注
-    public AddNoteVO getAddNote(AccountNumDTO dto) {
-
-        AddNoteVO getAddNote = accountToAccountDao.getAddNote(
-                select(
-                        sum(Tables.platform.highAccountNum).as("totalHighAccount"),
-                        sum(Tables.platform.midAccountNum).as("totalMiddleAccount"),
-                        sum(Tables.platform.lowAccountNum).as("totalLowAccount"))
-                        .from(Tables.platform)
-                        .build()
-                        .render(RenderingStrategies.MYBATIS3)
+    public void changeAddNote(AddNoteDTO dto) {
+        accountToAccountDao.update(
+                c->c.set(Tables.account.note).equalTo(dto.getNote())
+                        .where(Tables.account.accountAddress,isEqualTo(dto.getAccountAddress()))
         );
-        return getAddNote;
     }
 
 }
