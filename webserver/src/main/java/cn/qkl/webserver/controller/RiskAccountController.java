@@ -65,14 +65,14 @@ public class RiskAccountController {
     }
 
     @ApiOperation("交易导出按钮")
-    @GetMapping("transactionexport")
-    public BaseResult<TransactionExportVO> transactionExport(@Validated TransactionExportDTO dto) {
-        return BaseResult.ok(new TransactionExportVO());
+    @PostMapping("transactionexport")
+    public BaseResult<Void> transactionExport(@Validated TransactionExportDTO dto) {
+        return BaseResult.ok();
     }
     @ApiOperation("导出任务显示")
     @GetMapping("exporttask")
-    public BaseResult<exportTaskVO> exportTask(@Validated exportTaskDTO dto) {
-        return BaseResult.ok(new exportTaskVO());
+    public BaseResult<List<exportTaskVO>> exportTask(@Validated exportTaskDTO dto) {
+        return BaseResult.ok(riskAccountService.getExportTask(dto));
     }
 
     @ApiOperation("地址全部交易详情")

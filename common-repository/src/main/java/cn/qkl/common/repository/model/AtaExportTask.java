@@ -8,16 +8,13 @@ public class AtaExportTask {
     private Long id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String blockchain;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String currencyType;
+    private Integer blockchain;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String address;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String direction;
+    private Integer direction;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String lowerLimit;
@@ -27,6 +24,15 @@ public class AtaExportTask {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Date endTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String url;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Date createTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Date updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
@@ -45,35 +51,19 @@ public class AtaExportTask {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getBlockchain() {
+    public Integer getBlockchain() {
         return blockchain;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AtaExportTask withBlockchain(String blockchain) {
+    public AtaExportTask withBlockchain(Integer blockchain) {
         this.setBlockchain(blockchain);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setBlockchain(String blockchain) {
+    public void setBlockchain(Integer blockchain) {
         this.blockchain = blockchain;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getCurrencyType() {
-        return currencyType;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AtaExportTask withCurrencyType(String currencyType) {
-        this.setCurrencyType(currencyType);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setCurrencyType(String currencyType) {
-        this.currencyType = currencyType;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -93,18 +83,18 @@ public class AtaExportTask {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getDirection() {
+    public Integer getDirection() {
         return direction;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AtaExportTask withDirection(String direction) {
+    public AtaExportTask withDirection(Integer direction) {
         this.setDirection(direction);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setDirection(String direction) {
+    public void setDirection(Integer direction) {
         this.direction = direction;
     }
 
@@ -156,6 +146,54 @@ public class AtaExportTask {
         this.endTime = endTime;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getUrl() {
+        return url;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public AtaExportTask withUrl(String url) {
+        this.setUrl(url);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public AtaExportTask withCreateTime(Date createTime) {
+        this.setCreateTime(createTime);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public AtaExportTask withUpdateTime(Date updateTime) {
+        this.setUpdateTime(updateTime);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -165,12 +203,14 @@ public class AtaExportTask {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", blockchain=").append(blockchain);
-        sb.append(", currencyType=").append(currencyType);
         sb.append(", address=").append(address);
         sb.append(", direction=").append(direction);
         sb.append(", lowerLimit=").append(lowerLimit);
         sb.append(", startTime=").append(startTime);
         sb.append(", endTime=").append(endTime);
+        sb.append(", url=").append(url);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
         sb.append("]");
         return sb.toString();
     }

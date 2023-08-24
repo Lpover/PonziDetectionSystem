@@ -29,6 +29,9 @@ public class exportTaskVO {
     @ApiModelProperty("交易开始时间")
     private Date endTime;
 
+    @ApiModelProperty("交易方向， 1-全部/2-转入/3-转出")
+    private Integer direction;
+
     @ApiModelProperty("交易下载URL")
     private String url;
 

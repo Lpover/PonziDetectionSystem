@@ -4,10 +4,7 @@ import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.mapper.AccountTxHistoryMapper;
 import cn.qkl.common.repository.model.AccountToAccount;
-import cn.qkl.webserver.dao.AccountCheckHistoryDao;
-import cn.qkl.webserver.dao.AccountToAccountDao;
-import cn.qkl.webserver.dao.AccountTxHistoryDao;
-import cn.qkl.webserver.dao.PlatformDao;
+import cn.qkl.webserver.dao.*;
 import cn.qkl.webserver.dto.riskaccount.*;
 import cn.qkl.webserver.vo.riskAccount.*;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +40,8 @@ public class RiskAccountService {
     private AccountToAccountDao accountToAccountDao;
     @Autowired
     private AccountTxHistoryDao accountTxHistoryDao;
+    @Autowired
+    private AtaExportTaskDao ataExportTaskDao;
 
     //获取分页列表信息
     public PageVO<AccountInfoVO> getAccountInfoList(AccountInfoListQueryDTO dto) {
@@ -120,9 +119,24 @@ public class RiskAccountService {
         );
     }
 
-//    public List<TransactionExportVO> getTransactionExport(TransactionExportDTO dto){
-//
-//    }
+    //交易导出按钮
+    public void doTransactionExport(TransactionExportDTO dto){
+
+    }
+    //导出任务显示
+    public List<exportTaskVO> getExportTask(exportTaskDTO dto){
+        List<exportTaskVO> exportTaskVOList = ataExportTaskDao.getexportTask(
+                select(Tables.ataExportTask.address,Tables.ataExportTask.blockchain,Tables.ataExportTask.lowerLimit,
+                        Tables.ataExportTask.startTime,Tables.ataExportTask.endTime,Tables.ataExportTask.direction,
+                        Tables.ataExportTask.url)
+                        .from(Tables.ataExportTask)
+                        .orderBy(Tables.ataExportTask.updateTime)
+                        .limit(20)
+                        .build()
+                        .render(RenderingStrategies.MYBATIS3)
+        );
+        return exportTaskVOList;
+    }
 
     //地址全部交易详情
     public List<TransactionDetailVO> getTransactionDetail(TransactionDetailDTO dto){
