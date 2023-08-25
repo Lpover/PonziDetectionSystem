@@ -23,7 +23,7 @@ public final class AtaExportTaskDynamicSqlSupport {
     public static final SqlColumn<Integer> direction = ataExportTask.direction;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> lowerLimit = ataExportTask.lowerLimit;
+    public static final SqlColumn<Long> lowerLimit = ataExportTask.lowerLimit;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Date> startTime = ataExportTask.startTime;
@@ -50,7 +50,7 @@ public final class AtaExportTaskDynamicSqlSupport {
 
         public final SqlColumn<Integer> direction = column("direction", JDBCType.INTEGER);
 
-        public final SqlColumn<String> lowerLimit = column("lower_limit", JDBCType.VARCHAR);
+        public final SqlColumn<Long> lowerLimit = column("lower_limit", JDBCType.BIGINT);
 
         public final SqlColumn<Date> startTime = column("start_time", JDBCType.TIMESTAMP);
 

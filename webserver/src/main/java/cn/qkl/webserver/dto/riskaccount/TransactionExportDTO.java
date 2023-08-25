@@ -20,16 +20,16 @@ public class TransactionExportDTO {
     @ApiModelProperty("区块链，1-ETH,2-TRON")
     private Integer blockchain;
 
-    @ApiModelProperty("币种，1-USDT-TRC20")
-    private Integer currencyType;
-
     @ApiModelProperty("交易金额下限：数字框，默认不填，表示导出所有金额的交易")
-    private Integer lowerLimit;
+    private Long lowerLimit;
 
     @ApiModelProperty("交易开始时间")
     private Date startTime;
 
     @ApiModelProperty("交易开始时间")
     private Date endTime;
+
+    @ApiModelProperty("交易方向， 1-全部/2-转入/3-转出")
+    private Integer direction;
 
 }

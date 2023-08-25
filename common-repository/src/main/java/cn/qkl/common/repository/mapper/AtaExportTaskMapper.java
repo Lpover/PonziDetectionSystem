@@ -65,7 +65,7 @@ public interface AtaExportTaskMapper {
         @Result(column="blockchain", property="blockchain", jdbcType=JdbcType.INTEGER),
         @Result(column="address", property="address", jdbcType=JdbcType.VARCHAR),
         @Result(column="direction", property="direction", jdbcType=JdbcType.INTEGER),
-        @Result(column="lower_limit", property="lowerLimit", jdbcType=JdbcType.VARCHAR),
+        @Result(column="lower_limit", property="lowerLimit", jdbcType=JdbcType.BIGINT),
         @Result(column="start_time", property="startTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="end_time", property="endTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="url", property="url", jdbcType=JdbcType.VARCHAR),

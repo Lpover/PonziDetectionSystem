@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface AccountToAccountMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, from, to, fromRiskIndex, toRiskIndex, txAmount, txNum, fromRatio, toRatio, blockchain, currencyType, note, createTime, updateTime, protocols, wContract, wTransaction, wWallet, wHybrid, label, toAmount, fromAmount, toNum, fromNum, toCounter, fromCounter);
+    BasicColumn[] selectList = BasicColumn.columnList(id, from, to, fromRiskIndex, toRiskIndex, txAmount, txNum, fromRatio, toRatio, blockchain, currencyType, note, createTime, updateTime, protocols, wContract, wTransaction, wWallet, wHybrid, label, toAmount, fromAmount, toNum, fromNum, toCounter, fromCounter, chainId);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -86,7 +86,8 @@ public interface AccountToAccountMapper {
         @Result(column="to_num", property="toNum", jdbcType=JdbcType.BIGINT),
         @Result(column="from_num", property="fromNum", jdbcType=JdbcType.BIGINT),
         @Result(column="to_counter", property="toCounter", jdbcType=JdbcType.BIGINT),
-        @Result(column="from_counter", property="fromCounter", jdbcType=JdbcType.BIGINT)
+        @Result(column="from_counter", property="fromCounter", jdbcType=JdbcType.BIGINT),
+        @Result(column="chain_id", property="chainId", jdbcType=JdbcType.BIGINT)
     })
     List<AccountToAccount> selectMany(SelectStatementProvider selectStatement);
 
@@ -140,6 +141,7 @@ public interface AccountToAccountMapper {
             .map(fromNum).toProperty("fromNum")
             .map(toCounter).toProperty("toCounter")
             .map(fromCounter).toProperty("fromCounter")
+            .map(chainId).toProperty("chainId")
         );
     }
 
@@ -172,6 +174,7 @@ public interface AccountToAccountMapper {
             .map(fromNum).toProperty("fromNum")
             .map(toCounter).toProperty("toCounter")
             .map(fromCounter).toProperty("fromCounter")
+            .map(chainId).toProperty("chainId")
         );
     }
 
@@ -204,6 +207,7 @@ public interface AccountToAccountMapper {
             .map(fromNum).toPropertyWhenPresent("fromNum", record::getFromNum)
             .map(toCounter).toPropertyWhenPresent("toCounter", record::getToCounter)
             .map(fromCounter).toPropertyWhenPresent("fromCounter", record::getFromCounter)
+            .map(chainId).toPropertyWhenPresent("chainId", record::getChainId)
         );
     }
 
@@ -261,7 +265,8 @@ public interface AccountToAccountMapper {
                 .set(toNum).equalTo(record::getToNum)
                 .set(fromNum).equalTo(record::getFromNum)
                 .set(toCounter).equalTo(record::getToCounter)
-                .set(fromCounter).equalTo(record::getFromCounter);
+                .set(fromCounter).equalTo(record::getFromCounter)
+                .set(chainId).equalTo(record::getChainId);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -291,7 +296,8 @@ public interface AccountToAccountMapper {
                 .set(toNum).equalToWhenPresent(record::getToNum)
                 .set(fromNum).equalToWhenPresent(record::getFromNum)
                 .set(toCounter).equalToWhenPresent(record::getToCounter)
-                .set(fromCounter).equalToWhenPresent(record::getFromCounter);
+                .set(fromCounter).equalToWhenPresent(record::getFromCounter)
+                .set(chainId).equalToWhenPresent(record::getChainId);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -322,6 +328,7 @@ public interface AccountToAccountMapper {
             .set(fromNum).equalTo(record::getFromNum)
             .set(toCounter).equalTo(record::getToCounter)
             .set(fromCounter).equalTo(record::getFromCounter)
+            .set(chainId).equalTo(record::getChainId)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -354,6 +361,7 @@ public interface AccountToAccountMapper {
             .set(fromNum).equalToWhenPresent(record::getFromNum)
             .set(toCounter).equalToWhenPresent(record::getToCounter)
             .set(fromCounter).equalToWhenPresent(record::getFromCounter)
+            .set(chainId).equalToWhenPresent(record::getChainId)
             .where(id, isEqualTo(record::getId))
         );
     }

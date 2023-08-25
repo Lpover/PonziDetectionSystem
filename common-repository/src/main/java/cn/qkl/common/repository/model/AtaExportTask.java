@@ -17,7 +17,7 @@ public class AtaExportTask {
     private Integer direction;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String lowerLimit;
+    private Long lowerLimit;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Date startTime;
@@ -99,18 +99,18 @@ public class AtaExportTask {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getLowerLimit() {
+    public Long getLowerLimit() {
         return lowerLimit;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AtaExportTask withLowerLimit(String lowerLimit) {
+    public AtaExportTask withLowerLimit(Long lowerLimit) {
         this.setLowerLimit(lowerLimit);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setLowerLimit(String lowerLimit) {
+    public void setLowerLimit(Long lowerLimit) {
         this.lowerLimit = lowerLimit;
     }
 

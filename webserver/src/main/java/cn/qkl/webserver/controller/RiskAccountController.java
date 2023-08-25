@@ -67,6 +67,7 @@ public class RiskAccountController {
     @ApiOperation("交易导出按钮")
     @PostMapping("transactionexport")
     public BaseResult<Void> transactionExport(@Validated TransactionExportDTO dto) {
+        riskAccountService.doTransactionExport(dto);
         return BaseResult.ok();
     }
     @ApiOperation("导出任务显示")

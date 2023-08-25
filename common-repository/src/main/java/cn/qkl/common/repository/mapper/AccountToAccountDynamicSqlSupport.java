@@ -90,6 +90,9 @@ public final class AccountToAccountDynamicSqlSupport {
     public static final SqlColumn<Long> fromCounter = accountToAccount.fromCounter;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Long> chainId = accountToAccount.chainId;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class AccountToAccount extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -142,6 +145,8 @@ public final class AccountToAccountDynamicSqlSupport {
         public final SqlColumn<Long> toCounter = column("to_counter", JDBCType.BIGINT);
 
         public final SqlColumn<Long> fromCounter = column("from_counter", JDBCType.BIGINT);
+
+        public final SqlColumn<Long> chainId = column("chain_id", JDBCType.BIGINT);
 
         public AccountToAccount() {
             super("account_to_account");

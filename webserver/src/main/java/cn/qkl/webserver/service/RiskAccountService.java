@@ -3,12 +3,15 @@ package cn.qkl.webserver.service;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.mapper.AccountTxHistoryMapper;
+import cn.qkl.common.repository.mapper.AtaExportTaskDynamicSqlSupport;
 import cn.qkl.common.repository.model.AccountToAccount;
+import cn.qkl.common.repository.model.AtaExportTask;
 import cn.qkl.webserver.dao.*;
 import cn.qkl.webserver.dto.riskaccount.*;
 import cn.qkl.webserver.vo.riskAccount.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Case;
+import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
 import org.mybatis.dynamic.sql.where.condition.IsBetween;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,8 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.meta.When;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
@@ -122,7 +127,58 @@ public class RiskAccountService {
     //交易导出按钮
     public void doTransactionExport(TransactionExportDTO dto){
 
+        AtaExportTask ataExportTask=new AtaExportTask();
+
+        insertTransactionExport(ataExportTask,dto);
+        ataExportTaskDao.insertData(ataExportTask);
+
     }
+    public class exportCSVVO {
+        //目标地址
+        private String address;
+        //区块链
+        private Integer blockchain;
+        //协议
+        private String protocols;
+        //账号余额
+        private String currencyBalance;
+        //标签
+        private String label;
+        //更新时间-最近交易时间
+        private Date updateTime;
+        //创建时间-首次交易时间
+        private Date createTime;
+        //转出总金额
+        private Long toAmount;
+        //转入总金额
+        private Long fromAmount;
+        //转出笔数
+        private Long toNum;
+        //转入笔数
+        private Long fromNum;
+        //
+        private Long toCounter;
+    }
+    //生成本地csv文件
+    public List<exportCSVVO> getCsvData (TransactionExportDTO dto){
+
+    }
+
+    //交易导出插入新任务
+    public void insertTransactionExport (AtaExportTask ataExportTask,TransactionExportDTO dto){
+
+        Date end = new Date();
+
+        ataExportTask.setAddress(dto.getAddress());
+        ataExportTask.setBlockchain(dto.getBlockchain());
+        ataExportTask.setLowerLimit(dto.getLowerLimit());
+        ataExportTask.setStartTime(dto.getStartTime());
+        ataExportTask.setEndTime(dto.getEndTime());
+        ataExportTask.setDirection(dto.getDirection());
+        ataExportTask.setCreateTime(end);
+
+    }
+
     //导出任务显示
     public List<exportTaskVO> getExportTask(exportTaskDTO dto){
         List<exportTaskVO> exportTaskVOList = ataExportTaskDao.getexportTask(
