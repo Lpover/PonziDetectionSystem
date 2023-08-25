@@ -421,6 +421,7 @@ public class EvidenceService {
                         Tables.platform.platformType).from(Tables.evidenceWeb,"ew")
                         .leftJoin(Tables.platform).on(Tables.evidenceWeb.platformId,equalTo(Tables.platform.id))
                         .where(Tables.evidenceWeb.deleteStatus,isEqualTo(0))
+//                        .and(Tables.evidenceWeb.)
                         .orderBy(SimpleSortSpecification.of("time").descending())
                         .build().render(RenderingStrategies.MYBATIS3)
         ));

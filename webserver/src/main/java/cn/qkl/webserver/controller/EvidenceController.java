@@ -59,7 +59,7 @@ public class EvidenceController {
         return BaseResult.ok(evidenceService.getEvidencePhase(dto));
     }
 
-    @ApiOperation("网页取证")
+    @ApiOperation("网页取证，包括定时取证")
     @PutMapping("web")
     public BaseResult<EvidencePhaseVO> webEvidence(@Validated @RequestBody WebEvidenceDTO dto) {
         return BaseResult.ok(evidenceService.webEvidence(dto));
@@ -109,5 +109,9 @@ public class EvidenceController {
         return BaseResult.ok();
     }
 
-
+    @ApiOperation("停用定时取证任务")
+    @GetMapping("/stop/regular")
+    public BaseResult<Void> stopRegularEvidence(@Validated @NotNull Long id) {
+        return BaseResult.ok();
+    }
 }

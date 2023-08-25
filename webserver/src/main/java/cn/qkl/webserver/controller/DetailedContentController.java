@@ -6,10 +6,7 @@ import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dto.detail.*;
 import cn.qkl.webserver.service.DetailService;
-import cn.qkl.webserver.vo.detail.ContentDynamicMonitorVO;
-import cn.qkl.webserver.vo.detail.ContentHistoryVO;
-import cn.qkl.webserver.vo.detail.ContentInfoVO;
-import cn.qkl.webserver.vo.detail.ContentRiskReviseVO;
+import cn.qkl.webserver.vo.detail.*;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -68,4 +65,10 @@ public class DetailedContentController {
         return BaseResult.ok(detailService.getDynamicMonitor(dto));
     }
 
+    @ApiOperation("详情页固证")
+    @GetMapping("reinforce")
+    public BaseResult<ContentReinforceVO> reinforceEvidence(@Validated ContentReinforceDTO dto) {
+        ContentReinforceVO vo = new ContentReinforceVO();
+        return BaseResult.ok(vo);
+    }
 }
