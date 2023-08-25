@@ -50,6 +50,30 @@ public final class AccountDynamicSqlSupport {
     public static final SqlColumn<Integer> riskLevel = account.riskLevel;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> note = account.note;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Long> inflowAmount = account.inflowAmount;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> actionFeatures = account.actionFeatures;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> contentTag = account.contentTag;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Integer> riskTxNumIn = account.riskTxNumIn;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Integer> riskTxNumOut = account.riskTxNumOut;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Integer> riskContentNum = account.riskContentNum;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Date> recentTxTime = account.recentTxTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class Account extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -76,6 +100,22 @@ public final class AccountDynamicSqlSupport {
         public final SqlColumn<Integer> releaseNum = column("release_num", JDBCType.INTEGER);
 
         public final SqlColumn<Integer> riskLevel = column("risk_level", JDBCType.INTEGER);
+
+        public final SqlColumn<String> note = column("note", JDBCType.VARCHAR);
+
+        public final SqlColumn<Long> inflowAmount = column("inflow_amount", JDBCType.BIGINT);
+
+        public final SqlColumn<String> actionFeatures = column("action_features", JDBCType.VARCHAR);
+
+        public final SqlColumn<String> contentTag = column("content_tag", JDBCType.VARCHAR);
+
+        public final SqlColumn<Integer> riskTxNumIn = column("risk_tx_num_in", JDBCType.INTEGER);
+
+        public final SqlColumn<Integer> riskTxNumOut = column("risk_tx_num_out", JDBCType.INTEGER);
+
+        public final SqlColumn<Integer> riskContentNum = column("risk_content_num", JDBCType.INTEGER);
+
+        public final SqlColumn<Date> recentTxTime = column("recent_tx_time", JDBCType.TIMESTAMP);
 
         public Account() {
             super("account");

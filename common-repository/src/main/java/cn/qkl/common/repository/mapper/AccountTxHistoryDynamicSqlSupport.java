@@ -47,6 +47,9 @@ public final class AccountTxHistoryDynamicSqlSupport {
     public static final SqlColumn<Date> updateTime = accountTxHistory.updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> note = accountTxHistory.note;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class AccountTxHistory extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -71,6 +74,8 @@ public final class AccountTxHistoryDynamicSqlSupport {
         public final SqlColumn<Date> createTime = column("create_time", JDBCType.TIMESTAMP);
 
         public final SqlColumn<Date> updateTime = column("update_time", JDBCType.TIMESTAMP);
+
+        public final SqlColumn<String> note = column("note", JDBCType.VARCHAR);
 
         public AccountTxHistory() {
             super("account_tx_history");

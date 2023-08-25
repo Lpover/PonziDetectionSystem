@@ -26,15 +26,6 @@ public class EvidenceWeb {
     private Long platformId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String frequency;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Date startTime;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Date endTime;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String institution;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -72,6 +63,27 @@ public class EvidenceWeb {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long chainId;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String chainHash;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Date chainTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer frequency;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Date startTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Date endTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer dayOfWeek;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer dayOfMonth;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
@@ -183,54 +195,6 @@ public class EvidenceWeb {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setPlatformId(Long platformId) {
         this.platformId = platformId;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getFrequency() {
-        return frequency;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public EvidenceWeb withFrequency(String frequency) {
-        this.setFrequency(frequency);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setFrequency(String frequency) {
-        this.frequency = frequency;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public EvidenceWeb withStartTime(Date startTime) {
-        this.setStartTime(startTime);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public EvidenceWeb withEndTime(Date endTime) {
-        this.setEndTime(endTime);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -441,6 +405,118 @@ public class EvidenceWeb {
         this.chainId = chainId;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getChainHash() {
+        return chainHash;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public EvidenceWeb withChainHash(String chainHash) {
+        this.setChainHash(chainHash);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setChainHash(String chainHash) {
+        this.chainHash = chainHash;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Date getChainTime() {
+        return chainTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public EvidenceWeb withChainTime(Date chainTime) {
+        this.setChainTime(chainTime);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setChainTime(Date chainTime) {
+        this.chainTime = chainTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getFrequency() {
+        return frequency;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public EvidenceWeb withFrequency(Integer frequency) {
+        this.setFrequency(frequency);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setFrequency(Integer frequency) {
+        this.frequency = frequency;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public EvidenceWeb withStartTime(Date startTime) {
+        this.setStartTime(startTime);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public EvidenceWeb withEndTime(Date endTime) {
+        this.setEndTime(endTime);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public EvidenceWeb withDayOfWeek(Integer dayOfWeek) {
+        this.setDayOfWeek(dayOfWeek);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setDayOfWeek(Integer dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getDayOfMonth() {
+        return dayOfMonth;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public EvidenceWeb withDayOfMonth(Integer dayOfMonth) {
+        this.setDayOfMonth(dayOfMonth);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setDayOfMonth(Integer dayOfMonth) {
+        this.dayOfMonth = dayOfMonth;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -455,9 +531,6 @@ public class EvidenceWeb {
         sb.append(", personnel=").append(personnel);
         sb.append(", url=").append(url);
         sb.append(", platformId=").append(platformId);
-        sb.append(", frequency=").append(frequency);
-        sb.append(", startTime=").append(startTime);
-        sb.append(", endTime=").append(endTime);
         sb.append(", institution=").append(institution);
         sb.append(", department=").append(department);
         sb.append(", webOssPath=").append(webOssPath);
@@ -471,6 +544,13 @@ public class EvidenceWeb {
         sb.append(", deleteStatus=").append(deleteStatus);
         sb.append(", packageHash=").append(packageHash);
         sb.append(", chainId=").append(chainId);
+        sb.append(", chainHash=").append(chainHash);
+        sb.append(", chainTime=").append(chainTime);
+        sb.append(", frequency=").append(frequency);
+        sb.append(", startTime=").append(startTime);
+        sb.append(", endTime=").append(endTime);
+        sb.append(", dayOfWeek=").append(dayOfWeek);
+        sb.append(", dayOfMonth=").append(dayOfMonth);
         sb.append("]");
         return sb.toString();
     }

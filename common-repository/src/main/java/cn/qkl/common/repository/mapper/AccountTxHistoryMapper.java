@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface AccountTxHistoryMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, txHash, method, block, txTimestamp, from, to, value, txFee, chainId, createTime, updateTime);
+    BasicColumn[] selectList = BasicColumn.columnList(id, txHash, method, block, txTimestamp, from, to, value, txFee, chainId, createTime, updateTime, note);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -72,7 +72,8 @@ public interface AccountTxHistoryMapper {
         @Result(column="tx_fee", property="txFee", jdbcType=JdbcType.VARCHAR),
         @Result(column="chain_id", property="chainId", jdbcType=JdbcType.BIGINT),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
+        @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="note", property="note", jdbcType=JdbcType.VARCHAR)
     })
     List<AccountTxHistory> selectMany(SelectStatementProvider selectStatement);
 
@@ -112,6 +113,7 @@ public interface AccountTxHistoryMapper {
             .map(chainId).toProperty("chainId")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
+            .map(note).toProperty("note")
         );
     }
 
@@ -130,6 +132,7 @@ public interface AccountTxHistoryMapper {
             .map(chainId).toProperty("chainId")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
+            .map(note).toProperty("note")
         );
     }
 
@@ -148,6 +151,7 @@ public interface AccountTxHistoryMapper {
             .map(chainId).toPropertyWhenPresent("chainId", record::getChainId)
             .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
             .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
+            .map(note).toPropertyWhenPresent("note", record::getNote)
         );
     }
 
@@ -191,7 +195,8 @@ public interface AccountTxHistoryMapper {
                 .set(txFee).equalTo(record::getTxFee)
                 .set(chainId).equalTo(record::getChainId)
                 .set(createTime).equalTo(record::getCreateTime)
-                .set(updateTime).equalTo(record::getUpdateTime);
+                .set(updateTime).equalTo(record::getUpdateTime)
+                .set(note).equalTo(record::getNote);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -207,7 +212,8 @@ public interface AccountTxHistoryMapper {
                 .set(txFee).equalToWhenPresent(record::getTxFee)
                 .set(chainId).equalToWhenPresent(record::getChainId)
                 .set(createTime).equalToWhenPresent(record::getCreateTime)
-                .set(updateTime).equalToWhenPresent(record::getUpdateTime);
+                .set(updateTime).equalToWhenPresent(record::getUpdateTime)
+                .set(note).equalToWhenPresent(record::getNote);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -224,6 +230,7 @@ public interface AccountTxHistoryMapper {
             .set(chainId).equalTo(record::getChainId)
             .set(createTime).equalTo(record::getCreateTime)
             .set(updateTime).equalTo(record::getUpdateTime)
+            .set(note).equalTo(record::getNote)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -242,6 +249,7 @@ public interface AccountTxHistoryMapper {
             .set(chainId).equalToWhenPresent(record::getChainId)
             .set(createTime).equalToWhenPresent(record::getCreateTime)
             .set(updateTime).equalToWhenPresent(record::getUpdateTime)
+            .set(note).equalToWhenPresent(record::getNote)
             .where(id, isEqualTo(record::getId))
         );
     }

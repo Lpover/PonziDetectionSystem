@@ -44,6 +44,30 @@ public class Account {
     private Integer riskLevel;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String note;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Long inflowAmount;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String actionFeatures;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String contentTag;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer riskTxNumIn;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer riskTxNumOut;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer riskContentNum;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Date recentTxTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
@@ -251,6 +275,134 @@ public class Account {
         this.riskLevel = riskLevel;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getNote() {
+        return note;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Account withNote(String note) {
+        this.setNote(note);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Long getInflowAmount() {
+        return inflowAmount;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Account withInflowAmount(Long inflowAmount) {
+        this.setInflowAmount(inflowAmount);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setInflowAmount(Long inflowAmount) {
+        this.inflowAmount = inflowAmount;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getActionFeatures() {
+        return actionFeatures;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Account withActionFeatures(String actionFeatures) {
+        this.setActionFeatures(actionFeatures);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setActionFeatures(String actionFeatures) {
+        this.actionFeatures = actionFeatures;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getContentTag() {
+        return contentTag;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Account withContentTag(String contentTag) {
+        this.setContentTag(contentTag);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setContentTag(String contentTag) {
+        this.contentTag = contentTag;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getRiskTxNumIn() {
+        return riskTxNumIn;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Account withRiskTxNumIn(Integer riskTxNumIn) {
+        this.setRiskTxNumIn(riskTxNumIn);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setRiskTxNumIn(Integer riskTxNumIn) {
+        this.riskTxNumIn = riskTxNumIn;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getRiskTxNumOut() {
+        return riskTxNumOut;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Account withRiskTxNumOut(Integer riskTxNumOut) {
+        this.setRiskTxNumOut(riskTxNumOut);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setRiskTxNumOut(Integer riskTxNumOut) {
+        this.riskTxNumOut = riskTxNumOut;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getRiskContentNum() {
+        return riskContentNum;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Account withRiskContentNum(Integer riskContentNum) {
+        this.setRiskContentNum(riskContentNum);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setRiskContentNum(Integer riskContentNum) {
+        this.riskContentNum = riskContentNum;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Date getRecentTxTime() {
+        return recentTxTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Account withRecentTxTime(Date recentTxTime) {
+        this.setRecentTxTime(recentTxTime);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setRecentTxTime(Date recentTxTime) {
+        this.recentTxTime = recentTxTime;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -271,6 +423,14 @@ public class Account {
         sb.append(", platformId=").append(platformId);
         sb.append(", releaseNum=").append(releaseNum);
         sb.append(", riskLevel=").append(riskLevel);
+        sb.append(", note=").append(note);
+        sb.append(", inflowAmount=").append(inflowAmount);
+        sb.append(", actionFeatures=").append(actionFeatures);
+        sb.append(", contentTag=").append(contentTag);
+        sb.append(", riskTxNumIn=").append(riskTxNumIn);
+        sb.append(", riskTxNumOut=").append(riskTxNumOut);
+        sb.append(", riskContentNum=").append(riskContentNum);
+        sb.append(", recentTxTime=").append(recentTxTime);
         sb.append("]");
         return sb.toString();
     }

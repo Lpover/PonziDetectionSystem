@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface SwitchTableMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, open, openWeek, startTime, endTime, text);
+    BasicColumn[] selectList = BasicColumn.columnList(id, open, openWeek, startTime, endTime, text, frequency);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -66,7 +66,8 @@ public interface SwitchTableMapper {
         @Result(column="open_week", property="openWeek", jdbcType=JdbcType.INTEGER),
         @Result(column="start_time", property="startTime", jdbcType=JdbcType.TIME),
         @Result(column="end_time", property="endTime", jdbcType=JdbcType.TIME),
-        @Result(column="text", property="text", jdbcType=JdbcType.VARCHAR)
+        @Result(column="text", property="text", jdbcType=JdbcType.VARCHAR),
+        @Result(column="frequency", property="frequency", jdbcType=JdbcType.INTEGER)
     })
     List<SwitchTable> selectMany(SelectStatementProvider selectStatement);
 
@@ -100,6 +101,7 @@ public interface SwitchTableMapper {
             .map(startTime).toProperty("startTime")
             .map(endTime).toProperty("endTime")
             .map(text).toProperty("text")
+            .map(frequency).toProperty("frequency")
         );
     }
 
@@ -112,6 +114,7 @@ public interface SwitchTableMapper {
             .map(startTime).toProperty("startTime")
             .map(endTime).toProperty("endTime")
             .map(text).toProperty("text")
+            .map(frequency).toProperty("frequency")
         );
     }
 
@@ -124,6 +127,7 @@ public interface SwitchTableMapper {
             .map(startTime).toPropertyWhenPresent("startTime", record::getStartTime)
             .map(endTime).toPropertyWhenPresent("endTime", record::getEndTime)
             .map(text).toPropertyWhenPresent("text", record::getText)
+            .map(frequency).toPropertyWhenPresent("frequency", record::getFrequency)
         );
     }
 
@@ -161,7 +165,8 @@ public interface SwitchTableMapper {
                 .set(openWeek).equalTo(record::getOpenWeek)
                 .set(startTime).equalTo(record::getStartTime)
                 .set(endTime).equalTo(record::getEndTime)
-                .set(text).equalTo(record::getText);
+                .set(text).equalTo(record::getText)
+                .set(frequency).equalTo(record::getFrequency);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -171,7 +176,8 @@ public interface SwitchTableMapper {
                 .set(openWeek).equalToWhenPresent(record::getOpenWeek)
                 .set(startTime).equalToWhenPresent(record::getStartTime)
                 .set(endTime).equalToWhenPresent(record::getEndTime)
-                .set(text).equalToWhenPresent(record::getText);
+                .set(text).equalToWhenPresent(record::getText)
+                .set(frequency).equalToWhenPresent(record::getFrequency);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -182,6 +188,7 @@ public interface SwitchTableMapper {
             .set(startTime).equalTo(record::getStartTime)
             .set(endTime).equalTo(record::getEndTime)
             .set(text).equalTo(record::getText)
+            .set(frequency).equalTo(record::getFrequency)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -194,6 +201,7 @@ public interface SwitchTableMapper {
             .set(startTime).equalToWhenPresent(record::getStartTime)
             .set(endTime).equalToWhenPresent(record::getEndTime)
             .set(text).equalToWhenPresent(record::getText)
+            .set(frequency).equalToWhenPresent(record::getFrequency)
             .where(id, isEqualTo(record::getId))
         );
     }

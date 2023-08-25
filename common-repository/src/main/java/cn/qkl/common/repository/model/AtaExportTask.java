@@ -3,36 +3,30 @@ package cn.qkl.common.repository.model;
 import java.util.Date;
 import javax.annotation.Generated;
 
-public class AccountTxHistory {
+public class AtaExportTask {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String txHash;
+    private Integer blockchain;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String method;
+    private String address;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long block;
+    private Integer direction;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Date txTimestamp;
+    private String lowerLimit;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String from;
+    private Date startTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String to;
+    private Date endTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String value;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String txFee;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long chainId;
+    private String url;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Date createTime;
@@ -41,15 +35,12 @@ public class AccountTxHistory {
     private Date updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String note;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountTxHistory withId(Long id) {
+    public AtaExportTask withId(Long id) {
         this.setId(id);
         return this;
     }
@@ -60,147 +51,115 @@ public class AccountTxHistory {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getTxHash() {
-        return txHash;
+    public Integer getBlockchain() {
+        return blockchain;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountTxHistory withTxHash(String txHash) {
-        this.setTxHash(txHash);
+    public AtaExportTask withBlockchain(Integer blockchain) {
+        this.setBlockchain(blockchain);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setTxHash(String txHash) {
-        this.txHash = txHash;
+    public void setBlockchain(Integer blockchain) {
+        this.blockchain = blockchain;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getMethod() {
-        return method;
+    public String getAddress() {
+        return address;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountTxHistory withMethod(String method) {
-        this.setMethod(method);
+    public AtaExportTask withAddress(String address) {
+        this.setAddress(address);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setMethod(String method) {
-        this.method = method;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getBlock() {
-        return block;
+    public Integer getDirection() {
+        return direction;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountTxHistory withBlock(Long block) {
-        this.setBlock(block);
+    public AtaExportTask withDirection(Integer direction) {
+        this.setDirection(direction);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setBlock(Long block) {
-        this.block = block;
+    public void setDirection(Integer direction) {
+        this.direction = direction;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Date getTxTimestamp() {
-        return txTimestamp;
+    public String getLowerLimit() {
+        return lowerLimit;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountTxHistory withTxTimestamp(Date txTimestamp) {
-        this.setTxTimestamp(txTimestamp);
+    public AtaExportTask withLowerLimit(String lowerLimit) {
+        this.setLowerLimit(lowerLimit);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setTxTimestamp(Date txTimestamp) {
-        this.txTimestamp = txTimestamp;
+    public void setLowerLimit(String lowerLimit) {
+        this.lowerLimit = lowerLimit;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getFrom() {
-        return from;
+    public Date getStartTime() {
+        return startTime;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountTxHistory withFrom(String from) {
-        this.setFrom(from);
+    public AtaExportTask withStartTime(Date startTime) {
+        this.setStartTime(startTime);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setFrom(String from) {
-        this.from = from;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getTo() {
-        return to;
+    public Date getEndTime() {
+        return endTime;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountTxHistory withTo(String to) {
-        this.setTo(to);
+    public AtaExportTask withEndTime(Date endTime) {
+        this.setEndTime(endTime);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setTo(String to) {
-        this.to = to;
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getValue() {
-        return value;
+    public String getUrl() {
+        return url;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountTxHistory withValue(String value) {
-        this.setValue(value);
+    public AtaExportTask withUrl(String url) {
+        this.setUrl(url);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getTxFee() {
-        return txFee;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountTxHistory withTxFee(String txFee) {
-        this.setTxFee(txFee);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setTxFee(String txFee) {
-        this.txFee = txFee;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getChainId() {
-        return chainId;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountTxHistory withChainId(Long chainId) {
-        this.setChainId(chainId);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setChainId(Long chainId) {
-        this.chainId = chainId;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -209,7 +168,7 @@ public class AccountTxHistory {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountTxHistory withCreateTime(Date createTime) {
+    public AtaExportTask withCreateTime(Date createTime) {
         this.setCreateTime(createTime);
         return this;
     }
@@ -225,7 +184,7 @@ public class AccountTxHistory {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountTxHistory withUpdateTime(Date updateTime) {
+    public AtaExportTask withUpdateTime(Date updateTime) {
         this.setUpdateTime(updateTime);
         return this;
     }
@@ -233,22 +192,6 @@ public class AccountTxHistory {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getNote() {
-        return note;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountTxHistory withNote(String note) {
-        this.setNote(note);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setNote(String note) {
-        this.note = note;
     }
 
     @Override
@@ -259,18 +202,15 @@ public class AccountTxHistory {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", txHash=").append(txHash);
-        sb.append(", method=").append(method);
-        sb.append(", block=").append(block);
-        sb.append(", txTimestamp=").append(txTimestamp);
-        sb.append(", from=").append(from);
-        sb.append(", to=").append(to);
-        sb.append(", value=").append(value);
-        sb.append(", txFee=").append(txFee);
-        sb.append(", chainId=").append(chainId);
+        sb.append(", blockchain=").append(blockchain);
+        sb.append(", address=").append(address);
+        sb.append(", direction=").append(direction);
+        sb.append(", lowerLimit=").append(lowerLimit);
+        sb.append(", startTime=").append(startTime);
+        sb.append(", endTime=").append(endTime);
+        sb.append(", url=").append(url);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
-        sb.append(", note=").append(note);
         sb.append("]");
         return sb.toString();
     }
