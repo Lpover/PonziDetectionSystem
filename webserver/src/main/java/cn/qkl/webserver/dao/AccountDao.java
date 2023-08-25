@@ -19,6 +19,9 @@ public interface AccountDao extends AccountMapper{
     AccountBasicVO getAccountBasic(SelectStatementProvider selectStatementProvider);
 
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
+    List<AccountBasicVO> getAccountBasicList(SelectStatementProvider selectStatementProvider);
+
+    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     List<AccountCheckHistoryVO> getAccountCheckHistory(SelectStatementProvider selectStatementProvider);
 
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")

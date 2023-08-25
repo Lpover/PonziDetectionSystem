@@ -142,8 +142,10 @@ public class NotificationService {
     //通知开关修改
     public void openChange(OpenDTO dto){
         int cvalue=dto.getOpenValue();
+        int frequency = dto.getFrequency();
         switchTableDao.update(
                     c->c.set(Tables.switchTable.open).equalTo(cvalue)
+                            .set(Tables.switchTable.frequency).equalTo(frequency)
             );
     }
 
