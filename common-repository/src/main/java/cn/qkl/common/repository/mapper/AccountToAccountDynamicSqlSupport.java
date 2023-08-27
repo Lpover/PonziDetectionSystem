@@ -57,18 +57,6 @@ public final class AccountToAccountDynamicSqlSupport {
     public static final SqlColumn<String> protocols = accountToAccount.protocols;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> wContract = accountToAccount.wContract;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> wTransaction = accountToAccount.wTransaction;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> wWallet = accountToAccount.wWallet;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> wHybrid = accountToAccount.wHybrid;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> label = accountToAccount.label;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -123,14 +111,6 @@ public final class AccountToAccountDynamicSqlSupport {
         public final SqlColumn<Date> updateTime = column("update_time", JDBCType.TIMESTAMP);
 
         public final SqlColumn<String> protocols = column("protocols", JDBCType.VARCHAR);
-
-        public final SqlColumn<String> wContract = column("w_contract", JDBCType.VARCHAR);
-
-        public final SqlColumn<String> wTransaction = column("w_transaction", JDBCType.VARCHAR);
-
-        public final SqlColumn<String> wWallet = column("w_wallet", JDBCType.VARCHAR);
-
-        public final SqlColumn<String> wHybrid = column("w_hybrid", JDBCType.VARCHAR);
 
         public final SqlColumn<String> label = column("`label`", JDBCType.VARCHAR);
 

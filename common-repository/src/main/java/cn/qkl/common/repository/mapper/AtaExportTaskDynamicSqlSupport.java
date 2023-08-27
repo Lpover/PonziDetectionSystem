@@ -14,7 +14,7 @@ public final class AtaExportTaskDynamicSqlSupport {
     public static final SqlColumn<Long> id = ataExportTask.id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Integer> blockchain = ataExportTask.blockchain;
+    public static final SqlColumn<String> blockchain = ataExportTask.blockchain;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> address = ataExportTask.address;
@@ -44,7 +44,7 @@ public final class AtaExportTaskDynamicSqlSupport {
     public static final class AtaExportTask extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
-        public final SqlColumn<Integer> blockchain = column("blockchain", JDBCType.INTEGER);
+        public final SqlColumn<String> blockchain = column("blockchain", JDBCType.VARCHAR);
 
         public final SqlColumn<String> address = column("address", JDBCType.VARCHAR);
 

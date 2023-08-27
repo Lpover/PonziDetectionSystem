@@ -18,7 +18,7 @@ public class TransactionExportDTO {
     private String address;
 
     @ApiModelProperty("区块链，1-ETH,2-TRON")
-    private Integer blockchain;
+    private String blockchain;
 
     @ApiModelProperty("交易金额下限：数字框，默认不填，表示导出所有金额的交易")
     private Long lowerLimit;

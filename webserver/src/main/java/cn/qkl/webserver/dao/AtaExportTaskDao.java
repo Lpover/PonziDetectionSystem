@@ -4,6 +4,7 @@ import cn.qkl.common.repository.mapper.AccountToAccountMapper;
 import cn.qkl.common.repository.mapper.AtaExportTaskMapper;
 import cn.qkl.common.repository.model.AtaExportTask;
 import cn.qkl.webserver.vo.riskAccount.SmartAddressFindVO;
+import cn.qkl.webserver.vo.riskAccount.exportCSVVO;
 import cn.qkl.webserver.vo.riskAccount.exportTaskVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.SelectProvider;
@@ -22,6 +23,8 @@ public interface AtaExportTaskDao extends AtaExportTaskMapper {
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     List<exportTaskVO> getexportTask(SelectStatementProvider selectStatementProvider);
 
-    void insertData(AtaExportTask ataExportTask);
+
+    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
+    List<exportCSVVO> getExportCSVVO(SelectStatementProvider selectStatementProvider);
 
 }

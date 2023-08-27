@@ -62,7 +62,7 @@ public interface AtaExportTaskMapper {
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
     @Results(id="AtaExportTaskResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
-        @Result(column="blockchain", property="blockchain", jdbcType=JdbcType.INTEGER),
+        @Result(column="blockchain", property="blockchain", jdbcType=JdbcType.VARCHAR),
         @Result(column="address", property="address", jdbcType=JdbcType.VARCHAR),
         @Result(column="direction", property="direction", jdbcType=JdbcType.INTEGER),
         @Result(column="lower_limit", property="lowerLimit", jdbcType=JdbcType.BIGINT),

@@ -8,7 +8,7 @@ public class AtaExportTask {
     private Long id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Integer blockchain;
+    private String blockchain;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String address;
@@ -51,18 +51,18 @@ public class AtaExportTask {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Integer getBlockchain() {
+    public String getBlockchain() {
         return blockchain;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AtaExportTask withBlockchain(Integer blockchain) {
+    public AtaExportTask withBlockchain(String blockchain) {
         this.setBlockchain(blockchain);
         return this;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setBlockchain(Integer blockchain) {
+    public void setBlockchain(String blockchain) {
         this.blockchain = blockchain;
     }
 

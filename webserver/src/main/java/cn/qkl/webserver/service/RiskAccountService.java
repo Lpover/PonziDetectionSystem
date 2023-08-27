@@ -19,6 +19,12 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.meta.When;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,10 +64,10 @@ public class RiskAccountService {
                                 .leftJoin(Tables.account).on(Tables.accountCheckHistory.accountId,equalTo(Tables.account.id))
                                 .where(Tables.accountCheckHistory.riskLevel, isInWhenPresent(dto.getRiskLevelList()))
                                 //数字筛选
-                                .and(Tables.accountCheckHistory.relatedNum, isGreaterThanOrEqualToWhenPresent(dto.getRelatedNumMin()))
-                                .and(Tables.accountCheckHistory.relatedNum, isLessThanOrEqualToWhenPresent(dto.getRelatedNumMax()))
-                                .and(Tables.accountCheckHistory.releaseNum, isGreaterThanOrEqualToWhenPresent(dto.getReleaseNumMin()))
-                                .and(Tables.accountCheckHistory.releaseNum, isLessThanOrEqualToWhenPresent(dto.getReleaseNumMax()))
+                                .where(Tables.accountCheckHistory.relatedNum, isGreaterThanOrEqualToWhenPresent(dto.getRelatedNumMin()))
+                                .where(Tables.accountCheckHistory.relatedNum, isLessThanOrEqualToWhenPresent(dto.getRelatedNumMax()))
+                                .where(Tables.accountCheckHistory.releaseNum, isGreaterThanOrEqualToWhenPresent(dto.getReleaseNumMin()))
+                                .where(Tables.accountCheckHistory.releaseNum, isLessThanOrEqualToWhenPresent(dto.getReleaseNumMax()))
                                 .orderBy(Tables.accountCheckHistory.updateTime.descending())
                                 .build()
                                 .render(RenderingStrategies.MYBATIS3)
@@ -128,44 +134,105 @@ public class RiskAccountService {
     public void doTransactionExport(TransactionExportDTO dto){
 
         AtaExportTask ataExportTask=new AtaExportTask();
-
-        insertTransactionExport(ataExportTask,dto);
-        ataExportTaskDao.insertData(ataExportTask);
+        List<exportCSVVO> csvData=getCsvData(dto);
+        String csvFileUrl = exportToCsv(csvData);
+        insertTransactionExport(ataExportTask,dto,csvFileUrl);
 
     }
-    public class exportCSVVO {
-        //目标地址
-        private String address;
-        //区块链
-        private Integer blockchain;
-        //协议
-        private String protocols;
-        //账号余额
-        private String currencyBalance;
-        //标签
-        private String label;
-        //更新时间-最近交易时间
-        private Date updateTime;
-        //创建时间-首次交易时间
-        private Date createTime;
-        //转出总金额
-        private Long toAmount;
-        //转入总金额
-        private Long fromAmount;
-        //转出笔数
-        private Long toNum;
-        //转入笔数
-        private Long fromNum;
-        //
-        private Long toCounter;
-    }
+
     //生成本地csv文件
     public List<exportCSVVO> getCsvData (TransactionExportDTO dto){
 
+        //查转入,此时address为表中的to
+        List<exportCSVVO> exportCSVVOListTO = ataExportTaskDao.getExportCSVVO(
+                select(Tables.accountToAccount.blockchain,Tables.accountToAccount.protocols,Tables.account.currencyBalance,
+                        Tables.accountToAccount.label,Tables.accountToAccount.note,Tables.accountToAccount.updateTime,
+                        Tables.accountToAccount.createTime,Tables.accountToAccount.toAmount,Tables.accountToAccount.fromAmount,
+                        Tables.accountToAccount.toNum,Tables.accountToAccount.fromNum,Tables.accountToAccount.toCounter,
+                        Tables.accountToAccount.fromCounter,Tables.accountToAccount.to.as("address"))
+                        .from(Tables.accountToAccount)
+                        .leftJoin(Tables.account).on(Tables.accountToAccount.to,equalTo(Tables.account.accountAddress))
+                        .where(Tables.accountToAccount.createTime,isGreaterThanOrEqualToWhenPresent(dto.getStartTime()))
+                        .where(Tables.accountToAccount.createTime,isLessThanOrEqualToWhenPresent(dto.getEndTime()))
+                        .where(Tables.accountToAccount.toAmount,isGreaterThanOrEqualToWhenPresent(dto.getLowerLimit()))
+                        .where(Tables.accountToAccount.blockchain,isEqualToWhenPresent(dto.getBlockchain()))
+                        .build()
+                        .render(RenderingStrategies.MYBATIS3)
+        );
+
+        //查转出,此时address为表中的from
+        List<exportCSVVO> exportCSVVOListFrom = ataExportTaskDao.getExportCSVVO(
+                select(Tables.accountToAccount.blockchain,Tables.accountToAccount.protocols,Tables.account.currencyBalance,
+                        Tables.accountToAccount.label,Tables.accountToAccount.note,Tables.accountToAccount.updateTime,
+                        Tables.accountToAccount.createTime,Tables.accountToAccount.toAmount,Tables.accountToAccount.fromAmount,
+                        Tables.accountToAccount.toNum,Tables.accountToAccount.fromNum,Tables.accountToAccount.toCounter,
+                        Tables.accountToAccount.fromCounter,Tables.accountToAccount.from.as("address"))
+                        .from(Tables.accountToAccount)
+                        .leftJoin(Tables.account).on(Tables.accountToAccount.from,equalTo(Tables.account.accountAddress))
+                        .where(Tables.accountToAccount.createTime,isGreaterThanOrEqualToWhenPresent(dto.getStartTime()))
+                        .where(Tables.accountToAccount.createTime,isLessThanOrEqualToWhenPresent(dto.getEndTime()))
+                        .where(Tables.accountToAccount.toAmount,isGreaterThanOrEqualToWhenPresent(dto.getLowerLimit()))
+                        .where(Tables.accountToAccount.blockchain,isEqualToWhenPresent(dto.getBlockchain()))
+                        .build()
+                        .render(RenderingStrategies.MYBATIS3)
+        );
+
+        if(dto.getDirection()==3)return exportCSVVOListFrom;
+        if(dto.getDirection()==1)return exportCSVVOListTO;
+        //如果是全部，将两次查询合并返回
+        exportCSVVOListTO.addAll(exportCSVVOListFrom);
+        return exportCSVVOListTO;
+
+    }
+
+    public String exportToCsv(List<exportCSVVO> exportTaskVOList) {
+        // 创建文件夹
+        String folderPath = "AtaTask";
+        File folder = new File(folderPath);
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
+
+        // 构建文件路径，使用当前时间作为文件名
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String filePath = folderPath + "/" + timeStamp + ".csv";
+
+        try (FileWriter fileWriter = new FileWriter(filePath)) {
+            // 写 CSV 表头
+            //String header = "address,blockchain,lowerLimit,startTime,endTime,direction,url\n";
+            String header = "区块链,协议,目标地址,余额,标签,备注,首次交易时间,最近交易时间,转入总金额,转出总金额,转入笔数,转出笔数,转入对手,转出对手\n";
+            fileWriter.write(header);
+
+            // 写查询结果到 CSV
+            for (exportCSVVO task : exportTaskVOList) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String formattedUpdateTime = dateFormat.format(task.getUpdateTime());
+                String formattedCreateTime = dateFormat.format(task.getCreateTime());
+
+                String row = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d\n",
+                        task.getAddress(), task.getBlockchain(), task.getProtocols(),
+                        task.getCurrencyBalance(), task.getLabel(), task.getNote(),
+                        formattedUpdateTime,formattedCreateTime,task.getFromAmount(),
+                        task.getToAmount(),task.getFromNum(),task.getToNum(),
+                        task.getFromCounter(),task.getToCounter());
+                fileWriter.write(row);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // 构建文件的URL并返回
+        try {
+            URL fileUrl = new File(filePath).toURI().toURL();
+            return fileUrl.toString();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     //交易导出插入新任务
-    public void insertTransactionExport (AtaExportTask ataExportTask,TransactionExportDTO dto){
+    public void insertTransactionExport (AtaExportTask ataExportTask,TransactionExportDTO dto,String csvFileUrl){
 
         Date end = new Date();
 
@@ -176,6 +243,7 @@ public class RiskAccountService {
         ataExportTask.setEndTime(dto.getEndTime());
         ataExportTask.setDirection(dto.getDirection());
         ataExportTask.setCreateTime(end);
+        ataExportTask.setUrl(csvFileUrl);
 
     }
 
@@ -232,7 +300,7 @@ public class RiskAccountService {
 
         // Combine the two lists
         transactionDetailVOListFrom.addAll(transactionDetailVOListTo);
-        return transactionDetailVOListTo;
+        return transactionDetailVOListFrom;
     }
 
     //地址全部交易备注修改
