@@ -3,6 +3,7 @@ package cn.qkl.webserver.dao;
 import cn.qkl.common.repository.mapper.AccountMapper;
 import cn.qkl.common.repository.mapper.AccountToAccountMapper;
 import cn.qkl.webserver.vo.riskAccount.SmartAddressFindVO;
+import cn.qkl.webserver.vo.riskAccount.SmartTranscationFindVO;
 import cn.qkl.webserver.vo.riskAccount.TransactionDetailVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.SelectProvider;
@@ -20,6 +21,9 @@ public interface AccountToAccountDao extends AccountToAccountMapper {
 
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     List<SmartAddressFindVO> getSmartAddress(SelectStatementProvider selectStatementProvider);
+
+    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
+    List<SmartTranscationFindVO> getSmartTransaction(SelectStatementProvider selectStatementProvider);
 
 
 }

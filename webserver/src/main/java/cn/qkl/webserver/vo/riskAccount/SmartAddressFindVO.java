@@ -20,40 +20,19 @@ import java.util.List;
 @Data
 public class SmartAddressFindVO {
 
-    @ApiModelProperty("地址表-风险等级")
+    @ApiModelProperty("主键ID")
+    private Long id;
+
+    @ApiModelProperty("地址表-地址")
+    private String address;
+
+    @ApiModelProperty("地址表-风险等级,0-低风险 1-中风险 2-高风险")
     private Integer riskIndex;
 
-    @ApiModelProperty("备注")
+    @ApiModelProperty("地址表-备注")
     private String note;
 
-    @ApiModelProperty("交易表-来源地址")
-    private String from;
-
-    @ApiModelProperty("交易表-去向地址")
-    private String to;
-
-    @ApiModelProperty("来源地址风险等级，0-低风险 1-中风险 2-高风险")
-    private Integer fromRiskIndex;
-
-    @ApiModelProperty("去向地址风险等级，0-低风险 1-中风险 2-高风险")
-    private Integer toRiskIndex;
-
-    @ApiModelProperty("交易金额")
-    private Long txAmount;
-
-    @ApiModelProperty("交易笔数")
-    private Long txNum;
-
-    @ApiModelProperty("金额占来源账户比")
-    private BigDecimal fromRatio;
-
-    @ApiModelProperty("金额占去向账户比")
-    private BigDecimal toRatio;
-
-    @ApiModelProperty("公链")
-    private String blockchain;
-
-//    @ApiModelProperty("币种")
-//    private String currencyType;
+    @ApiModelProperty("地址表-流入总额")
+    private Long fromAmount;
 
 }

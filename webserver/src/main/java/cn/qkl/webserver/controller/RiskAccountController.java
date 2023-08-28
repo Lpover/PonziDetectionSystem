@@ -51,10 +51,16 @@ public class RiskAccountController {
         return BaseResult.ok(riskAccountService.getAccountNum(dto));
     }
 
-    @ApiOperation("智能查找目标地址")
+    @ApiOperation("智能查找目标地址-地址表")
     @GetMapping("smartaddressfind")
     public BaseResult<List<SmartAddressFindVO>>  smartAddressFind(@Validated SmartAddressFindDTO dto) {
         return BaseResult.ok(riskAccountService.getSmartAddress(dto));
+    }
+
+    @ApiOperation("智能查找目标地址-交易表")
+    @GetMapping("smarttranscationfind")
+    public BaseResult<List<SmartTranscationFindVO>>  smartTransactionFind(@Validated SmartAddressFindDTO dto) {
+        return BaseResult.ok(riskAccountService.getSmartTransaction(dto));
     }
 
     @ApiOperation("网状分析添加备注")
@@ -82,7 +88,7 @@ public class RiskAccountController {
         return BaseResult.ok(riskAccountService.getTransactionDetail(dto));
     }
 
-    @ApiOperation("地址全部交易备注")
+    @ApiOperation("地址全部交易备注修改")
     @PostMapping("detailnote")
     public BaseResult<Void> detailNote(@RequestBody @Validated DetailNoteDTO dto) {
         riskAccountService.changeDetailNote(dto);

@@ -91,34 +91,69 @@ public class RiskAccountService {
         return accountNumList;
     }
 
-    //智能查找目标地址
+    //智能查找目标地址-地址表
     public List<SmartAddressFindVO> getSmartAddress (SmartAddressFindDTO dto){
         //查找方向：1-查去向/2-查来源
+        // 1-去向，目标地址是from,返回的地址是to
         if(dto.getFindDirections()==1) {
             List<SmartAddressFindVO> smartAddressFindVOList = accountToAccountDao.getSmartAddress(
+                    select(Tables.accountToAccount.to.as("address"),Tables.accountToAccount.toRiskIndex.as("riskIndex"),
+                            Tables.accountToAccount.note, Tables.accountToAccount.toAmount.as("fromAmount"))
+                            .from(Tables.accountToAccount)
+                            .where(Tables.accountToAccount.from, isEqualToWhenPresent(dto.getAddress()))
+                            .where(Tables.accountToAccount.blockchain,isEqualToWhenPresent(dto.getMainChain()))
+                            .where(Tables.accountToAccount.toRiskIndex,isEqualToWhenPresent(dto.getRiskIndex()))
+                            .build()
+                            .render(RenderingStrategies.MYBATIS3)
+            );
+            return smartAddressFindVOList;
+        }
+        // 2-来源，目标地址是to,返回的地址是from
+        else {
+            List<SmartAddressFindVO> smartAddressFindVOList = accountToAccountDao.getSmartAddress(
+                    select(Tables.accountToAccount.from.as("address"),Tables.accountToAccount.fromRiskIndex.as("riskIndex"),
+                            Tables.accountToAccount.note, Tables.accountToAccount.fromAmount.as("fromAmount"))
+                            .from(Tables.accountToAccount)
+                            .where(Tables.accountToAccount.to, isEqualToWhenPresent(dto.getAddress()))
+                            .where(Tables.accountToAccount.blockchain,isEqualToWhenPresent(dto.getMainChain()))
+                            .where(Tables.accountToAccount.fromRiskIndex,isEqualToWhenPresent(dto.getRiskIndex()))
+                            .build()
+                            .render(RenderingStrategies.MYBATIS3)
+            );
+            return smartAddressFindVOList;
+        }
+    }
+
+    //智能查找目标地址-交易表
+    public List<SmartTranscationFindVO> getSmartTransaction (SmartAddressFindDTO dto){
+        //查找方向：1-查去向/2-查来源
+        // 1-去向，目标地址是from,返回的地址是to
+        if(dto.getFindDirections()==1) {
+            List<SmartTranscationFindVO> smartTranscationFindVOListTo = accountToAccountDao.getSmartTransaction(
                     select(Tables.accountToAccount.from, Tables.accountToAccount.to, Tables.accountToAccount.fromRiskIndex,
-                            Tables.accountToAccount.toRiskIndex, Tables.accountToAccount.note, Tables.accountToAccount.txAmount,
-                            Tables.accountToAccount.txNum, Tables.accountToAccount.fromRatio, Tables.accountToAccount.toRatio,
+                            Tables.accountToAccount.toRiskIndex, Tables.accountToAccount.toAmount,
+                            Tables.accountToAccount.txAmount, Tables.accountToAccount.txNum, Tables.accountToAccount.fromRatio, Tables.accountToAccount.toRatio,
                             Tables.accountToAccount.blockchain)
                             .from(Tables.accountToAccount)
                             .where(Tables.accountToAccount.from, isEqualToWhenPresent(dto.getAddress()))
                             .build()
                             .render(RenderingStrategies.MYBATIS3)
             );
-            return smartAddressFindVOList;
+            return smartTranscationFindVOListTo;
         }
+        // 2-来源，目标地址是to,返回的地址是from
         else {
-            List<SmartAddressFindVO> smartAddressFindVOList = accountToAccountDao.getSmartAddress(
+            List<SmartTranscationFindVO> smartAddressFindVOListFrom = accountToAccountDao.getSmartTransaction(
                     select(Tables.accountToAccount.from, Tables.accountToAccount.to, Tables.accountToAccount.fromRiskIndex,
-                            Tables.accountToAccount.toRiskIndex, Tables.accountToAccount.note, Tables.accountToAccount.txAmount,
-                            Tables.accountToAccount.txNum, Tables.accountToAccount.fromRatio, Tables.accountToAccount.toRatio,
+                            Tables.accountToAccount.toRiskIndex,Tables.accountToAccount.fromAmount,
+                            Tables.accountToAccount.txAmount, Tables.accountToAccount.txNum, Tables.accountToAccount.fromRatio, Tables.accountToAccount.toRatio,
                             Tables.accountToAccount.blockchain)
                             .from(Tables.accountToAccount)
                             .where(Tables.accountToAccount.to, isEqualToWhenPresent(dto.getAddress()))
                             .build()
                             .render(RenderingStrategies.MYBATIS3)
             );
-            return smartAddressFindVOList;
+            return smartAddressFindVOListFrom;
         }
     }
 
@@ -268,24 +303,18 @@ public class RiskAccountService {
         //当address作为from来源的时候，对手地址是to，交易方向是转出
         List<TransactionDetailVO> transactionDetailVOListFrom = accountTxHistoryDao.getTransactionDetail(
                 select(Tables.accountTxHistory.txHash,Tables.accountTxHistory.updateTime,Tables.accountTxHistory.value,
-                        Tables.accountTxHistory.note,Tables.accountTxHistory.to.as("address"))
+                        Tables.accountTxHistory.note,Tables.accountTxHistory.to.as("addressTarget"))
                         .from(Tables.accountTxHistory)
                         .where(Tables.accountTxHistory.from,isEqualTo(dto.getAddress()))
-                        .where(Tables.accountTxHistory.updateTime,isGreaterThanOrEqualToWhenPresent(dto.getStartTime()))
-                        .where(Tables.accountTxHistory.updateTime,isLessThanOrEqualToWhenPresent(dto.getEndTime()))
-                        .where(Tables.accountTxHistory.to,isEqualToWhenPresent(dto.getTargetAddress()))
                         .build()
                         .render(RenderingStrategies.MYBATIS3)
         );
         //当address作为to转入的时候，对手地址是from，交易方向是转入
         List<TransactionDetailVO> transactionDetailVOListTo = accountTxHistoryDao.getTransactionDetail(
                 select(Tables.accountTxHistory.txHash,Tables.accountTxHistory.updateTime,Tables.accountTxHistory.value,
-                        Tables.accountTxHistory.note,Tables.accountTxHistory.from.as("address"))
+                        Tables.accountTxHistory.note,Tables.accountTxHistory.from.as("addressTarget"))
                         .from(Tables.accountTxHistory)
                         .where(Tables.accountTxHistory.to,isEqualTo(dto.getAddress()))
-                        .where(Tables.accountTxHistory.updateTime,isGreaterThanOrEqualToWhenPresent(dto.getStartTime()))
-                        .where(Tables.accountTxHistory.updateTime,isLessThanOrEqualToWhenPresent(dto.getEndTime()))
-                        .where(Tables.accountTxHistory.from,isEqualToWhenPresent(dto.getTargetAddress()))
                         .build()
                         .render(RenderingStrategies.MYBATIS3)
         );

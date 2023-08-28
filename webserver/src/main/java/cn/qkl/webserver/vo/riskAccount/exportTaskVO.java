@@ -13,12 +13,14 @@ import java.util.Date;
  */
 @Data
 public class exportTaskVO {
+    @ApiModelProperty("主键ID")
+    private Long id;
 
     @ApiModelProperty("目标地址")
     private String address;
 
-    @ApiModelProperty("区块链，1-ETH,2-TRON")
-    private Integer blockchain;
+    @ApiModelProperty("区块链，ETH/TRON")
+    private String blockchain;
 
     @ApiModelProperty("交易金额下限：数字框，默认不填，表示导出所有金额的交易")
     private Integer lowerLimit;
