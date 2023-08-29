@@ -13,7 +13,7 @@ import java.util.Date;
 
 @Data
 public class EvidenceRecordListDTO extends PageDTO {
-    @ApiModelProperty("取证固证类型的id，0 网页取证 1 移动端取证 2 手动固证 3 内容监测")
+    @ApiModelProperty("取证固证类型，0 网页取证 1 移动端取证 2 手动固证 3 内容监测")
     private Integer evidenceType;
     @ApiModelProperty("风险类型，字符串搜索")
     private String riskType;

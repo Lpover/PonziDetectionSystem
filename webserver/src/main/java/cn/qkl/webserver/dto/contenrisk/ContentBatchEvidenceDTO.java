@@ -1,6 +1,5 @@
 package cn.qkl.webserver.dto.contenrisk;
 
-import cn.qkl.common.framework.request.PageDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -13,7 +12,7 @@ import java.util.List;
  * @wiki
  */
 @Data
-public class ContentBatchEvidenceDTO extends PageDTO {
+public class ContentBatchEvidenceDTO {
     @ApiModelProperty("待固证的数字内容id")
     private List<Long> contentIdList;
 }

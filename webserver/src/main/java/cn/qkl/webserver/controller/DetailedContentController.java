@@ -16,6 +16,8 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 /**
  * @title:
  * @Author zouzh
@@ -67,8 +69,8 @@ public class DetailedContentController {
 
     @ApiOperation("详情页固证")
     @GetMapping("reinforce")
-    public BaseResult<ContentReinforceVO> reinforceEvidence(@Validated ContentReinforceDTO dto) {
-        ContentReinforceVO vo = new ContentReinforceVO();
-        return BaseResult.ok(vo);
+    public BaseResult<ContentReinforceVO> reinforceEvidence(@Validated ContentReinforceDTO dto) throws IOException {
+
+        return BaseResult.ok(detailService.reinforceDetail(dto));
     }
 }

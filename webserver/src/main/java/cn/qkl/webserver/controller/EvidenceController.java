@@ -8,8 +8,6 @@ import cn.qkl.webserver.dto.evidence.*;
 import cn.qkl.webserver.service.EvidenceDailyStatisticsService;
 import cn.qkl.webserver.service.EvidenceService;
 import cn.qkl.webserver.vo.evidence.*;
-import cn.qkl.webserver.vo.evidence.EvidenceCertVO;
-import cn.qkl.webserver.vo.evidence.EvidenceRecordItemVO;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import freemarker.template.TemplateException;
 import io.swagger.annotations.Api;
@@ -112,6 +110,7 @@ public class EvidenceController {
     @ApiOperation("停用定时取证任务")
     @GetMapping("/stop/regular")
     public BaseResult<Void> stopRegularEvidence(@Validated @NotNull Long id) {
+        evidenceService.stopReguilarEvidence(id);
         return BaseResult.ok();
     }
 }

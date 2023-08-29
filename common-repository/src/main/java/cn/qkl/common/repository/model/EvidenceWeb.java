@@ -26,6 +26,15 @@ public class EvidenceWeb {
     private Long platformId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String frequency;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Date startTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Date endTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String institution;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -198,6 +207,54 @@ public class EvidenceWeb {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setPlatformId(Long platformId) {
         this.platformId = platformId;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getFrequency() {
+        return frequency;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public EvidenceWeb withFrequency(String frequency) {
+        this.setFrequency(frequency);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public EvidenceWeb withStartTime(Date startTime) {
+        this.setStartTime(startTime);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public EvidenceWeb withEndTime(Date endTime) {
+        this.setEndTime(endTime);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -550,6 +607,9 @@ public class EvidenceWeb {
         sb.append(", personnel=").append(personnel);
         sb.append(", url=").append(url);
         sb.append(", platformId=").append(platformId);
+        sb.append(", frequency=").append(frequency);
+        sb.append(", startTime=").append(startTime);
+        sb.append(", endTime=").append(endTime);
         sb.append(", institution=").append(institution);
         sb.append(", department=").append(department);
         sb.append(", webOssPath=").append(webOssPath);

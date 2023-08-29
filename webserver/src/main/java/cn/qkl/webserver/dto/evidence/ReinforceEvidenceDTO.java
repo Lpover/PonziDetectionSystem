@@ -19,6 +19,7 @@ public class ReinforceEvidenceDTO {
 //    private String fileName;
 //    @ApiModelProperty("上传文件的数据")
 //    private String fileData;
+    // todo 不是上传路径，是上传文件名
     @ApiModelProperty("上传文件的oss url")
     private String url;
     @ApiModelProperty("所属平台的id")

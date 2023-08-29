@@ -6,6 +6,7 @@ import cn.qkl.common.framework.exception.BusinessException;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.framework.util.OssUtil;
 import cn.qkl.common.framework.util.SchedulerUtil;
+import cn.qkl.common.framework.util.SqlUtil;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.ContentRisk;
 import cn.qkl.common.repository.model.EvidenceWeb;
@@ -25,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.entity.ContentType;
 import org.fit.cssbox.demo.ImageRenderer;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
+import org.mybatis.dynamic.sql.select.QueryExpressionDSL;
 import org.mybatis.dynamic.sql.select.SimpleSortSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockMultipartFile;
@@ -137,7 +139,7 @@ public class EvidenceService {
         evidenceWeb.setDeleteStatus(0);
         evidenceWeb.setEvidenceType(0);     // 取证固证来源
         evidenceWeb.setEvidencePhase(0);
-        evidenceWeb.setHash("hash123321");  // 上链服务返回的hash
+
         evidenceWeb.setChainId(1L);          // 上链服务返回的链id
 
         evidenceWebDao.insert(evidenceWeb);
@@ -146,8 +148,10 @@ public class EvidenceService {
         CountDownLatch latch = new CountDownLatch(2);
 
         // 网页截图
-        SchedulerUtil.commonScheduler.schedule("generatePack", () -> {
+        SchedulerUtil.commonScheduler.schedule("generateWebCapture", () -> {
             webCapture(dto.getUrl(), dto.getName(), evidenceWeb.getId());
+            // todo filehash
+            evidenceWeb.setHash("hash123321");  // 上链服务返回的hash
             latch.countDown();
         });
 
@@ -185,6 +189,11 @@ public class EvidenceService {
         EvidencePhaseVO vo = new EvidencePhaseVO();
         vo.setId(evidenceWeb.getId());
         return vo;
+    }
+
+    public void stopReguilarEvidence(Long id) {
+        evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.frequency).equalTo(0).where(Tables.evidenceWeb.id, isEqualTo(id)));
+
     }
 
     public EvidencePhaseVO reinforceEvidence(ReinforceEvidenceDTO dto) {
@@ -408,22 +417,35 @@ public class EvidenceService {
     }
 
     public PageVO<EvidenceRecordItemVO> getRecordList(EvidenceRecordListDTO dto) {
+        QueryExpressionDSL<org.mybatis.dynamic.sql.select.SelectModel>.QueryExpressionWhereBuilder builder = select(Tables.evidenceWeb.id,
+                Tables.evidenceWeb.name,
+                Tables.evidenceWeb.riskType,
+                Tables.evidenceWeb.evidenceType,
+                Tables.evidenceWeb.evidencePhase,
+                Tables.evidenceWeb.packOssPath,
+                Tables.evidenceWeb.url,
+                Tables.evidenceWeb.createTime.as("time"),
+                Tables.platform.name.as("platform_name"),
+                Tables.platform.platformType).from(Tables.evidenceWeb, "ew")
+                .leftJoin(Tables.platform).on(Tables.evidenceWeb.platformId, equalTo(Tables.platform.id))
+                .where(Tables.evidenceWeb.deleteStatus, isEqualTo(0))
+                .and(Tables.evidenceWeb.evidenceType, isEqualTo(dto.getEvidenceType()))
+                .and(Tables.evidenceWeb.platformId, isEqualTo(dto.getPlatformId()))
+                .and(Tables.evidenceWeb.createTime, isGreaterThanOrEqualTo(dto.getStartTime()))
+                .and(Tables.evidenceWeb.createTime, isLessThanOrEqualTo(dto.getEndTime()));
+
+        if (dto.getEvidenceName() != null) {
+            builder = builder.and(Tables.evidenceWeb.name, isLike(SqlUtil.allLike(dto.getEvidenceName())));
+        }
+        if (dto.getRiskType() != null){
+            builder = builder.and(Tables.evidenceWeb.riskType, isLike(SqlUtil.allLike(dto.getRiskType())));
+        }
+
+        QueryExpressionDSL<org.mybatis.dynamic.sql.select.SelectModel>.QueryExpressionWhereBuilder finalBuilder = builder;
         return new PageVO<>(dto.getPageId(),dto.getPageSize(),()->evidenceWebDao.getRecordList(
-                select(Tables.evidenceWeb.id,
-                        Tables.evidenceWeb.name,
-                        Tables.evidenceWeb.riskType,
-                        Tables.evidenceWeb.evidenceType,
-                        Tables.evidenceWeb.evidencePhase,
-                        Tables.evidenceWeb.packOssPath,
-                        Tables.evidenceWeb.url,
-                        Tables.evidenceWeb.createTime.as("time"),
-                        Tables.platform.name.as("platform_name"),
-                        Tables.platform.platformType).from(Tables.evidenceWeb,"ew")
-                        .leftJoin(Tables.platform).on(Tables.evidenceWeb.platformId,equalTo(Tables.platform.id))
-                        .where(Tables.evidenceWeb.deleteStatus,isEqualTo(0))
-//                        .and(Tables.evidenceWeb.)
-                        .orderBy(SimpleSortSpecification.of("time").descending())
-                        .build().render(RenderingStrategies.MYBATIS3)
+                finalBuilder
+                .orderBy(SimpleSortSpecification.of("time").descending())
+                .build().render(RenderingStrategies.MYBATIS3)
         ));
     }
 
