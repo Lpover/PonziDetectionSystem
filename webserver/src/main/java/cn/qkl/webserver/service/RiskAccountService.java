@@ -5,6 +5,7 @@ import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.mapper.AccountTxHistoryMapper;
 import cn.qkl.common.repository.mapper.AtaExportTaskDynamicSqlSupport;
+import cn.qkl.common.repository.mapper.ChainDynamicSqlSupport;
 import cn.qkl.common.repository.model.AccountToAccount;
 import cn.qkl.common.repository.model.AtaExportTask;
 import cn.qkl.common.repository.model.Content;
@@ -66,10 +67,10 @@ public class RiskAccountService {
                                 .leftJoin(Tables.account).on(Tables.accountCheckHistory.accountId,equalTo(Tables.account.id))
                                 .where(Tables.accountCheckHistory.riskLevel, isInWhenPresent(dto.getRiskLevelList()))
                                 //数字筛选
-                                .where(Tables.accountCheckHistory.relatedNum, isGreaterThanOrEqualToWhenPresent(dto.getRelatedNumMin()))
-                                .where(Tables.accountCheckHistory.relatedNum, isLessThanOrEqualToWhenPresent(dto.getRelatedNumMax()))
-                                .where(Tables.accountCheckHistory.releaseNum, isGreaterThanOrEqualToWhenPresent(dto.getReleaseNumMin()))
-                                .where(Tables.accountCheckHistory.releaseNum, isLessThanOrEqualToWhenPresent(dto.getReleaseNumMax()))
+                                .and(Tables.accountCheckHistory.relatedNum, isGreaterThanOrEqualToWhenPresent(dto.getRelatedNumMin()))
+                                .and(Tables.accountCheckHistory.relatedNum, isLessThanOrEqualToWhenPresent(dto.getRelatedNumMax()))
+                                .and(Tables.accountCheckHistory.releaseNum, isGreaterThanOrEqualToWhenPresent(dto.getReleaseNumMin()))
+                                .and(Tables.accountCheckHistory.releaseNum, isLessThanOrEqualToWhenPresent(dto.getReleaseNumMax()))
                                 .orderBy(Tables.accountCheckHistory.updateTime.descending())
                                 .build()
                                 .render(RenderingStrategies.MYBATIS3)
@@ -104,8 +105,8 @@ public class RiskAccountService {
                             Tables.accountToAccount.toAmount.as("fromAmount"))
                             .from(Tables.accountToAccount)
                             .where(Tables.accountToAccount.from, isEqualToWhenPresent(dto.getAddress()))
-                            .where(Tables.accountToAccount.blockchain,isEqualToWhenPresent(dto.getMainChain()))
-                            .where(Tables.accountToAccount.toRiskIndex,isEqualToWhenPresent(dto.getRiskIndex()))
+                            .and(Tables.accountToAccount.chainId,isEqualToWhenPresent(dto.getChainID()))
+                            .and(Tables.accountToAccount.toRiskIndex,isEqualToWhenPresent(dto.getRiskIndex()))
                             .build()
                             .render(RenderingStrategies.MYBATIS3)
             );
@@ -119,8 +120,8 @@ public class RiskAccountService {
                             Tables.accountToAccount.fromAmount.as("fromAmount"))
                             .from(Tables.accountToAccount)
                             .where(Tables.accountToAccount.to, isEqualToWhenPresent(dto.getAddress()))
-                            .where(Tables.accountToAccount.blockchain,isEqualToWhenPresent(dto.getMainChain()))
-                            .where(Tables.accountToAccount.fromRiskIndex,isEqualToWhenPresent(dto.getRiskIndex()))
+                            .and(Tables.accountToAccount.chainId,isEqualToWhenPresent(dto.getChainID()))
+                            .and(Tables.accountToAccount.fromRiskIndex,isEqualToWhenPresent(dto.getRiskIndex()))
                             .build()
                             .render(RenderingStrategies.MYBATIS3)
             );
@@ -137,8 +138,9 @@ public class RiskAccountService {
                     select(Tables.accountToAccount.id,Tables.accountToAccount.from, Tables.accountToAccount.to,
                             Tables.accountToAccount.fromRiskIndex,Tables.accountToAccount.toRiskIndex, Tables.accountToAccount.toAmount,
                             Tables.accountToAccount.txAmount, Tables.accountToAccount.txNum, Tables.accountToAccount.fromRatio, Tables.accountToAccount.toRatio,
-                            Tables.accountToAccount.blockchain)
+                            Tables.chain.chainName)
                             .from(Tables.accountToAccount)
+                            .leftJoin(Tables.chain).on(Tables.accountToAccount.chainId,equalTo(Tables.chain.id))
                             .where(Tables.accountToAccount.from, isEqualToWhenPresent(dto.getAddress()))
                             .build()
                             .render(RenderingStrategies.MYBATIS3)
@@ -151,8 +153,9 @@ public class RiskAccountService {
                     select(Tables.accountToAccount.id,Tables.accountToAccount.from, Tables.accountToAccount.to,
                             Tables.accountToAccount.fromRiskIndex,Tables.accountToAccount.toRiskIndex,Tables.accountToAccount.fromAmount,
                             Tables.accountToAccount.txAmount, Tables.accountToAccount.txNum, Tables.accountToAccount.fromRatio, Tables.accountToAccount.toRatio,
-                            Tables.accountToAccount.blockchain)
+                            Tables.chain.chainName)
                             .from(Tables.accountToAccount)
+                            .leftJoin(Tables.chain).on(Tables.accountToAccount.chainId,equalTo(Tables.chain.id))
                             .where(Tables.accountToAccount.to, isEqualToWhenPresent(dto.getAddress()))
                             .build()
                             .render(RenderingStrategies.MYBATIS3)
@@ -189,36 +192,38 @@ public class RiskAccountService {
 
         //查转入,自己的地址是from,此时address为表中的to
         List<exportCSVVO> exportCSVVOListTO = accountToAccountDao.getCsvData(
-                select(Tables.accountToAccount.blockchain,Tables.accountToAccount.protocols,Tables.account.currencyBalance,
+                select(Tables.chain.chainName,Tables.accountToAccount.protocols,Tables.account.currencyBalance,
                         Tables.accountToAccount.label,Tables.accountToAccount.note,Tables.accountToAccount.updateTime,
                         Tables.accountToAccount.createTime,Tables.accountToAccount.toAmount,Tables.accountToAccount.fromAmount,
                         Tables.accountToAccount.toNum,Tables.accountToAccount.fromNum,Tables.accountToAccount.toCounter,
                         Tables.accountToAccount.fromCounter,Tables.accountToAccount.to.as("address"))
                         .from(Tables.accountToAccount)
                         .leftJoin(Tables.account).on(Tables.accountToAccount.to,equalTo(Tables.account.accountAddress))
+                        .leftJoin(Tables.chain).on(Tables.accountToAccount.chainId,equalTo(Tables.chain.id))
                         .where(Tables.accountToAccount.from,isEqualToWhenPresent(dto.getAddress()))
-                        .where(Tables.accountToAccount.createTime,isGreaterThanOrEqualToWhenPresent(dto.getStartTime()))
-                        .where(Tables.accountToAccount.createTime,isLessThanOrEqualToWhenPresent(dto.getEndTime()))
-                        .where(Tables.accountToAccount.toAmount,isGreaterThanOrEqualToWhenPresent(dto.getLowerLimit()))
-                        .where(Tables.accountToAccount.blockchain,isEqualToWhenPresent(dto.getBlockchain()))
+                        .and(Tables.accountToAccount.createTime,isGreaterThanOrEqualToWhenPresent(dto.getStartTime()))
+                        .and(Tables.accountToAccount.createTime,isLessThanOrEqualToWhenPresent(dto.getEndTime()))
+                        .and(Tables.accountToAccount.toAmount,isGreaterThanOrEqualToWhenPresent(dto.getLowerLimit()))
+                        .and(Tables.accountToAccount.chainId,isEqualToWhenPresent(dto.getChainID()))
                         .build()
                         .render(RenderingStrategies.MYBATIS3)
         );
 
         //查转出,自己的地址是to,此时address为表中的from
         List<exportCSVVO> exportCSVVOListFrom = accountToAccountDao.getCsvData(
-                select(Tables.accountToAccount.blockchain,Tables.accountToAccount.protocols,Tables.account.currencyBalance,
+                select(Tables.chain.chainName,Tables.accountToAccount.protocols,Tables.account.currencyBalance,
                         Tables.accountToAccount.label,Tables.accountToAccount.note,Tables.accountToAccount.updateTime,
                         Tables.accountToAccount.createTime,Tables.accountToAccount.toAmount,Tables.accountToAccount.fromAmount,
                         Tables.accountToAccount.toNum,Tables.accountToAccount.fromNum,Tables.accountToAccount.toCounter,
                         Tables.accountToAccount.fromCounter,Tables.accountToAccount.from.as("address"))
                         .from(Tables.accountToAccount)
                         .leftJoin(Tables.account).on(Tables.accountToAccount.from,equalTo(Tables.account.accountAddress))
+                        .leftJoin(Tables.chain).on(Tables.accountToAccount.chainId,equalTo(Tables.chain.id))
                         .where(Tables.accountToAccount.to,isEqualToWhenPresent(dto.getAddress()))
-                        .where(Tables.accountToAccount.createTime,isGreaterThanOrEqualToWhenPresent(dto.getStartTime()))
-                        .where(Tables.accountToAccount.createTime,isLessThanOrEqualToWhenPresent(dto.getEndTime()))
-                        .where(Tables.accountToAccount.toAmount,isGreaterThanOrEqualToWhenPresent(dto.getLowerLimit()))
-                        .where(Tables.accountToAccount.blockchain,isEqualToWhenPresent(dto.getBlockchain()))
+                        .and(Tables.accountToAccount.createTime,isGreaterThanOrEqualToWhenPresent(dto.getStartTime()))
+                        .and(Tables.accountToAccount.createTime,isLessThanOrEqualToWhenPresent(dto.getEndTime()))
+                        .and(Tables.accountToAccount.toAmount,isGreaterThanOrEqualToWhenPresent(dto.getLowerLimit()))
+                        .and(Tables.accountToAccount.chainId,isEqualToWhenPresent(dto.getChainID()))
                         .build()
                         .render(RenderingStrategies.MYBATIS3)
         );
@@ -256,7 +261,7 @@ public class RiskAccountService {
                 String formattedCreateTime = dateFormat.format(task.getCreateTime());
 
                 String row = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d\n",
-                        task.getBlockchain(), task.getProtocols(), task.getAddress(),
+                        task.getChainName(), task.getProtocols(), task.getAddress(),
                         task.getCurrencyBalance(), task.getLabel(), task.getNote(),
                         formattedUpdateTime,formattedCreateTime,task.getFromAmount(),
                         task.getToAmount(),task.getFromNum(),task.getToNum(),
@@ -284,24 +289,26 @@ public class RiskAccountService {
 
         ataExportTask.setId(IdUtil.getSnowflakeNextId());
         ataExportTask.setAddress(dto.getAddress());
-        ataExportTask.setBlockchain(dto.getBlockchain());
+        ataExportTask.setChainId(dto.getChainID());
         ataExportTask.setLowerLimit(dto.getLowerLimit());
         ataExportTask.setStartTime(dto.getStartTime());
         ataExportTask.setEndTime(dto.getEndTime());
         ataExportTask.setDirection(dto.getDirection());
         ataExportTask.setCreateTime(end);
         ataExportTask.setUpdateTime(end);
+//        ataExportTask.set
         ataExportTask.setUrl(csvFileUrl);
 
     }
 
     //导出任务显示
     public List<exportTaskVO> getExportTask(exportTaskDTO dto){
-        List<exportTaskVO> exportTaskVOList = ataExportTaskDao.getexportTask(
-                select(Tables.ataExportTask.id,Tables.ataExportTask.address,Tables.ataExportTask.blockchain,Tables.ataExportTask.lowerLimit,
+        List<exportTaskVO> exportTaskVOList = ataExportTaskDao.getExportTask(
+                select(Tables.ataExportTask.id,Tables.ataExportTask.address,Tables.ataExportTask.lowerLimit,
                         Tables.ataExportTask.startTime,Tables.ataExportTask.endTime,Tables.ataExportTask.direction,
-                        Tables.ataExportTask.url)
-                        .from(Tables.ataExportTask)
+                        Tables.ataExportTask.url,Tables.chain.chainName)
+                        .from(Tables.ataExportTask,"ata")
+                        .leftJoin(Tables.chain,"lc").on(Tables.ataExportTask.chainId,equalTo(constant("lc.id")))
                         .orderBy(Tables.ataExportTask.updateTime)
                         .limit(20)
                         .build()

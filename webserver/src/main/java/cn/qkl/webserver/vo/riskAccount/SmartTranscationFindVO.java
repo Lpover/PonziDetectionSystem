@@ -41,10 +41,8 @@ public class SmartTranscationFindVO {
     @ApiModelProperty("交易表-金额占去向账户比")
     private BigDecimal toRatio;
 
-    @ApiModelProperty("交易表-公链")
-    private String blockchain;
+    @ApiModelProperty("区块链名称")
+    private String chainName;
 
-//    @ApiModelProperty("币种")
-//    private String currencyType;
 
 }

@@ -19,8 +19,8 @@ public class exportTaskVO {
     @ApiModelProperty("目标地址")
     private String address;
 
-    @ApiModelProperty("区块链，ETH/TRON")
-    private String blockchain;
+    @ApiModelProperty("区块链名称")
+    private String chainName;
 
     @ApiModelProperty("交易金额下限：数字框，默认不填，表示导出所有金额的交易")
     private Integer lowerLimit;

@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface AccountToAccountMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, from, to, fromRiskIndex, toRiskIndex, txAmount, txNum, fromRatio, toRatio, blockchain, currencyType, note, createTime, updateTime, protocols, label, toAmount, fromAmount, toNum, fromNum, toCounter, fromCounter, chainId);
+    BasicColumn[] selectList = BasicColumn.columnList(id, from, to, fromRiskIndex, toRiskIndex, txAmount, txNum, fromRatio, toRatio, note, createTime, updateTime, protocols, label, toAmount, fromAmount, toNum, fromNum, toCounter, fromCounter, chainId);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -70,8 +70,6 @@ public interface AccountToAccountMapper {
         @Result(column="tx_num", property="txNum", jdbcType=JdbcType.BIGINT),
         @Result(column="from_ratio", property="fromRatio", jdbcType=JdbcType.DECIMAL),
         @Result(column="to_ratio", property="toRatio", jdbcType=JdbcType.DECIMAL),
-        @Result(column="blockchain", property="blockchain", jdbcType=JdbcType.VARCHAR),
-        @Result(column="currency_type", property="currencyType", jdbcType=JdbcType.VARCHAR),
         @Result(column="note", property="note", jdbcType=JdbcType.VARCHAR),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
@@ -120,8 +118,6 @@ public interface AccountToAccountMapper {
             .map(txNum).toProperty("txNum")
             .map(fromRatio).toProperty("fromRatio")
             .map(toRatio).toProperty("toRatio")
-            .map(blockchain).toProperty("blockchain")
-            .map(currencyType).toProperty("currencyType")
             .map(note).toProperty("note")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
@@ -149,8 +145,6 @@ public interface AccountToAccountMapper {
             .map(txNum).toProperty("txNum")
             .map(fromRatio).toProperty("fromRatio")
             .map(toRatio).toProperty("toRatio")
-            .map(blockchain).toProperty("blockchain")
-            .map(currencyType).toProperty("currencyType")
             .map(note).toProperty("note")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
@@ -178,8 +172,6 @@ public interface AccountToAccountMapper {
             .map(txNum).toPropertyWhenPresent("txNum", record::getTxNum)
             .map(fromRatio).toPropertyWhenPresent("fromRatio", record::getFromRatio)
             .map(toRatio).toPropertyWhenPresent("toRatio", record::getToRatio)
-            .map(blockchain).toPropertyWhenPresent("blockchain", record::getBlockchain)
-            .map(currencyType).toPropertyWhenPresent("currencyType", record::getCurrencyType)
             .map(note).toPropertyWhenPresent("note", record::getNote)
             .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
             .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
@@ -233,8 +225,6 @@ public interface AccountToAccountMapper {
                 .set(txNum).equalTo(record::getTxNum)
                 .set(fromRatio).equalTo(record::getFromRatio)
                 .set(toRatio).equalTo(record::getToRatio)
-                .set(blockchain).equalTo(record::getBlockchain)
-                .set(currencyType).equalTo(record::getCurrencyType)
                 .set(note).equalTo(record::getNote)
                 .set(createTime).equalTo(record::getCreateTime)
                 .set(updateTime).equalTo(record::getUpdateTime)
@@ -260,8 +250,6 @@ public interface AccountToAccountMapper {
                 .set(txNum).equalToWhenPresent(record::getTxNum)
                 .set(fromRatio).equalToWhenPresent(record::getFromRatio)
                 .set(toRatio).equalToWhenPresent(record::getToRatio)
-                .set(blockchain).equalToWhenPresent(record::getBlockchain)
-                .set(currencyType).equalToWhenPresent(record::getCurrencyType)
                 .set(note).equalToWhenPresent(record::getNote)
                 .set(createTime).equalToWhenPresent(record::getCreateTime)
                 .set(updateTime).equalToWhenPresent(record::getUpdateTime)
@@ -287,8 +275,6 @@ public interface AccountToAccountMapper {
             .set(txNum).equalTo(record::getTxNum)
             .set(fromRatio).equalTo(record::getFromRatio)
             .set(toRatio).equalTo(record::getToRatio)
-            .set(blockchain).equalTo(record::getBlockchain)
-            .set(currencyType).equalTo(record::getCurrencyType)
             .set(note).equalTo(record::getNote)
             .set(createTime).equalTo(record::getCreateTime)
             .set(updateTime).equalTo(record::getUpdateTime)
@@ -316,8 +302,6 @@ public interface AccountToAccountMapper {
             .set(txNum).equalToWhenPresent(record::getTxNum)
             .set(fromRatio).equalToWhenPresent(record::getFromRatio)
             .set(toRatio).equalToWhenPresent(record::getToRatio)
-            .set(blockchain).equalToWhenPresent(record::getBlockchain)
-            .set(currencyType).equalToWhenPresent(record::getCurrencyType)
             .set(note).equalToWhenPresent(record::getNote)
             .set(createTime).equalToWhenPresent(record::getCreateTime)
             .set(updateTime).equalToWhenPresent(record::getUpdateTime)

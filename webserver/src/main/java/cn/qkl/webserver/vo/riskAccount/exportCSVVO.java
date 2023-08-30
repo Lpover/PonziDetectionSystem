@@ -17,7 +17,7 @@ public class exportCSVVO {
     //目标地址
     private String address;
     //区块链
-    private String blockchain;
+    private String chainName;
     //协议
     private String protocols;
     //账号余额
