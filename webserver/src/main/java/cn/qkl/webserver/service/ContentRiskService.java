@@ -7,6 +7,7 @@ import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.framework.util.OssUtil;
 import cn.qkl.common.framework.util.SchedulerUtil;
 import cn.qkl.common.framework.util.SqlUtil;
+import cn.qkl.common.framework.util.UploadToChainUtil;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.Content;
 import cn.qkl.common.repository.model.EvidenceWeb;
@@ -30,6 +31,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
@@ -63,6 +65,9 @@ public class ContentRiskService {
 
     @Autowired
     OssUtil ossUtil;
+
+    @Autowired
+    UploadToChainUtil uploadToChainUtil;
 
     //获取分页列表信息
     public PageVO<ContentRiskInfoVO> getContentRiskInfo(ContentRiskInfoDTO dto) {
@@ -109,7 +114,7 @@ public class ContentRiskService {
                 ));
     }
 
-    public void batchReinforce(ContentBatchEvidenceDTO dto) throws IOException, TemplateException, ParserConfigurationException, FontFormatException, SAXException {
+    public void batchReinforce(ContentBatchEvidenceDTO dto) throws IOException, NoSuchAlgorithmException {
 
 
         List<Long> contentIdList = dto.getContentIdList();
@@ -151,10 +156,15 @@ public class ContentRiskService {
             evidenceWeb.setRiskType(riskStr);
             evidenceWebDao.insert(evidenceWeb);
 
+            // 计算hash并上链
+            String digest = uploadToChainUtil.calculateHash(multipartFile.getInputStream(), "MD5");
+            uploadToChainUtil.uploadToChain(digest);
+            evidenceWeb.setHash(uploadToChainUtil.getTxHash());     // 上链hash
+            evidenceWeb.setPackageHash(digest);                     // 文件hash
+            evidenceWeb.setChainTime(uploadToChainUtil.getTxTime());    // 上链时间
+
             // 需要设置计数器保证先后关系
             CountDownLatch latch = new CountDownLatch(1);
-
-            // todo 上链
 
             // 生成证书并上传oss
             SchedulerUtil.commonScheduler.schedule("generateCert", () -> {
@@ -189,4 +199,6 @@ public class ContentRiskService {
             contentDao.update(c->c.set(Tables.content.evidenceStatus).equalTo(2).where(Tables.content.id, isEqualTo(item.getId())));
         }
     }
+
+
 }

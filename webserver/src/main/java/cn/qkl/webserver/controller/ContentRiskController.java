@@ -9,7 +9,6 @@ import cn.qkl.webserver.dto.contenrisk.ContentRiskInfoDTO;
 import cn.qkl.webserver.service.ContentRiskService;
 import cn.qkl.webserver.vo.contentRisk.ContentRiskInfoVO;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
-import freemarker.template.TemplateException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -19,11 +18,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import java.awt.*;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @title:
@@ -52,7 +49,7 @@ public class ContentRiskController {
 
     @ApiOperation("批量取证")
     @GetMapping("batch/evidence")
-    public BaseResult<Void> batchEvidence(@Validated ContentBatchEvidenceDTO dto) throws IOException, TemplateException, ParserConfigurationException, FontFormatException, SAXException {
+    public BaseResult<Void> batchEvidence(@Validated ContentBatchEvidenceDTO dto) throws IOException, NoSuchAlgorithmException {
         contentRiskService.batchReinforce(dto);
         return BaseResult.ok();
     }
