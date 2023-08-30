@@ -24,7 +24,4 @@ public interface AtaExportTaskDao extends AtaExportTaskMapper {
     List<exportTaskVO> getexportTask(SelectStatementProvider selectStatementProvider);
 
 
-    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
-    List<exportCSVVO> getExportCSVVO(SelectStatementProvider selectStatementProvider);
-
 }

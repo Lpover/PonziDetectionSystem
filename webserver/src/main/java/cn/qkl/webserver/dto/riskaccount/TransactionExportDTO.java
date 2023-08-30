@@ -17,7 +17,7 @@ public class TransactionExportDTO {
     @ApiModelProperty("目标地址")
     private String address;
 
-    @ApiModelProperty("区块链，1-ETH,2-TRON")
+    @ApiModelProperty("区块链，ETH/TRON")
     private String blockchain;
 
     @ApiModelProperty("交易金额下限：数字框，默认不填，表示导出所有金额的交易")

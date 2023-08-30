@@ -1,11 +1,13 @@
 package cn.qkl.webserver.service;
 
+import cn.hutool.core.util.IdUtil;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.mapper.AccountTxHistoryMapper;
 import cn.qkl.common.repository.mapper.AtaExportTaskDynamicSqlSupport;
 import cn.qkl.common.repository.model.AccountToAccount;
 import cn.qkl.common.repository.model.AtaExportTask;
+import cn.qkl.common.repository.model.Content;
 import cn.qkl.webserver.dao.*;
 import cn.qkl.webserver.dto.riskaccount.*;
 import cn.qkl.webserver.vo.riskAccount.*;
@@ -97,8 +99,9 @@ public class RiskAccountService {
         // 1-去向，目标地址是from,返回的地址是to
         if(dto.getFindDirections()==1) {
             List<SmartAddressFindVO> smartAddressFindVOList = accountToAccountDao.getSmartAddress(
-                    select(Tables.accountToAccount.to.as("address"),Tables.accountToAccount.toRiskIndex.as("riskIndex"),
-                            Tables.accountToAccount.note, Tables.accountToAccount.toAmount.as("fromAmount"))
+                    select(Tables.accountToAccount.id,Tables.accountToAccount.to.as("address"),
+                            Tables.accountToAccount.toRiskIndex.as("riskIndex"),Tables.accountToAccount.note,
+                            Tables.accountToAccount.toAmount.as("fromAmount"))
                             .from(Tables.accountToAccount)
                             .where(Tables.accountToAccount.from, isEqualToWhenPresent(dto.getAddress()))
                             .where(Tables.accountToAccount.blockchain,isEqualToWhenPresent(dto.getMainChain()))
@@ -111,8 +114,9 @@ public class RiskAccountService {
         // 2-来源，目标地址是to,返回的地址是from
         else {
             List<SmartAddressFindVO> smartAddressFindVOList = accountToAccountDao.getSmartAddress(
-                    select(Tables.accountToAccount.from.as("address"),Tables.accountToAccount.fromRiskIndex.as("riskIndex"),
-                            Tables.accountToAccount.note, Tables.accountToAccount.fromAmount.as("fromAmount"))
+                    select(Tables.accountToAccount.id,Tables.accountToAccount.from.as("address"),
+                            Tables.accountToAccount.fromRiskIndex.as("riskIndex"),Tables.accountToAccount.note,
+                            Tables.accountToAccount.fromAmount.as("fromAmount"))
                             .from(Tables.accountToAccount)
                             .where(Tables.accountToAccount.to, isEqualToWhenPresent(dto.getAddress()))
                             .where(Tables.accountToAccount.blockchain,isEqualToWhenPresent(dto.getMainChain()))
@@ -130,8 +134,8 @@ public class RiskAccountService {
         // 1-去向，目标地址是from,返回的地址是to
         if(dto.getFindDirections()==1) {
             List<SmartTranscationFindVO> smartTranscationFindVOListTo = accountToAccountDao.getSmartTransaction(
-                    select(Tables.accountToAccount.from, Tables.accountToAccount.to, Tables.accountToAccount.fromRiskIndex,
-                            Tables.accountToAccount.toRiskIndex, Tables.accountToAccount.toAmount,
+                    select(Tables.accountToAccount.id,Tables.accountToAccount.from, Tables.accountToAccount.to,
+                            Tables.accountToAccount.fromRiskIndex,Tables.accountToAccount.toRiskIndex, Tables.accountToAccount.toAmount,
                             Tables.accountToAccount.txAmount, Tables.accountToAccount.txNum, Tables.accountToAccount.fromRatio, Tables.accountToAccount.toRatio,
                             Tables.accountToAccount.blockchain)
                             .from(Tables.accountToAccount)
@@ -144,8 +148,8 @@ public class RiskAccountService {
         // 2-来源，目标地址是to,返回的地址是from
         else {
             List<SmartTranscationFindVO> smartAddressFindVOListFrom = accountToAccountDao.getSmartTransaction(
-                    select(Tables.accountToAccount.from, Tables.accountToAccount.to, Tables.accountToAccount.fromRiskIndex,
-                            Tables.accountToAccount.toRiskIndex,Tables.accountToAccount.fromAmount,
+                    select(Tables.accountToAccount.id,Tables.accountToAccount.from, Tables.accountToAccount.to,
+                            Tables.accountToAccount.fromRiskIndex,Tables.accountToAccount.toRiskIndex,Tables.accountToAccount.fromAmount,
                             Tables.accountToAccount.txAmount, Tables.accountToAccount.txNum, Tables.accountToAccount.fromRatio, Tables.accountToAccount.toRatio,
                             Tables.accountToAccount.blockchain)
                             .from(Tables.accountToAccount)
@@ -168,18 +172,23 @@ public class RiskAccountService {
     //交易导出按钮
     public void doTransactionExport(TransactionExportDTO dto){
 
+        List<AtaExportTask> list = new ArrayList<>();
         AtaExportTask ataExportTask=new AtaExportTask();
+
         List<exportCSVVO> csvData=getCsvData(dto);
         String csvFileUrl = exportToCsv(csvData);
+
         insertTransactionExport(ataExportTask,dto,csvFileUrl);
+        list.add(ataExportTask);
+        ataExportTaskDao.insertMultiple(list);
 
     }
 
-    //生成本地csv文件
+//    生成本地csv文件
     public List<exportCSVVO> getCsvData (TransactionExportDTO dto){
 
-        //查转入,此时address为表中的to
-        List<exportCSVVO> exportCSVVOListTO = ataExportTaskDao.getExportCSVVO(
+        //查转入,自己的地址是from,此时address为表中的to
+        List<exportCSVVO> exportCSVVOListTO = accountToAccountDao.getCsvData(
                 select(Tables.accountToAccount.blockchain,Tables.accountToAccount.protocols,Tables.account.currencyBalance,
                         Tables.accountToAccount.label,Tables.accountToAccount.note,Tables.accountToAccount.updateTime,
                         Tables.accountToAccount.createTime,Tables.accountToAccount.toAmount,Tables.accountToAccount.fromAmount,
@@ -187,6 +196,7 @@ public class RiskAccountService {
                         Tables.accountToAccount.fromCounter,Tables.accountToAccount.to.as("address"))
                         .from(Tables.accountToAccount)
                         .leftJoin(Tables.account).on(Tables.accountToAccount.to,equalTo(Tables.account.accountAddress))
+                        .where(Tables.accountToAccount.from,isEqualToWhenPresent(dto.getAddress()))
                         .where(Tables.accountToAccount.createTime,isGreaterThanOrEqualToWhenPresent(dto.getStartTime()))
                         .where(Tables.accountToAccount.createTime,isLessThanOrEqualToWhenPresent(dto.getEndTime()))
                         .where(Tables.accountToAccount.toAmount,isGreaterThanOrEqualToWhenPresent(dto.getLowerLimit()))
@@ -195,8 +205,8 @@ public class RiskAccountService {
                         .render(RenderingStrategies.MYBATIS3)
         );
 
-        //查转出,此时address为表中的from
-        List<exportCSVVO> exportCSVVOListFrom = ataExportTaskDao.getExportCSVVO(
+        //查转出,自己的地址是to,此时address为表中的from
+        List<exportCSVVO> exportCSVVOListFrom = accountToAccountDao.getCsvData(
                 select(Tables.accountToAccount.blockchain,Tables.accountToAccount.protocols,Tables.account.currencyBalance,
                         Tables.accountToAccount.label,Tables.accountToAccount.note,Tables.accountToAccount.updateTime,
                         Tables.accountToAccount.createTime,Tables.accountToAccount.toAmount,Tables.accountToAccount.fromAmount,
@@ -204,6 +214,7 @@ public class RiskAccountService {
                         Tables.accountToAccount.fromCounter,Tables.accountToAccount.from.as("address"))
                         .from(Tables.accountToAccount)
                         .leftJoin(Tables.account).on(Tables.accountToAccount.from,equalTo(Tables.account.accountAddress))
+                        .where(Tables.accountToAccount.to,isEqualToWhenPresent(dto.getAddress()))
                         .where(Tables.accountToAccount.createTime,isGreaterThanOrEqualToWhenPresent(dto.getStartTime()))
                         .where(Tables.accountToAccount.createTime,isLessThanOrEqualToWhenPresent(dto.getEndTime()))
                         .where(Tables.accountToAccount.toAmount,isGreaterThanOrEqualToWhenPresent(dto.getLowerLimit()))
@@ -212,8 +223,8 @@ public class RiskAccountService {
                         .render(RenderingStrategies.MYBATIS3)
         );
 
-        if(dto.getDirection()==3)return exportCSVVOListFrom;
-        if(dto.getDirection()==1)return exportCSVVOListTO;
+        if(dto.getDirection()==3)return exportCSVVOListFrom;//转出
+        if(dto.getDirection()==2)return exportCSVVOListTO;//转入
         //如果是全部，将两次查询合并返回
         exportCSVVOListTO.addAll(exportCSVVOListFrom);
         return exportCSVVOListTO;
@@ -245,7 +256,7 @@ public class RiskAccountService {
                 String formattedCreateTime = dateFormat.format(task.getCreateTime());
 
                 String row = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d\n",
-                        task.getAddress(), task.getBlockchain(), task.getProtocols(),
+                        task.getBlockchain(), task.getProtocols(), task.getAddress(),
                         task.getCurrencyBalance(), task.getLabel(), task.getNote(),
                         formattedUpdateTime,formattedCreateTime,task.getFromAmount(),
                         task.getToAmount(),task.getFromNum(),task.getToNum(),
@@ -271,6 +282,7 @@ public class RiskAccountService {
 
         Date end = new Date();
 
+        ataExportTask.setId(IdUtil.getSnowflakeNextId());
         ataExportTask.setAddress(dto.getAddress());
         ataExportTask.setBlockchain(dto.getBlockchain());
         ataExportTask.setLowerLimit(dto.getLowerLimit());
@@ -278,6 +290,7 @@ public class RiskAccountService {
         ataExportTask.setEndTime(dto.getEndTime());
         ataExportTask.setDirection(dto.getDirection());
         ataExportTask.setCreateTime(end);
+        ataExportTask.setUpdateTime(end);
         ataExportTask.setUrl(csvFileUrl);
 
     }
@@ -285,7 +298,7 @@ public class RiskAccountService {
     //导出任务显示
     public List<exportTaskVO> getExportTask(exportTaskDTO dto){
         List<exportTaskVO> exportTaskVOList = ataExportTaskDao.getexportTask(
-                select(Tables.ataExportTask.address,Tables.ataExportTask.blockchain,Tables.ataExportTask.lowerLimit,
+                select(Tables.ataExportTask.id,Tables.ataExportTask.address,Tables.ataExportTask.blockchain,Tables.ataExportTask.lowerLimit,
                         Tables.ataExportTask.startTime,Tables.ataExportTask.endTime,Tables.ataExportTask.direction,
                         Tables.ataExportTask.url)
                         .from(Tables.ataExportTask)
@@ -302,7 +315,7 @@ public class RiskAccountService {
 
         //当address作为from来源的时候，对手地址是to，交易方向是转出
         List<TransactionDetailVO> transactionDetailVOListFrom = accountTxHistoryDao.getTransactionDetail(
-                select(Tables.accountTxHistory.txHash,Tables.accountTxHistory.updateTime,Tables.accountTxHistory.value,
+                select(Tables.accountTxHistory.id,Tables.accountTxHistory.txHash,Tables.accountTxHistory.updateTime,Tables.accountTxHistory.value,
                         Tables.accountTxHistory.note,Tables.accountTxHistory.to.as("addressTarget"))
                         .from(Tables.accountTxHistory)
                         .where(Tables.accountTxHistory.from,isEqualTo(dto.getAddress()))
@@ -311,7 +324,7 @@ public class RiskAccountService {
         );
         //当address作为to转入的时候，对手地址是from，交易方向是转入
         List<TransactionDetailVO> transactionDetailVOListTo = accountTxHistoryDao.getTransactionDetail(
-                select(Tables.accountTxHistory.txHash,Tables.accountTxHistory.updateTime,Tables.accountTxHistory.value,
+                select(Tables.accountTxHistory.id,Tables.accountTxHistory.txHash,Tables.accountTxHistory.updateTime,Tables.accountTxHistory.value,
                         Tables.accountTxHistory.note,Tables.accountTxHistory.from.as("addressTarget"))
                         .from(Tables.accountTxHistory)
                         .where(Tables.accountTxHistory.to,isEqualTo(dto.getAddress()))
