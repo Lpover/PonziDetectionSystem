@@ -8,9 +8,6 @@ public class AtaExportTask {
     private Long id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String blockchain;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String address;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -35,6 +32,12 @@ public class AtaExportTask {
     private Date updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Long chainId;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Date orderTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
@@ -48,22 +51,6 @@ public class AtaExportTask {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getBlockchain() {
-        return blockchain;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AtaExportTask withBlockchain(String blockchain) {
-        this.setBlockchain(blockchain);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setBlockchain(String blockchain) {
-        this.blockchain = blockchain;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -194,6 +181,38 @@ public class AtaExportTask {
         this.updateTime = updateTime;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Long getChainId() {
+        return chainId;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public AtaExportTask withChainId(Long chainId) {
+        this.setChainId(chainId);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setChainId(Long chainId) {
+        this.chainId = chainId;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Date getOrderTime() {
+        return orderTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public AtaExportTask withOrderTime(Date orderTime) {
+        this.setOrderTime(orderTime);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setOrderTime(Date orderTime) {
+        this.orderTime = orderTime;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -202,7 +221,6 @@ public class AtaExportTask {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", blockchain=").append(blockchain);
         sb.append(", address=").append(address);
         sb.append(", direction=").append(direction);
         sb.append(", lowerLimit=").append(lowerLimit);
@@ -211,6 +229,8 @@ public class AtaExportTask {
         sb.append(", url=").append(url);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", chainId=").append(chainId);
+        sb.append(", orderTime=").append(orderTime);
         sb.append("]");
         return sb.toString();
     }

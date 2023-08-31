@@ -18,8 +18,8 @@ public class SmartAddressFindDTO {
     @ApiModelProperty("查找方向：1-查去向/2-查来源")
     private Integer findDirections;
 
-    @ApiModelProperty("选择主链：BSC/ETH/Polygon")
-    private String mainChain;
+    @ApiModelProperty("选择某一区块链进行账户网状分析，请求chain/list接口获取链列表")
+    private Long chainID;
 
     @ApiModelProperty("选择风险等级：0-低风险 1-中风险 2-高风险")
     private Integer riskIndex;

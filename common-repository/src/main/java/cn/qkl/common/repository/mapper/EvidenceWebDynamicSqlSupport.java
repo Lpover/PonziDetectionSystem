@@ -56,6 +56,9 @@ public final class EvidenceWebDynamicSqlSupport {
     public static final SqlColumn<String> hash = evidenceWeb.hash;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Date> chainTime = evidenceWeb.chainTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Date> createTime = evidenceWeb.createTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -71,12 +74,6 @@ public final class EvidenceWebDynamicSqlSupport {
     public static final SqlColumn<Long> chainId = evidenceWeb.chainId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> chainHash = evidenceWeb.chainHash;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Date> chainTime = evidenceWeb.chainTime;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Integer> frequency = evidenceWeb.frequency;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -90,6 +87,12 @@ public final class EvidenceWebDynamicSqlSupport {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Integer> dayOfMonth = evidenceWeb.dayOfMonth;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Long> contentId = evidenceWeb.contentId;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Date> nextEvidenceTime = evidenceWeb.nextEvidenceTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class EvidenceWeb extends SqlTable {
@@ -123,6 +126,8 @@ public final class EvidenceWebDynamicSqlSupport {
 
         public final SqlColumn<String> hash = column("hash", JDBCType.VARCHAR);
 
+        public final SqlColumn<Date> chainTime = column("chain_time", JDBCType.TIMESTAMP);
+
         public final SqlColumn<Date> createTime = column("create_time", JDBCType.TIMESTAMP);
 
         public final SqlColumn<Date> updateTime = column("update_time", JDBCType.TIMESTAMP);
@@ -133,10 +138,6 @@ public final class EvidenceWebDynamicSqlSupport {
 
         public final SqlColumn<Long> chainId = column("chain_id", JDBCType.BIGINT);
 
-        public final SqlColumn<String> chainHash = column("chain_hash", JDBCType.VARCHAR);
-
-        public final SqlColumn<Date> chainTime = column("chain_time", JDBCType.TIMESTAMP);
-
         public final SqlColumn<Integer> frequency = column("frequency", JDBCType.INTEGER);
 
         public final SqlColumn<Date> startTime = column("start_time", JDBCType.TIMESTAMP);
@@ -146,6 +147,10 @@ public final class EvidenceWebDynamicSqlSupport {
         public final SqlColumn<Integer> dayOfWeek = column("day_of_week", JDBCType.INTEGER);
 
         public final SqlColumn<Integer> dayOfMonth = column("day_of_month", JDBCType.INTEGER);
+
+        public final SqlColumn<Long> contentId = column("content_id", JDBCType.BIGINT);
+
+        public final SqlColumn<Date> nextEvidenceTime = column("next_evidence_time", JDBCType.TIMESTAMP);
 
         public EvidenceWeb() {
             super("evidence_web");

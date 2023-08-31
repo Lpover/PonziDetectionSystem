@@ -39,12 +39,6 @@ public final class AccountToAccountDynamicSqlSupport {
     public static final SqlColumn<BigDecimal> toRatio = accountToAccount.toRatio;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> blockchain = accountToAccount.blockchain;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> currencyType = accountToAccount.currencyType;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> note = accountToAccount.note;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -99,10 +93,6 @@ public final class AccountToAccountDynamicSqlSupport {
         public final SqlColumn<BigDecimal> fromRatio = column("from_ratio", JDBCType.DECIMAL);
 
         public final SqlColumn<BigDecimal> toRatio = column("to_ratio", JDBCType.DECIMAL);
-
-        public final SqlColumn<String> blockchain = column("blockchain", JDBCType.VARCHAR);
-
-        public final SqlColumn<String> currencyType = column("currency_type", JDBCType.VARCHAR);
 
         public final SqlColumn<String> note = column("note", JDBCType.VARCHAR);
 

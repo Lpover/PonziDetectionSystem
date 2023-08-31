@@ -17,8 +17,8 @@ public class TransactionExportDTO {
     @ApiModelProperty("目标地址")
     private String address;
 
-    @ApiModelProperty("区块链，ETH/TRON")
-    private String blockchain;
+    @ApiModelProperty("选择某一区块链进行账户网状分析，请求chain/list接口获取链列表")
+    private Long chainID;
 
     @ApiModelProperty("交易金额下限：数字框，默认不填，表示导出所有金额的交易")
     private Long lowerLimit;

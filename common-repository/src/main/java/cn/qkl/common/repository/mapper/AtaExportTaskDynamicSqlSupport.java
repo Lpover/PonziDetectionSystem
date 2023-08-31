@@ -14,9 +14,6 @@ public final class AtaExportTaskDynamicSqlSupport {
     public static final SqlColumn<Long> id = ataExportTask.id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> blockchain = ataExportTask.blockchain;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> address = ataExportTask.address;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -41,10 +38,14 @@ public final class AtaExportTaskDynamicSqlSupport {
     public static final SqlColumn<Date> updateTime = ataExportTask.updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Long> chainId = ataExportTask.chainId;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Date> orderTime = ataExportTask.orderTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class AtaExportTask extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
-
-        public final SqlColumn<String> blockchain = column("blockchain", JDBCType.VARCHAR);
 
         public final SqlColumn<String> address = column("address", JDBCType.VARCHAR);
 
@@ -61,6 +62,10 @@ public final class AtaExportTaskDynamicSqlSupport {
         public final SqlColumn<Date> createTime = column("create_time", JDBCType.TIMESTAMP);
 
         public final SqlColumn<Date> updateTime = column("update_time", JDBCType.TIMESTAMP);
+
+        public final SqlColumn<Long> chainId = column("chain_id", JDBCType.BIGINT);
+
+        public final SqlColumn<Date> orderTime = column("order_time", JDBCType.TIMESTAMP);
 
         public AtaExportTask() {
             super("ata_export_task");

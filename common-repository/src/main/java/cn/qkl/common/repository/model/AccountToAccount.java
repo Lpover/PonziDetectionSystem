@@ -33,12 +33,6 @@ public class AccountToAccount {
     private BigDecimal toRatio;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String blockchain;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String currencyType;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String note;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -216,38 +210,6 @@ public class AccountToAccount {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setToRatio(BigDecimal toRatio) {
         this.toRatio = toRatio;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getBlockchain() {
-        return blockchain;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountToAccount withBlockchain(String blockchain) {
-        this.setBlockchain(blockchain);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setBlockchain(String blockchain) {
-        this.blockchain = blockchain;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getCurrencyType() {
-        return currencyType;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountToAccount withCurrencyType(String currencyType) {
-        this.setCurrencyType(currencyType);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setCurrencyType(String currencyType) {
-        this.currencyType = currencyType;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -458,8 +420,6 @@ public class AccountToAccount {
         sb.append(", txNum=").append(txNum);
         sb.append(", fromRatio=").append(fromRatio);
         sb.append(", toRatio=").append(toRatio);
-        sb.append(", blockchain=").append(blockchain);
-        sb.append(", currencyType=").append(currencyType);
         sb.append(", note=").append(note);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);

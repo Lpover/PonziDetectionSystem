@@ -21,7 +21,7 @@ import java.util.List;
 public interface AtaExportTaskDao extends AtaExportTaskMapper {
 
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
-    List<exportTaskVO> getexportTask(SelectStatementProvider selectStatementProvider);
+    List<exportTaskVO> getExportTask(SelectStatementProvider selectStatementProvider);
 
 
 }

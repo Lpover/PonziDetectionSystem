@@ -50,6 +50,9 @@ public class EvidenceWeb {
     private String hash;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Date chainTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Date createTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -65,12 +68,6 @@ public class EvidenceWeb {
     private Long chainId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String chainHash;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Date chainTime;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer frequency;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -84,6 +81,12 @@ public class EvidenceWeb {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer dayOfMonth;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Long contentId;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Date nextEvidenceTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
@@ -326,6 +329,22 @@ public class EvidenceWeb {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Date getChainTime() {
+        return chainTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public EvidenceWeb withChainTime(Date chainTime) {
+        this.setChainTime(chainTime);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setChainTime(Date chainTime) {
+        this.chainTime = chainTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Date getCreateTime() {
         return createTime;
     }
@@ -403,38 +422,6 @@ public class EvidenceWeb {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setChainId(Long chainId) {
         this.chainId = chainId;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getChainHash() {
-        return chainHash;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public EvidenceWeb withChainHash(String chainHash) {
-        this.setChainHash(chainHash);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setChainHash(String chainHash) {
-        this.chainHash = chainHash;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Date getChainTime() {
-        return chainTime;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public EvidenceWeb withChainTime(Date chainTime) {
-        this.setChainTime(chainTime);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setChainTime(Date chainTime) {
-        this.chainTime = chainTime;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -517,6 +504,38 @@ public class EvidenceWeb {
         this.dayOfMonth = dayOfMonth;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Long getContentId() {
+        return contentId;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public EvidenceWeb withContentId(Long contentId) {
+        this.setContentId(contentId);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setContentId(Long contentId) {
+        this.contentId = contentId;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Date getNextEvidenceTime() {
+        return nextEvidenceTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public EvidenceWeb withNextEvidenceTime(Date nextEvidenceTime) {
+        this.setNextEvidenceTime(nextEvidenceTime);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setNextEvidenceTime(Date nextEvidenceTime) {
+        this.nextEvidenceTime = nextEvidenceTime;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -539,18 +558,19 @@ public class EvidenceWeb {
         sb.append(", evidencePhase=").append(evidencePhase);
         sb.append(", evidenceType=").append(evidenceType);
         sb.append(", hash=").append(hash);
+        sb.append(", chainTime=").append(chainTime);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", deleteStatus=").append(deleteStatus);
         sb.append(", packageHash=").append(packageHash);
         sb.append(", chainId=").append(chainId);
-        sb.append(", chainHash=").append(chainHash);
-        sb.append(", chainTime=").append(chainTime);
         sb.append(", frequency=").append(frequency);
         sb.append(", startTime=").append(startTime);
         sb.append(", endTime=").append(endTime);
         sb.append(", dayOfWeek=").append(dayOfWeek);
         sb.append(", dayOfMonth=").append(dayOfMonth);
+        sb.append(", contentId=").append(contentId);
+        sb.append(", nextEvidenceTime=").append(nextEvidenceTime);
         sb.append("]");
         return sb.toString();
     }
