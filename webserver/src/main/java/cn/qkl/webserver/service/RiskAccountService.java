@@ -3,25 +3,17 @@ package cn.qkl.webserver.service;
 import cn.hutool.core.util.IdUtil;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.repository.Tables;
-import cn.qkl.common.repository.mapper.AccountTxHistoryMapper;
-import cn.qkl.common.repository.mapper.AtaExportTaskDynamicSqlSupport;
-import cn.qkl.common.repository.mapper.ChainDynamicSqlSupport;
-import cn.qkl.common.repository.model.AccountToAccount;
 import cn.qkl.common.repository.model.AtaExportTask;
-import cn.qkl.common.repository.model.Content;
 import cn.qkl.webserver.dao.*;
 import cn.qkl.webserver.dto.riskaccount.*;
 import cn.qkl.webserver.vo.riskAccount.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Case;
-import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
-import org.mybatis.dynamic.sql.where.condition.IsBetween;
+import org.mybatis.dynamic.sql.select.SimpleSortSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.meta.When;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -61,10 +53,10 @@ public class RiskAccountService {
     public PageVO<AccountInfoVO> getAccountInfoList(AccountInfoListQueryDTO dto) {
         return PageVO.getPageData(dto.getPageId(), dto.getPageSize(),
                 () -> accountCheckHistoryDao.getAccountInfo(
-                        select(Tables.accountCheckHistory.id, Tables.account.accountAddress,Tables.accountCheckHistory.relatedNum,Tables.accountCheckHistory.releaseNum,Tables.accountCheckHistory.riskLevel,
-                                Tables.accountCheckHistory.updateTime,Tables.accountCheckHistory.accountId)
+                        select(Tables.accountCheckHistory.id, Tables.account.accountAddress, Tables.accountCheckHistory.relatedNum, Tables.accountCheckHistory.releaseNum, Tables.accountCheckHistory.riskLevel,
+                                Tables.accountCheckHistory.updateTime, Tables.accountCheckHistory.accountId)
                                 .from(Tables.accountCheckHistory)
-                                .leftJoin(Tables.account).on(Tables.accountCheckHistory.accountId,equalTo(Tables.account.id))
+                                .leftJoin(Tables.account).on(Tables.accountCheckHistory.accountId, equalTo(Tables.account.id))
                                 .where(Tables.accountCheckHistory.riskLevel, isInWhenPresent(dto.getRiskLevelList()))
                                 //数字筛选
                                 .and(Tables.accountCheckHistory.relatedNum, isGreaterThanOrEqualToWhenPresent(dto.getRelatedNumMin()))
@@ -95,18 +87,18 @@ public class RiskAccountService {
     }
 
     //智能查找目标地址-地址表
-    public List<SmartAddressFindVO> getSmartAddress (SmartAddressFindDTO dto){
+    public List<SmartAddressFindVO> getSmartAddress(SmartAddressFindDTO dto) {
         //查找方向：1-查去向/2-查来源
         // 1-去向，目标地址是from,返回的地址是to
-        if(dto.getFindDirections()==1) {
+        if (dto.getFindDirections() == 1) {
             List<SmartAddressFindVO> smartAddressFindVOList = accountToAccountDao.getSmartAddress(
-                    select(Tables.accountToAccount.id,Tables.accountToAccount.to.as("address"),
-                            Tables.accountToAccount.toRiskIndex.as("riskIndex"),Tables.accountToAccount.note,
+                    select(Tables.accountToAccount.id, Tables.accountToAccount.to.as("address"),
+                            Tables.accountToAccount.toRiskIndex.as("riskIndex"), Tables.accountToAccount.note,
                             Tables.accountToAccount.toAmount.as("fromAmount"))
                             .from(Tables.accountToAccount)
                             .where(Tables.accountToAccount.from, isEqualToWhenPresent(dto.getAddress()))
-                            .and(Tables.accountToAccount.chainId,isEqualToWhenPresent(dto.getChainID()))
-                            .and(Tables.accountToAccount.toRiskIndex,isEqualToWhenPresent(dto.getRiskIndex()))
+                            .and(Tables.accountToAccount.chainId, isEqualToWhenPresent(dto.getChainID()))
+                            .and(Tables.accountToAccount.toRiskIndex, isEqualToWhenPresent(dto.getRiskIndex()))
                             .build()
                             .render(RenderingStrategies.MYBATIS3)
             );
@@ -115,13 +107,13 @@ public class RiskAccountService {
         // 2-来源，目标地址是to,返回的地址是from
         else {
             List<SmartAddressFindVO> smartAddressFindVOList = accountToAccountDao.getSmartAddress(
-                    select(Tables.accountToAccount.id,Tables.accountToAccount.from.as("address"),
-                            Tables.accountToAccount.fromRiskIndex.as("riskIndex"),Tables.accountToAccount.note,
+                    select(Tables.accountToAccount.id, Tables.accountToAccount.from.as("address"),
+                            Tables.accountToAccount.fromRiskIndex.as("riskIndex"), Tables.accountToAccount.note,
                             Tables.accountToAccount.fromAmount.as("fromAmount"))
                             .from(Tables.accountToAccount)
                             .where(Tables.accountToAccount.to, isEqualToWhenPresent(dto.getAddress()))
-                            .and(Tables.accountToAccount.chainId,isEqualToWhenPresent(dto.getChainID()))
-                            .and(Tables.accountToAccount.fromRiskIndex,isEqualToWhenPresent(dto.getRiskIndex()))
+                            .and(Tables.accountToAccount.chainId, isEqualToWhenPresent(dto.getChainID()))
+                            .and(Tables.accountToAccount.fromRiskIndex, isEqualToWhenPresent(dto.getRiskIndex()))
                             .build()
                             .render(RenderingStrategies.MYBATIS3)
             );
@@ -130,17 +122,17 @@ public class RiskAccountService {
     }
 
     //智能查找目标地址-交易表
-    public List<SmartTranscationFindVO> getSmartTransaction (SmartAddressFindDTO dto){
+    public List<SmartTranscationFindVO> getSmartTransaction(SmartAddressFindDTO dto) {
         //查找方向：1-查去向/2-查来源
         // 1-去向，目标地址是from,返回的地址是to
-        if(dto.getFindDirections()==1) {
+        if (dto.getFindDirections() == 1) {
             List<SmartTranscationFindVO> smartTranscationFindVOListTo = accountToAccountDao.getSmartTransaction(
-                    select(Tables.accountToAccount.id,Tables.accountToAccount.from, Tables.accountToAccount.to,
-                            Tables.accountToAccount.fromRiskIndex,Tables.accountToAccount.toRiskIndex, Tables.accountToAccount.toAmount,
+                    select(Tables.accountToAccount.id, Tables.accountToAccount.from, Tables.accountToAccount.to,
+                            Tables.accountToAccount.fromRiskIndex, Tables.accountToAccount.toRiskIndex, Tables.accountToAccount.toAmount,
                             Tables.accountToAccount.txAmount, Tables.accountToAccount.txNum, Tables.accountToAccount.fromRatio, Tables.accountToAccount.toRatio,
                             Tables.chain.chainName)
                             .from(Tables.accountToAccount)
-                            .leftJoin(Tables.chain).on(Tables.accountToAccount.chainId,equalTo(Tables.chain.id))
+                            .leftJoin(Tables.chain).on(Tables.accountToAccount.chainId, equalTo(Tables.chain.id))
                             .where(Tables.accountToAccount.from, isEqualToWhenPresent(dto.getAddress()))
                             .build()
                             .render(RenderingStrategies.MYBATIS3)
@@ -150,12 +142,12 @@ public class RiskAccountService {
         // 2-来源，目标地址是to,返回的地址是from
         else {
             List<SmartTranscationFindVO> smartAddressFindVOListFrom = accountToAccountDao.getSmartTransaction(
-                    select(Tables.accountToAccount.id,Tables.accountToAccount.from, Tables.accountToAccount.to,
-                            Tables.accountToAccount.fromRiskIndex,Tables.accountToAccount.toRiskIndex,Tables.accountToAccount.fromAmount,
+                    select(Tables.accountToAccount.id, Tables.accountToAccount.from, Tables.accountToAccount.to,
+                            Tables.accountToAccount.fromRiskIndex, Tables.accountToAccount.toRiskIndex, Tables.accountToAccount.fromAmount,
                             Tables.accountToAccount.txAmount, Tables.accountToAccount.txNum, Tables.accountToAccount.fromRatio, Tables.accountToAccount.toRatio,
                             Tables.chain.chainName)
                             .from(Tables.accountToAccount)
-                            .leftJoin(Tables.chain).on(Tables.accountToAccount.chainId,equalTo(Tables.chain.id))
+                            .leftJoin(Tables.chain).on(Tables.accountToAccount.chainId, equalTo(Tables.chain.id))
                             .where(Tables.accountToAccount.to, isEqualToWhenPresent(dto.getAddress()))
                             .build()
                             .render(RenderingStrategies.MYBATIS3)
@@ -167,69 +159,69 @@ public class RiskAccountService {
     //根据地址添加备注
     public void changeAddNote(AddNoteDTO dto) {
         accountToAccountDao.update(
-                c->c.set(Tables.account.note).equalTo(dto.getNote())
-                        .where(Tables.account.accountAddress,isEqualTo(dto.getAccountAddress()))
+                c -> c.set(Tables.account.note).equalTo(dto.getNote())
+                        .where(Tables.account.accountAddress, isEqualTo(dto.getAccountAddress()))
         );
     }
 
     //交易导出按钮
-    public void doTransactionExport(TransactionExportDTO dto){
+    public void doTransactionExport(TransactionExportDTO dto) {
 
         List<AtaExportTask> list = new ArrayList<>();
-        AtaExportTask ataExportTask=new AtaExportTask();
+        AtaExportTask ataExportTask = new AtaExportTask();
 
-        List<exportCSVVO> csvData=getCsvData(dto);
+        List<exportCSVVO> csvData = getCsvData(dto);
         String csvFileUrl = exportToCsv(csvData);
 
-        insertTransactionExport(ataExportTask,dto,csvFileUrl);
+        insertTransactionExport(ataExportTask, dto, csvFileUrl);
         list.add(ataExportTask);
         ataExportTaskDao.insertMultiple(list);
 
     }
 
-//    生成本地csv文件
-    public List<exportCSVVO> getCsvData (TransactionExportDTO dto){
+    //    生成本地csv文件
+    public List<exportCSVVO> getCsvData(TransactionExportDTO dto) {
 
         //查转入,自己的地址是from,此时address为表中的to
         List<exportCSVVO> exportCSVVOListTO = accountToAccountDao.getCsvData(
-                select(Tables.chain.chainName,Tables.accountToAccount.protocols,Tables.account.currencyBalance,
-                        Tables.accountToAccount.label,Tables.accountToAccount.note,Tables.accountToAccount.updateTime,
-                        Tables.accountToAccount.createTime,Tables.accountToAccount.toAmount,Tables.accountToAccount.fromAmount,
-                        Tables.accountToAccount.toNum,Tables.accountToAccount.fromNum,Tables.accountToAccount.toCounter,
-                        Tables.accountToAccount.fromCounter,Tables.accountToAccount.to.as("address"))
+                select(Tables.chain.chainName, Tables.accountToAccount.protocols, Tables.account.currencyBalance,
+                        Tables.accountToAccount.label, Tables.accountToAccount.note, Tables.accountToAccount.updateTime,
+                        Tables.accountToAccount.createTime, Tables.accountToAccount.toAmount, Tables.accountToAccount.fromAmount,
+                        Tables.accountToAccount.toNum, Tables.accountToAccount.fromNum, Tables.accountToAccount.toCounter,
+                        Tables.accountToAccount.fromCounter, Tables.accountToAccount.to.as("address"))
                         .from(Tables.accountToAccount)
-                        .leftJoin(Tables.account).on(Tables.accountToAccount.to,equalTo(Tables.account.accountAddress))
-                        .leftJoin(Tables.chain).on(Tables.accountToAccount.chainId,equalTo(Tables.chain.id))
-                        .where(Tables.accountToAccount.from,isEqualToWhenPresent(dto.getAddress()))
-                        .and(Tables.accountToAccount.createTime,isGreaterThanOrEqualToWhenPresent(dto.getStartTime()))
-                        .and(Tables.accountToAccount.createTime,isLessThanOrEqualToWhenPresent(dto.getEndTime()))
-                        .and(Tables.accountToAccount.toAmount,isGreaterThanOrEqualToWhenPresent(dto.getLowerLimit()))
-                        .and(Tables.accountToAccount.chainId,isEqualToWhenPresent(dto.getChainID()))
+                        .leftJoin(Tables.account).on(Tables.accountToAccount.to, equalTo(Tables.account.accountAddress))
+                        .leftJoin(Tables.chain).on(Tables.accountToAccount.chainId, equalTo(Tables.chain.id))
+                        .where(Tables.accountToAccount.from, isEqualToWhenPresent(dto.getAddress()))
+                        .and(Tables.accountToAccount.createTime, isGreaterThanOrEqualToWhenPresent(dto.getStartTime()))
+                        .and(Tables.accountToAccount.createTime, isLessThanOrEqualToWhenPresent(dto.getEndTime()))
+                        .and(Tables.accountToAccount.toAmount, isGreaterThanOrEqualToWhenPresent(dto.getLowerLimit()))
+                        .and(Tables.accountToAccount.chainId, isEqualToWhenPresent(dto.getChainID()))
                         .build()
                         .render(RenderingStrategies.MYBATIS3)
         );
 
         //查转出,自己的地址是to,此时address为表中的from
         List<exportCSVVO> exportCSVVOListFrom = accountToAccountDao.getCsvData(
-                select(Tables.chain.chainName,Tables.accountToAccount.protocols,Tables.account.currencyBalance,
-                        Tables.accountToAccount.label,Tables.accountToAccount.note,Tables.accountToAccount.updateTime,
-                        Tables.accountToAccount.createTime,Tables.accountToAccount.toAmount,Tables.accountToAccount.fromAmount,
-                        Tables.accountToAccount.toNum,Tables.accountToAccount.fromNum,Tables.accountToAccount.toCounter,
-                        Tables.accountToAccount.fromCounter,Tables.accountToAccount.from.as("address"))
+                select(Tables.chain.chainName, Tables.accountToAccount.protocols, Tables.account.currencyBalance,
+                        Tables.accountToAccount.label, Tables.accountToAccount.note, Tables.accountToAccount.updateTime,
+                        Tables.accountToAccount.createTime, Tables.accountToAccount.toAmount, Tables.accountToAccount.fromAmount,
+                        Tables.accountToAccount.toNum, Tables.accountToAccount.fromNum, Tables.accountToAccount.toCounter,
+                        Tables.accountToAccount.fromCounter, Tables.accountToAccount.from.as("address"))
                         .from(Tables.accountToAccount)
-                        .leftJoin(Tables.account).on(Tables.accountToAccount.from,equalTo(Tables.account.accountAddress))
-                        .leftJoin(Tables.chain).on(Tables.accountToAccount.chainId,equalTo(Tables.chain.id))
-                        .where(Tables.accountToAccount.to,isEqualToWhenPresent(dto.getAddress()))
-                        .and(Tables.accountToAccount.createTime,isGreaterThanOrEqualToWhenPresent(dto.getStartTime()))
-                        .and(Tables.accountToAccount.createTime,isLessThanOrEqualToWhenPresent(dto.getEndTime()))
-                        .and(Tables.accountToAccount.toAmount,isGreaterThanOrEqualToWhenPresent(dto.getLowerLimit()))
-                        .and(Tables.accountToAccount.chainId,isEqualToWhenPresent(dto.getChainID()))
+                        .leftJoin(Tables.account).on(Tables.accountToAccount.from, equalTo(Tables.account.accountAddress))
+                        .leftJoin(Tables.chain).on(Tables.accountToAccount.chainId, equalTo(Tables.chain.id))
+                        .where(Tables.accountToAccount.to, isEqualToWhenPresent(dto.getAddress()))
+                        .and(Tables.accountToAccount.createTime, isGreaterThanOrEqualToWhenPresent(dto.getStartTime()))
+                        .and(Tables.accountToAccount.createTime, isLessThanOrEqualToWhenPresent(dto.getEndTime()))
+                        .and(Tables.accountToAccount.toAmount, isGreaterThanOrEqualToWhenPresent(dto.getLowerLimit()))
+                        .and(Tables.accountToAccount.chainId, isEqualToWhenPresent(dto.getChainID()))
                         .build()
                         .render(RenderingStrategies.MYBATIS3)
         );
 
-        if(dto.getDirection()==3)return exportCSVVOListFrom;//转出
-        if(dto.getDirection()==2)return exportCSVVOListTO;//转入
+        if (dto.getDirection() == 3) return exportCSVVOListFrom;//转出
+        if (dto.getDirection() == 2) return exportCSVVOListTO;//转入
         //如果是全部，将两次查询合并返回
         exportCSVVOListTO.addAll(exportCSVVOListFrom);
         return exportCSVVOListTO;
@@ -263,9 +255,9 @@ public class RiskAccountService {
                 String row = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d\n",
                         task.getChainName(), task.getProtocols(), task.getAddress(),
                         task.getCurrencyBalance(), task.getLabel(), task.getNote(),
-                        formattedUpdateTime,formattedCreateTime,task.getFromAmount(),
-                        task.getToAmount(),task.getFromNum(),task.getToNum(),
-                        task.getFromCounter(),task.getToCounter());
+                        formattedUpdateTime, formattedCreateTime, task.getFromAmount(),
+                        task.getToAmount(), task.getFromNum(), task.getToNum(),
+                        task.getFromCounter(), task.getToCounter());
                 fileWriter.write(row);
             }
         } catch (IOException e) {
@@ -283,7 +275,7 @@ public class RiskAccountService {
     }
 
     //交易导出插入新任务
-    public void insertTransactionExport (AtaExportTask ataExportTask,TransactionExportDTO dto,String csvFileUrl){
+    public void insertTransactionExport(AtaExportTask ataExportTask, TransactionExportDTO dto, String csvFileUrl) {
 
         Date end = new Date();
 
@@ -302,14 +294,14 @@ public class RiskAccountService {
     }
 
     //导出任务显示
-    public List<exportTaskVO> getExportTask(exportTaskDTO dto){
+    public List<exportTaskVO> getExportTask(exportTaskDTO dto) {
         List<exportTaskVO> exportTaskVOList = ataExportTaskDao.getExportTask(
-                select(Tables.ataExportTask.id,Tables.ataExportTask.address,Tables.ataExportTask.lowerLimit,
-                        Tables.ataExportTask.startTime,Tables.ataExportTask.endTime,Tables.ataExportTask.direction,
-                        Tables.ataExportTask.url,Tables.chain.chainName)
-                        .from(Tables.ataExportTask,"ata")
-                        .leftJoin(Tables.chain,"lc").on(Tables.ataExportTask.chainId,equalTo(constant("lc.id")))
-                        .orderBy(Tables.ataExportTask.updateTime)
+                select(Tables.ataExportTask.id, Tables.ataExportTask.address, Tables.ataExportTask.lowerLimit,
+                        Tables.ataExportTask.startTime, Tables.ataExportTask.endTime, Tables.ataExportTask.direction,
+                        Tables.ataExportTask.url, Tables.chain.chainName)
+                        .from(Tables.ataExportTask, "ata")
+                        .leftJoin(Tables.chain).on(Tables.ataExportTask.chainId, equalTo(Tables.chain.id))
+                        .orderBy(SimpleSortSpecification.of("ata.update_time"))
                         .limit(20)
                         .build()
                         .render(RenderingStrategies.MYBATIS3)
@@ -318,23 +310,23 @@ public class RiskAccountService {
     }
 
     //地址全部交易详情
-    public List<TransactionDetailVO> getTransactionDetail(TransactionDetailDTO dto){
+    public List<TransactionDetailVO> getTransactionDetail(TransactionDetailDTO dto) {
 
         //当address作为from来源的时候，对手地址是to，交易方向是转出
         List<TransactionDetailVO> transactionDetailVOListFrom = accountTxHistoryDao.getTransactionDetail(
-                select(Tables.accountTxHistory.id,Tables.accountTxHistory.txHash,Tables.accountTxHistory.updateTime,Tables.accountTxHistory.value,
-                        Tables.accountTxHistory.note,Tables.accountTxHistory.to.as("addressTarget"))
+                select(Tables.accountTxHistory.id, Tables.accountTxHistory.txHash, Tables.accountTxHistory.updateTime, Tables.accountTxHistory.value,
+                        Tables.accountTxHistory.note, Tables.accountTxHistory.to.as("addressTarget"))
                         .from(Tables.accountTxHistory)
-                        .where(Tables.accountTxHistory.from,isEqualTo(dto.getAddress()))
+                        .where(Tables.accountTxHistory.from, isEqualTo(dto.getAddress()))
                         .build()
                         .render(RenderingStrategies.MYBATIS3)
         );
         //当address作为to转入的时候，对手地址是from，交易方向是转入
         List<TransactionDetailVO> transactionDetailVOListTo = accountTxHistoryDao.getTransactionDetail(
-                select(Tables.accountTxHistory.id,Tables.accountTxHistory.txHash,Tables.accountTxHistory.updateTime,Tables.accountTxHistory.value,
-                        Tables.accountTxHistory.note,Tables.accountTxHistory.from.as("addressTarget"))
+                select(Tables.accountTxHistory.id, Tables.accountTxHistory.txHash, Tables.accountTxHistory.updateTime, Tables.accountTxHistory.value,
+                        Tables.accountTxHistory.note, Tables.accountTxHistory.from.as("addressTarget"))
                         .from(Tables.accountTxHistory)
-                        .where(Tables.accountTxHistory.to,isEqualTo(dto.getAddress()))
+                        .where(Tables.accountTxHistory.to, isEqualTo(dto.getAddress()))
                         .build()
                         .render(RenderingStrategies.MYBATIS3)
         );
@@ -355,8 +347,8 @@ public class RiskAccountService {
     //地址全部交易备注修改
     public void changeDetailNote(DetailNoteDTO dto) {
         accountTxHistoryDao.update(
-                c->c.set(Tables.accountTxHistory.note).equalTo(dto.getNote())
-                        .where(Tables.accountTxHistory.txHash,isEqualTo(dto.getTxHash()))
+                c -> c.set(Tables.accountTxHistory.note).equalTo(dto.getNote())
+                        .where(Tables.accountTxHistory.txHash, isEqualTo(dto.getTxHash()))
         );
     }
 
