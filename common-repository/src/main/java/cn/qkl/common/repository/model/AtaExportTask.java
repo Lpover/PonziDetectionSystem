@@ -35,9 +35,6 @@ public class AtaExportTask {
     private Long chainId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Date orderTime;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
@@ -197,22 +194,6 @@ public class AtaExportTask {
         this.chainId = chainId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Date getOrderTime() {
-        return orderTime;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AtaExportTask withOrderTime(Date orderTime) {
-        this.setOrderTime(orderTime);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setOrderTime(Date orderTime) {
-        this.orderTime = orderTime;
-    }
-
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -230,7 +211,6 @@ public class AtaExportTask {
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", chainId=").append(chainId);
-        sb.append(", orderTime=").append(orderTime);
         sb.append("]");
         return sb.toString();
     }

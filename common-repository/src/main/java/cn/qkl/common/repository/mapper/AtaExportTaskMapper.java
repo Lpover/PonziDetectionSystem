@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface AtaExportTaskMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, address, direction, lowerLimit, startTime, endTime, url, createTime, updateTime, chainId, orderTime);
+    BasicColumn[] selectList = BasicColumn.columnList(id, address, direction, lowerLimit, startTime, endTime, url, createTime, updateTime, chainId);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -70,8 +70,7 @@ public interface AtaExportTaskMapper {
         @Result(column="url", property="url", jdbcType=JdbcType.VARCHAR),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="chain_id", property="chainId", jdbcType=JdbcType.BIGINT),
-        @Result(column="order_time", property="orderTime", jdbcType=JdbcType.TIMESTAMP)
+        @Result(column="chain_id", property="chainId", jdbcType=JdbcType.BIGINT)
     })
     List<AtaExportTask> selectMany(SelectStatementProvider selectStatement);
 
@@ -109,7 +108,6 @@ public interface AtaExportTaskMapper {
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
             .map(chainId).toProperty("chainId")
-            .map(orderTime).toProperty("orderTime")
         );
     }
 
@@ -126,7 +124,6 @@ public interface AtaExportTaskMapper {
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
             .map(chainId).toProperty("chainId")
-            .map(orderTime).toProperty("orderTime")
         );
     }
 
@@ -143,7 +140,6 @@ public interface AtaExportTaskMapper {
             .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
             .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
             .map(chainId).toPropertyWhenPresent("chainId", record::getChainId)
-            .map(orderTime).toPropertyWhenPresent("orderTime", record::getOrderTime)
         );
     }
 
@@ -185,8 +181,7 @@ public interface AtaExportTaskMapper {
                 .set(url).equalTo(record::getUrl)
                 .set(createTime).equalTo(record::getCreateTime)
                 .set(updateTime).equalTo(record::getUpdateTime)
-                .set(chainId).equalTo(record::getChainId)
-                .set(orderTime).equalTo(record::getOrderTime);
+                .set(chainId).equalTo(record::getChainId);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -200,8 +195,7 @@ public interface AtaExportTaskMapper {
                 .set(url).equalToWhenPresent(record::getUrl)
                 .set(createTime).equalToWhenPresent(record::getCreateTime)
                 .set(updateTime).equalToWhenPresent(record::getUpdateTime)
-                .set(chainId).equalToWhenPresent(record::getChainId)
-                .set(orderTime).equalToWhenPresent(record::getOrderTime);
+                .set(chainId).equalToWhenPresent(record::getChainId);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -216,7 +210,6 @@ public interface AtaExportTaskMapper {
             .set(createTime).equalTo(record::getCreateTime)
             .set(updateTime).equalTo(record::getUpdateTime)
             .set(chainId).equalTo(record::getChainId)
-            .set(orderTime).equalTo(record::getOrderTime)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -233,7 +226,6 @@ public interface AtaExportTaskMapper {
             .set(createTime).equalToWhenPresent(record::getCreateTime)
             .set(updateTime).equalToWhenPresent(record::getUpdateTime)
             .set(chainId).equalToWhenPresent(record::getChainId)
-            .set(orderTime).equalToWhenPresent(record::getOrderTime)
             .where(id, isEqualTo(record::getId))
         );
     }

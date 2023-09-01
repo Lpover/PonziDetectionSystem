@@ -41,9 +41,6 @@ public final class AtaExportTaskDynamicSqlSupport {
     public static final SqlColumn<Long> chainId = ataExportTask.chainId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Date> orderTime = ataExportTask.orderTime;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class AtaExportTask extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -64,8 +61,6 @@ public final class AtaExportTaskDynamicSqlSupport {
         public final SqlColumn<Date> updateTime = column("update_time", JDBCType.TIMESTAMP);
 
         public final SqlColumn<Long> chainId = column("chain_id", JDBCType.BIGINT);
-
-        public final SqlColumn<Date> orderTime = column("order_time", JDBCType.TIMESTAMP);
 
         public AtaExportTask() {
             super("ata_export_task");

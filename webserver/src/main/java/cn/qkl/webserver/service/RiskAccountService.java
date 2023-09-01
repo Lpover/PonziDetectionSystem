@@ -48,6 +48,8 @@ public class RiskAccountService {
     private AccountTxHistoryDao accountTxHistoryDao;
     @Autowired
     private AtaExportTaskDao ataExportTaskDao;
+    @Autowired
+    private AccountDao accountDao;
 
     //获取分页列表信息
     public PageVO<AccountInfoVO> getAccountInfoList(AccountInfoListQueryDTO dto) {
@@ -158,7 +160,7 @@ public class RiskAccountService {
 
     //根据地址添加备注
     public void changeAddNote(AddNoteDTO dto) {
-        accountToAccountDao.update(
+        accountDao.update(
                 c -> c.set(Tables.account.note).equalTo(dto.getNote())
                         .where(Tables.account.accountAddress, isEqualTo(dto.getAccountAddress()))
         );
@@ -288,7 +290,6 @@ public class RiskAccountService {
         ataExportTask.setDirection(dto.getDirection());
         ataExportTask.setCreateTime(end);
         ataExportTask.setUpdateTime(end);
-//        ataExportTask.set
         ataExportTask.setUrl(csvFileUrl);
 
     }
@@ -301,7 +302,7 @@ public class RiskAccountService {
                         Tables.ataExportTask.url, Tables.chain.chainName)
                         .from(Tables.ataExportTask, "ata")
                         .leftJoin(Tables.chain).on(Tables.ataExportTask.chainId, equalTo(Tables.chain.id))
-                        .orderBy(SimpleSortSpecification.of("ata.update_time"))
+                        .orderBy(SimpleSortSpecification.of("ata.update_time").descending())
                         .limit(20)
                         .build()
                         .render(RenderingStrategies.MYBATIS3)
