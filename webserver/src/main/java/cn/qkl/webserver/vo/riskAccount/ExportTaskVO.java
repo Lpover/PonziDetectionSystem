@@ -12,7 +12,7 @@ import java.util.Date;
  * @wiki
  */
 @Data
-public class exportTaskVO {
+public class ExportTaskVO {
     @ApiModelProperty("主键ID")
     private Long id;
 
