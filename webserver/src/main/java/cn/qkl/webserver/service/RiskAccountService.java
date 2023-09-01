@@ -167,7 +167,7 @@ public class RiskAccountService {
     }
 
     //交易导出按钮
-    public void doTransactionExport(TransactionExportDTO dto) {
+    public String doTransactionExport(TransactionExportDTO dto) {
 
         List<AtaExportTask> list = new ArrayList<>();
         AtaExportTask ataExportTask = new AtaExportTask();
@@ -178,6 +178,8 @@ public class RiskAccountService {
         insertTransactionExport(ataExportTask, dto, csvFileUrl);
         list.add(ataExportTask);
         ataExportTaskDao.insertMultiple(list);
+        
+        return csvFileUrl;
 
     }
 
