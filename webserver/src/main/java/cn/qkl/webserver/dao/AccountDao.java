@@ -28,4 +28,6 @@ public interface AccountDao extends AccountMapper{
     @ResultMap(value = "AccountContentResultMap")
 //    Mybatis结果集映射 对象嵌套对象 数据库查出的部分字段需要包装成"tags":{},对应TagVO
     List<AccountContentVO> getAccountContent(SelectStatementProvider selectStatementProvider);
+
+
 }
