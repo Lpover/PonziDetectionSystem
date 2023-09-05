@@ -32,15 +32,6 @@ public final class EvidenceWebDynamicSqlSupport {
     public static final SqlColumn<Long> platformId = evidenceWeb.platformId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> frequency = evidenceWeb.frequency;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Date> startTime = evidenceWeb.startTime;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Date> endTime = evidenceWeb.endTime;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> institution = evidenceWeb.institution;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -118,12 +109,6 @@ public final class EvidenceWebDynamicSqlSupport {
         public final SqlColumn<String> url = column("url", JDBCType.VARCHAR);
 
         public final SqlColumn<Long> platformId = column("platform_id", JDBCType.BIGINT);
-
-        public final SqlColumn<String> frequency = column("frequency", JDBCType.VARCHAR);
-
-        public final SqlColumn<Date> startTime = column("start_time", JDBCType.TIMESTAMP);
-
-        public final SqlColumn<Date> endTime = column("end_time", JDBCType.TIMESTAMP);
 
         public final SqlColumn<String> institution = column("institution", JDBCType.VARCHAR);
 

@@ -68,9 +68,6 @@ public interface EvidenceWebMapper {
         @Result(column="personnel", property="personnel", jdbcType=JdbcType.VARCHAR),
         @Result(column="url", property="url", jdbcType=JdbcType.VARCHAR),
         @Result(column="platform_id", property="platformId", jdbcType=JdbcType.BIGINT),
-        @Result(column="frequency", property="frequency", jdbcType=JdbcType.VARCHAR),
-        @Result(column="start_time", property="startTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="end_time", property="endTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="institution", property="institution", jdbcType=JdbcType.VARCHAR),
         @Result(column="department", property="department", jdbcType=JdbcType.VARCHAR),
         @Result(column="web_oss_path", property="webOssPath", jdbcType=JdbcType.VARCHAR),
@@ -126,9 +123,6 @@ public interface EvidenceWebMapper {
             .map(personnel).toProperty("personnel")
             .map(url).toProperty("url")
             .map(platformId).toProperty("platformId")
-            .map(frequency).toProperty("frequency")
-            .map(startTime).toProperty("startTime")
-            .map(endTime).toProperty("endTime")
             .map(institution).toProperty("institution")
             .map(department).toProperty("department")
             .map(webOssPath).toProperty("webOssPath")
@@ -163,9 +157,6 @@ public interface EvidenceWebMapper {
             .map(personnel).toProperty("personnel")
             .map(url).toProperty("url")
             .map(platformId).toProperty("platformId")
-            .map(frequency).toProperty("frequency")
-            .map(startTime).toProperty("startTime")
-            .map(endTime).toProperty("endTime")
             .map(institution).toProperty("institution")
             .map(department).toProperty("department")
             .map(webOssPath).toProperty("webOssPath")
@@ -200,9 +191,6 @@ public interface EvidenceWebMapper {
             .map(personnel).toPropertyWhenPresent("personnel", record::getPersonnel)
             .map(url).toPropertyWhenPresent("url", record::getUrl)
             .map(platformId).toPropertyWhenPresent("platformId", record::getPlatformId)
-            .map(frequency).toPropertyWhenPresent("frequency", record::getFrequency)
-            .map(startTime).toPropertyWhenPresent("startTime", record::getStartTime)
-            .map(endTime).toPropertyWhenPresent("endTime", record::getEndTime)
             .map(institution).toPropertyWhenPresent("institution", record::getInstitution)
             .map(department).toPropertyWhenPresent("department", record::getDepartment)
             .map(webOssPath).toPropertyWhenPresent("webOssPath", record::getWebOssPath)
@@ -263,9 +251,6 @@ public interface EvidenceWebMapper {
                 .set(personnel).equalTo(record::getPersonnel)
                 .set(url).equalTo(record::getUrl)
                 .set(platformId).equalTo(record::getPlatformId)
-                .set(frequency).equalTo(record::getFrequency)
-                .set(startTime).equalTo(record::getStartTime)
-                .set(endTime).equalTo(record::getEndTime)
                 .set(institution).equalTo(record::getInstitution)
                 .set(department).equalTo(record::getDepartment)
                 .set(webOssPath).equalTo(record::getWebOssPath)
@@ -298,9 +283,6 @@ public interface EvidenceWebMapper {
                 .set(personnel).equalToWhenPresent(record::getPersonnel)
                 .set(url).equalToWhenPresent(record::getUrl)
                 .set(platformId).equalToWhenPresent(record::getPlatformId)
-                .set(frequency).equalToWhenPresent(record::getFrequency)
-                .set(startTime).equalToWhenPresent(record::getStartTime)
-                .set(endTime).equalToWhenPresent(record::getEndTime)
                 .set(institution).equalToWhenPresent(record::getInstitution)
                 .set(department).equalToWhenPresent(record::getDepartment)
                 .set(webOssPath).equalToWhenPresent(record::getWebOssPath)
@@ -333,9 +315,6 @@ public interface EvidenceWebMapper {
             .set(personnel).equalTo(record::getPersonnel)
             .set(url).equalTo(record::getUrl)
             .set(platformId).equalTo(record::getPlatformId)
-            .set(frequency).equalTo(record::getFrequency)
-            .set(startTime).equalTo(record::getStartTime)
-            .set(endTime).equalTo(record::getEndTime)
             .set(institution).equalTo(record::getInstitution)
             .set(department).equalTo(record::getDepartment)
             .set(webOssPath).equalTo(record::getWebOssPath)
@@ -370,9 +349,6 @@ public interface EvidenceWebMapper {
             .set(personnel).equalToWhenPresent(record::getPersonnel)
             .set(url).equalToWhenPresent(record::getUrl)
             .set(platformId).equalToWhenPresent(record::getPlatformId)
-            .set(frequency).equalToWhenPresent(record::getFrequency)
-            .set(startTime).equalToWhenPresent(record::getStartTime)
-            .set(endTime).equalToWhenPresent(record::getEndTime)
             .set(institution).equalToWhenPresent(record::getInstitution)
             .set(department).equalToWhenPresent(record::getDepartment)
             .set(webOssPath).equalToWhenPresent(record::getWebOssPath)
