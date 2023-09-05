@@ -261,8 +261,9 @@ public class EvidenceService {
         return vo;
     }
 
-    public void stopRegularEvidence(Long id) {
-        evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.frequency).equalTo(0).where(Tables.evidenceWeb.id, isEqualTo(id)));
+    public void stopRegularEvidence(EvidenceDetailDTO dto) {
+        evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.frequency).equalTo(0).where(Tables.evidenceWeb.id, isEqualTo(dto.getEvidenceID())));
+        evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.updateTime).equalTo(new Date()).where(Tables.evidenceWeb.id, isEqualTo(dto.getEvidenceID())));
     }
 
     public EvidencePhaseVO reinforceEvidence(ReinforceEvidenceDTO dto) {
