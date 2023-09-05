@@ -1,11 +1,9 @@
 package cn.qkl.webserver.dao;
 
-import cn.qkl.common.repository.mapper.AccountMapper;
 import cn.qkl.common.repository.mapper.AccountToAccountMapper;
 import cn.qkl.webserver.vo.riskAccount.SmartAddressFindVO;
 import cn.qkl.webserver.vo.riskAccount.SmartTranscationFindVO;
-import cn.qkl.webserver.vo.riskAccount.TransactionDetailVO;
-import cn.qkl.webserver.vo.riskAccount.exportCSVVO;
+import cn.qkl.webserver.vo.riskAccount.ExportCSVVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
@@ -27,7 +25,7 @@ public interface AccountToAccountDao extends AccountToAccountMapper {
     List<SmartTranscationFindVO> getSmartTransaction(SelectStatementProvider selectStatementProvider);
 
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
-    List<exportCSVVO> getCsvData(SelectStatementProvider selectStatementProvider);
+    List<ExportCSVVO> getCsvData(SelectStatementProvider selectStatementProvider);
 
 
 }

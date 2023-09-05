@@ -1,6 +1,5 @@
 package cn.qkl.webserver.vo.riskAccount;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,7 +11,7 @@ import java.util.Date;
  * @wiki
  */
 @Data
-public class exportCSVVO {
+public class ExportCSVVO {
 
     //目标地址
     private String address;

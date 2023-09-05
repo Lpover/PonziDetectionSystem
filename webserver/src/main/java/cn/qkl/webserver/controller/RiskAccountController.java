@@ -1,5 +1,6 @@
 package cn.qkl.webserver.controller;
 
+import cn.hutool.core.io.resource.UrlResource;
 import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.common.framework.response.PageVO;
@@ -13,9 +14,15 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -72,14 +79,13 @@ public class RiskAccountController {
 
     @ApiOperation("交易导出按钮")
     @GetMapping("transactionexport")
-    public BaseResult<Void> transactionExport(@Validated TransactionExportDTO dto) {
-        riskAccountService.doTransactionExport(dto);
-        return BaseResult.ok();
+    public BaseResult<String> transactionExport(@Validated TransactionExportDTO dto) {
+        return BaseResult.ok(riskAccountService.doTransactionExport(dto));
     }
 
     @ApiOperation("导出任务显示")
     @GetMapping("exporttask")
-    public BaseResult<List<exportTaskVO>> exportTask(@Validated exportTaskDTO dto) {
+    public BaseResult<List<ExportTaskVO>> exportTask(@Validated ExportTaskDTO dto) {
         return BaseResult.ok(riskAccountService.getExportTask(dto));
     }
 
@@ -94,6 +100,34 @@ public class RiskAccountController {
     public BaseResult<Void> detailNote(@RequestBody @Validated DetailNoteDTO dto) {
         riskAccountService.changeDetailNote(dto);
         return BaseResult.ok();
+    }
+
+    @ApiOperation("下载附件url")
+    @GetMapping("csv")
+    public ResponseEntity<byte[]> downloadCsv(@Validated DownloadDTO dto) throws IOException {
+        // 获取文件的URL
+        String csvFileUrl = dto.getUrl(); // 请确保 URL 格式正确
+
+        // 如果 URL 中包含多余的前缀，可以尝试去除它们
+        csvFileUrl = csvFileUrl.replace("file:/", ""); // 去除 "file:/" 前缀
+        // 创建 UrlResource 对象
+        UrlResource resource = new UrlResource(new File(csvFileUrl));
+
+        // 读取文件内容为字节数组
+        byte[] fileContent;
+        try (InputStream inputStream = resource.getStream()) {
+            fileContent = inputStream.readAllBytes();
+        }
+
+        // 设置响应头
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", resource.getName());
+
+        // 返回字节数组，并设置响应头
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(fileContent);
     }
 
 }

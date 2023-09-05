@@ -1,11 +1,7 @@
 package cn.qkl.webserver.dao;
 
-import cn.qkl.common.repository.mapper.AccountToAccountMapper;
 import cn.qkl.common.repository.mapper.AtaExportTaskMapper;
-import cn.qkl.common.repository.model.AtaExportTask;
-import cn.qkl.webserver.vo.riskAccount.SmartAddressFindVO;
-import cn.qkl.webserver.vo.riskAccount.exportCSVVO;
-import cn.qkl.webserver.vo.riskAccount.exportTaskVO;
+import cn.qkl.webserver.vo.riskAccount.ExportTaskVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
@@ -21,7 +17,7 @@ import java.util.List;
 public interface AtaExportTaskDao extends AtaExportTaskMapper {
 
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
-    List<exportTaskVO> getExportTask(SelectStatementProvider selectStatementProvider);
+    List<ExportTaskVO> getExportTask(SelectStatementProvider selectStatementProvider);
 
 
 }
