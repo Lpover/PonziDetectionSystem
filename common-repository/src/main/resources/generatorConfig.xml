@@ -21,14 +21,14 @@
                             targetProject="src/main/java"/>
         <javaClientGenerator targetPackage="cn.qkl.common.repository.mapper"
                              targetProject="src/main/java"/>
-        <table tableName="account" domainObjectName="Account">
-        </table>
+<!--        <table tableName="account" domainObjectName="Account">-->
+<!--        </table>-->
 <!--        <table tableName="account_check_history" domainObjectName="AccountCheckHistory">-->
 <!--        </table>-->
 <!--        <table tableName="account_content" domainObjectName="AccountContent">-->
 <!--        </table>-->
-        <table tableName="account_tx_history" domainObjectName="AccountTxHistory">
-        </table>
+<!--        <table tableName="account_tx_history" domainObjectName="AccountTxHistory">-->
+<!--        </table>-->
 <!--        <table tableName="algorithm" domainObjectName="Algorithm">-->
 <!--        </table>-->
 <!--        <table tableName="carrier" domainObjectName="Carrier">-->
@@ -76,23 +76,22 @@
 <!--        <table tableName="notify_record" domainObjectName="NotifyRecord">-->
 <!--        </table>-->
 
-<!--        todo-->
         <table tableName="evidence_web" domainObjectName="EvidenceWeb">
         </table>
-        <table tableName="evidence_overview_daily_statistics" domainObjectName="EvidenceOverviewDailyStatistics">
-        </table>
+<!--        <table tableName="evidence_overview_daily_statistics" domainObjectName="EvidenceOverviewDailyStatistics">-->
+<!--        </table>-->
 <!--        <table tableName="thresholds" domainObjectName="Thresholds">-->
 <!--        </table>-->
 <!--        <table tableName="situation_report" domainObjectName="SituationReport">-->
 <!--        </table>-->
-        <table tableName="situation_report" domainObjectName="SituationReport">
-        </table>
-        <table tableName="switch_table" domainObjectName="SwitchTable">
-        </table>
-        <table tableName="account_to_account" domainObjectName="AccountToAccount">
-        </table>
-        <table tableName="ata_export_task" domainObjectName="AtaExportTask">
-        </table>
+<!--        <table tableName="situation_report" domainObjectName="SituationReport">-->
+<!--        </table>-->
+<!--        <table tableName="switch_table" domainObjectName="SwitchTable">-->
+<!--        </table>-->
+<!--        <table tableName="account_to_account" domainObjectName="AccountToAccount">-->
+<!--        </table>-->
+<!--        <table tableName="ata_export_task" domainObjectName="AtaExportTask">-->
+<!--        </table>-->
 
     </context>
 </generatorConfiguration>

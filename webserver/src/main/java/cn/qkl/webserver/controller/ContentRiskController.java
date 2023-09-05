@@ -1,9 +1,10 @@
 package cn.qkl.webserver.controller;
 
-import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
+import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.common.auth.RoleEnum;
+import cn.qkl.webserver.dto.contenrisk.ContentBatchEvidenceDTO;
 import cn.qkl.webserver.dto.contenrisk.ContentRiskInfoDTO;
 import cn.qkl.webserver.service.ContentRiskService;
 import cn.qkl.webserver.vo.contentRisk.ContentRiskInfoVO;
@@ -15,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @title:
@@ -41,5 +45,11 @@ public class ContentRiskController {
         return BaseResult.ok(contentRiskService.getContentRiskInfo(dto));
     }//获得报表信息
 
+    @ApiOperation("批量取证")
+    @PutMapping("batch/evidence")
+    public BaseResult<Void> batchEvidence(@RequestBody @Validated ContentBatchEvidenceDTO dto) throws IOException, NoSuchAlgorithmException {
+        contentRiskService.batchReinforce(dto);
+        return BaseResult.ok();
+    }
 
 }

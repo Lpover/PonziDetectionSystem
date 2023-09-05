@@ -51,6 +51,9 @@ public class ContentRiskInfoVO {
     @ApiModelProperty("风险评级：0无风险 1低风险 2中风险 3高风险")
     private Integer riskLevel;
 
+    @ApiModelProperty("是否已固证：0未固证 1取证中 2已固证")
+    private Integer evidencStatus;
+
     public static ContentRiskInfoVO transform(ContentRisk contentRisk) {
         ContentRiskInfoVO vo = new ContentRiskInfoVO();
         BeanUtil.copyProperties(contentRisk, vo);
