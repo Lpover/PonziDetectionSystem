@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -41,20 +42,26 @@ public class UploadToChainUtil {
     private String txTime;
     private List<String> res;
 
+//    private String url = "http://47.114.77.180:9090";
+//    private String skId = "337bcc493804468db01860af65efff69";
+//    private String sk = "0b20640e701f4aa3923b94bbf52c37c3";
+
     public UploadToChainUtil(ChainProperties chainProperties) {
         this.chainProperties = chainProperties;
-        this.sk = chainProperties.getSk();
-        this.url = chainProperties.getUrl();
-        this.skId = chainProperties.getSkId();
+        this.sk = this.chainProperties.getSk()==null?"0b20640e701f4aa3923b94bbf52c37c3":this.chainProperties.getSk();
+        this.url = this.chainProperties.getUrl()==null?"http://47.114.77.180:9090":this.chainProperties.getUrl();
+        this.skId = this.chainProperties.getSkId()==null?"337bcc493804468db01860af65efff69":this.chainProperties.getSkId();
     }
 
     public String getTxHash() {
+        log.info(res.get(0));
         return res.get(0);
     }
 
     public Date getTxTime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
+            log.info(res.get(1));
             return dateFormat.parse(res.get(1));
         } catch (ParseException e) {
             e.printStackTrace();
@@ -62,20 +69,32 @@ public class UploadToChainUtil {
         return null;
     }
 
+    @Data
+    public class TextUpChainDTO {
+        /**
+         * 要上链的文本，必填
+         */
+        private String text;
+    }
+
     public void uploadToChain(String str) throws JsonProcessingException {
         long timeStamp = System.currentTimeMillis();
-        String sn = postMd5(str, timeStamp);
+        TextUpChainDTO dto = new TextUpChainDTO();
+        dto.setText(str);
+        String sn = postMd5(dto, timeStamp);
+//        System.out.println("sn=====" + sn);
         String body = HttpRequest.post(url + "/api/v1/upChain/text")
                 .header("nft-sk-id", skId)
                 .header("nft-sk", sn)
                 .header("nft-timestamp", String.valueOf(timeStamp))
-                .body(JSONUtil.toJsonStr(str))
+                .body(JSONUtil.toJsonStr(dto))
                 .contentType("application/json")
                 .execute().body();
-
+//        System.out.println("body====" + body);
         String txTime = "";
         String txHash = "";
 
+        log.info(body);
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode root = objectMapper.readTree(body);
@@ -93,9 +112,13 @@ public class UploadToChainUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        System.out.println("txhash====" + txHash);
+        System.out.println("txtime====" + txTime);
         res = new ArrayList<>();
         res.add(txHash);
         res.add(txTime);
+        log.info(res.toString());
 
     }
 
@@ -199,7 +222,7 @@ public class UploadToChainUtil {
         String paramJson = (o == null) ? "" : objectMapper.writeValueAsString(o);
         // Md5签名
         String sn = DigestUtils.md5DigestAsHex((paramJson + sk + timestamp).getBytes(StandardCharsets.UTF_8));
-        System.out.println("最终签名为: " + sn);
+//        log.info("最终签名为: " + sn);
         return sn;
     }
 

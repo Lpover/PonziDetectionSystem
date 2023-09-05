@@ -43,7 +43,7 @@ public class EvidenceRecordItemVO {
     @ApiModelProperty("平台分类 NFT or Web3")
     private Integer platformType;
 
-    @ApiModelProperty("是否定时取证: 0 否 1 是")
-    private Integer regularEvidence;
+    @ApiModelProperty("取证频率：0 关闭 1 一次 5 每天 6 每周 7 每月")
+    private Integer frequency;
 
 }

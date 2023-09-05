@@ -17,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @title:
@@ -68,9 +69,16 @@ public class DetailedContentController {
     }
 
     @ApiOperation("详情页固证")
-    @GetMapping("reinforce")
-    public BaseResult<ContentReinforceVO> reinforceEvidence(@Validated ContentReinforceDTO dto) throws IOException {
+    @PutMapping("reinforce")
+    public BaseResult<ContentReinforceVO> reinforceEvidence(@RequestBody @Validated ContentReinforceDTO dto) throws IOException, NoSuchAlgorithmException {
 
         return BaseResult.ok(detailService.reinforceDetail(dto));
+    }
+
+    @ApiOperation("详情页查看固证状态")
+    @GetMapping("reinforce/status")
+    public BaseResult<ContentReinforceVO> reinforceStatus(@Validated ContentReinforceDTO dto) throws IOException, NoSuchAlgorithmException {
+
+        return BaseResult.ok(detailService.reinforceStatus(dto));
     }
 }

@@ -11,6 +11,8 @@ import cn.qkl.common.framework.util.UploadToChainUtil;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.Content;
 import cn.qkl.common.repository.model.EvidenceWeb;
+import cn.qkl.webserver.common.enums.ChainEnum;
+import cn.qkl.webserver.common.enums.EvidenceTypeEnum;
 import cn.qkl.webserver.dao.ContentDao;
 import cn.qkl.webserver.dao.ContentRiskDao;
 import cn.qkl.webserver.dao.EvidenceWebDao;
@@ -125,19 +127,20 @@ public class ContentRiskService {
         }
 
         for (Content item: contentList) {
-            // 切换成 取证中 状态
+            // 更新content表中的取证状态
             contentDao.update(c->c.set(Tables.content.evidenceStatus).equalTo(1).where(Tables.content.id, isEqualTo(item.getId())));
             EvidenceWeb evidenceWeb = new EvidenceWeb();
-
-            // 取证 json上传oss
-            String json = JSONUtil.toJsonStr(item);
+            evidenceWeb.setContentId(item.getId());
+            // content -> json 上传oss
+            String json = JSONUtil.toJsonStr(item.toString());
+//        log.info("file json:", json);
             byte[] jsonBytes = json.getBytes();
             String jsonName = "content_" + item.getId().toString() + ".json";
             MultipartFile multipartFile = new MockMultipartFile(jsonName, jsonName, "application/json", jsonBytes);
             String webOss = ossUtil.uploadMultipartFile(multipartFile, jsonName);
-            evidenceWeb.setId(IdUtil.getSnowflakeNextId());
             evidenceWeb.setWebOssPath(webOss);
             evidenceWeb.setUrl(webOss);
+            evidenceWeb.setId(IdUtil.getSnowflakeNextId());
             evidenceWeb.setName(item.getName());
             evidenceWeb.setPlatformId(item.getPlatformId());
             evidenceWeb.setPlatformId(item.getPlatformId());
@@ -146,22 +149,30 @@ public class ContentRiskService {
             evidenceWeb.setCreateTime(new Date());
             evidenceWeb.setFrequency(0);
             evidenceWeb.setContentId(item.getId());
-            List<Long> riskIdList = Arrays.stream(item.getRiskType().toString().split(",")).map(Long::parseLong).collect(Collectors.toList());
+//            evidenceWeb.setChainId(item.getChainId());
+            evidenceWeb.setPersonnel("from_detail");
+            evidenceWeb.setEvidenceType(EvidenceTypeEnum.MANUAL.getCode());
+
+            // 得到风险类型字符串
+            List<Long> riskIdList = Arrays.stream(item.getContentTag().split(",")).map(Long::parseLong).collect(Collectors.toList());
             String riskStr = "";
             for (Long riskId: riskIdList) {
                 String category = contentRiskDao.selectOne(c -> c.where(Tables.contentRisk.id, isEqualTo(riskId))).getCategory();
                 riskStr = riskStr + category + ",";
             }
             riskStr = riskStr.substring(0, riskStr.length() - 1);
+
             evidenceWeb.setRiskType(riskStr);
-            evidenceWebDao.insert(evidenceWeb);
 
             // 计算hash并上链
             String digest = uploadToChainUtil.calculateHash(multipartFile.getInputStream(), "MD5");
             uploadToChainUtil.uploadToChain(digest);
-            evidenceWeb.setHash(uploadToChainUtil.getTxHash());     // 上链hash
             evidenceWeb.setPackageHash(digest);                     // 文件hash
+            evidenceWeb.setHash(uploadToChainUtil.getTxHash());     // 上链hash
             evidenceWeb.setChainTime(uploadToChainUtil.getTxTime());    // 上链时间
+            evidenceWeb.setChainId(ChainEnum.XINZHENG.getCode());
+
+            evidenceWebDao.insert(evidenceWeb);
 
             // 需要设置计数器保证先后关系
             CountDownLatch latch = new CountDownLatch(1);
@@ -173,8 +184,8 @@ public class ContentRiskService {
                     evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.certOssPath).equalTo(ossPath).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
                     evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.updateTime).equalTo(new Date()).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
                     evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.evidencePhase).equalTo(2).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
-                } catch (TemplateException | ParserConfigurationException | IOException | SAXException |
-                         FontFormatException e) {
+                } catch (ParserConfigurationException | IOException |
+                         FontFormatException | TemplateException | SAXException e) {
                     throw new RuntimeException(e);
                 } finally {
                     latch.countDown();
@@ -188,13 +199,13 @@ public class ContentRiskService {
             }
 
             // 生成证据包并上传oss
-            SchedulerUtil.commonScheduler.schedule("generateEvidencePack", () -> {
-                try {
-                    evidenceService.generateEvidencePack(evidenceWeb.getId());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+//        SchedulerUtil.commonScheduler.schedule("generateEvidencePack", () -> {
+//            try {
+            evidenceService.generateEvidencePack(evidenceWeb.getId());
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
             // 切换成 已固证 状态
             contentDao.update(c->c.set(Tables.content.evidenceStatus).equalTo(2).where(Tables.content.id, isEqualTo(item.getId())));
         }

@@ -17,9 +17,9 @@ import org.springframework.context.annotation.Configuration;
 )
 public class ChainProperties implements InitializingBean {
     private static final Logger log = LoggerFactory.getLogger(ChainProperties.class);
-    private String url;
-    private String skId;
-    private String sk;
+    private String url = "http://47.114.77.180:9090";
+    private String skId = "337bcc493804468db01860af65efff69";
+    private String sk = "0b20640e701f4aa3923b94bbf52c37c3";
 
     public void afterPropertiesSet() {
         log.info("{}", this);

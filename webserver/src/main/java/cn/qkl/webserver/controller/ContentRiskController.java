@@ -15,9 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -48,8 +46,8 @@ public class ContentRiskController {
     }//获得报表信息
 
     @ApiOperation("批量取证")
-    @GetMapping("batch/evidence")
-    public BaseResult<Void> batchEvidence(@Validated ContentBatchEvidenceDTO dto) throws IOException, NoSuchAlgorithmException {
+    @PutMapping("batch/evidence")
+    public BaseResult<Void> batchEvidence(@RequestBody @Validated ContentBatchEvidenceDTO dto) throws IOException, NoSuchAlgorithmException {
         contentRiskService.batchReinforce(dto);
         return BaseResult.ok();
     }

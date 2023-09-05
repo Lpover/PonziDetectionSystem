@@ -5,9 +5,12 @@ import cn.hutool.json.JSONUtil;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.framework.util.OssUtil;
 import cn.qkl.common.framework.util.SchedulerUtil;
+import cn.qkl.common.framework.util.UploadToChainUtil;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.Content;
 import cn.qkl.common.repository.model.EvidenceWeb;
+import cn.qkl.webserver.common.enums.ChainEnum;
+import cn.qkl.webserver.common.enums.EvidenceTypeEnum;
 import cn.qkl.webserver.dao.ContentDao;
 import cn.qkl.webserver.dao.ContentRiskDao;
 import cn.qkl.webserver.dao.EvidenceWebDao;
@@ -20,13 +23,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -59,6 +62,9 @@ public class DetailService {
 
     @Autowired
     private EvidenceService evidenceService;
+
+    @Autowired
+    private UploadToChainUtil uploadToChainUtil;
 
     public ContentInfoVO getContentInfo(ContentInfoDTO dto) {
         return contentDao.getContentDetail(
@@ -115,15 +121,17 @@ public class DetailService {
                         .render(RenderingStrategies.MYBATIS3)), ContentDynamicMonitorVO::transform);
     }
 
-    public ContentReinforceVO reinforceDetail(@Validated ContentReinforceDTO dto) throws IOException {
+    public ContentReinforceVO reinforceDetail(ContentReinforceDTO dto) throws IOException, NoSuchAlgorithmException {
         Long contentId = dto.getId();
         Content item = contentDao.selectOne(c -> c.where(Tables.content.id, isEqualTo(dto.getId()))).get();
+//        log.info("item name:================", item.getName().toString());
         // 更新取证状态
         contentDao.update(c->c.set(Tables.content.evidenceStatus).equalTo(1).where(Tables.content.id, isEqualTo(dto.getId())));
         EvidenceWeb evidenceWeb = new EvidenceWeb();
         evidenceWeb.setContentId(contentId);
         // content -> json 上传oss
-        String json = JSONUtil.toJsonStr(item);
+        String json = JSONUtil.toJsonStr(item.toString());
+//        log.info("file json:", json);
         byte[] jsonBytes = json.getBytes();
         String jsonName = "content_" + item.getId().toString() + ".json";
         MultipartFile multipartFile = new MockMultipartFile(jsonName, jsonName, "application/json", jsonBytes);
@@ -139,21 +147,33 @@ public class DetailService {
         evidenceWeb.setCreateTime(new Date());
         evidenceWeb.setFrequency(0);
         evidenceWeb.setContentId(item.getId());
+//        evidenceWeb.setChainId(item.getChainId());    item中的chainid是内容所在链，evidence的chainid是固证的链
+        evidenceWeb.setPersonnel("from_detail");
+        evidenceWeb.setEvidenceType(EvidenceTypeEnum.MANUAL.getCode());
+
         // 得到风险类型字符串
-        List<Long> riskIdList = Arrays.stream(item.getRiskType().toString().split(",")).map(Long::parseLong).collect(Collectors.toList());
+        List<Long> riskIdList = Arrays.stream(item.getContentTag().split(",")).map(Long::parseLong).collect(Collectors.toList());
         String riskStr = "";
         for (Long riskId: riskIdList) {
             String category = contentRiskDao.selectOne(c -> c.where(Tables.contentRisk.id, isEqualTo(riskId))).getCategory();
             riskStr = riskStr + category + ",";
         }
         riskStr = riskStr.substring(0, riskStr.length() - 1);
+
         evidenceWeb.setRiskType(riskStr);
+
+        // 计算hash并上链
+        String digest = uploadToChainUtil.calculateHash(multipartFile.getInputStream(), "MD5");
+        uploadToChainUtil.uploadToChain(digest);
+        evidenceWeb.setPackageHash(digest);                     // 文件hash
+        evidenceWeb.setHash(uploadToChainUtil.getTxHash());     // 上链hash
+        evidenceWeb.setChainTime(uploadToChainUtil.getTxTime());    // 上链时间
+        evidenceWeb.setChainId(ChainEnum.XINZHENG.getCode());                             // 信证链是5
+
         evidenceWebDao.insert(evidenceWeb);
 
         // 需要设置计数器保证先后关系
         CountDownLatch latch = new CountDownLatch(1);
-
-        // todo 上链
 
         // 生成证书并上传oss
         SchedulerUtil.commonScheduler.schedule("generateCert", () -> {
@@ -177,25 +197,45 @@ public class DetailService {
         }
 
         // 生成证据包并上传oss
-        SchedulerUtil.commonScheduler.schedule("generateEvidencePack", () -> {
-            try {
+//        SchedulerUtil.commonScheduler.schedule("generateEvidencePack", () -> {
+//            try {
                 evidenceService.generateEvidencePack(evidenceWeb.getId());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
         // 切换成 已固证 状态
         contentDao.update(c->c.set(Tables.content.evidenceStatus).equalTo(2).where(Tables.content.id, isEqualTo(item.getId())));
 
         ContentReinforceVO vo = new ContentReinforceVO();
+        EvidenceWeb finalEvidenceWeb = evidenceWebDao.selectOne(c -> c.where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId()))).get();
         vo.setId(item.getId());
-        vo.setStatus(item.getEvidenceStatus());
-        vo.setCertOss(evidenceWeb.getCertOssPath());
-        vo.setPackOss(evidenceWeb.getPackOssPath());
-        vo.setChainTime(evidenceWeb.getChainTime());
-        vo.setChainHash(evidenceWeb.getHash());
+        vo.setStatus(2);
+        vo.setCertOss(finalEvidenceWeb.getCertOssPath());
+        vo.setPackOss(finalEvidenceWeb.getPackOssPath());
+        vo.setChainTime(finalEvidenceWeb.getChainTime());
+        vo.setChainHash(finalEvidenceWeb.getHash());
 
         return vo;
 
+    }
+
+    public ContentReinforceVO reinforceStatus(ContentReinforceDTO dto) {
+        ContentReinforceVO vo = new ContentReinforceVO();
+//        EvidenceWeb evidenceWeb = evidenceWebDao.selectOne(c -> c.where(Tables.evidenceWeb.contentId, isEqualTo(dto.getId()))).get();
+        Content content = contentDao.selectOne(c -> c.where(Tables.content.id, isEqualTo(dto.getId()))).get();
+        int status = content.getEvidenceStatus()==null?0:content.getEvidenceStatus();
+        vo.setStatus(status);
+        vo.setId(dto.getId());
+        if (status != 0) {
+            EvidenceWeb evidenceWeb = evidenceWebDao.selectOne(c -> c.where(Tables.evidenceWeb.contentId, isEqualTo(dto.getId()))).get();
+            vo.setCertOss(evidenceWeb.getCertOssPath());
+            vo.setPackOss(evidenceWeb.getPackOssPath());
+            vo.setChainHash(evidenceWeb.getHash());
+            vo.setChainTime(evidenceWeb.getChainTime());
+        }
+
+//        vo.setStatus(contentDao.selectOne(c -> c.where(Tables.content.id, isEqualTo(dto.getId()))).get().getEvidenceStatus());
+        return vo;
     }
 }

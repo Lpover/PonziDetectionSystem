@@ -23,4 +23,5 @@ public class ContentReinforceVO {
     private String packOss;
     @ApiModelProperty("固证文书oss")
     private String certOss;
+
 }
