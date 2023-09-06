@@ -70,7 +70,6 @@ public class EventBackgroundTask implements BackgroundTask {
             it.setTitle("Title"+(char)(x+new Random().nextInt(26))+new Random().nextInt(2006));
             it.setPlatformId((long) (1+new Random().nextInt(10)));
         });
-        System.out.println(event);
         eventDao.insert(event);
     }
 }

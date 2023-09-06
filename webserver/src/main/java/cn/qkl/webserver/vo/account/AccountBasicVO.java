@@ -14,6 +14,9 @@ import java.util.Date;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AccountBasicVO {
+    @ApiModelProperty("賬戶主鍵ID")
+    private Long accountId;
+
     @ApiModelProperty("账户地址")
     private String accountAddress;
 

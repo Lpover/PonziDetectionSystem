@@ -65,7 +65,6 @@ public class VocabCloudBackgroundTask implements BackgroundTask {
             it.setCreateTime(end);
             it.setUpdateTime(end);
         });
-        System.out.println(vocabCloud);
         vocabCloudDao.insert(vocabCloud);
     }
 }

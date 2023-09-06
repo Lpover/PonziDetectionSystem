@@ -11,10 +11,6 @@ qkl:
       endpoint: https://obs.cn-east-3.myhuaweicloud.com
       ak: MUIBG1CQ5TLHIF5NHER2
       sk: BMNCoYbF4vd9Pv5LCHFCgz0xnFHLp8oUu8mmJXXV
-    uploadToChainUtil:
-      url: http://47.114.77.180:9090
-      skId: 337bcc493804468db01860af65efff69
-      sk: 0b20640e701f4aa3923b94bbf52c37c3
     thread:
       pool:
         executor:

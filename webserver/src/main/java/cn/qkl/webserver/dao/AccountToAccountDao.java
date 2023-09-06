@@ -1,6 +1,7 @@
 package cn.qkl.webserver.dao;
 
 import cn.qkl.common.repository.mapper.AccountToAccountMapper;
+import cn.qkl.webserver.vo.riskAccount.NetworkAccountEdgeVO;
 import cn.qkl.webserver.vo.riskAccount.SmartAddressFindVO;
 import cn.qkl.webserver.vo.riskAccount.SmartTranscationFindVO;
 import cn.qkl.webserver.vo.riskAccount.ExportCSVVO;
@@ -27,5 +28,7 @@ public interface AccountToAccountDao extends AccountToAccountMapper {
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     List<ExportCSVVO> getCsvData(SelectStatementProvider selectStatementProvider);
 
+    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
+    List<NetworkAccountEdgeVO> getNetworkAccountEdge(SelectStatementProvider selectStatementProvider);
 
 }

@@ -7,8 +7,12 @@ import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dto.riskaccount.*;
+import cn.qkl.webserver.dto.riskaccount.NetworkAccountQueryDTO;
 import cn.qkl.webserver.service.RiskAccountService;
+import cn.qkl.webserver.vo.account.AccountBasicVO;
 import cn.qkl.webserver.vo.riskAccount.*;
+import cn.qkl.webserver.vo.riskAccount.NetworkAccountAnalysisVO;
+import cn.qkl.webserver.vo.riskAccount.NetworkAccountPanelVO;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +31,8 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.Path;
+import java.util.List;
+
 import java.util.List;
 
 /**
@@ -62,6 +68,23 @@ public class RiskAccountController {
         return BaseResult.ok(riskAccountService.getAccountNum(dto));
     }
 
+    @ApiOperation("账户网状分析的账户查询")
+    @GetMapping("riskaccount/network/list")
+    public BaseResult<List<AccountBasicVO>> getNetworkAccountList(@Validated NetworkAccountQueryDTO dto) {
+        return BaseResult.ok(riskAccountService.getNetworkAccount(dto));
+    }
+
+    @ApiOperation("账户网状分析画布界面")
+    @GetMapping("riskaccount/network/panel")
+    public BaseResult<NetworkAccountPanelVO> getNetworkAccountPanel(Long accountId) {
+        return BaseResult.ok(riskAccountService.getNetworkAccountPanel(accountId));
+    }
+
+    @ApiOperation("账户网状分析-点击账户-左侧栏分析账户信息")
+    @GetMapping("riskaccount/network/analysis")
+    public BaseResult<NetworkAccountAnalysisVO> getNetworkAccountAnalysis(Long accountId) {
+        return BaseResult.ok(riskAccountService.getNetworkAccountAnalysis(accountId));
+    }
     @ApiOperation("智能查找目标地址-地址表")
     @GetMapping("smartaddressfind")
     public BaseResult<List<SmartAddressFindVO>>  smartAddressFind(@Validated SmartAddressFindDTO dto) {

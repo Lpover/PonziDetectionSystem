@@ -15,6 +15,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.concurrent.ScheduledFuture;
 
 @Component
 public class BackgroundTaskManager implements CommandLineRunner {
@@ -34,7 +35,8 @@ public class BackgroundTaskManager implements CommandLineRunner {
             this.backgroundScheduler.startup();
             this.backgroundTaskList.forEach((task) -> {
                 log.info("[{}]-[{}] start...", task.getTaskType(), task.getName());
-                this.backgroundScheduler.schedule(task.getName(), task, task.getDelay(), task.getPeriod());
+                ScheduledFuture<?> schedule = this.backgroundScheduler.schedule(task.getName(), task, task.getDelay(), task.getPeriod());
+                schedule.cancel(false);
             });
         }
     }
