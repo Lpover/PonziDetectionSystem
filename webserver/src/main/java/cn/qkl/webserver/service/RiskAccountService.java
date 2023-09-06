@@ -2,10 +2,13 @@ package cn.qkl.webserver.service;
 
 import cn.hutool.core.util.IdUtil;
 import cn.qkl.common.framework.response.PageVO;
+import cn.qkl.common.framework.util.OssUtil;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.AtaExportTask;
+import cn.qkl.webserver.controller.OssController;
 import cn.qkl.webserver.dao.*;
 import cn.qkl.webserver.dto.riskaccount.*;
+import cn.qkl.webserver.vo.oss.OssUploadFileVO;
 import cn.qkl.webserver.vo.riskAccount.*;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
@@ -13,17 +16,18 @@ import org.mybatis.dynamic.sql.select.SimpleSortSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
 
@@ -50,6 +54,8 @@ public class RiskAccountService {
     private AtaExportTaskDao ataExportTaskDao;
     @Autowired
     private AccountDao accountDao;
+    @Autowired
+    OssUtil ossUtil;
 
     //获取分页列表信息
     public PageVO<AccountInfoVO> getAccountInfoList(AccountInfoListQueryDTO dto) {
@@ -167,22 +173,35 @@ public class RiskAccountService {
     }
 
     //交易导出按钮
-    public String doTransactionExport(TransactionExportDTO dto) {
+    public String doTransactionExport(TransactionExportDTO dto) throws IOException {
 
         List<AtaExportTask> list = new ArrayList<>();
         AtaExportTask ataExportTask = new AtaExportTask();
 
         List<ExportCSVVO> csvData = getCsvData(dto);
-        String csvFileUrl = exportToCsv(csvData);
 
-        insertTransactionExport(ataExportTask, dto, csvFileUrl);
+        File csvFile=exportToCsv(csvData);
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String url = ossUtil.uploadFile(csvFile, timeStamp + ".csv");
+        deleteFile(csvFile);
+
+        insertTransactionExport(ataExportTask, dto, url);
         list.add(ataExportTask);
         ataExportTaskDao.insertMultiple(list);
         
-        return csvFileUrl;
-
+        return url;
     }
-
+    private void deleteFile(File file) {
+        if (file.exists()) {
+            if (file.delete()) {
+                System.out.println("文件删除成功: " + file);
+            } else {
+                System.out.println("文件删除失败: " + file);
+            }
+        } else {
+            System.out.println("文件不存在: " + file);
+        }
+    }
     //    生成本地csv文件
     public List<ExportCSVVO> getCsvData(TransactionExportDTO dto) {
 
@@ -232,7 +251,7 @@ public class RiskAccountService {
 
     }
 
-    public String exportToCsv(List<ExportCSVVO> exportTaskVOList) {
+    public File exportToCsv(List<ExportCSVVO> exportTaskVOList) {
         // 创建文件夹
         String folderPath = "AtaTask";
         File folder = new File(folderPath);
@@ -267,15 +286,16 @@ public class RiskAccountService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return new File(filePath);
 
         // 构建文件的URL并返回
-        try {
-            URL fileUrl = new File(filePath).toURI().toURL();
-            return fileUrl.toString();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return null;
-        }
+//        try {
+//            URL fileUrl = new File(filePath).toURI().toURL();
+//            return fileUrl.toString();
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
     }
 
     //交易导出插入新任务
