@@ -107,8 +107,8 @@ public class RiskAccountController {
         return BaseResult.ok();
     }
 
-    @ApiOperation("下载附件url")
-    @GetMapping("csv")
+    @ApiOperation("下载附件url-1号接口")
+    @GetMapping("downloadCsv-1")
     public ResponseEntity<byte[]> downloadCsv(@Validated DownloadDTO dto) throws IOException {
         // 获取文件的URL
         String csvFileUrl = dto.getUrl(); // 请确保 URL 格式正确
@@ -141,8 +141,8 @@ public class RiskAccountController {
                 .body(fileContent);
     }
 
-    @ApiOperation("下载附件url")
-    @PostMapping("downloadCsv")
+    @ApiOperation("下载附件url-2号接口")
+    @PostMapping("downloadCsv-2")
     public BaseResult<Void> downloadCsv(@RequestBody @Validated DownloadDTO dto, HttpServletResponse response) throws IOException {
         URL url = new URL(dto.getUrl());
         String filePath = url.getPath();
