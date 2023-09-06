@@ -150,7 +150,7 @@ public class ContentRiskService {
             evidenceWeb.setFrequency(0);
             evidenceWeb.setContentId(item.getId());
 //            evidenceWeb.setChainId(item.getChainId());
-            evidenceWeb.setPersonnel("from_detail");
+            evidenceWeb.setPersonnel("from_riskList");
             evidenceWeb.setEvidenceType(EvidenceTypeEnum.MANUAL.getCode());
 
             // 得到风险类型字符串

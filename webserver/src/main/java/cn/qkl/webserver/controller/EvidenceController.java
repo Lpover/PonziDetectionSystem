@@ -109,8 +109,8 @@ public class EvidenceController {
 
     @ApiOperation("停用定时取证任务")
     @PutMapping("/stop/regular")
-    public BaseResult<Void> stopRegularEvidence(@RequestBody @Validated @NotNull Long id) {
-        evidenceService.stopRegularEvidence(id);
+    public BaseResult<Void> stopRegularEvidence(@RequestBody @Validated @NotNull EvidenceDetailDTO dto) {
+        evidenceService.stopRegularEvidence(dto);
         return BaseResult.ok();
     }
 }

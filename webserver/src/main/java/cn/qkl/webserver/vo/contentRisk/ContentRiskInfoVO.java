@@ -52,7 +52,7 @@ public class ContentRiskInfoVO {
     private Integer riskLevel;
 
     @ApiModelProperty("是否已固证：0未固证 1取证中 2已固证")
-    private Integer evidencStatus;
+    private Integer evidenceStatus;
 
     public static ContentRiskInfoVO transform(ContentRisk contentRisk) {
         ContentRiskInfoVO vo = new ContentRiskInfoVO();
