@@ -6,10 +6,7 @@ import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dto.detail.*;
 import cn.qkl.webserver.service.DetailService;
-import cn.qkl.webserver.vo.detail.ContentDynamicMonitorVO;
-import cn.qkl.webserver.vo.detail.ContentHistoryVO;
-import cn.qkl.webserver.vo.detail.ContentInfoVO;
-import cn.qkl.webserver.vo.detail.ContentRiskReviseVO;
+import cn.qkl.webserver.vo.detail.*;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @title:
@@ -68,4 +68,17 @@ public class DetailedContentController {
         return BaseResult.ok(detailService.getDynamicMonitor(dto));
     }
 
+    @ApiOperation("详情页固证")
+    @PutMapping("reinforce")
+    public BaseResult<ContentReinforceVO> reinforceEvidence(@RequestBody @Validated ContentReinforceDTO dto) throws IOException, NoSuchAlgorithmException {
+
+        return BaseResult.ok(detailService.reinforceDetail(dto));
+    }
+
+    @ApiOperation("详情页查看固证状态")
+    @GetMapping("reinforce/status")
+    public BaseResult<ContentReinforceVO> reinforceStatus(@Validated ContentReinforceDTO dto) throws IOException, NoSuchAlgorithmException {
+
+        return BaseResult.ok(detailService.reinforceStatus(dto));
+    }
 }

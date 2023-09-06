@@ -33,12 +33,6 @@ public class AccountToAccount {
     private BigDecimal toRatio;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String blockchain;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String currencyType;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String note;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -49,18 +43,6 @@ public class AccountToAccount {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String protocols;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String wContract;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String wTransaction;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String wWallet;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String wHybrid;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String label;
@@ -231,38 +213,6 @@ public class AccountToAccount {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getBlockchain() {
-        return blockchain;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountToAccount withBlockchain(String blockchain) {
-        this.setBlockchain(blockchain);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setBlockchain(String blockchain) {
-        this.blockchain = blockchain;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getCurrencyType() {
-        return currencyType;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountToAccount withCurrencyType(String currencyType) {
-        this.setCurrencyType(currencyType);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setCurrencyType(String currencyType) {
-        this.currencyType = currencyType;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String getNote() {
         return note;
     }
@@ -324,70 +274,6 @@ public class AccountToAccount {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setProtocols(String protocols) {
         this.protocols = protocols;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getwContract() {
-        return wContract;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountToAccount withwContract(String wContract) {
-        this.setwContract(wContract);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setwContract(String wContract) {
-        this.wContract = wContract;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getwTransaction() {
-        return wTransaction;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountToAccount withwTransaction(String wTransaction) {
-        this.setwTransaction(wTransaction);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setwTransaction(String wTransaction) {
-        this.wTransaction = wTransaction;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getwWallet() {
-        return wWallet;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountToAccount withwWallet(String wWallet) {
-        this.setwWallet(wWallet);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setwWallet(String wWallet) {
-        this.wWallet = wWallet;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getwHybrid() {
-        return wHybrid;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public AccountToAccount withwHybrid(String wHybrid) {
-        this.setwHybrid(wHybrid);
-        return this;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setwHybrid(String wHybrid) {
-        this.wHybrid = wHybrid;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -534,16 +420,10 @@ public class AccountToAccount {
         sb.append(", txNum=").append(txNum);
         sb.append(", fromRatio=").append(fromRatio);
         sb.append(", toRatio=").append(toRatio);
-        sb.append(", blockchain=").append(blockchain);
-        sb.append(", currencyType=").append(currencyType);
         sb.append(", note=").append(note);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", protocols=").append(protocols);
-        sb.append(", wContract=").append(wContract);
-        sb.append(", wTransaction=").append(wTransaction);
-        sb.append(", wWallet=").append(wWallet);
-        sb.append(", wHybrid=").append(wHybrid);
         sb.append(", label=").append(label);
         sb.append(", toAmount=").append(toAmount);
         sb.append(", fromAmount=").append(fromAmount);

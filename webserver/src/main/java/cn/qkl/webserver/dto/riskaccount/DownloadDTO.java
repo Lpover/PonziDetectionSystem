@@ -3,8 +3,6 @@ package cn.qkl.webserver.dto.riskaccount;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.util.Date;
-
 /**
  * @title:
  * @Author wang xin
@@ -12,6 +10,8 @@ import java.util.Date;
  * @wiki
  */
 @Data
-public class exportTaskDTO {
+public class DownloadDTO {
+    @ApiModelProperty("要下载的文件的url")
+    private String url;
 
 }

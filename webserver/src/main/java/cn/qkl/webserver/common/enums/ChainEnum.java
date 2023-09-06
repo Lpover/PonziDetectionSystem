@@ -1,18 +1,19 @@
 package cn.qkl.webserver.common.enums;
 
 public enum ChainEnum {
-    ETH(0, "以太坊"),
-    BTC(1, "比特币"),
+    ETH(0L, "以太坊"),
+    BTC(1L, "比特币"),
 
+    XINZHENG(5L, "信证链")
     ;
 
-    private final int code;
+    private final Long code;
 
-    public int getCode() {
+    public Long getCode() {
         return code;
     }
 
-    ChainEnum(int code, String description) {
+    ChainEnum(Long code, String description) {
         this.code = code;
     }
 }

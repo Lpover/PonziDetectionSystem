@@ -14,6 +14,9 @@ import java.util.Date;
 @Data
 public class TransactionDetailVO {
 
+    @ApiModelProperty("主键ID")
+    private Long id;
+
     @ApiModelProperty("交易哈希，是长度为66的字符串")
     private String txHash;
 
@@ -24,7 +27,7 @@ public class TransactionDetailVO {
     private String txDirection;
 
     @ApiModelProperty("对手地址")
-    private String address;
+    private String addressTarget;
 
     @ApiModelProperty("交易金额")
     private String value;

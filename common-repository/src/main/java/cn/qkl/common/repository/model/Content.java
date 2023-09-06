@@ -93,6 +93,9 @@ public class Content {
     private BigDecimal currencyPriceRanking;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer evidenceStatus;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
@@ -556,6 +559,22 @@ public class Content {
         this.currencyPriceRanking = currencyPriceRanking;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getEvidenceStatus() {
+        return evidenceStatus;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Content withEvidenceStatus(Integer evidenceStatus) {
+        this.setEvidenceStatus(evidenceStatus);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setEvidenceStatus(Integer evidenceStatus) {
+        this.evidenceStatus = evidenceStatus;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -592,6 +611,7 @@ public class Content {
         sb.append(", hotNum12h=").append(hotNum12h);
         sb.append(", hotNum24h=").append(hotNum24h);
         sb.append(", currencyPriceRanking=").append(currencyPriceRanking);
+        sb.append(", evidenceStatus=").append(evidenceStatus);
         sb.append("]");
         return sb.toString();
     }

@@ -14,16 +14,13 @@ public final class AtaExportTaskDynamicSqlSupport {
     public static final SqlColumn<Long> id = ataExportTask.id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Integer> blockchain = ataExportTask.blockchain;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> address = ataExportTask.address;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Integer> direction = ataExportTask.direction;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> lowerLimit = ataExportTask.lowerLimit;
+    public static final SqlColumn<Long> lowerLimit = ataExportTask.lowerLimit;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Date> startTime = ataExportTask.startTime;
@@ -41,16 +38,17 @@ public final class AtaExportTaskDynamicSqlSupport {
     public static final SqlColumn<Date> updateTime = ataExportTask.updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Long> chainId = ataExportTask.chainId;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class AtaExportTask extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
-
-        public final SqlColumn<Integer> blockchain = column("blockchain", JDBCType.INTEGER);
 
         public final SqlColumn<String> address = column("address", JDBCType.VARCHAR);
 
         public final SqlColumn<Integer> direction = column("direction", JDBCType.INTEGER);
 
-        public final SqlColumn<String> lowerLimit = column("lower_limit", JDBCType.VARCHAR);
+        public final SqlColumn<Long> lowerLimit = column("lower_limit", JDBCType.BIGINT);
 
         public final SqlColumn<Date> startTime = column("start_time", JDBCType.TIMESTAMP);
 
@@ -61,6 +59,8 @@ public final class AtaExportTaskDynamicSqlSupport {
         public final SqlColumn<Date> createTime = column("create_time", JDBCType.TIMESTAMP);
 
         public final SqlColumn<Date> updateTime = column("update_time", JDBCType.TIMESTAMP);
+
+        public final SqlColumn<Long> chainId = column("chain_id", JDBCType.BIGINT);
 
         public AtaExportTask() {
             super("ata_export_task");

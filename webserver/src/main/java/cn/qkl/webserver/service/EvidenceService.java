@@ -6,11 +6,14 @@ import cn.qkl.common.framework.exception.BusinessException;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.framework.util.OssUtil;
 import cn.qkl.common.framework.util.SchedulerUtil;
+import cn.qkl.common.framework.util.SqlUtil;
+import cn.qkl.common.framework.util.UploadToChainUtil;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.ContentRisk;
 import cn.qkl.common.repository.model.EvidenceWeb;
 import cn.qkl.webserver.common.BusinessStatus;
 import cn.qkl.webserver.common.cert.FreemarkerUtils;
+import cn.qkl.webserver.common.enums.ChainEnum;
 import cn.qkl.webserver.common.enums.EvidenceTypeEnum;
 import cn.qkl.webserver.dao.ContentRiskDao;
 import cn.qkl.webserver.dao.EvidenceWebDao;
@@ -20,11 +23,13 @@ import cn.qkl.webserver.dto.evidence.ReinforceEvidenceDTO;
 import cn.qkl.webserver.dto.evidence.WebEvidenceDTO;
 import cn.qkl.webserver.vo.evidence.*;
 import com.alibaba.nacos.common.utils.StringUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.entity.ContentType;
 import org.fit.cssbox.demo.ImageRenderer;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
+import org.mybatis.dynamic.sql.select.QueryExpressionDSL;
 import org.mybatis.dynamic.sql.select.SimpleSortSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockMultipartFile;
@@ -47,6 +52,7 @@ import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
@@ -74,6 +80,9 @@ public class EvidenceService {
 
     @Autowired
     ContentRiskDao contentRiskDao;
+
+    @Autowired
+    UploadToChainUtil uploadToChainUtil;
 
     public EvidencePhaseVO getEvidencePhase(EvidenceDetailDTO dto) {
         Optional<EvidenceWeb> evidenceWeb = evidenceWebDao.selectOne(c -> c
@@ -127,29 +136,94 @@ public class EvidenceService {
     }
 
 
+
+
     public EvidencePhaseVO webEvidence(WebEvidenceDTO dto) {
         EvidenceWeb evidenceWeb = new EvidenceWeb();
         BeanUtil.copyProperties(dto, evidenceWeb);
-//        log.info(String.valueOf(dto.getPlatformId()));
         evidenceWeb.setPlatformId(dto.getPlatformId());
         evidenceWeb.setId(IdUtil.getSnowflakeNextId());
-        evidenceWeb.setCreateTime(new Date());
         evidenceWeb.setDeleteStatus(0);
-        evidenceWeb.setEvidenceType(0);     // 取证固证来源
-        evidenceWeb.setEvidencePhase(0);
-        evidenceWeb.setHash("hash123321");  // 上链服务返回的hash
-        evidenceWeb.setChainId(1L);          // 上链服务返回的链id
-
-        evidenceWebDao.insert(evidenceWeb);
-
+        evidenceWeb.setEvidenceType(EvidenceTypeEnum.WEBPAGE.getCode());     // 取证固证来源
         evidenceWeb.setUpdateTime(new Date());
+        evidenceWeb.setCreateTime(new Date());
+        evidenceWeb.setEvidencePhase(0);
+
+        if (dto.getFrequency() != 0) {  // 定时取证就提早返回
+            if (dto.getFrequency() == 1) {
+                evidenceWeb.setNextEvidenceTime(dto.getStartTime());
+            } else {
+                Date currentDate = new Date();
+                int dayOfMonth = dto.getDayOfMonth();
+                int dayOfWeek = dto.getDayOfWeek();
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(dto.getStartTime());
+
+                // 计算下一次操作的时间
+                if (dto.getFrequency() == 6) {
+                    // 如果dayOfWeek有效，将日历设置为下一个符合条件的星期几
+                    calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek + 1);
+                    if (currentDate.after(calendar.getTime())) {
+                        // 如果当前日期已经超过了目标星期几，就加7天以确保下一个星期几
+                        calendar.add(Calendar.DAY_OF_MONTH, 7);
+                    }
+                } else if (dto.getFrequency() == 7) {
+                    // 如果dayOfMonth有效，将日历设置为下一个符合条件的日期
+                    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                    if (currentDate.after(calendar.getTime())) {
+                        // 如果当前日期已经超过了目标日期，就加一个月以确保下一个目标日期
+                        calendar.add(Calendar.MONTH, 1);
+                    }
+                } else if (dto.getFrequency() == 5) {   // 每天取证
+                    if (currentDate.after(calendar.getTime())) {
+                        // 如果当前日期已经超过了目标日期，就加一个月以确保下一个目标日期
+                        calendar.add(Calendar.DAY_OF_MONTH, 1);
+                    }
+                }
+                evidenceWeb.setNextEvidenceTime(calendar.getTime());
+            }
+
+            evidenceWebDao.insert(evidenceWeb);
+            EvidencePhaseVO vo = new EvidencePhaseVO();
+            vo.setId(evidenceWeb.getId());
+            return vo;
+        }
+
         CountDownLatch latch = new CountDownLatch(2);
 
-        // 网页截图
-        SchedulerUtil.commonScheduler.schedule("generatePack", () -> {
+        // 网页截图，上链
+        SchedulerUtil.commonScheduler.schedule("generateWebCapture", () -> {
             webCapture(dto.getUrl(), dto.getName(), evidenceWeb.getId());
+            String webOss = evidenceWebDao.selectOne(c->c
+                    .where(Tables.evidenceWeb.id, isEqualTo(dto.getId()))).get().getWebOssPath();
+            InputStream webStream = null;
+            try {
+                webStream = ossUtil.downloadFileByURL(webOss);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            // 计算hash并上链
+            String digest = null;
+            try {
+                digest = uploadToChainUtil.calculateHash(webStream, "MD5");
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                uploadToChainUtil.uploadToChain(digest);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+            evidenceWeb.setPackageHash(digest);                     // 文件hash
+            evidenceWeb.setHash(uploadToChainUtil.getTxHash());     // 上链hash
+            evidenceWeb.setChainTime(uploadToChainUtil.getTxTime());    // 上链时间
+            evidenceWeb.setChainId(ChainEnum.XINZHENG.getCode());
             latch.countDown();
         });
+        evidenceWebDao.insert(evidenceWeb);
 
         // 生成证书并上传oss
         SchedulerUtil.commonScheduler.schedule("generateCert", () -> {
@@ -187,6 +261,11 @@ public class EvidenceService {
         return vo;
     }
 
+    public void stopRegularEvidence(EvidenceDetailDTO dto) {
+        evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.frequency).equalTo(0).where(Tables.evidenceWeb.id, isEqualTo(dto.getEvidenceID())));
+        evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.updateTime).equalTo(new Date()).where(Tables.evidenceWeb.id, isEqualTo(dto.getEvidenceID())));
+    }
+
     public EvidencePhaseVO reinforceEvidence(ReinforceEvidenceDTO dto) {
         EvidenceWeb evidenceWeb = new EvidenceWeb();
         BeanUtil.copyProperties(dto, evidenceWeb);
@@ -196,11 +275,36 @@ public class EvidenceService {
         evidenceWeb.setCreateTime(new Date());
         evidenceWeb.setUpdateTime(new Date());
         evidenceWeb.setDeleteStatus(0);
-        evidenceWeb.setEvidenceType(2);     // 取证固证来源
+        evidenceWeb.setEvidenceType(EvidenceTypeEnum.MANUAL.getCode());     // 取证固证来源
         evidenceWeb.setEvidencePhase(1);
-        evidenceWeb.setHash("hash123321");  // 上链服务返回的hash
-        evidenceWeb.setChainId(1L);          // 上链服务返回的链id
         evidenceWeb.setWebOssPath(dto.getUrl());
+
+        // 上链
+        InputStream webStream = null;
+        try {
+            webStream = ossUtil.downloadFileByURL(dto.getUrl());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        // 计算hash并上链
+        String digest = null;
+        try {
+            digest = uploadToChainUtil.calculateHash(webStream, "MD5");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            uploadToChainUtil.uploadToChain(digest);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        evidenceWeb.setPackageHash(digest);                     // 文件hash
+        evidenceWeb.setHash(uploadToChainUtil.getTxHash());     // 上链hash
+        evidenceWeb.setChainTime(uploadToChainUtil.getTxTime());    // 上链时间
+        evidenceWeb.setChainId(ChainEnum.XINZHENG.getCode());
+
         evidenceWebDao.insert(evidenceWeb);
 
         // 需要设置计数器保证先后关系
@@ -333,12 +437,19 @@ public class EvidenceService {
             log.error("缺少webOsspath或certOssPath");
             return;
         }
+
+        String ext = "";
+        int lastDotIndex = webOssPath.lastIndexOf(".");
+        if (lastDotIndex != -1 && lastDotIndex < webOssPath.length() - 1) {
+            ext = webOssPath.substring(lastDotIndex + 1);
+        }
+
         InputStream webStream = ossUtil.downloadFileByURL(webOssPath);
         InputStream certStream = ossUtil.downloadFileByURL(certOssPath);
         String zipFilePath = "pack" + id + ".zip";
         FileOutputStream fos = new FileOutputStream(zipFilePath);
         ZipOutputStream zipOut = new ZipOutputStream(fos);
-        compressPack(webStream, certStream, zipOut, id);
+        compressPack(webStream, ext, certStream, zipOut, id);
         fos.close();
 //        zipOut.close();
         webStream.close();
@@ -363,8 +474,8 @@ public class EvidenceService {
         log.info("生成证据包完成");
     }
 
-    private void compressPack(InputStream webStream, InputStream certStream, ZipOutputStream zipOut, Long id) throws IOException {
-        zipOut.putNextEntry(new ZipEntry("web" + id + ".png"));
+    private void compressPack(InputStream webStream, String ext, InputStream certStream, ZipOutputStream zipOut, Long id) throws IOException {
+        zipOut.putNextEntry(new ZipEntry("web" + id + "." + ext));
         byte[] buffer = new byte[1024];
         int len;
         while ((len = webStream.read(buffer)) > 0) {
@@ -408,26 +519,50 @@ public class EvidenceService {
     }
 
     public PageVO<EvidenceRecordItemVO> getRecordList(EvidenceRecordListDTO dto) {
+        QueryExpressionDSL<org.mybatis.dynamic.sql.select.SelectModel>.QueryExpressionWhereBuilder builder = select(Tables.evidenceWeb.id,
+                Tables.evidenceWeb.name,
+                Tables.evidenceWeb.riskType,
+                Tables.evidenceWeb.evidenceType,
+                Tables.evidenceWeb.evidencePhase,
+                Tables.evidenceWeb.packOssPath,
+                Tables.evidenceWeb.url,
+                Tables.evidenceWeb.frequency,
+                Tables.evidenceWeb.createTime.as("time"),
+                Tables.platform.name.as("platform_name"),
+                Tables.platform.platformType).from(Tables.evidenceWeb, "ew")
+                .leftJoin(Tables.platform).on(Tables.evidenceWeb.platformId, equalTo(Tables.platform.id))
+                .where(Tables.evidenceWeb.deleteStatus, isEqualTo(0));
+
+
+        if (dto.getEvidenceName() != null) {
+            builder = builder.and(Tables.evidenceWeb.name, isLike(SqlUtil.allLike(dto.getEvidenceName())));
+        }
+        if (dto.getRiskType() != null){
+            builder = builder.and(Tables.evidenceWeb.riskType, isLike(SqlUtil.allLike(dto.getRiskType())));
+        }
+        if (dto.getEvidenceType() != null) {
+            builder = builder.and(Tables.evidenceWeb.evidenceType, isEqualTo(dto.getEvidenceType()));
+        }
+        if (dto.getPlatformId() != null) {
+            builder = builder.and(Tables.evidenceWeb.platformId, isEqualTo(dto.getPlatformId()));
+        }
+        if (dto.getStartTime() != null) {
+            builder = builder.and(Tables.evidenceWeb.createTime, isGreaterThanOrEqualTo(dto.getStartTime()));
+        }
+        if (dto.getEndTime() != null) {
+            builder = builder.and(Tables.evidenceWeb.createTime, isLessThanOrEqualTo(dto.getEndTime()));
+        }
+
+        QueryExpressionDSL<org.mybatis.dynamic.sql.select.SelectModel>.QueryExpressionWhereBuilder finalBuilder = builder;
         return new PageVO<>(dto.getPageId(),dto.getPageSize(),()->evidenceWebDao.getRecordList(
-                select(Tables.evidenceWeb.id,
-                        Tables.evidenceWeb.name,
-                        Tables.evidenceWeb.riskType,
-                        Tables.evidenceWeb.evidenceType,
-                        Tables.evidenceWeb.evidencePhase,
-                        Tables.evidenceWeb.packOssPath,
-                        Tables.evidenceWeb.url,
-                        Tables.evidenceWeb.createTime.as("time"),
-                        Tables.platform.name.as("platform_name"),
-                        Tables.platform.platformType).from(Tables.evidenceWeb,"ew")
-                        .leftJoin(Tables.platform).on(Tables.evidenceWeb.platformId,equalTo(Tables.platform.id))
-                        .where(Tables.evidenceWeb.deleteStatus,isEqualTo(0))
-                        .orderBy(SimpleSortSpecification.of("time").descending())
-                        .build().render(RenderingStrategies.MYBATIS3)
+                finalBuilder
+                .orderBy(SimpleSortSpecification.of("time").descending())
+                .build().render(RenderingStrategies.MYBATIS3)
         ));
     }
 
     //根据字段生成证书 返回Oss地址
-    protected String generateEvidenceCert(Long id) throws TemplateException, IOException, ParserConfigurationException, SAXException, FontFormatException {
+    public String generateEvidenceCert(Long id) throws TemplateException, IOException, ParserConfigurationException, SAXException, FontFormatException {
         //H5模板,填入参数
         EvidenceCertParamsVO evidenceCertParamsVO = evidenceWebDao.getEvidenceCertParams(select(
                     Tables.evidenceWeb.personnel,

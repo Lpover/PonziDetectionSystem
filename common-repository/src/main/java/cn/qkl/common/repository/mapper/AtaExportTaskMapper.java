@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface AtaExportTaskMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, blockchain, address, direction, lowerLimit, startTime, endTime, url, createTime, updateTime);
+    BasicColumn[] selectList = BasicColumn.columnList(id, address, direction, lowerLimit, startTime, endTime, url, createTime, updateTime, chainId);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -62,15 +62,15 @@ public interface AtaExportTaskMapper {
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
     @Results(id="AtaExportTaskResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
-        @Result(column="blockchain", property="blockchain", jdbcType=JdbcType.INTEGER),
         @Result(column="address", property="address", jdbcType=JdbcType.VARCHAR),
         @Result(column="direction", property="direction", jdbcType=JdbcType.INTEGER),
-        @Result(column="lower_limit", property="lowerLimit", jdbcType=JdbcType.VARCHAR),
+        @Result(column="lower_limit", property="lowerLimit", jdbcType=JdbcType.BIGINT),
         @Result(column="start_time", property="startTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="end_time", property="endTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="url", property="url", jdbcType=JdbcType.VARCHAR),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
+        @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="chain_id", property="chainId", jdbcType=JdbcType.BIGINT)
     })
     List<AtaExportTask> selectMany(SelectStatementProvider selectStatement);
 
@@ -99,7 +99,6 @@ public interface AtaExportTaskMapper {
     default int insert(AtaExportTask record) {
         return MyBatis3Utils.insert(this::insert, record, ataExportTask, c ->
             c.map(id).toProperty("id")
-            .map(blockchain).toProperty("blockchain")
             .map(address).toProperty("address")
             .map(direction).toProperty("direction")
             .map(lowerLimit).toProperty("lowerLimit")
@@ -108,6 +107,7 @@ public interface AtaExportTaskMapper {
             .map(url).toProperty("url")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
+            .map(chainId).toProperty("chainId")
         );
     }
 
@@ -115,7 +115,6 @@ public interface AtaExportTaskMapper {
     default int insertMultiple(Collection<AtaExportTask> records) {
         return MyBatis3Utils.insertMultiple(this::insertMultiple, records, ataExportTask, c ->
             c.map(id).toProperty("id")
-            .map(blockchain).toProperty("blockchain")
             .map(address).toProperty("address")
             .map(direction).toProperty("direction")
             .map(lowerLimit).toProperty("lowerLimit")
@@ -124,6 +123,7 @@ public interface AtaExportTaskMapper {
             .map(url).toProperty("url")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
+            .map(chainId).toProperty("chainId")
         );
     }
 
@@ -131,7 +131,6 @@ public interface AtaExportTaskMapper {
     default int insertSelective(AtaExportTask record) {
         return MyBatis3Utils.insert(this::insert, record, ataExportTask, c ->
             c.map(id).toPropertyWhenPresent("id", record::getId)
-            .map(blockchain).toPropertyWhenPresent("blockchain", record::getBlockchain)
             .map(address).toPropertyWhenPresent("address", record::getAddress)
             .map(direction).toPropertyWhenPresent("direction", record::getDirection)
             .map(lowerLimit).toPropertyWhenPresent("lowerLimit", record::getLowerLimit)
@@ -140,6 +139,7 @@ public interface AtaExportTaskMapper {
             .map(url).toPropertyWhenPresent("url", record::getUrl)
             .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
             .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
+            .map(chainId).toPropertyWhenPresent("chainId", record::getChainId)
         );
     }
 
@@ -173,7 +173,6 @@ public interface AtaExportTaskMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     static UpdateDSL<UpdateModel> updateAllColumns(AtaExportTask record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalTo(record::getId)
-                .set(blockchain).equalTo(record::getBlockchain)
                 .set(address).equalTo(record::getAddress)
                 .set(direction).equalTo(record::getDirection)
                 .set(lowerLimit).equalTo(record::getLowerLimit)
@@ -181,13 +180,13 @@ public interface AtaExportTaskMapper {
                 .set(endTime).equalTo(record::getEndTime)
                 .set(url).equalTo(record::getUrl)
                 .set(createTime).equalTo(record::getCreateTime)
-                .set(updateTime).equalTo(record::getUpdateTime);
+                .set(updateTime).equalTo(record::getUpdateTime)
+                .set(chainId).equalTo(record::getChainId);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     static UpdateDSL<UpdateModel> updateSelectiveColumns(AtaExportTask record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalToWhenPresent(record::getId)
-                .set(blockchain).equalToWhenPresent(record::getBlockchain)
                 .set(address).equalToWhenPresent(record::getAddress)
                 .set(direction).equalToWhenPresent(record::getDirection)
                 .set(lowerLimit).equalToWhenPresent(record::getLowerLimit)
@@ -195,14 +194,14 @@ public interface AtaExportTaskMapper {
                 .set(endTime).equalToWhenPresent(record::getEndTime)
                 .set(url).equalToWhenPresent(record::getUrl)
                 .set(createTime).equalToWhenPresent(record::getCreateTime)
-                .set(updateTime).equalToWhenPresent(record::getUpdateTime);
+                .set(updateTime).equalToWhenPresent(record::getUpdateTime)
+                .set(chainId).equalToWhenPresent(record::getChainId);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int updateByPrimaryKey(AtaExportTask record) {
         return update(c ->
-            c.set(blockchain).equalTo(record::getBlockchain)
-            .set(address).equalTo(record::getAddress)
+            c.set(address).equalTo(record::getAddress)
             .set(direction).equalTo(record::getDirection)
             .set(lowerLimit).equalTo(record::getLowerLimit)
             .set(startTime).equalTo(record::getStartTime)
@@ -210,6 +209,7 @@ public interface AtaExportTaskMapper {
             .set(url).equalTo(record::getUrl)
             .set(createTime).equalTo(record::getCreateTime)
             .set(updateTime).equalTo(record::getUpdateTime)
+            .set(chainId).equalTo(record::getChainId)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -217,8 +217,7 @@ public interface AtaExportTaskMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int updateByPrimaryKeySelective(AtaExportTask record) {
         return update(c ->
-            c.set(blockchain).equalToWhenPresent(record::getBlockchain)
-            .set(address).equalToWhenPresent(record::getAddress)
+            c.set(address).equalToWhenPresent(record::getAddress)
             .set(direction).equalToWhenPresent(record::getDirection)
             .set(lowerLimit).equalToWhenPresent(record::getLowerLimit)
             .set(startTime).equalToWhenPresent(record::getStartTime)
@@ -226,6 +225,7 @@ public interface AtaExportTaskMapper {
             .set(url).equalToWhenPresent(record::getUrl)
             .set(createTime).equalToWhenPresent(record::getCreateTime)
             .set(updateTime).equalToWhenPresent(record::getUpdateTime)
+            .set(chainId).equalToWhenPresent(record::getChainId)
             .where(id, isEqualTo(record::getId))
         );
     }

@@ -16,4 +16,8 @@ public class AddUserDTO {
     @Pattern(regexp = "[A-Za-z0-9]{6,12}", message = "密码格式不正确")
     @NotNull
     private String pwd;
+
+    @ApiModelProperty("用户名字")
+    @NotNull
+    private String name;
 }

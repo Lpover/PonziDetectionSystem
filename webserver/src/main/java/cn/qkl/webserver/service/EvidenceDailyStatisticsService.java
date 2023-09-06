@@ -44,6 +44,7 @@ public class EvidenceDailyStatisticsService {
     public StatisticsEvidenceVO getEvidenceStatistics(StatisticsEvidenceDTO dto) {
         StatisticsEvidenceVO vo = new StatisticsEvidenceVO();
         SelectStatementProvider selectStatementProvider;
+        // todo: 需要考虑平台是否监测中
         if (dto.getPlatformType() == 0) {   //全部平台
             selectStatementProvider = select(Tables.platform.name.as("platformName"),
                     sum(Tables.evidenceOverviewDailyStatistics.webEvidenceCount).as("webNum"),

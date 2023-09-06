@@ -1,5 +1,6 @@
 package cn.qkl.webserver.service;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.qkl.common.framework.auth.TokenBean;
 import cn.qkl.common.framework.auth.TokenHandler;
@@ -103,9 +104,8 @@ public class UserService {
 
     public void addUser(AddUserDTO dto){
         User user = new User();
+        BeanUtil.copyProperties(dto, user);
         user.setId(IdUtil.getSnowflakeNextId());
-        user.setPhone(dto.getPhone());
-        user.setPwd(dto.getPwd());
         user.setRole(5);
         user.setState(1);
         userDao.insert(user);

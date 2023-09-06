@@ -17,6 +17,9 @@ public class UserListVO {
 
     @ApiModelProperty("用户角色 0管理员 5 用户")
     private int role;
+
+    @ApiModelProperty("用户名字")
+    private String name;
     public static UserListVO transform(User user) {
         UserListVO vo = new UserListVO();
         BeanUtil.copyProperties(user, vo);
