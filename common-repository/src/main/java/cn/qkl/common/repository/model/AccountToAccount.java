@@ -84,6 +84,9 @@ public class AccountToAccount {
     private Long fromCounter;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Long chainId;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
@@ -499,6 +502,22 @@ public class AccountToAccount {
         this.fromCounter = fromCounter;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Long getChainId() {
+        return chainId;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public AccountToAccount withChainId(Long chainId) {
+        this.setChainId(chainId);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setChainId(Long chainId) {
+        this.chainId = chainId;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -532,6 +551,7 @@ public class AccountToAccount {
         sb.append(", fromNum=").append(fromNum);
         sb.append(", toCounter=").append(toCounter);
         sb.append(", fromCounter=").append(fromCounter);
+        sb.append(", chainId=").append(chainId);
         sb.append("]");
         return sb.toString();
     }

@@ -24,6 +24,9 @@ public class NetworkAccountPanelVO {
     @ApiModelProperty("账户所在区块链名字（需要交表查）")
     private String chainName;
 
+    @ApiModelProperty("与中心账户发生的交易关系记录(相关账号，包含中心账户)")
+    List<NetworkAccountNodeVO> nodes;
+
     @ApiModelProperty("与中心账户发生的交易关系记录")
     List<NetworkAccountEdgeVO> edges;
 

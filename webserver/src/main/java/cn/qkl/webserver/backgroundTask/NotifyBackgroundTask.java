@@ -48,11 +48,11 @@ public class NotifyBackgroundTask implements BackgroundTask {
     @Autowired
     WarnService warnService;
     /**
-     * 间隔1 min
+     * 间隔100h
      */
     @Override
     public long getPeriod() {
-        return 1 * 1 * 60 * 1000;
+        return 100 * 60 * 60 * 1000;
     }
 
     //每天18点执行
@@ -69,61 +69,61 @@ public class NotifyBackgroundTask implements BackgroundTask {
 
     @Override
     public void run() {
-        log.debug("check notice");
-
-        //业务代码
-        Optional<SwitchTable> st =  switchTableDao.selectOne(c -> c
-                .where(Tables.switchTable.open,isEqualTo(SwitchEnum.ON.getCode()))
-        );
-        if (!st.isPresent()) {
-            log.info("通知没有开");
-            return;
-        }
-        Calendar ca = Calendar.getInstance();
-        ca.setTime(new Date());
-        int dayOfWeek = ca.get(Calendar.DAY_OF_WEEK);
-        if (st.get().getOpenWeek() == 0 && (dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY)) {
-            log.info("周末预警没开，休息");
-            return;
-        }
-        LocalTime now = LocalTime.now();
-
-        ZoneId zoneId = ZoneId.systemDefault();
-        Date start = st.get().getStartTime();
-        LocalDateTime localDateTime1 = LocalDateTime.ofInstant(start.toInstant(),zoneId);
-        LocalTime localTime1 = localDateTime1.toLocalTime();
-
-        Date end = st.get().getEndTime();
-        LocalDateTime localDateTime2 = LocalDateTime.ofInstant(end.toInstant(),zoneId);
-        LocalTime localTime2 = localDateTime2.toLocalTime();
-
-
-        if (now.isAfter(localTime2) || now.isBefore(localTime1)) {
-            log.info("不在时间内");
-            return;
-        }
-
-        List<Thresholds> thresholds = thresholdsDao.select(c -> c
-                .where(Tables.thresholds.nowIndex, isGreaterThanOrEqualTo(Tables.thresholds.setIndex))
-                .and(Tables.thresholds.on,isEqualTo(SwitchEnum.ON.getCode()))
-        );
-        List<String> notifyItemIds = new ArrayList<>();
-        List<String> userIds = new ArrayList<>();
-        userIds.add(String.valueOf(1));
-        userIds.add(String.valueOf(2+new Random().nextInt(3)));
-
-        thresholds.forEach((model) -> {
-            notifyItemIds.add(model.getId().toString());
-        });
-        NotifyRecord obj = FunctionUtil.apply(new NotifyRecord(),it -> {
-            it.setUserIds(String.join(",", userIds));
-            it.setNotifyItemIds(String.join(",", notifyItemIds));
-            it.setId(IdUtil.getSnowflakeNextId());
-            it.setStatus(NotifyStatusEnum.PREPARING.getCode());
-            it.setCreateTime(new Date());
-            it.setUpdateTime(new Date());
-        });
-        notifyRecordDao.insert(obj);
-        warnService.tsgzWarn(obj);
+//        log.debug("check notice");
+//
+//        //业务代码
+//        Optional<SwitchTable> st =  switchTableDao.selectOne(c -> c
+//                .where(Tables.switchTable.open,isEqualTo(SwitchEnum.ON.getCode()))
+//        );
+//        if (!st.isPresent()) {
+//            log.info("通知没有开");
+//            return;
+//        }
+//        Calendar ca = Calendar.getInstance();
+//        ca.setTime(new Date());
+//        int dayOfWeek = ca.get(Calendar.DAY_OF_WEEK);
+//        if (st.get().getOpenWeek() == 0 && (dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY)) {
+//            log.info("周末预警没开，休息");
+//            return;
+//        }
+//        LocalTime now = LocalTime.now();
+//
+//        ZoneId zoneId = ZoneId.systemDefault();
+//        Date start = st.get().getStartTime();
+//        LocalDateTime localDateTime1 = LocalDateTime.ofInstant(start.toInstant(),zoneId);
+//        LocalTime localTime1 = localDateTime1.toLocalTime();
+//
+//        Date end = st.get().getEndTime();
+//        LocalDateTime localDateTime2 = LocalDateTime.ofInstant(end.toInstant(),zoneId);
+//        LocalTime localTime2 = localDateTime2.toLocalTime();
+//
+//
+//        if (now.isAfter(localTime2) || now.isBefore(localTime1)) {
+//            log.info("不在时间内");
+//            return;
+//        }
+//
+//        List<Thresholds> thresholds = thresholdsDao.select(c -> c
+//                .where(Tables.thresholds.nowIndex, isGreaterThanOrEqualTo(Tables.thresholds.setIndex))
+//                .and(Tables.thresholds.on,isEqualTo(SwitchEnum.ON.getCode()))
+//        );
+//        List<String> notifyItemIds = new ArrayList<>();
+//        List<String> userIds = new ArrayList<>();
+//        userIds.add(String.valueOf(1));
+//        userIds.add(String.valueOf(2+new Random().nextInt(3)));
+//
+//        thresholds.forEach((model) -> {
+//            notifyItemIds.add(model.getId().toString());
+//        });
+//        NotifyRecord obj = FunctionUtil.apply(new NotifyRecord(),it -> {
+//            it.setUserIds(String.join(",", userIds));
+//            it.setNotifyItemIds(String.join(",", notifyItemIds));
+//            it.setId(IdUtil.getSnowflakeNextId());
+//            it.setStatus(NotifyStatusEnum.PREPARING.getCode());
+//            it.setCreateTime(new Date());
+//            it.setUpdateTime(new Date());
+//        });
+//        notifyRecordDao.insert(obj);
+//        warnService.tsgzWarn(obj);
     }
 }

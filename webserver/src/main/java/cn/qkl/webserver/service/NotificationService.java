@@ -6,6 +6,7 @@ import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.NotifyRecord;
 import cn.qkl.common.repository.model.Thresholds;
 import cn.qkl.common.repository.model.User;
+import cn.qkl.webserver.backgroundTask.schedule.NotificationScheduleTask;
 import cn.qkl.webserver.dao.NotifyRecordDao;
 import cn.qkl.webserver.dao.SwitchTableDao;
 import cn.qkl.webserver.dao.ThresholdsDao;
@@ -51,6 +52,9 @@ public class NotificationService {
 
     @Autowired
     SwitchTableDao switchTableDao;
+
+    @Autowired
+    NotificationScheduleTask notificationScheduleTask;
 
     //遍历通知项，返回全部
     public NotificationNumbersVO getNotificationNumbers() {
@@ -147,6 +151,9 @@ public class NotificationService {
                     c->c.set(Tables.switchTable.open).equalTo(cvalue)
                             .set(Tables.switchTable.frequency).equalTo(frequency)
             );
+        // 设置cron时间
+        String cron = String.format("0 */%d * * * ?", frequency);
+        notificationScheduleTask.setCron(cron);
     }
 
     //周末预警修改

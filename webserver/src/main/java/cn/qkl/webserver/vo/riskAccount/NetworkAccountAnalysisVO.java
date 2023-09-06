@@ -1,5 +1,6 @@
 package cn.qkl.webserver.vo.riskAccount;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -11,6 +12,7 @@ import java.util.Date;
  **/
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class NetworkAccountAnalysisVO {
     @ApiModelProperty("賬戶主鍵ID")
     private Long accountId;
@@ -24,7 +26,7 @@ public class NetworkAccountAnalysisVO {
     @ApiModelProperty("账户所在区块链名字（需要交表查）")
     private String chainName;
 
-    @ApiModelProperty("行为特征组合，逗号点开：行为特征枚举，0 无，1-散进整出 2-频繁转入 3-频繁转出 4-高频交易 5-非常规交易 6-分散转出")
+    @ApiModelProperty("行为特征组合，逗号点开：行为特征枚举，0 无， 1-多风险内容持有 2-多风险内容发布 3-多风险内容交易")
     private String actionFeatures;
 
     @ApiModelProperty("内容标签组合，逗号点开：内容标签枚举，0无，1政治，2恐怖，3暴力，4低俗，5犯罪，6赌博，7毒品'")

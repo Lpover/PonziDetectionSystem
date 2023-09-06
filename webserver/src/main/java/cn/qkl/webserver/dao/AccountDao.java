@@ -2,6 +2,7 @@ package cn.qkl.webserver.dao;
 
 import cn.qkl.common.repository.mapper.AccountMapper;
 import cn.qkl.webserver.vo.account.*;
+import cn.qkl.webserver.vo.riskAccount.NetworkAccountAnalysisVO;
 import org.apache.ibatis.annotations.*;
 import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
 import org.mybatis.dynamic.sql.util.SqlProviderAdapter;
@@ -31,4 +32,7 @@ public interface AccountDao extends AccountMapper{
     @ResultMap(value = "AccountContentResultMap")
 //    Mybatis结果集映射 对象嵌套对象 数据库查出的部分字段需要包装成"tags":{},对应TagVO
     List<AccountContentVO> getAccountContent(SelectStatementProvider selectStatementProvider);
+
+    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
+    NetworkAccountAnalysisVO getAccountAnalysis(SelectStatementProvider selectStatementProvider);
 }

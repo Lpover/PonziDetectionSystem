@@ -1,7 +1,9 @@
 package cn.qkl.webserver.service;
 
 import cn.qkl.common.framework.response.PageVO;
+import cn.qkl.common.framework.util.FunctionUtil;
 import cn.qkl.common.repository.Tables;
+import cn.qkl.common.repository.mapper.AccountDynamicSqlSupport;
 import cn.qkl.common.repository.mapper.AccountTxHistoryMapper;
 import cn.qkl.webserver.dao.AccountDao;
 import cn.qkl.common.repository.model.AccountToAccount;
@@ -13,17 +15,20 @@ import cn.qkl.webserver.vo.riskAccount.*;
 import cn.qkl.webserver.vo.riskAccount.NetworkAccountAnalysisVO;
 import cn.qkl.webserver.vo.riskAccount.NetworkAccountPanelVO;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.jsqlparser.expression.operators.relational.EqualsTo;
 import org.apache.ibatis.annotations.Case;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
+import org.mybatis.dynamic.sql.select.join.EqualTo;
 import org.mybatis.dynamic.sql.where.condition.IsBetween;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 import javax.annotation.meta.When;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
@@ -92,7 +97,7 @@ public class RiskAccountService {
 
     public List<AccountBasicVO> getNetworkAccount(NetworkAccountQueryDTO dto) {
         return accountDao.getAccountBasicList(
-                select(Tables.account.id,
+                select(Tables.account.id.as("accountId"),
                         Tables.account.accountAddress,
                         Tables.account.accountAlias,
                         Tables.account.chainId,
@@ -107,7 +112,7 @@ public class RiskAccountService {
 
     public NetworkAccountPanelVO getNetworkAccountPanel(Long accountId) {
         AccountBasicVO accountBasicVO = accountDao.getAccountBasic(
-                select(Tables.account.id,
+                select(Tables.account.id.as("accountId"),
                         Tables.account.accountAddress,
                         Tables.account.accountAlias,
                         Tables.account.chainId,
@@ -118,12 +123,59 @@ public class RiskAccountService {
                         .render(RenderingStrategies.MYBATIS3)
         );
 
+        List<NetworkAccountEdgeVO> edges = accountToAccountDao.getNetworkAccountEdge(
+                select(Tables.account.id.qualifiedWith("from_account_table").as("from_account_id"),Tables.accountToAccount.from, Tables.account.id.qualifiedWith("to_account_table").as("to_account_id"), Tables.accountToAccount.to, Tables.accountToAccount.fromRiskIndex,
+                        Tables.accountToAccount.toRiskIndex, Tables.accountToAccount.note, Tables.accountToAccount.txAmount,
+                        Tables.accountToAccount.txNum, Tables.accountToAccount.fromRatio, Tables.accountToAccount.toRatio)
+                        .from(Tables.accountToAccount)
+                        .leftJoin(Tables.account,"from_account_table").on(Tables.accountToAccount.from,equalTo(Tables.account.accountAddress.qualifiedWith("from_account_table"))).and(Tables.accountToAccount.chainId,equalTo(Tables.account.chainId.qualifiedWith("from_account_table")))
+                        .leftJoin(new AccountDynamicSqlSupport.Account(),"to_account_table").on(Tables.accountToAccount.to,equalTo(Tables.account.accountAddress.qualifiedWith("to_account_table"))).and(Tables.accountToAccount.chainId,equalTo(Tables.account.chainId.qualifiedWith("to_account_table")))
+                        .where(Tables.accountToAccount.from, isEqualTo(accountBasicVO.getAccountAddress()), or(Tables.accountToAccount.to, isEqualTo(accountBasicVO.getAccountAddress())))
+                        .and(Tables.accountToAccount.chainId, isEqualTo(accountBasicVO.getChainId()))
+                        .build().render(RenderingStrategies.MYBATIS3)
+        );
 
-        return null;
+        HashMap<Long,NetworkAccountNodeVO> hashMap = new HashMap<>();
+        for (NetworkAccountEdgeVO edge:edges) {
+            NetworkAccountNodeVO toVo = FunctionUtil.apply(new NetworkAccountNodeVO(), it-> {
+                it.setId(edge.getToAccountId());
+                it.setLabel(edge.getTo());
+                it.setRiskIndex(edge.getToRiskIndex());
+            });
+            if (!hashMap.containsKey(toVo.getId())) {
+                hashMap.put(toVo.getId(),toVo);
+            }
+            NetworkAccountNodeVO fromVo = FunctionUtil.apply(new NetworkAccountNodeVO(), it -> {
+                it.setId(edge.getFromAccountId());
+                it.setLabel(edge.getFrom());
+                it.setRiskIndex(edge.getFromRiskIndex());
+            });
+            if (!hashMap.containsKey(fromVo.getId())) {
+                hashMap.put(fromVo.getId(),fromVo);
+            }
+        }
+
+        return FunctionUtil.apply(new NetworkAccountPanelVO(),it -> {
+            it.setAccountId(accountBasicVO.getAccountId());
+            it.setAccountAddress(accountBasicVO.getAccountAddress());
+            it.setChainId(accountBasicVO.getChainId());
+            it.setChainName(accountBasicVO.getChainName());
+            it.setNodes(new ArrayList<>(hashMap.values()));
+            it.setEdges(edges);
+        });
     }
 
     public NetworkAccountAnalysisVO getNetworkAccountAnalysis(Long accountId) {
-        return null;
+        return accountDao.getAccountAnalysis(select(
+                Tables.account.id.as("accountId"), Tables.account.accountAddress, Tables.account.chainId,
+                Tables.chain.chainName, Tables.account.actionFeatures, Tables.account.contentTag,
+                Tables.account.releaseNum, Tables.account.riskLevel, Tables.account.note,
+                Tables.account.riskTxNumIn, Tables.account.riskTxNumOut, Tables.account.riskContentNum,
+                Tables.account.recentTxTime
+        ).from(Tables.account).leftJoin(Tables.chain)
+                .on(Tables.account.chainId, equalTo(Tables.chain.id))
+                .where(Tables.account.id,isEqualTo(accountId))
+                .build().render(RenderingStrategies.MYBATIS3));
     }
 
     //智能查找目标地址
