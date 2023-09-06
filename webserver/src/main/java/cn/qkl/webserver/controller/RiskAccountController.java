@@ -142,15 +142,37 @@ public class RiskAccountController {
 //    }
 
     @ApiOperation("下载附件url")
-    @PostMapping("downloadCsv")
-    public BaseResult<Void> downloadCsv(@RequestBody @Validated DownloadDTO dto, HttpServletResponse response) throws IOException {
-        URL url = new URL(dto.getUrl());
-        String filePath = url.getPath();
-        String fileName = FilenameUtils.getName(filePath);
-        FileInputStream fis=new FileInputStream(filePath);
-        response.addHeader("Content-Disposition", "attachment;filename="+fileName+";"+"filename*=utf-8''"+fileName);
-        FileUtil.copy((Path) fis, (Path) response.getOutputStream());
-        return BaseResult.ok();
+    @GetMapping("csv")
+    public ResponseEntity<byte[]> downloadCsv(@Validated DownloadDTO dto) throws IOException {
+        // 获取文件的URL
+        String csvFileUrl = dto.getUrl(); // 请确保 URL 格式正确
+
+        // 如果 URL 中包含多余的前缀，可以尝试去除它们
+        csvFileUrl = csvFileUrl.replace("file:/", ""); // 去除 "file:/" 前缀
+        // 创建 UrlResource 对象
+        UrlResource resource = new UrlResource(new File(csvFileUrl));
+
+        // 读取文件内容为字节数组（Java 8）
+        byte[] fileContent;
+        try (InputStream inputStream = resource.getStream()) {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            fileContent = outputStream.toByteArray();
+        }
+
+        // 设置响应头
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", resource.getName());
+
+        // 返回字节数组，并设置响应头
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(fileContent);
     }
 
 }
