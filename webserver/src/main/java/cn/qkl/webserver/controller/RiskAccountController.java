@@ -113,10 +113,16 @@ public class RiskAccountController {
         // 创建 UrlResource 对象
         UrlResource resource = new UrlResource(new File(csvFileUrl));
 
-        // 读取文件内容为字节数组
+        // 读取文件内容为字节数组（Java 8）
         byte[] fileContent;
         try (InputStream inputStream = resource.getStream()) {
-            fileContent = inputStream.readAllBytes();
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            fileContent = outputStream.toByteArray();
         }
 
         // 设置响应头
