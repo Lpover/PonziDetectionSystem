@@ -252,16 +252,10 @@ public class RiskAccountService {
     }
 
     public File exportToCsv(List<ExportCSVVO> exportTaskVOList) {
-        // 创建文件夹
-        String folderPath = "AtaTask";
-        File folder = new File(folderPath);
-        if (!folder.exists()) {
-            folder.mkdir();
-        }
 
         // 构建文件路径，使用当前时间作为文件名
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String filePath = folderPath + "/" + timeStamp + ".csv";
+        String filePath = timeStamp + ".csv";
 
         try (FileWriter fileWriter = new FileWriter(filePath)) {
             // 写 CSV 表头
