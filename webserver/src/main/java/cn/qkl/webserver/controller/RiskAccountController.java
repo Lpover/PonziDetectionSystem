@@ -1,5 +1,6 @@
 package cn.qkl.webserver.controller;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.resource.UrlResource;
 import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
@@ -12,6 +13,7 @@ import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpHeaders;
@@ -20,9 +22,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
+import java.nio.file.Path;
 import java.util.List;
 
 /**
@@ -102,38 +107,50 @@ public class RiskAccountController {
         return BaseResult.ok();
     }
 
+//    @ApiOperation("下载附件url")
+//    @GetMapping("csv")
+//    public ResponseEntity<byte[]> downloadCsv(@Validated DownloadDTO dto) throws IOException {
+//        // 获取文件的URL
+//        String csvFileUrl = dto.getUrl(); // 请确保 URL 格式正确
+//
+//        // 如果 URL 中包含多余的前缀，可以尝试去除它们
+//        csvFileUrl = csvFileUrl.replace("file:/", ""); // 去除 "file:/" 前缀
+//        // 创建 UrlResource 对象
+//        UrlResource resource = new UrlResource(new File(csvFileUrl));
+//
+//        // 读取文件内容为字节数组（Java 8）
+//        byte[] fileContent;
+//        try (InputStream inputStream = resource.getStream()) {
+//            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//            byte[] buffer = new byte[1024];
+//            int bytesRead;
+//            while ((bytesRead = inputStream.read(buffer)) != -1) {
+//                outputStream.write(buffer, 0, bytesRead);
+//            }
+//            fileContent = outputStream.toByteArray();
+//        }
+//
+//        // 设置响应头
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+//        headers.setContentDispositionFormData("attachment", resource.getName());
+//
+//        // 返回字节数组，并设置响应头
+//        return ResponseEntity.ok()
+//                .headers(headers)
+//                .body(fileContent);
+//    }
+
     @ApiOperation("下载附件url")
-    @GetMapping("csv")
-    public ResponseEntity<byte[]> downloadCsv(@Validated DownloadDTO dto) throws IOException {
-        // 获取文件的URL
-        String csvFileUrl = dto.getUrl(); // 请确保 URL 格式正确
-
-        // 如果 URL 中包含多余的前缀，可以尝试去除它们
-        csvFileUrl = csvFileUrl.replace("file:/", ""); // 去除 "file:/" 前缀
-        // 创建 UrlResource 对象
-        UrlResource resource = new UrlResource(new File(csvFileUrl));
-
-        // 读取文件内容为字节数组（Java 8）
-        byte[] fileContent;
-        try (InputStream inputStream = resource.getStream()) {
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
-            }
-            fileContent = outputStream.toByteArray();
-        }
-
-        // 设置响应头
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentDispositionFormData("attachment", resource.getName());
-
-        // 返回字节数组，并设置响应头
-        return ResponseEntity.ok()
-                .headers(headers)
-                .body(fileContent);
+    @PostMapping("downloadCsv")
+    public BaseResult<Void> downloadCsv(@RequestBody @Validated DownloadDTO dto, HttpServletResponse response) throws IOException {
+        URL url = new URL(dto.getUrl());
+        String filePath = url.getPath();
+        String fileName = FilenameUtils.getName(filePath);
+        FileInputStream fis=new FileInputStream(filePath);
+        response.addHeader("Content-Disposition", "attachment;filename="+fileName+";"+"filename*=utf-8''"+fileName);
+        FileUtil.copy((Path) fis, (Path) response.getOutputStream());
+        return BaseResult.ok();
     }
 
 }
