@@ -1,6 +1,7 @@
 package cn.qkl.common.framework.util;
 
 import cn.qkl.common.framework.config.OssProperties;
+import com.alibaba.excel.util.FileUtils;
 import com.obs.services.ObsClient;
 import com.obs.services.model.ObsObject;
 import org.slf4j.Logger;
@@ -88,6 +89,14 @@ public class OssUtil {
 
     public String uploadMultipartFile(MultipartFile file, String fileName) throws IOException {
         byte[] bytes = file.getBytes();
+        ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+        obsClient.putObject("digital-content", fileName, in);
+        return "https://digital-content.obs.cn-east-3.myhuaweicloud.com/" + fileName;
+    }
+
+    //上传文件
+    public String uploadFile(File file, String fileName) throws IOException {
+        byte[] bytes = FileUtils.readFileToByteArray(file);
         ByteArrayInputStream in = new ByteArrayInputStream(bytes);
         obsClient.putObject("digital-content", fileName, in);
         return "https://digital-content.obs.cn-east-3.myhuaweicloud.com/" + fileName;
