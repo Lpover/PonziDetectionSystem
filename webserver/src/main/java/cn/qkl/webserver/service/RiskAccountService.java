@@ -30,11 +30,11 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -356,11 +356,13 @@ public class RiskAccountService {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String filePath = timeStamp + ".csv";
 
-        try (FileWriter fileWriter = new FileWriter(filePath)) {
+        try (FileOutputStream fos = new FileOutputStream(filePath);
+             OutputStreamWriter osw = new OutputStreamWriter(fos, Charset.forName("GBK"));
+             BufferedWriter writer = new BufferedWriter(osw)) {
+
             // 写 CSV 表头
-            //String header = "address,blockchain,lowerLimit,startTime,endTime,direction,url\n";
             String header = "区块链,协议,目标地址,余额,标签,备注,首次交易时间,最近交易时间,转入总金额,转出总金额,转入笔数,转出笔数,转入对手,转出对手\n";
-            fileWriter.write(header);
+            writer.write(header);
 
             // 写查询结果到 CSV
             for (ExportCSVVO task : exportTaskVOList) {
@@ -374,11 +376,12 @@ public class RiskAccountService {
                         formattedUpdateTime, formattedCreateTime, task.getFromAmount(),
                         task.getToAmount(), task.getFromNum(), task.getToNum(),
                         task.getFromCounter(), task.getToCounter());
-                fileWriter.write(row);
+                writer.write(row);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return new File(filePath);
 
         // 构建文件的URL并返回
