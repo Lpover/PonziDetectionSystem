@@ -4,7 +4,6 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.json.JSONUtil;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.framework.util.OssUtil;
-import cn.qkl.common.framework.util.SchedulerUtil;
 import cn.qkl.common.framework.util.UploadToChainUtil;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.Content;
@@ -176,7 +175,7 @@ public class DetailService {
         CountDownLatch latch = new CountDownLatch(1);
 
         // 生成证书并上传oss
-        SchedulerUtil.commonScheduler.schedule("generateCert", () -> {
+//        SchedulerUtil.commonScheduler.schedule("generateCert", () -> {
             try {
                 String ossPath = evidenceService.generateEvidenceCert(evidenceWeb.getId());
                 evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.certOssPath).equalTo(ossPath).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
@@ -188,7 +187,7 @@ public class DetailService {
             } finally {
                 latch.countDown();
             }
-        });
+//        });
 
         try {
             latch.await();
@@ -210,7 +209,8 @@ public class DetailService {
         ContentReinforceVO vo = new ContentReinforceVO();
         EvidenceWeb finalEvidenceWeb = evidenceWebDao.selectOne(c -> c.where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId()))).get();
         vo.setId(item.getId());
-        vo.setStatus(2);
+        Content finalContent = contentDao.selectOne(c->c.where(Tables.content.id, isEqualTo(item.getId()))).get();
+        vo.setStatus(finalContent.getEvidenceStatus());
         vo.setCertOss(finalEvidenceWeb.getCertOssPath());
         vo.setPackOss(finalEvidenceWeb.getPackOssPath());
         vo.setChainTime(finalEvidenceWeb.getChainTime());

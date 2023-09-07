@@ -140,6 +140,7 @@ public class EvidenceRegularBackgroundTask implements BackgroundTask {
                 evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.packageHash).equalTo(finalDigest).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
                 evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.hash).equalTo(uploadToChainUtil.getTxHash()).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
                 evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.chainTime).equalTo(uploadToChainUtil.getTxTime()).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
+                evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.updateTime).equalTo(new Date()).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
                 evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.chainId).equalTo(ChainEnum.XINZHENG.getCode()).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
                 latch.countDown();
 //            });
