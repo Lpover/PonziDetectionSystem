@@ -47,7 +47,7 @@ public class OssController {
 
     @ApiOperation("上传文件(MultipartFile)到oss")
     @PostMapping("upload/by/file")
-    public BaseResult<OssUploadFileVO> ossUploadFileByFile(@Validated @RequestBody ossUploadMultipartFileDTO dto) throws IOException {
+    public BaseResult<OssUploadFileVO> ossUploadFileByFile(@Validated ossUploadMultipartFileDTO dto) throws IOException {
         OssUploadFileVO ossUploadFileVO = new OssUploadFileVO();
         ossUploadFileVO.setRemoteFileURL(ossUtil.uploadMultipartFile(dto.getFile(), dto.getFile().getName()));
         return BaseResult.ok(ossUploadFileVO);
