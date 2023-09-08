@@ -105,6 +105,7 @@ public class EvidenceDailyStatisticsService {
                 select(Tables.evidenceWeb.evidenceType, count().as("count"))
                         .from(Tables.evidenceWeb)
                         .where(Tables.evidenceWeb.deleteStatus, isNotEqualTo(1))
+                        .and(Tables.evidenceWeb.evidenceType, isNotNull())
                         .groupBy(Tables.evidenceWeb.evidenceType)
                         .build()
                         .render(RenderingStrategies.MYBATIS3)
@@ -116,6 +117,7 @@ public class EvidenceDailyStatisticsService {
         reinforceView.setWebNum(0);
 
         for (Record item : res) {
+            System.out.println("======" + item.toString());
             if (item.getEvidenceType() == 0) {
                 reinforceView.setWebNum(item.getCount());
             } else if (item.getEvidenceType() == 2) {
