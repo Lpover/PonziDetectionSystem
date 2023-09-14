@@ -127,7 +127,7 @@ public class NotificationService {
     //当前通知状态获取
     public CurrentStatusVO getCurrentStatus(){
         CurrentStatusVO CurrentStatus= switchTableDao.getCurrentStatus(select(
-                Tables.switchTable.open,Tables.switchTable.openWeek,Tables.switchTable.startTime,Tables.switchTable.endTime)
+                Tables.switchTable.open,Tables.switchTable.openWeek,Tables.switchTable.startTime,Tables.switchTable.endTime, Tables.switchTable.frequency)
                 .from(Tables.switchTable)
                 .build()
                 .render(RenderingStrategies.MYBATIS3)

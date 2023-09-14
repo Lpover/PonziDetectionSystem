@@ -27,5 +27,7 @@ public class CurrentStatusVO {
     @ApiModelProperty("接收关闭的时间")
     private Time endTime;
 
+    @ApiModelProperty("频率")
+    private Integer frequency;
 
 }

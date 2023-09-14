@@ -36,7 +36,7 @@ public class BackgroundTaskManager implements CommandLineRunner {
             this.backgroundTaskList.forEach((task) -> {
                 log.info("[{}]-[{}] start...", task.getTaskType(), task.getName());
                 ScheduledFuture<?> schedule = this.backgroundScheduler.schedule(task.getName(), task, task.getDelay(), task.getPeriod());
-                schedule.cancel(false);
+//                schedule.cancel(false);
             });
         }
     }

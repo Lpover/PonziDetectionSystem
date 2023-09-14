@@ -5,7 +5,6 @@ import cn.hutool.core.util.IdUtil;
 import cn.qkl.common.framework.exception.BusinessException;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.framework.util.OssUtil;
-import cn.qkl.common.framework.util.SchedulerUtil;
 import cn.qkl.common.framework.util.SqlUtil;
 import cn.qkl.common.framework.util.UploadToChainUtil;
 import cn.qkl.common.repository.Tables;
@@ -193,7 +192,7 @@ public class EvidenceService {
         CountDownLatch latch = new CountDownLatch(2);
 
         // 网页截图，上链
-        SchedulerUtil.commonScheduler.schedule("generateWebCapture", () -> {
+//        SchedulerUtil.commonScheduler.schedule("generateWebCapture", () -> {
             webCapture(dto.getUrl(), dto.getName(), evidenceWeb.getId());
             String webOss = evidenceWebDao.selectOne(c->c
                     .where(Tables.evidenceWeb.id, isEqualTo(dto.getId()))).get().getWebOssPath();
@@ -222,11 +221,11 @@ public class EvidenceService {
             evidenceWeb.setChainTime(uploadToChainUtil.getTxTime());    // 上链时间
             evidenceWeb.setChainId(ChainEnum.XINZHENG.getCode());
             latch.countDown();
-        });
+//        });
         evidenceWebDao.insert(evidenceWeb);
 
         // 生成证书并上传oss
-        SchedulerUtil.commonScheduler.schedule("generateCert", () -> {
+//        SchedulerUtil.commonScheduler.schedule("generateCert", () -> {
             try {
                 String ossPath = generateEvidenceCert(evidenceWeb.getId());
                 evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.certOssPath).equalTo(ossPath).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
@@ -238,7 +237,7 @@ public class EvidenceService {
             } finally {
                 latch.countDown();
             }
-        });
+//        });
 
         // 等待计数值变为零
         try {
@@ -248,13 +247,13 @@ public class EvidenceService {
         }
 
         // 生成证据包并上传oss
-        SchedulerUtil.commonScheduler.schedule("generateEvidencePack", () -> {
+//        SchedulerUtil.commonScheduler.schedule("generateEvidencePack", () -> {
             try {
                 generateEvidencePack(evidenceWeb.getId());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        });
+//        });
 
         EvidencePhaseVO vo = new EvidencePhaseVO();
         vo.setId(evidenceWeb.getId());
@@ -311,7 +310,7 @@ public class EvidenceService {
         CountDownLatch latch = new CountDownLatch(1);
 
         // 生成证书并上传oss
-        SchedulerUtil.commonScheduler.schedule("generateCert", () -> {
+//        SchedulerUtil.commonScheduler.schedule("generateCert", () -> {
             try {
                 String ossPath = generateEvidenceCert(evidenceWeb.getId());
                 evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.certOssPath).equalTo(ossPath).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
@@ -323,7 +322,7 @@ public class EvidenceService {
             } finally {
               latch.countDown();
             }
-        });
+//        });
 
         try {
             latch.await();
@@ -332,13 +331,13 @@ public class EvidenceService {
         }
 
         // 生成证据包并上传oss
-        SchedulerUtil.commonScheduler.schedule("generateEvidencePack", () -> {
+//        SchedulerUtil.commonScheduler.schedule("generateEvidencePack", () -> {
             try {
                 generateEvidencePack(evidenceWeb.getId());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        });
+//        });
 
         EvidencePhaseVO vo = new EvidencePhaseVO();
         vo.setId(evidenceWeb.getId());
@@ -527,7 +526,7 @@ public class EvidenceService {
                 Tables.evidenceWeb.packOssPath,
                 Tables.evidenceWeb.url,
                 Tables.evidenceWeb.frequency,
-                Tables.evidenceWeb.createTime.as("time"),
+                Tables.evidenceWeb.updateTime.as("time"),
                 Tables.platform.name.as("platform_name"),
                 Tables.platform.platformType).from(Tables.evidenceWeb, "ew")
                 .leftJoin(Tables.platform).on(Tables.evidenceWeb.platformId, equalTo(Tables.platform.id))
@@ -547,10 +546,10 @@ public class EvidenceService {
             builder = builder.and(Tables.evidenceWeb.platformId, isEqualTo(dto.getPlatformId()));
         }
         if (dto.getStartTime() != null) {
-            builder = builder.and(Tables.evidenceWeb.createTime, isGreaterThanOrEqualTo(dto.getStartTime()));
+            builder = builder.and(Tables.evidenceWeb.updateTime, isGreaterThanOrEqualTo(dto.getStartTime()));
         }
         if (dto.getEndTime() != null) {
-            builder = builder.and(Tables.evidenceWeb.createTime, isLessThanOrEqualTo(dto.getEndTime()));
+            builder = builder.and(Tables.evidenceWeb.updateTime, isLessThanOrEqualTo(dto.getEndTime()));
         }
 
         QueryExpressionDSL<org.mybatis.dynamic.sql.select.SelectModel>.QueryExpressionWhereBuilder finalBuilder = builder;
