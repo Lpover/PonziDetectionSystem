@@ -45,8 +45,10 @@ public class FetchWarnService {
 
     @KafkaListener(topics = tsgzWarnTopic)
     public boolean fetch(String value) {
+        // todo 幂等问题 校验原先的状态 然后再update update的where里面加上check条件
         NotifyRecord notifyRecord= null;
         try {
+            //todo new序列化 写到工具类
             notifyRecord = new ObjectMapper().readValue(value, NotifyRecord.class);
             log.info("消费者接收到待发送通知信息：" + notifyRecord);
             List<String> itemList = new ArrayList<>();
@@ -75,10 +77,12 @@ public class FetchWarnService {
 
                     emailService.sendEmail(email,new Date()+"态势感知预警",String.format(content,name,warnings, new Date()));
                 });
-                notifyRecordDao.update(u -> u.set(Tables.notifyRecord.status).equalTo(NotifyStatusEnum.OK.getCode()).where(Tables.notifyRecord.id,SqlBuilder.isEqualTo(finalNotifyRecord.getId())));
+                notifyRecordDao.update(u -> u.set(Tables.notifyRecord.status).equalTo(NotifyStatusEnum.OK.getCode())
+                        .where(Tables.notifyRecord.id,SqlBuilder.isEqualTo(finalNotifyRecord.getId())));
 
             }catch (Exception e) {
-                notifyRecordDao.update(u -> u.set(Tables.notifyRecord.status).equalTo(NotifyStatusEnum.EXCEPTION.getCode()).where(Tables.notifyRecord.id,SqlBuilder.isEqualTo(finalNotifyRecord.getId())));
+                notifyRecordDao.update(u -> u.set(Tables.notifyRecord.status).equalTo(NotifyStatusEnum.EXCEPTION.getCode())
+                        .where(Tables.notifyRecord.id,SqlBuilder.isEqualTo(finalNotifyRecord.getId())));
             }
 
         } catch (JsonProcessingException e) {
