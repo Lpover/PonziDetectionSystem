@@ -12,7 +12,6 @@ import java.util.Date;
  * @Date 2023/5/19 11:55
  **/
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AccountCheckHistoryVO {
     @ApiModelProperty("检查时间")
     private Date accountCheckTime;

@@ -3,6 +3,7 @@ package cn.qkl.webserver.service;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.Account;
+import cn.qkl.common.repository.model.AccountTxHistory;
 import cn.qkl.webserver.common.enums.AccountContentTypeEnum;
 import cn.qkl.webserver.dao.AccountDao;
 import cn.qkl.webserver.dto.account.AccountContentQueryDTO;
@@ -80,6 +81,7 @@ public class AccountService {
                 ).from(Tables.account).join(Tables.accountTxHistory).on(Tables.account.chainId,equalTo(Tables.accountTxHistory.chainId))
                         .where(Tables.account.id,isEqualTo(dto.getAccountId()))
                         .and(Tables.accountTxHistory.to,isEqualTo(Tables.account.accountAddress),or(Tables.accountTxHistory.from,isEqualTo(Tables.account.accountAddress)))
+                        .orderBy(Tables.accountTxHistory.txTimestamp.descending())
                         .build()
                         .render(RenderingStrategies.MYBATIS3)
         ));
