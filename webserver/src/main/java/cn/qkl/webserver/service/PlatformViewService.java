@@ -251,7 +251,8 @@ public class PlatformViewService {
             rand_24_hotness_c = platformStats.getHotnessChange24h();
             rand_7_hotness_c = platformStats.getHotnessChange7d();
             rand_30_hotness_c = platformStats.getHotnessChange30d();
-            rand_hotness_24h = platformStats.getHotness24h();
+            Long check_hotness24h = platformStats.getHotness24h();
+            if (check_hotness24h != null)rand_hotness_24h = check_hotness24h;
         }
 
 
