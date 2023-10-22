@@ -161,7 +161,9 @@ public class PlatformViewService {
         //默认最热门NFT平台
         long HotestPlatform=getHotestPlatform2(dto);
         List<PlatformRiskAccountVO> platformRiskAccountList = platformViewDao.getPlatformRiskAccount(
-                select(Tables.account.id,Tables.account.accountAlias,Tables.account.image,Tables.account.releaseNum)
+                select(Tables.account.id,Tables.account.accountAlias,Tables.account.image,Tables.account.releaseNum,
+                        Tables.account.accountAddress
+                )
                         .from(Tables.account)
                         .where(Tables.account.platformId,isEqualTo(HotestPlatform))
                         .orderBy(Tables.account.releaseNum.descending())
