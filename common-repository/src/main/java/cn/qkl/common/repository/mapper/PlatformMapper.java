@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface PlatformMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, name, url, monitor, riskContentNum, activation, riskLevel, platformType, logo, location, frequency, crawlerFile, web3Type, contentNum, highAccountNum, midAccountNum, lowAccountNum, highContentNum, midContentNum, lowContentNum, createTime, updateTime, riskIndexChina, riskIndexOversea, hotness, webEvidenceCount, mobileEvidenceCount, reinforceEvidenceCount);
+    BasicColumn[] selectList = BasicColumn.columnList(id, name, url, monitor, riskContentNum, activation, riskLevel, platformType, logo, location, frequency, crawlerFile, web3Type, contentNum, highAccountNum, midAccountNum, lowAccountNum, highContentNum, midContentNum, lowContentNum, createTime, updateTime, riskIndexChina, riskIndexOversea, hotness, webEvidenceCount, mobileEvidenceCount, reinforceEvidenceCount, hotnessChange24h, hotnessChange7d, hotnessChange30d, hotness24h);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -88,7 +88,11 @@ public interface PlatformMapper {
         @Result(column="hotness", property="hotness", jdbcType=JdbcType.BIGINT),
         @Result(column="web_evidence_count", property="webEvidenceCount", jdbcType=JdbcType.INTEGER),
         @Result(column="mobile_evidence_count", property="mobileEvidenceCount", jdbcType=JdbcType.INTEGER),
-        @Result(column="reinforce_evidence_count", property="reinforceEvidenceCount", jdbcType=JdbcType.INTEGER)
+        @Result(column="reinforce_evidence_count", property="reinforceEvidenceCount", jdbcType=JdbcType.INTEGER),
+        @Result(column="hotness_change_24h", property="hotnessChange24h", jdbcType=JdbcType.DECIMAL),
+        @Result(column="hotness_change_7d", property="hotnessChange7d", jdbcType=JdbcType.DECIMAL),
+        @Result(column="hotness_change_30d", property="hotnessChange30d", jdbcType=JdbcType.DECIMAL),
+        @Result(column="hotness_24h", property="hotness24h", jdbcType=JdbcType.BIGINT)
     })
     List<Platform> selectMany(SelectStatementProvider selectStatement);
 
@@ -144,6 +148,10 @@ public interface PlatformMapper {
             .map(webEvidenceCount).toProperty("webEvidenceCount")
             .map(mobileEvidenceCount).toProperty("mobileEvidenceCount")
             .map(reinforceEvidenceCount).toProperty("reinforceEvidenceCount")
+            .map(hotnessChange24h).toProperty("hotnessChange24h")
+            .map(hotnessChange7d).toProperty("hotnessChange7d")
+            .map(hotnessChange30d).toProperty("hotnessChange30d")
+            .map(hotness24h).toProperty("hotness24h")
         );
     }
 
@@ -178,6 +186,10 @@ public interface PlatformMapper {
             .map(webEvidenceCount).toProperty("webEvidenceCount")
             .map(mobileEvidenceCount).toProperty("mobileEvidenceCount")
             .map(reinforceEvidenceCount).toProperty("reinforceEvidenceCount")
+            .map(hotnessChange24h).toProperty("hotnessChange24h")
+            .map(hotnessChange7d).toProperty("hotnessChange7d")
+            .map(hotnessChange30d).toProperty("hotnessChange30d")
+            .map(hotness24h).toProperty("hotness24h")
         );
     }
 
@@ -212,6 +224,10 @@ public interface PlatformMapper {
             .map(webEvidenceCount).toPropertyWhenPresent("webEvidenceCount", record::getWebEvidenceCount)
             .map(mobileEvidenceCount).toPropertyWhenPresent("mobileEvidenceCount", record::getMobileEvidenceCount)
             .map(reinforceEvidenceCount).toPropertyWhenPresent("reinforceEvidenceCount", record::getReinforceEvidenceCount)
+            .map(hotnessChange24h).toPropertyWhenPresent("hotnessChange24h", record::getHotnessChange24h)
+            .map(hotnessChange7d).toPropertyWhenPresent("hotnessChange7d", record::getHotnessChange7d)
+            .map(hotnessChange30d).toPropertyWhenPresent("hotnessChange30d", record::getHotnessChange30d)
+            .map(hotness24h).toPropertyWhenPresent("hotness24h", record::getHotness24h)
         );
     }
 
@@ -271,7 +287,11 @@ public interface PlatformMapper {
                 .set(hotness).equalTo(record::getHotness)
                 .set(webEvidenceCount).equalTo(record::getWebEvidenceCount)
                 .set(mobileEvidenceCount).equalTo(record::getMobileEvidenceCount)
-                .set(reinforceEvidenceCount).equalTo(record::getReinforceEvidenceCount);
+                .set(reinforceEvidenceCount).equalTo(record::getReinforceEvidenceCount)
+                .set(hotnessChange24h).equalTo(record::getHotnessChange24h)
+                .set(hotnessChange7d).equalTo(record::getHotnessChange7d)
+                .set(hotnessChange30d).equalTo(record::getHotnessChange30d)
+                .set(hotness24h).equalTo(record::getHotness24h);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -303,7 +323,11 @@ public interface PlatformMapper {
                 .set(hotness).equalToWhenPresent(record::getHotness)
                 .set(webEvidenceCount).equalToWhenPresent(record::getWebEvidenceCount)
                 .set(mobileEvidenceCount).equalToWhenPresent(record::getMobileEvidenceCount)
-                .set(reinforceEvidenceCount).equalToWhenPresent(record::getReinforceEvidenceCount);
+                .set(reinforceEvidenceCount).equalToWhenPresent(record::getReinforceEvidenceCount)
+                .set(hotnessChange24h).equalToWhenPresent(record::getHotnessChange24h)
+                .set(hotnessChange7d).equalToWhenPresent(record::getHotnessChange7d)
+                .set(hotnessChange30d).equalToWhenPresent(record::getHotnessChange30d)
+                .set(hotness24h).equalToWhenPresent(record::getHotness24h);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -336,6 +360,10 @@ public interface PlatformMapper {
             .set(webEvidenceCount).equalTo(record::getWebEvidenceCount)
             .set(mobileEvidenceCount).equalTo(record::getMobileEvidenceCount)
             .set(reinforceEvidenceCount).equalTo(record::getReinforceEvidenceCount)
+            .set(hotnessChange24h).equalTo(record::getHotnessChange24h)
+            .set(hotnessChange7d).equalTo(record::getHotnessChange7d)
+            .set(hotnessChange30d).equalTo(record::getHotnessChange30d)
+            .set(hotness24h).equalTo(record::getHotness24h)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -370,6 +398,10 @@ public interface PlatformMapper {
             .set(webEvidenceCount).equalToWhenPresent(record::getWebEvidenceCount)
             .set(mobileEvidenceCount).equalToWhenPresent(record::getMobileEvidenceCount)
             .set(reinforceEvidenceCount).equalToWhenPresent(record::getReinforceEvidenceCount)
+            .set(hotnessChange24h).equalToWhenPresent(record::getHotnessChange24h)
+            .set(hotnessChange7d).equalToWhenPresent(record::getHotnessChange7d)
+            .set(hotnessChange30d).equalToWhenPresent(record::getHotnessChange30d)
+            .set(hotness24h).equalToWhenPresent(record::getHotness24h)
             .where(id, isEqualTo(record::getId))
         );
     }

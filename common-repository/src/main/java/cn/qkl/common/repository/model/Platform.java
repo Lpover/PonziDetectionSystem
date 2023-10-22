@@ -90,6 +90,18 @@ public class Platform {
     private Integer reinforceEvidenceCount;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private BigDecimal hotnessChange24h;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private BigDecimal hotnessChange7d;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private BigDecimal hotnessChange30d;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Long hotness24h;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
@@ -537,6 +549,70 @@ public class Platform {
         this.reinforceEvidenceCount = reinforceEvidenceCount;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public BigDecimal getHotnessChange24h() {
+        return hotnessChange24h;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Platform withHotnessChange24h(BigDecimal hotnessChange24h) {
+        this.setHotnessChange24h(hotnessChange24h);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setHotnessChange24h(BigDecimal hotnessChange24h) {
+        this.hotnessChange24h = hotnessChange24h;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public BigDecimal getHotnessChange7d() {
+        return hotnessChange7d;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Platform withHotnessChange7d(BigDecimal hotnessChange7d) {
+        this.setHotnessChange7d(hotnessChange7d);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setHotnessChange7d(BigDecimal hotnessChange7d) {
+        this.hotnessChange7d = hotnessChange7d;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public BigDecimal getHotnessChange30d() {
+        return hotnessChange30d;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Platform withHotnessChange30d(BigDecimal hotnessChange30d) {
+        this.setHotnessChange30d(hotnessChange30d);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setHotnessChange30d(BigDecimal hotnessChange30d) {
+        this.hotnessChange30d = hotnessChange30d;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Long getHotness24h() {
+        return hotness24h;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Platform withHotness24h(Long hotness24h) {
+        this.setHotness24h(hotness24h);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setHotness24h(Long hotness24h) {
+        this.hotness24h = hotness24h;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -572,6 +648,10 @@ public class Platform {
         sb.append(", webEvidenceCount=").append(webEvidenceCount);
         sb.append(", mobileEvidenceCount=").append(mobileEvidenceCount);
         sb.append(", reinforceEvidenceCount=").append(reinforceEvidenceCount);
+        sb.append(", hotnessChange24h=").append(hotnessChange24h);
+        sb.append(", hotnessChange7d=").append(hotnessChange7d);
+        sb.append(", hotnessChange30d=").append(hotnessChange30d);
+        sb.append(", hotness24h=").append(hotness24h);
         sb.append("]");
         return sb.toString();
     }

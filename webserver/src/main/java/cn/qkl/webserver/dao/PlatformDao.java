@@ -1,6 +1,8 @@
 package cn.qkl.webserver.dao;
 
 import cn.qkl.common.repository.mapper.PlatformMapper;
+import cn.qkl.common.repository.model.Platform;
+import cn.qkl.common.repository.model.PlatformDailyStatistics;
 import cn.qkl.webserver.vo.platform.PlatformContentVO;
 import cn.qkl.webserver.vo.riskAccount.AccountNumVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -23,4 +25,7 @@ public interface PlatformDao extends PlatformMapper {
 
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     AccountNumVO getAccountNum(SelectStatementProvider selectStatementProvider);
+
+    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
+    List<Platform> getHotnessOfPlatform(SelectStatementProvider selectStatementProvider);
 }

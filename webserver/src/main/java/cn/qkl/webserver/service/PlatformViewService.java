@@ -217,7 +217,6 @@ public class PlatformViewService {
                                 .and(Tables.platformDailyStatistics.createTime,isGreaterThanOrEqualToWhenPresent(start))
                                 .and(Tables.platformDailyStatistics.createTime,isLessThanOrEqualToWhenPresent(end))
                                 .orderBy(Tables.platformDailyStatistics.hotness24h.descending())
-//                                .limit(platformNum)
                                 .build()
                                 .render(RenderingStrategies.MYBATIS3)
                 )
@@ -231,24 +230,45 @@ public class PlatformViewService {
         Integer totalSum=platformDailyStatistics.getContentRiskSum();
         Integer rand_risk_index = random.nextInt(100);
 
-        double rand_24_hotness_c = random.nextDouble() * 2 - 1;//一天之内的变化-1~1
-        BigDecimal decimal_rand_24_hotness_c = BigDecimal.valueOf(rand_24_hotness_c).setScale(2, BigDecimal.ROUND_HALF_UP);
+        long platformId=platformDailyStatistics.getPlatformId();
+        List<Platform> hotnessOfPlatform=platformDao.getHotnessOfPlatform(
+                select(Tables.platform.hotness24h,Tables.platform.hotnessChange7d,
+                        Tables.platform.hotnessChange24h,Tables.platform.hotnessChange30d)
+                        .from(Tables.platform)
+                        .where(Tables.platform.id,isEqualTo(platformId))
+                        .build()
+                        .render(RenderingStrategies.MYBATIS3)
+        );
 
-        double rand_7_hotness_c = random.nextDouble() * 14 - 7;//7天之内的变化-7~7
-        BigDecimal decimal_rand_7_hotness_c = BigDecimal.valueOf(rand_7_hotness_c).setScale(2, BigDecimal.ROUND_HALF_UP);
+        BigDecimal rand_24_hotness_c = null;
+        BigDecimal rand_7_hotness_c = null;
+        BigDecimal rand_30_hotness_c = null;
+        long rand_hotness_24h = 0;
+
+        for (Platform platformStats : hotnessOfPlatform) {
+            rand_24_hotness_c = platformStats.getHotnessChange24h();
+            rand_7_hotness_c = platformStats.getHotnessChange7d();
+            rand_30_hotness_c = platformStats.getHotnessChange30d();
+            rand_hotness_24h = platformStats.getHotness24h();
+        }
 
 
-        double rand_30_hotness_c = random.nextDouble() * 60 - 30;//一天之内的变化-30~30
-        BigDecimal decimal_rand_30_hotness_c = BigDecimal.valueOf(rand_30_hotness_c).setScale(2, BigDecimal.ROUND_HALF_UP);
+//        double rand_24_hotness_c = random.nextDouble() * 2 - 1;//一天之内的变化-1~1
+//        BigDecimal decimal_rand_24_hotness_c = BigDecimal.valueOf(rand_24_hotness_c).setScale(2, BigDecimal.ROUND_HALF_UP);
+//
+//        double rand_7_hotness_c = random.nextDouble() * 14 - 7;//7天之内的变化-7~7
+//        BigDecimal decimal_rand_7_hotness_c = BigDecimal.valueOf(rand_7_hotness_c).setScale(2, BigDecimal.ROUND_HALF_UP);
+//
+//        double rand_30_hotness_c = random.nextDouble() * 60 - 30;//一天之内的变化-30~30
+//        BigDecimal decimal_rand_30_hotness_c = BigDecimal.valueOf(rand_30_hotness_c).setScale(2, BigDecimal.ROUND_HALF_UP);
 
         //随机热度生成
-        long rand_hotness_24h = ThreadLocalRandom.current().nextLong(20000001);
 
         platformDailyStatistics.setContentSum(totalSum);
         platformDailyStatistics.setRiskIndex(rand_risk_index);
-        platformDailyStatistics.setHotnessChange24h(decimal_rand_24_hotness_c);
-        platformDailyStatistics.setHotnessChange7d(decimal_rand_7_hotness_c);
-        platformDailyStatistics.setHotnessChange30d(decimal_rand_30_hotness_c);
+        platformDailyStatistics.setHotnessChange24h(rand_24_hotness_c);
+        platformDailyStatistics.setHotnessChange7d(rand_7_hotness_c);
+        platformDailyStatistics.setHotnessChange30d(rand_30_hotness_c);
         platformDailyStatistics.setHotness24h(rand_hotness_24h);
 
     }
