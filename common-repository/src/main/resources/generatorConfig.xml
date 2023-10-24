@@ -21,14 +21,14 @@
                             targetProject="src/main/java"/>
         <javaClientGenerator targetPackage="cn.qkl.common.repository.mapper"
                              targetProject="src/main/java"/>
-        <table tableName="account" domainObjectName="Account">
-        </table>
-<!--        <table tableName="account_check_history" domainObjectName="AccountCheckHistory">-->
+<!--        <table tableName="account" domainObjectName="Account">-->
 <!--        </table>-->
-<!--        <table tableName="account_content" domainObjectName="AccountContent">-->
-<!--        </table>-->
-        <table tableName="account_tx_history" domainObjectName="AccountTxHistory">
+        <table tableName="account_check_history" domainObjectName="AccountCheckHistory">
         </table>
+        <table tableName="account_content" domainObjectName="AccountContent">
+        </table>
+<!--        <table tableName="account_tx_history" domainObjectName="AccountTxHistory">-->
+<!--        </table>-->
 <!--        <table tableName="algorithm" domainObjectName="Algorithm">-->
 <!--        </table>-->
 <!--        <table tableName="carrier" domainObjectName="Carrier">-->
@@ -51,8 +51,8 @@
 <!--        </table>-->
 <!--        <table tableName="dynamic_monitor" domainObjectName="DynamicMonitor">-->
 <!--        </table>-->
-<!--        <table tableName="platform" domainObjectName="Platform">-->
-<!--        </table>-->
+        <table tableName="platform" domainObjectName="Platform">
+        </table>
 <!--        <table tableName="platform_daily_statistics" domainObjectName="PlatformDailyStatistics">-->
 <!--        </table>-->
 <!--        <table tableName="risk_report" domainObjectName="RiskReport">-->
@@ -77,22 +77,22 @@
 <!--        </table>-->
 
 <!--        todo-->
-        <table tableName="evidence_web" domainObjectName="EvidenceWeb">
-        </table>
-        <table tableName="evidence_overview_daily_statistics" domainObjectName="EvidenceOverviewDailyStatistics">
-        </table>
-<!--        <table tableName="thresholds" domainObjectName="Thresholds">-->
+<!--        <table tableName="evidence_web" domainObjectName="EvidenceWeb">-->
 <!--        </table>-->
+<!--        <table tableName="evidence_overview_daily_statistics" domainObjectName="EvidenceOverviewDailyStatistics">-->
+<!--        </table>-->
+<!--&lt;!&ndash;        <table tableName="thresholds" domainObjectName="Thresholds">&ndash;&gt;-->
+<!--&lt;!&ndash;        </table>&ndash;&gt;-->
+<!--&lt;!&ndash;        <table tableName="situation_report" domainObjectName="SituationReport">&ndash;&gt;-->
+<!--&lt;!&ndash;        </table>&ndash;&gt;-->
 <!--        <table tableName="situation_report" domainObjectName="SituationReport">-->
 <!--        </table>-->
-        <table tableName="situation_report" domainObjectName="SituationReport">
-        </table>
-        <table tableName="switch_table" domainObjectName="SwitchTable">
-        </table>
-        <table tableName="account_to_account" domainObjectName="AccountToAccount">
-        </table>
-        <table tableName="ata_export_task" domainObjectName="AtaExportTask">
-        </table>
+<!--        <table tableName="switch_table" domainObjectName="SwitchTable">-->
+<!--        </table>-->
+<!--        <table tableName="account_to_account" domainObjectName="AccountToAccount">-->
+<!--        </table>-->
+<!--        <table tableName="ata_export_task" domainObjectName="AtaExportTask">-->
+<!--        </table>-->
 
     </context>
 </generatorConfiguration>

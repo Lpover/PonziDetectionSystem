@@ -96,6 +96,18 @@ public final class PlatformDynamicSqlSupport {
     public static final SqlColumn<Integer> reinforceEvidenceCount = platform.reinforceEvidenceCount;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<BigDecimal> hotnessChange24h = platform.hotnessChange24h;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<BigDecimal> hotnessChange7d = platform.hotnessChange7d;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<BigDecimal> hotnessChange30d = platform.hotnessChange30d;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Long> hotness24h = platform.hotness24h;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class Platform extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -152,6 +164,14 @@ public final class PlatformDynamicSqlSupport {
         public final SqlColumn<Integer> mobileEvidenceCount = column("mobile_evidence_count", JDBCType.INTEGER);
 
         public final SqlColumn<Integer> reinforceEvidenceCount = column("reinforce_evidence_count", JDBCType.INTEGER);
+
+        public final SqlColumn<BigDecimal> hotnessChange24h = column("hotness_change_24h", JDBCType.DECIMAL);
+
+        public final SqlColumn<BigDecimal> hotnessChange7d = column("hotness_change_7d", JDBCType.DECIMAL);
+
+        public final SqlColumn<BigDecimal> hotnessChange30d = column("hotness_change_30d", JDBCType.DECIMAL);
+
+        public final SqlColumn<Long> hotness24h = column("hotness_24h", JDBCType.BIGINT);
 
         public Platform() {
             super("platform");

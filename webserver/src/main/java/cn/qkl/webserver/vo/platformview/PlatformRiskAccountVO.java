@@ -25,5 +25,8 @@ public class PlatformRiskAccountVO {
     @ApiModelProperty("该账号发布的风险内容数量")
     private Integer releaseNum;
 
+    @ApiModelProperty("账户地址")
+    private String accountAddress;
+
 
 }
