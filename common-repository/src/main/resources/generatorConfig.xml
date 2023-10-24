@@ -23,10 +23,10 @@
                              targetProject="src/main/java"/>
 <!--        <table tableName="account" domainObjectName="Account">-->
 <!--        </table>-->
-<!--&lt;!&ndash;        <table tableName="account_check_history" domainObjectName="AccountCheckHistory">&ndash;&gt;-->
-<!--&lt;!&ndash;        </table>&ndash;&gt;-->
-<!--&lt;!&ndash;        <table tableName="account_content" domainObjectName="AccountContent">&ndash;&gt;-->
-<!--&lt;!&ndash;        </table>&ndash;&gt;-->
+        <table tableName="account_check_history" domainObjectName="AccountCheckHistory">
+        </table>
+        <table tableName="account_content" domainObjectName="AccountContent">
+        </table>
 <!--        <table tableName="account_tx_history" domainObjectName="AccountTxHistory">-->
 <!--        </table>-->
 <!--        <table tableName="algorithm" domainObjectName="Algorithm">-->
