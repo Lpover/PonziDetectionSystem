@@ -130,8 +130,8 @@ public class AccountService {
                     .on(Tables.content.chainId,equalTo(Tables.chain.id))
                     .join(Tables.platform)
                     .on(Tables.content.platformId,equalTo(Tables.platform.id))
-                    .where(Tables.content.owner,isEqualTo(account.getAccountAddress()))
-                    .and(Tables.content.chainId,isEqualTo(account.getChainId()));
+                    .where(Tables.content.owner, isEqualTo(account.getAccountAddress()))
+                    .and(Tables.content.chainId, isEqualTo(account.getChainId()));
         }
 
         if (builder == null) throw new SQLException();
