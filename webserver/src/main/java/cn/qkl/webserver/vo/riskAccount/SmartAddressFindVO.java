@@ -33,6 +33,6 @@ public class SmartAddressFindVO {
     private String note;
 
     @ApiModelProperty("地址表-流入总额")
-    private Long fromAmount;
+    private BigDecimal fromAmount;
 
 }

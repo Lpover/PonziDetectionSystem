@@ -370,7 +370,7 @@ public class RiskAccountService {
                 String formattedUpdateTime = dateFormat.format(task.getUpdateTime());
                 String formattedCreateTime = dateFormat.format(task.getCreateTime());
 
-                String row = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d\n",
+                String row = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%.2f,%.2f,%d,%d,%d,%d\n",
                         task.getChainName(), task.getProtocols(), task.getAddress(),
                         task.getCurrencyBalance(), task.getLabel(), task.getNote(),
                         formattedUpdateTime, formattedCreateTime, task.getFromAmount(),

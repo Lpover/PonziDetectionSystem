@@ -2,6 +2,7 @@ package cn.qkl.webserver.vo.riskAccount;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -30,9 +31,9 @@ public class ExportCSVVO {
     //创建时间-首次交易时间
     private Date createTime;
     //转入总金额
-    private Long fromAmount;
+    private BigDecimal fromAmount;
     //转出总金额
-    private Long toAmount;
+    private BigDecimal toAmount;
     //转入笔数
     private Long fromNum;
     //转出笔数

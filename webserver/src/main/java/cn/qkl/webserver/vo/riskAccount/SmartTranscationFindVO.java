@@ -30,7 +30,7 @@ public class SmartTranscationFindVO {
     private Integer toRiskIndex;
 
     @ApiModelProperty("交易表-交易金额")
-    private Long txAmount;
+    private BigDecimal txAmount;
 
     @ApiModelProperty("交易表-交易笔数")
     private Long txNum;
