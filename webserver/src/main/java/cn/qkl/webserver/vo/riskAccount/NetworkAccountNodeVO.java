@@ -1,5 +1,6 @@
 package cn.qkl.webserver.vo.riskAccount;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -8,6 +9,7 @@ import lombok.Data;
  * @Date 2023/9/4 18:18
  **/
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class NetworkAccountNodeVO {
     @ApiModelProperty("账户ID")
     private Long id;

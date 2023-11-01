@@ -4,6 +4,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.framework.util.FunctionUtil;
 import cn.qkl.common.framework.util.OssUtil;
+import cn.qkl.common.framework.util.SnowflakeIdUtil;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.mapper.AccountDynamicSqlSupport;
 import cn.qkl.common.repository.mapper.AccountTxHistoryMapper;
@@ -153,7 +154,13 @@ public class RiskAccountService {
         HashMap<Long,NetworkAccountNodeVO> hashMap = new HashMap<>();
         for (NetworkAccountEdgeVO edge:edges) {
             NetworkAccountNodeVO toVo = FunctionUtil.apply(new NetworkAccountNodeVO(), it-> {
-                it.setId(edge.getToAccountId());
+                if (edge.getToAccountId() == null) {
+                    Long generateId = SnowflakeIdUtil.generateId();
+                    it.setId(generateId);
+                    edge.setToAccountId(generateId);
+                } else {
+                    it.setId(edge.getToAccountId());
+                }
                 it.setLabel(edge.getTo());
                 it.setRiskIndex(edge.getToRiskIndex());
             });
@@ -161,7 +168,13 @@ public class RiskAccountService {
                 hashMap.put(toVo.getId(),toVo);
             }
             NetworkAccountNodeVO fromVo = FunctionUtil.apply(new NetworkAccountNodeVO(), it -> {
-                it.setId(edge.getFromAccountId());
+                if (edge.getFromAccountId() == null) {
+                    Long generateId = SnowflakeIdUtil.generateId();
+                    it.setId(generateId);
+                    edge.setFromAccountId(generateId);
+                } else {
+                    it.setId(edge.getFromAccountId());
+                }
                 it.setLabel(edge.getFrom());
                 it.setRiskIndex(edge.getFromRiskIndex());
             });

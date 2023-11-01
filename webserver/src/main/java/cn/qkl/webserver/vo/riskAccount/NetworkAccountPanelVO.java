@@ -1,5 +1,6 @@
 package cn.qkl.webserver.vo.riskAccount;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -11,6 +12,7 @@ import java.util.List;
  **/
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class NetworkAccountPanelVO {
     @ApiModelProperty("中心账户主鍵ID")
     private Long accountId;
