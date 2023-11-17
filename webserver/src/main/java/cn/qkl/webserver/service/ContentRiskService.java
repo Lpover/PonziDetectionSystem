@@ -19,7 +19,9 @@ import cn.qkl.webserver.dao.ContentRiskDao;
 import cn.qkl.webserver.dao.EvidenceWebDao;
 import cn.qkl.webserver.dto.contenrisk.ContentBatchEvidenceDTO;
 import cn.qkl.webserver.dto.contenrisk.ContentRiskInfoDTO;
+import cn.qkl.webserver.dto.contenrisk.ContentStatisticanInfoDTO;
 import cn.qkl.webserver.vo.contentRisk.ContentRiskInfoVO;
+import cn.qkl.webserver.vo.contentRisk.ContentStatistcianInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
 import org.mybatis.dynamic.sql.select.QueryExpressionDSL;
@@ -228,4 +230,35 @@ public class ContentRiskService {
         // 切换成 已固证 状态
         contentDao.update(c->c.set(Tables.content.evidenceStatus).equalTo(2).where(Tables.content.id, isEqualTo(item.getId())));
     }
+
+    public ContentStatistcianInfoVO getContentStatistcianInfo(ContentStatisticanInfoDTO dto) {
+        // 假设 ContentRiskDao 被注入或者通过自动装配
+        Long riskNum = 0L;
+        riskNum = contentRiskDao.countContentByRiskLevelGreaterThanorEqual(1);
+
+        Long riskAccount = 0L;
+        riskAccount = contentRiskDao.countAccountByRiskLevelGreaterThanOrEqual(0);
+
+        // 假设 ContentRiskDao 被注入或者通过自动装配
+        Long riskPlatform = 0L;
+        riskPlatform = contentRiskDao.countPlatformByRiskLevelGreaterThanOrEqual(0);
+
+        Long riskEvidence = 0L;
+        riskEvidence = contentRiskDao.countRiskEvidence();
+
+        // 其他统计逻辑，根据需要查询风险账户数量、风险平台数量、风险取证数量等
+
+        // 创建 ContentStatistcianInfoVO 对象并设置值
+        ContentStatistcianInfoVO statisticianInfoVO = new ContentStatistcianInfoVO();
+        statisticianInfoVO.setRiskNum(riskNum);
+        statisticianInfoVO.setRiskAccount(riskAccount);
+        statisticianInfoVO.setRiskPlatform(riskPlatform);
+        statisticianInfoVO.setRiskEvidence(riskEvidence);
+        // 设置其他字段...
+
+        return statisticianInfoVO;
+    }
+
+
+
 }

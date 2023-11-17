@@ -139,6 +139,7 @@ public class AccountService {
         SelectStatementProvider provider = builder.build().render(RenderingStrategies.MYBATIS3);
         return PageVO.getPageData(dto.getPageId(), dto.getPageSize(),
                 () -> accountDao.getAccountContent(provider)
+
         );
 
     }

@@ -6,8 +6,10 @@ import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.common.auth.RoleEnum;
 import cn.qkl.webserver.dto.contenrisk.ContentBatchEvidenceDTO;
 import cn.qkl.webserver.dto.contenrisk.ContentRiskInfoDTO;
+import cn.qkl.webserver.dto.contenrisk.ContentStatisticanInfoDTO;
 import cn.qkl.webserver.service.ContentRiskService;
 import cn.qkl.webserver.vo.contentRisk.ContentRiskInfoVO;
+import cn.qkl.webserver.vo.contentRisk.ContentStatistcianInfoVO;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -50,6 +52,12 @@ public class ContentRiskController {
     public BaseResult<Void> batchEvidence(@RequestBody @Validated ContentBatchEvidenceDTO dto) throws IOException, NoSuchAlgorithmException {
         contentRiskService.batchReinforce(dto);
         return BaseResult.ok();
+    }
+
+    @ApiOperation("最新风险统计")
+    @GetMapping("contentrisk/statistician")
+    public BaseResult<ContentStatistcianInfoVO> getContentStatistcianInfo(@Validated ContentStatisticanInfoDTO dto) {
+        return BaseResult.ok(contentRiskService.getContentStatistcianInfo(dto));
     }
 
 }
