@@ -113,8 +113,6 @@ public class UploadToChainUtil {
             e.printStackTrace();
         }
 
-        System.out.println("txhash====" + txHash);
-        System.out.println("txtime====" + txTime);
         res = new ArrayList<>();
         res.add(txHash);
         res.add(txTime);

@@ -22,8 +22,12 @@ public class ContentRiskReviseVO {
     private String algorithmName;
     @ApiModelProperty("算法准确率")
     private BigDecimal recognitionRate;
-    @ApiModelProperty("识别结果：0静态 1动态")
+    @ApiModelProperty("识别结果：0静态 1读动态 2写动态")
     private String dynamicType;
+    @ApiModelProperty("跨链算法模型")
+    private String crossModelName;
+    @ApiModelProperty("是否跨链 0否 1是")
+    private int crossRes;
 
     public static ContentRiskReviseVO transform(ContentRiskReviseVO vo) {
         String[] split = vo.getContentTag().split(",");

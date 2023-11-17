@@ -11,6 +11,9 @@ public class ContentCross {
     private String name;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Long contentId;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String metaurl;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -59,6 +62,9 @@ public class ContentCross {
     private Integer riskLevel;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String crossAlgorithm;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Date createTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -94,6 +100,22 @@ public class ContentCross {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Long getContentId() {
+        return contentId;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public ContentCross withContentId(Long contentId) {
+        this.setContentId(contentId);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setContentId(Long contentId) {
+        this.contentId = contentId;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -353,6 +375,22 @@ public class ContentCross {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getCrossAlgorithm() {
+        return crossAlgorithm;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public ContentCross withCrossAlgorithm(String crossAlgorithm) {
+        this.setCrossAlgorithm(crossAlgorithm);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setCrossAlgorithm(String crossAlgorithm) {
+        this.crossAlgorithm = crossAlgorithm;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Date getCreateTime() {
         return createTime;
     }
@@ -393,6 +431,7 @@ public class ContentCross {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", name=").append(name);
+        sb.append(", contentId=").append(contentId);
         sb.append(", metaurl=").append(metaurl);
         sb.append(", chainId=").append(chainId);
         sb.append(", address=").append(address);
@@ -409,6 +448,7 @@ public class ContentCross {
         sb.append(", bridge=").append(bridge);
         sb.append(", dynamicType=").append(dynamicType);
         sb.append(", riskLevel=").append(riskLevel);
+        sb.append(", crossAlgorithm=").append(crossAlgorithm);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append("]");

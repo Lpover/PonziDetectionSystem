@@ -8,7 +8,6 @@ import cn.qkl.webserver.common.enums.ContentRiskLevelEnum;
 import cn.qkl.webserver.dto.cross.CrossContentListQueryDTO;
 import cn.qkl.webserver.vo.cross.CrossContentVO;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.mybatis.dynamic.sql.SqlBuilder;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;

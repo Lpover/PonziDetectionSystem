@@ -7,9 +7,11 @@ import cn.qkl.common.framework.util.OssUtil;
 import cn.qkl.common.framework.util.UploadToChainUtil;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.Content;
+import cn.qkl.common.repository.model.ContentCross;
 import cn.qkl.common.repository.model.EvidenceWeb;
 import cn.qkl.webserver.common.enums.ChainEnum;
 import cn.qkl.webserver.common.enums.EvidenceTypeEnum;
+import cn.qkl.webserver.dao.ContentCrossDao;
 import cn.qkl.webserver.dao.ContentDao;
 import cn.qkl.webserver.dao.ContentRiskDao;
 import cn.qkl.webserver.dao.EvidenceWebDao;
@@ -65,6 +67,9 @@ public class DetailService {
     @Autowired
     private UploadToChainUtil uploadToChainUtil;
 
+    @Autowired
+    private ContentCrossDao contentCrossDao;
+
     public ContentInfoVO getContentInfo(ContentInfoDTO dto) {
         return contentDao.getContentDetail(
                 select(Tables.content.name, Tables.content.address, Tables.content.tokenid,
@@ -80,6 +85,7 @@ public class DetailService {
     }
 
     public PageVO<ContentHistoryVO> getContentTxHistory(ContentHistoryDTO dto) {
+
         return PageVO.getPageData(dto.getPageId(), dto.getPageSize(), () -> contentDao.getContentTxHistoryList(
                 select(Tables.contentTxHistory.id, Tables.contentTxHistory.event, Tables.contentTxHistory.from, Tables.contentTxHistory.to,
                         Tables.contentTxHistory.ownerLogo, Tables.contentTxHistory.createTime)
@@ -93,7 +99,12 @@ public class DetailService {
 
     public ContentRiskReviseVO getReviseRiskInfo(ContentRiskReviseInfoDTO dto) {
 //        ContentRiskReviseVO contentRiskReviseVO;
-        return ContentRiskReviseVO.transform(contentDao.getCotentRiskRevise(
+        Integer crossRes = 0;
+        List<ContentCross> selectRes = contentCrossDao.select(c -> c.where(Tables.contentCross.contentId, isEqualTo(dto.getContentID())));
+        if (!selectRes.isEmpty()) {
+            crossRes = 1;
+        }
+        ContentRiskReviseVO contentRiskReviseVO = ContentRiskReviseVO.transform(contentDao.getCotentRiskRevise(
                 select(Tables.content.riskLevel, Tables.content.contentType, Tables.content.contentTag,
                         Tables.algorithm.name.as("algorithmName"), Tables.algorithm.recognitionRate, Tables.content.dynamicType)
                         .from(Tables.content)
@@ -101,12 +112,24 @@ public class DetailService {
                         .where(Tables.content.id, isEqualTo(dto.getContentID()))
                         .build()
                         .render(RenderingStrategies.MYBATIS3)));
-
+        contentRiskReviseVO.setCrossRes(crossRes);
+        // 跨链算法确定后，修改此字段为Tables.contentCross.crossAlgorithm
+        contentRiskReviseVO.setCrossModelName("跨链监测模型V1");
+        return contentRiskReviseVO;
     }
 
+    // 人工修正动态识别结果和风险等级
     public void manualReviseRisk(ContentRiskReviseDTO dto) {
         contentDao.update(c -> c
-                .set(Tables.content.dynamicType).equalTo(0)
+                .set(Tables.content.dynamicType).equalTo(dto.getDynamicType())
+                .where(Tables.content.id, isEqualTo(dto.getContentID()))
+        );
+        contentDao.update(c -> c
+                .set(Tables.content.riskLevel).equalTo(dto.getRiskLevel())
+                .where(Tables.content.id, isEqualTo(dto.getContentID()))
+        );
+        contentDao.update(c -> c
+                .set(Tables.content.revised).equalTo(1)
                 .where(Tables.content.id, isEqualTo(dto.getContentID()))
         );
     }

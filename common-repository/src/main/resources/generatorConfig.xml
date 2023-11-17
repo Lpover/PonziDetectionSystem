@@ -23,10 +23,10 @@
                              targetProject="src/main/java"/>
 <!--        <table tableName="account" domainObjectName="Account">-->
 <!--        </table>-->
-        <table tableName="account_check_history" domainObjectName="AccountCheckHistory">
-        </table>
-        <table tableName="account_content" domainObjectName="AccountContent">
-        </table>
+<!--        <table tableName="account_check_history" domainObjectName="AccountCheckHistory">-->
+<!--        </table>-->
+<!--        <table tableName="account_content" domainObjectName="AccountContent">-->
+<!--        </table>-->
 <!--        <table tableName="account_tx_history" domainObjectName="AccountTxHistory">-->
 <!--        </table>-->
 <!--        <table tableName="algorithm" domainObjectName="Algorithm">-->
@@ -39,8 +39,8 @@
 <!--        </table>-->
 <!--        <table tableName="content" domainObjectName="Content">-->
 <!--        </table>-->
-<!--        <table tableName="content_cross" domainObjectName="ContentCross">-->
-<!--        </table>-->
+        <table tableName="content_cross" domainObjectName="ContentCross">
+        </table>
 <!--        <table tableName="content_cross_daily_statistics" domainObjectName="ContentCrossDailyStatistics">-->
 <!--        </table>-->
 <!--        <table tableName="content_risk" domainObjectName="ContentRisk">-->
@@ -51,8 +51,8 @@
 <!--        </table>-->
 <!--        <table tableName="dynamic_monitor" domainObjectName="DynamicMonitor">-->
 <!--        </table>-->
-        <table tableName="platform" domainObjectName="Platform">
-        </table>
+<!--        <table tableName="platform" domainObjectName="Platform">-->
+<!--        </table>-->
 <!--        <table tableName="platform_daily_statistics" domainObjectName="PlatformDailyStatistics">-->
 <!--        </table>-->
 <!--        <table tableName="risk_report" domainObjectName="RiskReport">-->

@@ -102,6 +102,7 @@ public class EvidenceService {
 
     // 网页截图
     public void webCapture(String url, String name, Long id) {
+        // todo stream close
         File imageFile = null;
         try {
             ImageRenderer render = new ImageRenderer();
@@ -116,6 +117,7 @@ public class EvidenceService {
             String fileName = "web" + id.toString() + ".png";
             String webOssPath = ossUtil.uploadImage(bufferedImage, fileName);
             // 更新webOssPath字段
+
             evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.webOssPath).equalTo(webOssPath).where(Tables.evidenceWeb.id, isEqualTo(id)));
             evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.updateTime).equalTo(new Date()).where(Tables.evidenceWeb.id,isEqualTo(id)));
             evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.evidencePhase).equalTo(1).where(Tables.evidenceWeb.id,isEqualTo(id)));
@@ -286,6 +288,7 @@ public class EvidenceService {
             throw new RuntimeException(e);
         }
         // 计算hash并上链
+        // todo 错误处理 数据一致性
         String digest = null;
         try {
             digest = uploadToChainUtil.calculateHash(webStream, "MD5");

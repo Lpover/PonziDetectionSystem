@@ -1,12 +1,8 @@
 package cn.qkl.webserver.vo.contentDetection;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.qkl.common.repository.model.Content;
-import cn.qkl.webserver.common.enums.ContentRiskCategoryEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.annotation.Generated;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,6 +53,9 @@ public class ContentDetectionInfoVO {
 
     @ApiModelProperty("更新时间")
     private Date updateTime;
+
+    @ApiModelProperty("是否人工修正 0未修正 1已修正")
+    private Integer revised;
 
     public static ContentDetectionInfoVO transform(ContentDetectionInfoVO vo) {
         //string contentTag转化为List<Integer>

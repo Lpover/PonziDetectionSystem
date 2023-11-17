@@ -1,4 +1,5 @@
 package cn.qkl.webserver.service;
+
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.ContentRisk;
@@ -13,7 +14,6 @@ import cn.qkl.webserver.vo.contentDetection.ContentDetectionInfoVO;
 import cn.qkl.webserver.vo.contentDetection.ContentTagsVO;
 import cn.qkl.webserver.vo.contentDetection.PlatformDistributionVO;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.jsqlparser.statement.select.Select;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -22,7 +22,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.mybatis.dynamic.sql.SqlBuilder.*;
+import static org.mybatis.dynamic.sql.SqlBuilder.equalTo;
+import static org.mybatis.dynamic.sql.SqlBuilder.select;
 
 
 /**
@@ -49,7 +50,8 @@ public class ContentDetectionService {
                 ()->contentDetectionDao.getContentDetectionList(
                         select(Tables.content.id,Tables.content.name,Tables.platform.logo,Tables.platform.name.as("platformName"),Tables.platform.url,
                                 Tables.content.owner,Tables.platform.platformType,Tables.content.contentTag,Tables.content.dynamicType,
-                                Tables.content.riskLevel,Tables.content.updateTime,Tables.content.address)
+                                Tables.content.riskLevel,Tables.content.updateTime,Tables.content.address,
+                                Tables.content.revised)
                                 .from(Tables.content)
                                 .leftJoin(Tables.platform).on(Tables.content.platformId,equalTo(Tables.platform.id))
                                 .orderBy(Tables.content.updateTime)

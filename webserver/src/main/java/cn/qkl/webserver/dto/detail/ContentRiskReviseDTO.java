@@ -13,4 +13,13 @@ public class ContentRiskReviseDTO {
     @ApiModelProperty("数字内容id")
     @NotNull
     private Long contentID;
+
+    @ApiModelProperty("风险评级 0无风险 1低风险 2中风险 3高风险")
+    @NotNull
+    private Integer riskLevel;
+
+    @ApiModelProperty("人工识别结果 是否动态 0静态 1读动态 2写动态")
+    @NotNull
+    private Integer dynamicType;
+
 }

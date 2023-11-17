@@ -17,6 +17,9 @@ public final class ContentCrossDynamicSqlSupport {
     public static final SqlColumn<String> name = contentCross.name;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Long> contentId = contentCross.contentId;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> metaurl = contentCross.metaurl;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -65,6 +68,9 @@ public final class ContentCrossDynamicSqlSupport {
     public static final SqlColumn<Integer> riskLevel = contentCross.riskLevel;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> crossAlgorithm = contentCross.crossAlgorithm;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Date> createTime = contentCross.createTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -75,6 +81,8 @@ public final class ContentCrossDynamicSqlSupport {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
         public final SqlColumn<String> name = column("`name`", JDBCType.VARCHAR);
+
+        public final SqlColumn<Long> contentId = column("content_id", JDBCType.BIGINT);
 
         public final SqlColumn<String> metaurl = column("metaUrl", JDBCType.VARCHAR);
 
@@ -107,6 +115,8 @@ public final class ContentCrossDynamicSqlSupport {
         public final SqlColumn<Integer> dynamicType = column("dynamic_type", JDBCType.INTEGER);
 
         public final SqlColumn<Integer> riskLevel = column("risk_level", JDBCType.INTEGER);
+
+        public final SqlColumn<String> crossAlgorithm = column("cross_algorithm", JDBCType.VARCHAR);
 
         public final SqlColumn<Date> createTime = column("create_time", JDBCType.TIMESTAMP);
 

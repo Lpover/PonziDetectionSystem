@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface ContentCrossMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, name, metaurl, chainId, address, hash, tokenId, accountId, startTime, dstChainId, dstAddress, dstHash, dstTokenId, dstAccountId, endTime, bridge, dynamicType, riskLevel, createTime, updateTime);
+    BasicColumn[] selectList = BasicColumn.columnList(id, name, contentId, metaurl, chainId, address, hash, tokenId, accountId, startTime, dstChainId, dstAddress, dstHash, dstTokenId, dstAccountId, endTime, bridge, dynamicType, riskLevel, crossAlgorithm, createTime, updateTime);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -63,6 +63,7 @@ public interface ContentCrossMapper {
     @Results(id="ContentCrossResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
+        @Result(column="content_id", property="contentId", jdbcType=JdbcType.BIGINT),
         @Result(column="metaUrl", property="metaurl", jdbcType=JdbcType.VARCHAR),
         @Result(column="chain_id", property="chainId", jdbcType=JdbcType.BIGINT),
         @Result(column="address", property="address", jdbcType=JdbcType.VARCHAR),
@@ -79,6 +80,7 @@ public interface ContentCrossMapper {
         @Result(column="bridge", property="bridge", jdbcType=JdbcType.INTEGER),
         @Result(column="dynamic_type", property="dynamicType", jdbcType=JdbcType.INTEGER),
         @Result(column="risk_level", property="riskLevel", jdbcType=JdbcType.INTEGER),
+        @Result(column="cross_algorithm", property="crossAlgorithm", jdbcType=JdbcType.VARCHAR),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
     })
@@ -110,6 +112,7 @@ public interface ContentCrossMapper {
         return MyBatis3Utils.insert(this::insert, record, contentCross, c ->
             c.map(id).toProperty("id")
             .map(name).toProperty("name")
+            .map(contentId).toProperty("contentId")
             .map(metaurl).toProperty("metaurl")
             .map(chainId).toProperty("chainId")
             .map(address).toProperty("address")
@@ -126,6 +129,7 @@ public interface ContentCrossMapper {
             .map(bridge).toProperty("bridge")
             .map(dynamicType).toProperty("dynamicType")
             .map(riskLevel).toProperty("riskLevel")
+            .map(crossAlgorithm).toProperty("crossAlgorithm")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
         );
@@ -136,6 +140,7 @@ public interface ContentCrossMapper {
         return MyBatis3Utils.insertMultiple(this::insertMultiple, records, contentCross, c ->
             c.map(id).toProperty("id")
             .map(name).toProperty("name")
+            .map(contentId).toProperty("contentId")
             .map(metaurl).toProperty("metaurl")
             .map(chainId).toProperty("chainId")
             .map(address).toProperty("address")
@@ -152,6 +157,7 @@ public interface ContentCrossMapper {
             .map(bridge).toProperty("bridge")
             .map(dynamicType).toProperty("dynamicType")
             .map(riskLevel).toProperty("riskLevel")
+            .map(crossAlgorithm).toProperty("crossAlgorithm")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
         );
@@ -162,6 +168,7 @@ public interface ContentCrossMapper {
         return MyBatis3Utils.insert(this::insert, record, contentCross, c ->
             c.map(id).toPropertyWhenPresent("id", record::getId)
             .map(name).toPropertyWhenPresent("name", record::getName)
+            .map(contentId).toPropertyWhenPresent("contentId", record::getContentId)
             .map(metaurl).toPropertyWhenPresent("metaurl", record::getMetaurl)
             .map(chainId).toPropertyWhenPresent("chainId", record::getChainId)
             .map(address).toPropertyWhenPresent("address", record::getAddress)
@@ -178,6 +185,7 @@ public interface ContentCrossMapper {
             .map(bridge).toPropertyWhenPresent("bridge", record::getBridge)
             .map(dynamicType).toPropertyWhenPresent("dynamicType", record::getDynamicType)
             .map(riskLevel).toPropertyWhenPresent("riskLevel", record::getRiskLevel)
+            .map(crossAlgorithm).toPropertyWhenPresent("crossAlgorithm", record::getCrossAlgorithm)
             .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
             .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
         );
@@ -214,6 +222,7 @@ public interface ContentCrossMapper {
     static UpdateDSL<UpdateModel> updateAllColumns(ContentCross record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalTo(record::getId)
                 .set(name).equalTo(record::getName)
+                .set(contentId).equalTo(record::getContentId)
                 .set(metaurl).equalTo(record::getMetaurl)
                 .set(chainId).equalTo(record::getChainId)
                 .set(address).equalTo(record::getAddress)
@@ -230,6 +239,7 @@ public interface ContentCrossMapper {
                 .set(bridge).equalTo(record::getBridge)
                 .set(dynamicType).equalTo(record::getDynamicType)
                 .set(riskLevel).equalTo(record::getRiskLevel)
+                .set(crossAlgorithm).equalTo(record::getCrossAlgorithm)
                 .set(createTime).equalTo(record::getCreateTime)
                 .set(updateTime).equalTo(record::getUpdateTime);
     }
@@ -238,6 +248,7 @@ public interface ContentCrossMapper {
     static UpdateDSL<UpdateModel> updateSelectiveColumns(ContentCross record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalToWhenPresent(record::getId)
                 .set(name).equalToWhenPresent(record::getName)
+                .set(contentId).equalToWhenPresent(record::getContentId)
                 .set(metaurl).equalToWhenPresent(record::getMetaurl)
                 .set(chainId).equalToWhenPresent(record::getChainId)
                 .set(address).equalToWhenPresent(record::getAddress)
@@ -254,6 +265,7 @@ public interface ContentCrossMapper {
                 .set(bridge).equalToWhenPresent(record::getBridge)
                 .set(dynamicType).equalToWhenPresent(record::getDynamicType)
                 .set(riskLevel).equalToWhenPresent(record::getRiskLevel)
+                .set(crossAlgorithm).equalToWhenPresent(record::getCrossAlgorithm)
                 .set(createTime).equalToWhenPresent(record::getCreateTime)
                 .set(updateTime).equalToWhenPresent(record::getUpdateTime);
     }
@@ -262,6 +274,7 @@ public interface ContentCrossMapper {
     default int updateByPrimaryKey(ContentCross record) {
         return update(c ->
             c.set(name).equalTo(record::getName)
+            .set(contentId).equalTo(record::getContentId)
             .set(metaurl).equalTo(record::getMetaurl)
             .set(chainId).equalTo(record::getChainId)
             .set(address).equalTo(record::getAddress)
@@ -278,6 +291,7 @@ public interface ContentCrossMapper {
             .set(bridge).equalTo(record::getBridge)
             .set(dynamicType).equalTo(record::getDynamicType)
             .set(riskLevel).equalTo(record::getRiskLevel)
+            .set(crossAlgorithm).equalTo(record::getCrossAlgorithm)
             .set(createTime).equalTo(record::getCreateTime)
             .set(updateTime).equalTo(record::getUpdateTime)
             .where(id, isEqualTo(record::getId))
@@ -288,6 +302,7 @@ public interface ContentCrossMapper {
     default int updateByPrimaryKeySelective(ContentCross record) {
         return update(c ->
             c.set(name).equalToWhenPresent(record::getName)
+            .set(contentId).equalToWhenPresent(record::getContentId)
             .set(metaurl).equalToWhenPresent(record::getMetaurl)
             .set(chainId).equalToWhenPresent(record::getChainId)
             .set(address).equalToWhenPresent(record::getAddress)
@@ -304,6 +319,7 @@ public interface ContentCrossMapper {
             .set(bridge).equalToWhenPresent(record::getBridge)
             .set(dynamicType).equalToWhenPresent(record::getDynamicType)
             .set(riskLevel).equalToWhenPresent(record::getRiskLevel)
+            .set(crossAlgorithm).equalToWhenPresent(record::getCrossAlgorithm)
             .set(createTime).equalToWhenPresent(record::getCreateTime)
             .set(updateTime).equalToWhenPresent(record::getUpdateTime)
             .where(id, isEqualTo(record::getId))

@@ -30,7 +30,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @Validated
-@Api(value = "风险检测相关接口", tags = {"风险检测相关接口"})
+@Api(value = "内容监测页面 本地数据相关接口", tags = {"内容监测页面 本地数据相关接口"})
 @ApiSupport(author = "lpc")
 @RequestMapping("contentdetection")
 @RefreshScope
@@ -40,7 +40,7 @@ public class ContentDetectionController {
     @Autowired
     ContentDetectionService contentDetectionService;
 
-    @ApiOperation("获取分页列表信息")
+    @ApiOperation("内容监测 本地数据页 获取分页列表信息")
     @GetMapping("contentdetection/info")
     public BaseResult<PageVO<ContentDetectionInfoVO>> getContentDetectionInfo(@Validated ContentDetectionListQueryDTO dto) {
         return BaseResult.ok(contentDetectionService.getContentDetectionList(dto));
