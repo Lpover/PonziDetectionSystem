@@ -136,7 +136,8 @@ public class DetailService {
 
     public PageVO<ContentDynamicMonitorVO> getDynamicMonitor(ContentDynamicMonitorDTO dto) {
         return PageVO.getPageData(dto.getPageId(), dto.getPageSize(), () -> contentDao.getDynamicMonitor(
-                select(Tables.dynamicMonitor.id, Tables.dynamicMonitor.riskLevel, Tables.dynamicMonitor.contentTag, Tables.dynamicMonitor.createTime)
+                select(Tables.dynamicMonitor.id, Tables.dynamicMonitor.riskLevel, Tables.dynamicMonitor.contentTag, Tables.dynamicMonitor.createTime
+                    ,Tables.dynamicMonitor.character)
                         .from(Tables.dynamicMonitor)
                         .where(Tables.dynamicMonitor.contentId, isEqualTo(dto.getContentID()))
                         .build()

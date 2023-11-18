@@ -23,6 +23,9 @@ public class DynamicMonitor {
     private Date updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer character;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
@@ -118,6 +121,22 @@ public class DynamicMonitor {
         this.updateTime = updateTime;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getCharacter() {
+        return character;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public DynamicMonitor withCharacter(Integer character) {
+        this.setCharacter(character);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setCharacter(Integer character) {
+        this.character = character;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -131,6 +150,7 @@ public class DynamicMonitor {
         sb.append(", contentTag=").append(contentTag);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", character=").append(character);
         sb.append("]");
         return sb.toString();
     }

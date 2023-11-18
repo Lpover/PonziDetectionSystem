@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface DynamicMonitorMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, contentId, riskLevel, contentTag, createTime, updateTime);
+    BasicColumn[] selectList = BasicColumn.columnList(id, contentId, riskLevel, contentTag, createTime, updateTime, character);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -66,7 +66,8 @@ public interface DynamicMonitorMapper {
         @Result(column="risk_level", property="riskLevel", jdbcType=JdbcType.INTEGER),
         @Result(column="content_tag", property="contentTag", jdbcType=JdbcType.VARCHAR),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
+        @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="character", property="character", jdbcType=JdbcType.INTEGER)
     })
     List<DynamicMonitor> selectMany(SelectStatementProvider selectStatement);
 
@@ -100,6 +101,7 @@ public interface DynamicMonitorMapper {
             .map(contentTag).toProperty("contentTag")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
+            .map(character).toProperty("character")
         );
     }
 
@@ -112,6 +114,7 @@ public interface DynamicMonitorMapper {
             .map(contentTag).toProperty("contentTag")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
+            .map(character).toProperty("character")
         );
     }
 
@@ -124,6 +127,7 @@ public interface DynamicMonitorMapper {
             .map(contentTag).toPropertyWhenPresent("contentTag", record::getContentTag)
             .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
             .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
+            .map(character).toPropertyWhenPresent("character", record::getCharacter)
         );
     }
 
@@ -161,7 +165,8 @@ public interface DynamicMonitorMapper {
                 .set(riskLevel).equalTo(record::getRiskLevel)
                 .set(contentTag).equalTo(record::getContentTag)
                 .set(createTime).equalTo(record::getCreateTime)
-                .set(updateTime).equalTo(record::getUpdateTime);
+                .set(updateTime).equalTo(record::getUpdateTime)
+                .set(character).equalTo(record::getCharacter);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -171,7 +176,8 @@ public interface DynamicMonitorMapper {
                 .set(riskLevel).equalToWhenPresent(record::getRiskLevel)
                 .set(contentTag).equalToWhenPresent(record::getContentTag)
                 .set(createTime).equalToWhenPresent(record::getCreateTime)
-                .set(updateTime).equalToWhenPresent(record::getUpdateTime);
+                .set(updateTime).equalToWhenPresent(record::getUpdateTime)
+                .set(character).equalToWhenPresent(record::getCharacter);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -182,6 +188,7 @@ public interface DynamicMonitorMapper {
             .set(contentTag).equalTo(record::getContentTag)
             .set(createTime).equalTo(record::getCreateTime)
             .set(updateTime).equalTo(record::getUpdateTime)
+            .set(character).equalTo(record::getCharacter)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -194,6 +201,7 @@ public interface DynamicMonitorMapper {
             .set(contentTag).equalToWhenPresent(record::getContentTag)
             .set(createTime).equalToWhenPresent(record::getCreateTime)
             .set(updateTime).equalToWhenPresent(record::getUpdateTime)
+            .set(character).equalToWhenPresent(record::getCharacter)
             .where(id, isEqualTo(record::getId))
         );
     }

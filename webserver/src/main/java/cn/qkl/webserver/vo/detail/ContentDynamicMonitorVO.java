@@ -21,12 +21,39 @@ public class ContentDynamicMonitorVO {
     private List<String> contentTagList;
     @ApiModelProperty("监测到的变更时间")
     private String createTime;
+    @ApiModelProperty("监测的角色，0-模型，1-人工")
+    private Integer character;
 
+//    public static ContentDynamicMonitorVO transform(ContentDynamicMonitorVO vo) {
+//        String[] split = vo.getContentTag().split(",");
+//        ArrayList<String> list = new ArrayList<>();
+//        for (String s : split) {
+//            list.add(ContentRiskCategoryEnum.valueOf(Integer.parseInt(s)).getDescription());
+//        }
+//        vo.setContentTagList(list);
+//        return vo;
+//    }
     public static ContentDynamicMonitorVO transform(ContentDynamicMonitorVO vo) {
         String[] split = vo.getContentTag().split(",");
         ArrayList<String> list = new ArrayList<>();
         for (String s : split) {
-            list.add(ContentRiskCategoryEnum.valueOf(Integer.parseInt(s)).getDescription());
+            int enumValue = Integer.parseInt(s);
+            String description;
+            switch (enumValue) {
+                case 0:
+                    description = "静态";
+                    break;
+                case 1:
+                    description = "动态";
+                    break;
+                case 2:
+                    description = "跨链";
+                    break;
+                default:
+                    description = "Unknown"; // Handle unknown values if needed
+                    break;
+            }
+            list.add(description);
         }
         vo.setContentTagList(list);
         return vo;
