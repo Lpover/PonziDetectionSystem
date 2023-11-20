@@ -102,6 +102,12 @@ public final class ContentDynamicSqlSupport {
     public static final SqlColumn<Integer> evidenceStatus = content.evidenceStatus;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Integer> dynamicTypeArtificial = content.dynamicTypeArtificial;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Date> reviseTime = content.reviseTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class Content extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -162,6 +168,10 @@ public final class ContentDynamicSqlSupport {
         public final SqlColumn<BigDecimal> currencyPriceRanking = column("currency_price_ranking", JDBCType.DECIMAL);
 
         public final SqlColumn<Integer> evidenceStatus = column("evidence_status", JDBCType.INTEGER);
+
+        public final SqlColumn<Integer> dynamicTypeArtificial = column("dynamic_type_artificial", JDBCType.INTEGER);
+
+        public final SqlColumn<Date> reviseTime = column("revise_time", JDBCType.TIMESTAMP);
 
         public Content() {
             super("content");

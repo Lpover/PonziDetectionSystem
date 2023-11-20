@@ -96,6 +96,12 @@ public class Content {
     private Integer evidenceStatus;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer dynamicTypeArtificial;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Date reviseTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
@@ -575,6 +581,38 @@ public class Content {
         this.evidenceStatus = evidenceStatus;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getDynamicTypeArtificial() {
+        return dynamicTypeArtificial;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Content withDynamicTypeArtificial(Integer dynamicTypeArtificial) {
+        this.setDynamicTypeArtificial(dynamicTypeArtificial);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setDynamicTypeArtificial(Integer dynamicTypeArtificial) {
+        this.dynamicTypeArtificial = dynamicTypeArtificial;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Date getReviseTime() {
+        return reviseTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Content withReviseTime(Date reviseTime) {
+        this.setReviseTime(reviseTime);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setReviseTime(Date reviseTime) {
+        this.reviseTime = reviseTime;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -612,6 +650,8 @@ public class Content {
         sb.append(", hotNum24h=").append(hotNum24h);
         sb.append(", currencyPriceRanking=").append(currencyPriceRanking);
         sb.append(", evidenceStatus=").append(evidenceStatus);
+        sb.append(", dynamicTypeArtificial=").append(dynamicTypeArtificial);
+        sb.append(", reviseTime=").append(reviseTime);
         sb.append("]");
         return sb.toString();
     }
