@@ -15,9 +15,9 @@ public class ContentDynamicMonitorVO {
     private Long id;
     @ApiModelProperty("数字内容风险评级：0低 1中 2高风险")
     private Integer riskLevel;
-    @ApiModelProperty("内容标签，逗号隔开每个标签")
+    @ApiModelProperty("内容标签，用逗号隔开每个标签，0静态 1读动态 2写动态 10跨链")
     private String contentTag;
-    @ApiModelProperty("内容标签列表")
+    @ApiModelProperty("内容标签列表，用逗号隔开每个标签，0静态 1读动态 2写动态 10跨链")
     private List<String> contentTagList;
     @ApiModelProperty("监测到的变更时间")
     private String createTime;
@@ -44,11 +44,13 @@ public class ContentDynamicMonitorVO {
                     description = "静态";
                     break;
                 case 1:
-                    description = "动态";
+                    description = "读动态";
                     break;
                 case 2:
-                    description = "跨链";
+                    description = "写动态";
                     break;
+                case 10:
+                    description = "跨链";
                 default:
                     description = "Unknown"; // Handle unknown values if needed
                     break;
