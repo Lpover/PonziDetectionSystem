@@ -3,7 +3,7 @@ package cn.qkl.webserver.common.enums;
 import java.util.Arrays;
 
 public enum ContentRiskCategoryEnum {
-    NO_RISK(0, "无风险"),
+    NO_RISK(0, "无"),
     POLITICS(1, "政治风险"),
     TERROR(2, "恐怖风险"),
     VIOLENCE(3, "暴力风险"),
