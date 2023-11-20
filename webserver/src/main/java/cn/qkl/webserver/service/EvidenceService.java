@@ -102,7 +102,7 @@ public class EvidenceService {
 
     // 网页截图
     public void webCapture(String url, String name, Long id) {
-        // todo stream close
+        // stream close
         File imageFile = null;
         try {
             ImageRenderer render = new ImageRenderer();
@@ -288,7 +288,7 @@ public class EvidenceService {
             throw new RuntimeException(e);
         }
         // 计算hash并上链
-        // todo 错误处理 数据一致性
+        // 错误处理 数据一致性
         String digest = null;
         try {
             digest = uploadToChainUtil.calculateHash(webStream, "MD5");

@@ -106,7 +106,9 @@ public class DetailService {
         }
         ContentRiskReviseVO contentRiskReviseVO = ContentRiskReviseVO.transform(contentDao.getCotentRiskRevise(
                 select(Tables.content.riskLevel, Tables.content.contentType, Tables.content.contentTag,
-                        Tables.algorithm.name.as("algorithmName"), Tables.algorithm.recognitionRate, Tables.content.dynamicType)
+                        Tables.algorithm.name.as("algorithmName"), Tables.algorithm.recognitionRate, Tables.content.dynamicType,
+                        Tables.content.reviseTime.as("reviseDate"), Tables.content.dynamicTypeArtificial.as("reviseRes")
+                        )
                         .from(Tables.content)
                         .leftJoin(Tables.algorithm).on(Tables.content.dynamicAlgorithmId, equalTo(Tables.algorithm.id))
                         .where(Tables.content.id, isEqualTo(dto.getContentID()))

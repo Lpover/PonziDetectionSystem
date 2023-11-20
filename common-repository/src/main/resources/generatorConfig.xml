@@ -37,10 +37,10 @@
 <!--        </table>-->
 <!--        <table tableName="chain" domainObjectName="Chain">-->
 <!--        </table>-->
-<!--        <table tableName="content" domainObjectName="Content">-->
-<!--        </table>-->
-        <table tableName="content_cross" domainObjectName="ContentCross">
+        <table tableName="content" domainObjectName="Content">
         </table>
+<!--        <table tableName="content_cross" domainObjectName="ContentCross">-->
+<!--        </table>-->
 <!--        <table tableName="content_cross_daily_statistics" domainObjectName="ContentCrossDailyStatistics">-->
 <!--        </table>-->
 <!--        <table tableName="content_risk" domainObjectName="ContentRisk">-->
