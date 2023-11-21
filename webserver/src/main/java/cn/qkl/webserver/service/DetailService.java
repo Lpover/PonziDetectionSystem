@@ -142,6 +142,7 @@ public class DetailService {
                     ,Tables.dynamicMonitor.character)
                         .from(Tables.dynamicMonitor)
                         .where(Tables.dynamicMonitor.contentId, isEqualTo(dto.getContentID()))
+                        .orderBy(Tables.dynamicMonitor.createTime.descending()) // 添加排序条件
                         .build()
                         .render(RenderingStrategies.MYBATIS3)), ContentDynamicMonitorVO::transform);
     }
