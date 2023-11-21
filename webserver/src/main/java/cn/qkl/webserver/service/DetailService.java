@@ -122,16 +122,23 @@ public class DetailService {
 
     // 人工修正动态识别结果和风险等级
     public void manualReviseRisk(ContentRiskReviseDTO dto) {
-        contentDao.update(c -> c
-                .set(Tables.content.dynamicType).equalTo(dto.getDynamicType())
-                .where(Tables.content.id, isEqualTo(dto.getContentID()))
-        );
-        contentDao.update(c -> c
-                .set(Tables.content.riskLevel).equalTo(dto.getRiskLevel())
-                .where(Tables.content.id, isEqualTo(dto.getContentID()))
-        );
+        if (dto.getDynamicType() != null) {
+            contentDao.update(c -> c
+                    .set(Tables.content.dynamicTypeArtificial).equalTo(dto.getDynamicType())
+                    .where(Tables.content.id, isEqualTo(dto.getContentID()))
+            );
+        }
+        if (dto.getRiskLevel() != null) {
+            contentDao.update(c -> c
+                    .set(Tables.content.riskLevel).equalTo(dto.getRiskLevel())
+                    .where(Tables.content.id, isEqualTo(dto.getContentID()))
+            );
+        }
+
         contentDao.update(c -> c
                 .set(Tables.content.revised).equalTo(1)
+                .set(Tables.content.reviseTime).equalTo(new Date())
+                .set(Tables.content.updateTime).equalTo(new Date())
                 .where(Tables.content.id, isEqualTo(dto.getContentID()))
         );
     }

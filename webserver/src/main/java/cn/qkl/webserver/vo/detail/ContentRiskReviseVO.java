@@ -11,7 +11,7 @@ import java.util.List;
 
 @Data
 public class ContentRiskReviseVO {
-    @ApiModelProperty("风险评级：0低风险 1中风险 2高风险")
+    @ApiModelProperty("风险评级：0无风险 1低风险 2中风险 3高风险")
     private Integer riskLevel;
     @ApiModelProperty("内容类型：0图片 1视频 2音频")
     private Integer contentType;
