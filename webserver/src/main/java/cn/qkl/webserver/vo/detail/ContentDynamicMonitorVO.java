@@ -17,8 +17,8 @@ public class ContentDynamicMonitorVO {
     private Integer riskLevel;
     @ApiModelProperty("内容标签，用逗号隔开每个标签，0静态 1读动态 2写动态 10跨链")
     private String contentTag;
-    @ApiModelProperty("内容标签列表，用逗号隔开每个标签，0静态 1读动态 2写动态 10跨链")
-    private List<String> contentTagList;
+    @ApiModelProperty("识别结果列表，用逗号隔开每个标签，0静态 1读动态 2写动态 10跨链")
+    private List<String> resultList;
     @ApiModelProperty("监测到的变更时间")
     private String createTime;
     @ApiModelProperty("监测的角色，0-模型，1-人工")
@@ -57,7 +57,7 @@ public class ContentDynamicMonitorVO {
             }
             list.add(description);
         }
-        vo.setContentTagList(list);
+        vo.setResultList(list);
         return vo;
     }
 }
