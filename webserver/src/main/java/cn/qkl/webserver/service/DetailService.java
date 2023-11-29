@@ -32,6 +32,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.stream.Collectors;
 
@@ -146,9 +147,19 @@ public class DetailService {
         DynamicMonitor item = new DynamicMonitor();
         item.setId(IdUtil.getSnowflakeNextId());
         item.setContentId(dto.getContentID());
-        item.setRiskLevel(dto.getRiskLevel());
         item.setCharacter(1);
-        item.setContentTag(dto.getDynamicType().toString());
+        Optional<Content> content = contentDao.selectOne(c -> c
+                .where(Tables.content.id, isEqualTo(dto.getContentID())));
+        if (dto.getRiskLevel() != null) {
+            item.setRiskLevel(dto.getRiskLevel());
+        } else {
+            item.setRiskLevel(content.get().getRiskLevel());
+        }
+        if (dto.getDynamicType() != null) {
+            item.setContentTag(dto.getDynamicType().toString());
+        } else {
+            item.setContentTag(content.get().getContentTag());
+        }
         item.setCreateTime(new Date());
         item.setUpdateTime(new Date());
         item.setStatus(0);
