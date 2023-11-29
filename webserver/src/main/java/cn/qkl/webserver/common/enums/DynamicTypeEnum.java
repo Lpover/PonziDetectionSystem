@@ -15,4 +15,13 @@ public enum DynamicTypeEnum {
     DynamicTypeEnum(int code, String description) {
         this.code = code;
     }
+
+    public static boolean contains(int code) {
+        for (DynamicTypeEnum e:DynamicTypeEnum.values()) {
+            if(e.code == code) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

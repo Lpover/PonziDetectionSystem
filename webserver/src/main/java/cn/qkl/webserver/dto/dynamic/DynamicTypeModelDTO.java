@@ -6,10 +6,9 @@ import lombok.Data;
 import javax.validation.constraints.Size;
 import java.util.List;
 
-@Deprecated
 @Data
-public class ManualReviseDynamicTypeDTO {
+public class DynamicTypeModelDTO {
     @ApiModelProperty("数字内容主键id")
     @Size(min = 1)
-    private List<Long> contentIdList;
+    private List<Long> contentIdsList;
 }

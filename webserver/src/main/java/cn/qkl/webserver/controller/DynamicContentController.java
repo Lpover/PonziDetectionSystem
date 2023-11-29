@@ -5,10 +5,7 @@ import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.common.auth.RoleEnum;
-import cn.qkl.webserver.dto.dynamic.DynamicContentExportDTO;
-import cn.qkl.webserver.dto.dynamic.DynamicContentListQueryDTO;
-import cn.qkl.webserver.dto.dynamic.ManualReviseDynamicTypeDTO;
-import cn.qkl.webserver.dto.dynamic.ReCheckDynamicTypeDTO;
+import cn.qkl.webserver.dto.dynamic.*;
 import cn.qkl.webserver.service.DynamicContentService;
 import cn.qkl.webserver.vo.dynamic.DynamicContentVO;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
@@ -49,11 +46,27 @@ public class DynamicContentController {
 
     @ApiOperation("动态风险数字内容批量纠错")
     @PutMapping("content/type/manual")
+    @Deprecated
     public BaseResult<Void> manualReviseDynamicType(@Validated @RequestBody ManualReviseDynamicTypeDTO dto) {
         dynamicContentService.manualReviseDynamicType(dto);
         return BaseResult.ok();
     }
 
+    @ApiOperation("动态风险数字内容批量人工标识")
+    @PostMapping("content/type/artificial")
+    public BaseResult<Void> manualMarkDynamicTypeArtificial(@Validated @RequestBody ManualMarkDynamicTypeArtificialDTO dto) {
+        dynamicContentService.manualMarkDynamicTypeArtificial(dto);
+        return BaseResult.ok();
+    }
+
+    @ApiOperation("动态风险数字内容批量重新机器识别")
+    @PostMapping("content/type/model")
+    public BaseResult<Void> triggerDynamicTypeModel(@Validated @RequestBody DynamicTypeModelDTO dto) {
+        dynamicContentService.triggerDynamicTypeModel(dto);
+        return BaseResult.ok();
+    }
+
+    @Deprecated
     @ApiOperation("动态风险数字内容重新识别")
     @PutMapping("content/type/reCheck")
     public BaseResult<Void> reCheckDynamicType(@Validated @RequestBody ReCheckDynamicTypeDTO dto) {

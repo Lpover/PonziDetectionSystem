@@ -31,6 +31,8 @@ public class ContentInfoVO {
     private String description;
     @ApiModelProperty("元数据(图片/视频/音频)url")
     private String metaUrl;
+    @ApiModelProperty("是否正在动态风险识别中：0不是 1是 2网络错误 3模型错误")
+    private Integer dynamicRecognition;
 
     public static ContentInfoVO transform(Content content) {
         ContentInfoVO vo = new ContentInfoVO();

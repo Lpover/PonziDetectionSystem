@@ -25,6 +25,8 @@ public interface ContentDao extends ContentMapper {
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     List<DynamicContentVO> getDynamicContentList(SelectStatementProvider selectStatementProvider);
 
+    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
+    String getAddress(SelectStatementProvider selectStatementProvider);
 
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     List<DynamicContentExportVO> dynamicContentListExport(SelectStatementProvider selectStatementProvider);

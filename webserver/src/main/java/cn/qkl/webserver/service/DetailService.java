@@ -74,7 +74,7 @@ public class DetailService {
         return contentDao.getContentDetail(
                 select(Tables.content.name, Tables.content.address, Tables.content.tokenid,
                         Tables.content.cryptoPrice, Tables.content.currencyPrice, Tables.content.creator, Tables.platform.name.as("platformName"),
-                        Tables.content.standard, Tables.chain.chainName, Tables.content.listingTime, Tables.content.description,Tables.content.metaUrl)
+                        Tables.content.standard, Tables.chain.chainName, Tables.content.listingTime, Tables.content.description,Tables.content.metaUrl,Tables.content.dynamicRecognition)
                 .from(Tables.content)
                 .leftJoin(Tables.platform).on(Tables.content.platformId, equalTo(Tables.platform.id))
                 .leftJoin(Tables.chain).on(Tables.content.chainId, equalTo(Tables.chain.id))

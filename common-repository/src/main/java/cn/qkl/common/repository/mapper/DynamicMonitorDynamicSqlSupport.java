@@ -32,6 +32,9 @@ public final class DynamicMonitorDynamicSqlSupport {
     public static final SqlColumn<Integer> character = dynamicMonitor.character;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Integer> status = dynamicMonitor.status;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class DynamicMonitor extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -46,6 +49,8 @@ public final class DynamicMonitorDynamicSqlSupport {
         public final SqlColumn<Date> updateTime = column("update_time", JDBCType.TIMESTAMP);
 
         public final SqlColumn<Integer> character = column("`character`", JDBCType.INTEGER);
+
+        public final SqlColumn<Integer> status = column("`status`", JDBCType.INTEGER);
 
         public DynamicMonitor() {
             super("dynamic_monitor");

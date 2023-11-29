@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface DynamicMonitorMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, contentId, riskLevel, contentTag, createTime, updateTime, character);
+    BasicColumn[] selectList = BasicColumn.columnList(id, contentId, riskLevel, contentTag, createTime, updateTime, character, status);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -67,7 +67,8 @@ public interface DynamicMonitorMapper {
         @Result(column="content_tag", property="contentTag", jdbcType=JdbcType.VARCHAR),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="character", property="character", jdbcType=JdbcType.INTEGER)
+        @Result(column="character", property="character", jdbcType=JdbcType.INTEGER),
+        @Result(column="status", property="status", jdbcType=JdbcType.INTEGER)
     })
     List<DynamicMonitor> selectMany(SelectStatementProvider selectStatement);
 
@@ -102,6 +103,7 @@ public interface DynamicMonitorMapper {
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
             .map(character).toProperty("character")
+            .map(status).toProperty("status")
         );
     }
 
@@ -115,6 +117,7 @@ public interface DynamicMonitorMapper {
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
             .map(character).toProperty("character")
+            .map(status).toProperty("status")
         );
     }
 
@@ -128,6 +131,7 @@ public interface DynamicMonitorMapper {
             .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
             .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
             .map(character).toPropertyWhenPresent("character", record::getCharacter)
+            .map(status).toPropertyWhenPresent("status", record::getStatus)
         );
     }
 
@@ -166,7 +170,8 @@ public interface DynamicMonitorMapper {
                 .set(contentTag).equalTo(record::getContentTag)
                 .set(createTime).equalTo(record::getCreateTime)
                 .set(updateTime).equalTo(record::getUpdateTime)
-                .set(character).equalTo(record::getCharacter);
+                .set(character).equalTo(record::getCharacter)
+                .set(status).equalTo(record::getStatus);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -177,7 +182,8 @@ public interface DynamicMonitorMapper {
                 .set(contentTag).equalToWhenPresent(record::getContentTag)
                 .set(createTime).equalToWhenPresent(record::getCreateTime)
                 .set(updateTime).equalToWhenPresent(record::getUpdateTime)
-                .set(character).equalToWhenPresent(record::getCharacter);
+                .set(character).equalToWhenPresent(record::getCharacter)
+                .set(status).equalToWhenPresent(record::getStatus);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -189,6 +195,7 @@ public interface DynamicMonitorMapper {
             .set(createTime).equalTo(record::getCreateTime)
             .set(updateTime).equalTo(record::getUpdateTime)
             .set(character).equalTo(record::getCharacter)
+            .set(status).equalTo(record::getStatus)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -202,6 +209,7 @@ public interface DynamicMonitorMapper {
             .set(createTime).equalToWhenPresent(record::getCreateTime)
             .set(updateTime).equalToWhenPresent(record::getUpdateTime)
             .set(character).equalToWhenPresent(record::getCharacter)
+            .set(status).equalToWhenPresent(record::getStatus)
             .where(id, isEqualTo(record::getId))
         );
     }

@@ -21,8 +21,12 @@ public enum BusinessStatus implements BaseCode {
     UNAUTHORIZED("2004", "未授权"),
 
     //删除问题
-    DELETE_FAILED("4001","[DELETE] NO SUCH ROW")
+    DELETE_FAILED("4001","[DELETE] NO SUCH ROW"),
 
+    //模型异常
+    MODEL_ERROR("9999","MODEL ERROR"),
+    //网异常，通常是服务连接问题
+    NETWORK_ERROR("9998","NETWORK_ERROR")
     ;
     private static final String PREFIX = "USER";
     private final String code;

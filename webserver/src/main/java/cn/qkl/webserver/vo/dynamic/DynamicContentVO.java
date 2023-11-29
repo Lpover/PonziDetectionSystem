@@ -18,8 +18,12 @@ public class DynamicContentVO {
     private String metaUrl;
     @ApiModelProperty("识别算法版本")
     private Integer dynamicAlgorithm;
-    @ApiModelProperty("识别状态：0识别完成 1正在识别中")
+    @ApiModelProperty("是否正在动态风险识别中：0不是 1是 2网络错误 3模型错误")
     private Integer dynamicRecognition;
+    @ApiModelProperty("人工标识是不是动态内容 -1待定 0静态 1读动态  2 写动态")
+    private Integer dynamicTypeArtificial;
+    @ApiModelProperty("机器标识是不是动态内容 0静态 1动态 2动态")
+    private Integer dynamicType;
     @ApiModelProperty("风险评级：1低风险 2中风险 3高风险")
     private Integer riskLevel;
     @ApiModelProperty("内容标签")
