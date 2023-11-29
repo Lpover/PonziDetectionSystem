@@ -8,13 +8,11 @@ import cn.qkl.common.framework.util.UploadToChainUtil;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.Content;
 import cn.qkl.common.repository.model.ContentCross;
+import cn.qkl.common.repository.model.DynamicMonitor;
 import cn.qkl.common.repository.model.EvidenceWeb;
 import cn.qkl.webserver.common.enums.ChainEnum;
 import cn.qkl.webserver.common.enums.EvidenceTypeEnum;
-import cn.qkl.webserver.dao.ContentCrossDao;
-import cn.qkl.webserver.dao.ContentDao;
-import cn.qkl.webserver.dao.ContentRiskDao;
-import cn.qkl.webserver.dao.EvidenceWebDao;
+import cn.qkl.webserver.dao.*;
 import cn.qkl.webserver.dto.detail.*;
 import cn.qkl.webserver.vo.detail.*;
 import freemarker.template.TemplateException;
@@ -69,6 +67,9 @@ public class DetailService {
 
     @Autowired
     private ContentCrossDao contentCrossDao;
+
+    @Autowired
+    private DynamicMonitorDao dynamicMonitorDao;
 
     public ContentInfoVO getContentInfo(ContentInfoDTO dto) {
         return contentDao.getContentDetail(
@@ -141,6 +142,18 @@ public class DetailService {
                 .set(Tables.content.updateTime).equalTo(new Date())
                 .where(Tables.content.id, isEqualTo(dto.getContentID()))
         );
+
+        DynamicMonitor item = new DynamicMonitor();
+        item.setId(IdUtil.getSnowflakeNextId());
+        item.setContentId(dto.getContentID());
+        item.setRiskLevel(dto.getRiskLevel());
+        item.setCharacter(1);
+        item.setContentTag(dto.getDynamicType().toString());
+        item.setCreateTime(new Date());
+        item.setUpdateTime(new Date());
+        item.setStatus(0);
+
+        dynamicMonitorDao.insert(item);
     }
 
     public PageVO<ContentDynamicMonitorVO> getDynamicMonitor(ContentDynamicMonitorDTO dto) {
