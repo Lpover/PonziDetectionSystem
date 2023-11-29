@@ -13,11 +13,11 @@ import java.util.List;
 public class ContentDynamicMonitorVO {
     @ApiModelProperty("单条记录的id")
     private Long id;
-    @ApiModelProperty("数字内容风险评级：0低 1中 2高风险")
+    @ApiModelProperty("数字内容风险评级：0无风险 1低风险 2中风险 3高风险")
     private Integer riskLevel;
-    @ApiModelProperty("内容标签，用逗号隔开每个标签，0静态 1读动态 2写动态 10跨链")
+    @ApiModelProperty("内容标签，用逗号隔开每个标签，-1待定 0静态 1读动态 2写动态 10 跨链")
     private String contentTag;
-    @ApiModelProperty("识别结果列表，用逗号隔开每个标签，0静态 1读动态 2写动态 10跨链")
+    @ApiModelProperty("识别结果列表，用逗号隔开每个标签，-1待定 0静态 1读动态 2写动态 10 跨链")
     private List<String> resultList;
     @ApiModelProperty("监测到的变更时间")
     private String createTime;
@@ -40,6 +40,9 @@ public class ContentDynamicMonitorVO {
             int enumValue = Integer.parseInt(s);
             String description;
             switch (enumValue) {
+                case -1:
+                    description = "待定";
+                    break;
                 case 0:
                     description = "静态";
                     break;
