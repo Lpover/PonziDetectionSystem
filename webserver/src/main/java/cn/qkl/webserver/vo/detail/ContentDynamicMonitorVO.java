@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +35,12 @@ public class ContentDynamicMonitorVO {
 //        return vo;
 //    }
     public static ContentDynamicMonitorVO transform(ContentDynamicMonitorVO vo) {
+        String contentTag = vo.getContentTag();
+        if (contentTag == null || contentTag.trim().isEmpty()) {
+            // 如果contentTag为空，则将resultList设为空列表
+            vo.setResultList(Collections.emptyList());
+            return vo;
+        }
         String[] split = vo.getContentTag().split(",");
         ArrayList<String> list = new ArrayList<>();
         for (String s : split) {
