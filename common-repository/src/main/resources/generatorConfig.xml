@@ -93,6 +93,7 @@
 <!--        </table>-->
 <!--        <table tableName="ata_export_task" domainObjectName="AtaExportTask">-->
 <!--        </table>-->
-
+                <table tableName="concern" domainObjectName="Concern">
+                </table>
     </context>
 </generatorConfiguration>

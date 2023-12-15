@@ -24,6 +24,8 @@ public class ContentDynamicMonitorVO {
     private String createTime;
     @ApiModelProperty("监测的角色，0-模型，1-人工")
     private Integer character;
+    @ApiModelProperty("状态表示错误原因 0-成功 1（保留，可能会表示正在识别，但目前没做） 2-网络错误 3-模型错误")
+    private Integer status;
 
 //    public static ContentDynamicMonitorVO transform(ContentDynamicMonitorVO vo) {
 //        String[] split = vo.getContentTag().split(",");
