@@ -82,6 +82,12 @@ public class EvidenceController {
         return BaseResult.ok(evidenceService.getEvidenceDetail(dto));
     }
 
+    @ApiOperation("获取定时任务信息")
+    @GetMapping("detail/regular")
+    public BaseResult<EvidenceRegularVO> getEvidenceRegular(@Validated EvidenceDetailDTO dto) {
+        return BaseResult.ok(evidenceService.getEvidenceRegular(dto));
+    }
+
     @ApiOperation("证据包下载")
     @PostMapping("pack/download")
     public void downloadEvidencePack(@Validated @RequestBody EvidenceDetailDTO dto, HttpServletResponse response) throws IOException {

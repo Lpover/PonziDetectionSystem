@@ -3,44 +3,32 @@ package cn.qkl.webserver.service;
 import cn.hutool.core.date.DateUtil;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.common.repository.Tables;
-import cn.qkl.common.repository.mapper.PlatformMapper;
 import cn.qkl.common.repository.model.Account;
 import cn.qkl.common.repository.model.Content;
 import cn.qkl.common.repository.model.Platform;
 import cn.qkl.common.repository.model.PlatformDailyStatistics;
-import cn.qkl.webserver.common.enums.CarrierTypeEnum;
 import cn.qkl.webserver.dao.PlatformDailyStatisticsDao;
 import cn.qkl.webserver.dao.PlatformDao;
 import cn.qkl.webserver.dao.PlatformViewDao;
 import cn.qkl.webserver.dto.platformview.HotnessRankingViewDTO;
 import cn.qkl.webserver.dto.platformview.PlatformAndTimeSelectionDTO;
 import cn.qkl.webserver.dto.platformview.PlatformSelectionDTO;
-import cn.qkl.webserver.vo.contentDetection.ContentDetectionInfoVO;
 import cn.qkl.webserver.vo.platformview.*;
-import com.alibaba.druid.support.ibatis.SqlMapClientImplWrapper;
+import com.github.javafaker.Faker;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.jsqlparser.expression.operators.relational.EqualsTo;
-import org.apache.ibatis.jdbc.Null;
-import org.apache.ibatis.session.SqlSession;
-import org.mybatis.dynamic.sql.SqlBuilder;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
-import com.github.javafaker.Faker;
 
-import java.util.*;
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.concurrent.Callable;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
-import java.text.DecimalFormat;
-import java.util.concurrent.ThreadLocalRandom;
-
 
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 
 
 /**
@@ -159,7 +147,7 @@ public class PlatformViewService {
 //    返回十个平台风险账户
     public List<PlatformRiskAccountVO> getPlatformRiskAccount(PlatformSelectionDTO dto){
         //默认最热门NFT平台
-        long HotestPlatform=getHotestPlatform2(dto);
+        long HotestPlatform = getHotestPlatform2(dto);
         List<PlatformRiskAccountVO> platformRiskAccountList = platformViewDao.getPlatformRiskAccount(
                 select(Tables.account.id,Tables.account.accountAlias,Tables.account.image,Tables.account.releaseNum,
                         Tables.account.accountAddress

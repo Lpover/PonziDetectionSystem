@@ -5,6 +5,7 @@ import cn.qkl.webserver.service.EvidenceDailyStatisticsService;
 import cn.qkl.webserver.vo.evidence.EvidenceCertParamsVO;
 import cn.qkl.webserver.vo.evidence.EvidenceDetailVO;
 import cn.qkl.webserver.vo.evidence.EvidenceRecordItemVO;
+import cn.qkl.webserver.vo.evidence.EvidenceRegularVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.UpdateProvider;
@@ -31,6 +32,9 @@ public interface EvidenceWebDao extends EvidenceWebMapper {
 
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     EvidenceDetailVO getEvidenceDetail(SelectStatementProvider selectStatementProvider);
+
+    @SelectProvider(type = SqlProviderAdapter.class, method = "select")
+    EvidenceRegularVO getEvidenceRegular(SelectStatementProvider selectStatementProvider);
 
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     List<EvidenceDailyStatisticsService.Record> getReinforceView(SelectStatementProvider selectStatementProvider);
