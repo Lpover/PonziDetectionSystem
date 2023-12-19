@@ -75,10 +75,8 @@
 <!--        </table>-->
 <!--        <table tableName="notify_record" domainObjectName="NotifyRecord">-->
 <!--        </table>-->
-
-<!--        todo-->
-<!--        <table tableName="evidence_web" domainObjectName="EvidenceWeb">-->
-<!--        </table>-->
+        <table tableName="evidence_web" domainObjectName="EvidenceWeb">
+        </table>
 <!--        <table tableName="evidence_overview_daily_statistics" domainObjectName="EvidenceOverviewDailyStatistics">-->
 <!--        </table>-->
 <!--&lt;!&ndash;        <table tableName="thresholds" domainObjectName="Thresholds">&ndash;&gt;-->
