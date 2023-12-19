@@ -279,6 +279,7 @@ public class EvidenceService {
         evidenceWeb.setEvidenceType(EvidenceTypeEnum.MANUAL.getCode());     // 取证固证来源
         evidenceWeb.setEvidencePhase(1);
         evidenceWeb.setWebOssPath(dto.getUrl());
+        evidenceWeb.setFrequency(0);
 
         // 上链
         InputStream webStream = null;
@@ -356,6 +357,17 @@ public class EvidenceService {
                 .where(Tables.evidenceWeb.id, isEqualTo(dto.getEvidenceID()))
                 .build()
                 .render(RenderingStrategies.MYBATIS3));
+    }
+
+    public EvidenceRegularVO getEvidenceRegular(EvidenceDetailDTO dto) {
+        return evidenceWebDao.getEvidenceRegular(
+                select(Tables.evidenceWeb.frequency, Tables.evidenceWeb.startTime, Tables.evidenceWeb.endTime,
+                        Tables.evidenceWeb.dayOfWeek, Tables.evidenceWeb.dayOfMonth)
+                        .from(Tables.evidenceWeb)
+                        .where(Tables.evidenceWeb.id, isEqualTo(dto.getEvidenceID()))
+                        .build()
+                        .render(RenderingStrategies.MYBATIS3)
+        );
     }
 
 //    public void downloadEvidencePack1(EvidenceDetailDTO dto, HttpServletResponse response) throws IOException {
@@ -530,12 +542,19 @@ public class EvidenceService {
                 Tables.evidenceWeb.url,
                 Tables.evidenceWeb.frequency,
                 Tables.evidenceWeb.updateTime.as("time"),
+                Tables.evidenceWeb.startTime,
+                Tables.evidenceWeb.endTime,
+                Tables.evidenceWeb.dayOfWeek,
+                Tables.evidenceWeb.dayOfMonth,
                 Tables.platform.name.as("platform_name"),
-                Tables.platform.platformType).from(Tables.evidenceWeb, "ew")
+                Tables.platform.platformType
+                ).from(Tables.evidenceWeb, "ew")
+
+
                 .leftJoin(Tables.platform).on(Tables.evidenceWeb.platformId, equalTo(Tables.platform.id))
                 .where(Tables.evidenceWeb.deleteStatus, isEqualTo(0));
 
-
+        // 筛选条件
         if (dto.getEvidenceName() != null) {
             builder = builder.and(Tables.evidenceWeb.name, isLike(SqlUtil.allLike(dto.getEvidenceName())));
         }

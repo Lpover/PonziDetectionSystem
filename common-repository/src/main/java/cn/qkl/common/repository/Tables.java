@@ -39,6 +39,7 @@ public class Tables {
     public static final SituationReportDynamicSqlSupport.SituationReport situationReport = SituationReportDynamicSqlSupport.situationReport;
     public static final AccountToAccountDynamicSqlSupport.AccountToAccount accountToAccount = AccountToAccountDynamicSqlSupport.accountToAccount;
     public static final AtaExportTaskDynamicSqlSupport.AtaExportTask ataExportTask = AtaExportTaskDynamicSqlSupport.ataExportTask;
+    public static final ConcernDynamicSqlSupport.Concern concern = ConcernDynamicSqlSupport.concern;
 
     public static final LoginLogDynamicSqlSupport.LoginLog loginLog = LoginLogDynamicSqlSupport.loginLog;
 

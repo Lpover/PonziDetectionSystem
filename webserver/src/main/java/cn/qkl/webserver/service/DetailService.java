@@ -8,13 +8,11 @@ import cn.qkl.common.framework.util.UploadToChainUtil;
 import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.Content;
 import cn.qkl.common.repository.model.ContentCross;
+import cn.qkl.common.repository.model.DynamicMonitor;
 import cn.qkl.common.repository.model.EvidenceWeb;
 import cn.qkl.webserver.common.enums.ChainEnum;
 import cn.qkl.webserver.common.enums.EvidenceTypeEnum;
-import cn.qkl.webserver.dao.ContentCrossDao;
-import cn.qkl.webserver.dao.ContentDao;
-import cn.qkl.webserver.dao.ContentRiskDao;
-import cn.qkl.webserver.dao.EvidenceWebDao;
+import cn.qkl.webserver.dao.*;
 import cn.qkl.webserver.dto.detail.*;
 import cn.qkl.webserver.vo.detail.*;
 import freemarker.template.TemplateException;
@@ -34,6 +32,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.stream.Collectors;
 
@@ -69,6 +68,9 @@ public class DetailService {
 
     @Autowired
     private ContentCrossDao contentCrossDao;
+
+    @Autowired
+    private DynamicMonitorDao dynamicMonitorDao;
 
     public ContentInfoVO getContentInfo(ContentInfoDTO dto) {
         return contentDao.getContentDetail(
@@ -141,12 +143,34 @@ public class DetailService {
                 .set(Tables.content.updateTime).equalTo(new Date())
                 .where(Tables.content.id, isEqualTo(dto.getContentID()))
         );
+
+        DynamicMonitor item = new DynamicMonitor();
+        item.setId(IdUtil.getSnowflakeNextId());
+        item.setContentId(dto.getContentID());
+        item.setCharacter(1);
+        Optional<Content> content = contentDao.selectOne(c -> c
+                .where(Tables.content.id, isEqualTo(dto.getContentID())));
+        if (dto.getRiskLevel() != null) {
+            item.setRiskLevel(dto.getRiskLevel());
+        } else {
+            item.setRiskLevel(content.get().getRiskLevel());
+        }
+        if (dto.getDynamicType() != null) {
+            item.setContentTag(dto.getDynamicType().toString());
+        } else {
+            item.setContentTag(content.get().getContentTag());
+        }
+        item.setCreateTime(new Date());
+        item.setUpdateTime(new Date());
+        item.setStatus(0);
+
+        dynamicMonitorDao.insert(item);
     }
 
     public PageVO<ContentDynamicMonitorVO> getDynamicMonitor(ContentDynamicMonitorDTO dto) {
         return PageVO.getPageData(dto.getPageId(), dto.getPageSize(), () -> contentDao.getDynamicMonitor(
                 select(Tables.dynamicMonitor.id, Tables.dynamicMonitor.riskLevel, Tables.dynamicMonitor.contentTag, Tables.dynamicMonitor.createTime
-                    ,Tables.dynamicMonitor.character)
+                    ,Tables.dynamicMonitor.character,Tables.dynamicMonitor.status)
                         .from(Tables.dynamicMonitor)
                         .where(Tables.dynamicMonitor.contentId, isEqualTo(dto.getContentID()))
                         .orderBy(Tables.dynamicMonitor.createTime.descending()) // 添加排序条件
