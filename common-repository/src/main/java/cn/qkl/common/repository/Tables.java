@@ -2,6 +2,7 @@ package cn.qkl.common.repository;
 
 
 import cn.qkl.common.repository.mapper.*;
+import cn.qkl.common.repository.model.OperationLog;
 
 public class Tables {
     public static final AccountDynamicSqlSupport.Account account = AccountDynamicSqlSupport.account;
@@ -39,4 +40,7 @@ public class Tables {
     public static final AccountToAccountDynamicSqlSupport.AccountToAccount accountToAccount = AccountToAccountDynamicSqlSupport.accountToAccount;
     public static final AtaExportTaskDynamicSqlSupport.AtaExportTask ataExportTask = AtaExportTaskDynamicSqlSupport.ataExportTask;
 
+    public static final LoginLogDynamicSqlSupport.LoginLog loginLog = LoginLogDynamicSqlSupport.loginLog;
+
+    public static final OperationLogDynamicSqlSupport.OperationLog operationLog = OperationLogDynamicSqlSupport.operationLog;
 }

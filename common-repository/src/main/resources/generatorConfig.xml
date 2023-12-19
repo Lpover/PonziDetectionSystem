@@ -37,8 +37,8 @@
 <!--        </table>-->
 <!--        <table tableName="chain" domainObjectName="Chain">-->
 <!--        </table>-->
-        <table tableName="content" domainObjectName="Content">
-        </table>
+<!--        <table tableName="content" domainObjectName="Content">-->
+<!--        </table>-->
 <!--        <table tableName="content_cross" domainObjectName="ContentCross">-->
 <!--        </table>-->
 <!--        <table tableName="content_cross_daily_statistics" domainObjectName="ContentCrossDailyStatistics">-->
@@ -49,8 +49,8 @@
 <!--        </table>-->
 <!--        <table tableName="content_tx_history" domainObjectName="ContentTxHistory">-->
 <!--        </table>-->
-        <table tableName="dynamic_monitor" domainObjectName="DynamicMonitor">
-        </table>
+<!--        <table tableName="dynamic_monitor" domainObjectName="DynamicMonitor">-->
+<!--        </table>-->
 <!--        <table tableName="platform" domainObjectName="Platform">-->
 <!--        </table>-->
 <!--        <table tableName="platform_daily_statistics" domainObjectName="PlatformDailyStatistics">-->
@@ -93,6 +93,7 @@
 <!--        </table>-->
 <!--        <table tableName="ata_export_task" domainObjectName="AtaExportTask">-->
 <!--        </table>-->
-
+        <table tableName="login_log" domainObjectName="LoginLog"></table>
+        <table tableName="operation_log" domainObjectName="OperationLog"></table>
     </context>
 </generatorConfiguration>

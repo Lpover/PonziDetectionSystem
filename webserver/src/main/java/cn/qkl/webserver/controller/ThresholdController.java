@@ -4,6 +4,8 @@ package cn.qkl.webserver.controller;
 import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.webserver.common.auth.RoleEnum;
+import cn.qkl.webserver.common.log.ApiRecord;
+import cn.qkl.webserver.common.log.OperationApiType;
 import cn.qkl.webserver.dto.riskreport.RiskReportListQueryDTO;
 import cn.qkl.webserver.dto.riskreport.SituationReportDTO;
 import cn.qkl.webserver.dto.threhold.IndexChangeDTO;
@@ -40,6 +42,7 @@ import java.util.List;
 @RequestMapping("threshold")
 @RefreshScope
 @Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
+@ApiRecord(apiType = OperationApiType.class)
 public class ThresholdController {
 
 //    @LoadBalanced
