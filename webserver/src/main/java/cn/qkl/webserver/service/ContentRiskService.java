@@ -85,7 +85,7 @@ public class ContentRiskService {
                 .and(Tables.content.riskLevel, isEqualToWhenPresent(dto.getRiskLevelList()))
                 .and(Tables.content.contentTag, isLikeWhenPresent(SqlUtil.allLike(dto.getContentRisk())))
                 .and(Tables.content.thingType, isInWhenPresent(dto.getThingType()))
-                .and(Tables.content.riskType, isInWhenPresent(dto.getRiskType()));
+                .and(Tables.content.dynamicType, isInWhenPresent(dto.getRiskAttributeType()));
         //时间
         Date end = new Date();
 //        end = DateUtil.beginOfDay(end);

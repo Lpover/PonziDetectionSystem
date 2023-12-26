@@ -13,9 +13,9 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class DynamicContentListQueryDTO extends PageDTO {
-    @ApiModelProperty("风险评级：1低风险 2中风险 3高风险, 不传表示都选")
-    @Size(max = 3)
-    private List<@Range(min = 1, max = 3) Integer> riskLevelList;
+    @ApiModelProperty("风险评级：0无风险 1低风险 2中风险 3高风险, 不传表示都选")
+    @Size(max = 4)
+    private List<@Range(min = 0, max = 3) Integer> riskLevelList;
     @ApiModelProperty("算法版本主键id, 不传表示都选")
     private List<Long> dynamicAlgorithmIdList;
     @ApiModelProperty("平台主键id, 不传表示都选")
