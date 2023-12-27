@@ -120,8 +120,9 @@ public class RiskAccountService {
                         Tables.account.updateTime,
                         Tables.chain.chainName
                 ).from(Tables.account).leftJoin(Tables.chain).on(Tables.account.chainId,equalTo(Tables.chain.id))
-                        .where(Tables.account.chainId,isEqualTo(dto.getChainId()))
-                        .and(Tables.account.accountAddress,isEqualTo(dto.getAccountAddress())).build()
+                        .where(Tables.account.chainId,isEqualToWhenPresent(dto.getChainId()))
+                        .and(Tables.account.accountAddress,isEqualToWhenPresent(dto.getAccountAddress())).orderBy(Tables.account.updateTime)
+                        .build()
                         .render(RenderingStrategies.MYBATIS3)
         );
     }

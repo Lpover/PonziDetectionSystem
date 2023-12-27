@@ -21,7 +21,7 @@ public class NetworkAccountQueryDTO {
 
     @AssertTrue(message = "所有条件必填其一")
     private boolean isUserValid(){
-        if(StringUtils.isBlank(this.accountAddress)&&this.chainId==null) {
+        if(StringUtils.isBlank(this.accountAddress)&&(this.chainId==null)) {
             return false;
         }
         return true;
