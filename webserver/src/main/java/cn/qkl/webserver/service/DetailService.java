@@ -285,7 +285,7 @@ public class DetailService {
         int status = content.getEvidenceStatus()==null?0:content.getEvidenceStatus();
         vo.setStatus(status);
         vo.setId(dto.getId());
-        if (status != 0) {
+        if (status != 0 && status !=1 ) {
             EvidenceWeb evidenceWeb = evidenceWebDao.selectOne(c -> c.where(Tables.evidenceWeb.contentId, isEqualTo(dto.getId()))).get();
             vo.setCertOss(evidenceWeb.getCertOssPath());
             vo.setPackOss(evidenceWeb.getPackOssPath());
