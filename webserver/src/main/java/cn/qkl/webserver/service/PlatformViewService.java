@@ -87,9 +87,10 @@ public class PlatformViewService {
 
         //默认最热门NFT平台
         long HotestPlatform=getHotestPlatform(dto);
-        //dayLimit指的是显示的天数，默认7天
+        //dayLimit指的是显示的天数,默认7天
         int dayLimit;
-        if(dto.getSelectTime()==2)dayLimit=30;
+        if(dto.getSelectTime()==3)dayLimit=180;
+        else if(dto.getSelectTime()==2)dayLimit=30;
         else {
             dayLimit = 7;
         }
