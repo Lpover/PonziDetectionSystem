@@ -1,6 +1,8 @@
 package cn.qkl.webserver.controller;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.common.auth.RoleEnum;
+import cn.qkl.webserver.common.log.ApiRecord;
+import cn.qkl.webserver.common.log.OperationApiType;
 import cn.qkl.webserver.dto.contentdetection.ContentTagsDTO;
 import cn.qkl.webserver.dto.contentdetection.PlatformDistributionDTO;
 import cn.qkl.webserver.dto.contentdetection.ContentDetectionListQueryDTO;
@@ -35,6 +37,7 @@ import java.util.List;
 @RequestMapping("contentdetection")
 @RefreshScope
 @Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
+@ApiRecord(apiType = OperationApiType.class)
 public class ContentDetectionController {
 
     @Autowired

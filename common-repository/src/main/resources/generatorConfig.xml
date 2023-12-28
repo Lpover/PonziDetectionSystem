@@ -49,8 +49,8 @@
 <!--        </table>-->
 <!--        <table tableName="content_tx_history" domainObjectName="ContentTxHistory">-->
 <!--        </table>-->
-        <table tableName="dynamic_monitor" domainObjectName="DynamicMonitor">
-        </table>
+<!--        <table tableName="dynamic_monitor" domainObjectName="DynamicMonitor">-->
+<!--        </table>-->
 <!--        <table tableName="platform" domainObjectName="Platform">-->
 <!--        </table>-->
 <!--        <table tableName="platform_daily_statistics" domainObjectName="PlatformDailyStatistics">-->
@@ -91,7 +91,9 @@
 <!--        </table>-->
 <!--        <table tableName="ata_export_task" domainObjectName="AtaExportTask">-->
 <!--        </table>-->
-                <table tableName="concern" domainObjectName="Concern">
-                </table>
+        <table tableName="login_log" domainObjectName="LoginLog"></table>
+        <table tableName="operation_log" domainObjectName="OperationLog"></table>
+        <table tableName="concern" domainObjectName="Concern">
+        </table>
     </context>
 </generatorConfiguration>

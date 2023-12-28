@@ -102,16 +102,20 @@ public class ContentRiskService {
         String keyWord = dto.getKeyWord();
         if (keyWord != null) {
             if (keyWord.startsWith("0x") || keyWord.startsWith("0X")) {
-                builder.and(Tables.content.address, isLike(SqlUtil.rightLike(keyWord)), or(Tables.content.owner, isLike(SqlUtil.rightLike(keyWord))));
+                builder.and(Tables.content.address, isLikeWhenPresent(SqlUtil.rightLike(keyWord)), or(Tables.content.owner, isLikeWhenPresent(SqlUtil.rightLike(keyWord))));
             } else {
-                builder.and(Tables.content.name, isLike(SqlUtil.allLike(keyWord)), or(Tables.content.description, isLike(SqlUtil.allLike(keyWord))));
+                builder.and(Tables.content.name, isLikeWhenPresent(SqlUtil.allLike(keyWord)), or(Tables.content.description, isLikeWhenPresent(SqlUtil.allLike(keyWord))));
             }
         }
 
         return PageVO.getPageData(dto.getPageId(), dto.getPageSize(),
+//              Bug记录 Mysql针对Limit优化
+//              https://dev.mysql.com/doc/refman/5.7/en/limit-optimization.html
+//              如果一定要保证顺序，可以把id加入Order By
+//              Mysql Official Guide ref: If it is important to ensure the same row order with and without LIMIT, include additional columns in the ORDER BY clause to make the order deterministic. For example, if id values are unique, you can make rows for a given category value appear in id order by sorting like this:
                 () -> contentRiskDao.getContentRiskInfo(
                         builder
-                                .orderBy(Tables.content.mintTime.descending())
+                                .orderBy(Tables.content.mintTime.descending(),Tables.content.id)
                                 .build()
                                 .render(RenderingStrategies.MYBATIS3)
                 ));

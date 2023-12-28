@@ -6,8 +6,9 @@ import cn.qkl.common.framework.request.PageDTO;
 import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.common.auth.RoleEnum;
+import cn.qkl.webserver.common.log.ApiRecord;
+import cn.qkl.webserver.common.log.LoginApiType;
 import cn.qkl.webserver.dto.user.AddUserDTO;
-import cn.qkl.webserver.dto.user.GetUserInfoDTO;
 import cn.qkl.webserver.dto.user.LoginDTO;
 import cn.qkl.webserver.dto.user.ModifyPwdDTO;
 import cn.qkl.webserver.service.UserService;
@@ -18,12 +19,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @title:
@@ -43,9 +41,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @ApiOperation("登录")
+    @ApiOperation("普通登录")
     @PostMapping("login")
     @Role
+    @ApiRecord(apiType = LoginApiType.class)
     public BaseResult<String> emailLogin(@RequestBody @Validated LoginDTO dto) {
         return BaseResult.ok(userService.emailLogin(dto));
     }

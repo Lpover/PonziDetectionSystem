@@ -5,10 +5,11 @@ import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.common.auth.RoleEnum;
+import cn.qkl.webserver.common.log.ApiRecord;
+import cn.qkl.webserver.common.log.OperationApiType;
 import cn.qkl.webserver.dto.concern.AddConcernDTO;
 import cn.qkl.webserver.dto.concern.ConcernListDTO;
 import cn.qkl.webserver.service.ConcernService;
-import cn.qkl.webserver.vo.concern.AddConcernVO;
 import cn.qkl.webserver.vo.concern.ConcernListVO;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 @ApiSupport(author = "lpc")
 @RequestMapping("concern")
 @RefreshScope
+@ApiRecord(apiType = OperationApiType.class)
 @Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
 public class ConcernController {
 

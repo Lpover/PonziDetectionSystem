@@ -34,7 +34,7 @@
         .content-row-label {
             font-weight: 600;
             font-size: 18px;
-            width: 430px;
+            width: 400px;
             overflow-wrap: break-word;
         }
 
@@ -72,6 +72,9 @@
             <div id="content-row" class="content-row">
                 <div id="content-row-label" class="content-row-label">上链时间：${timestamp?string('yyyy.MM.dd HH:mm:ss')}</div>
 <#--                <div id="content-row-chain-time" class="content-row-text"></div>-->
+            </div>
+            <div id="content-row" class="content-row">
+                <div id="content-row-label" class="content-row-label">证据包哈希：${packagehash}</div>
             </div>
         </div>
     </div>

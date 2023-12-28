@@ -1,38 +1,25 @@
 package cn.qkl.webserver.controller;
 
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.io.resource.UrlResource;
 import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.common.auth.RoleEnum;
+import cn.qkl.webserver.common.log.ApiRecord;
+import cn.qkl.webserver.common.log.OperationApiType;
 import cn.qkl.webserver.dto.riskaccount.*;
-import cn.qkl.webserver.dto.riskaccount.NetworkAccountQueryDTO;
 import cn.qkl.webserver.service.RiskAccountService;
 import cn.qkl.webserver.vo.account.AccountBasicVO;
 import cn.qkl.webserver.vo.riskAccount.*;
-import cn.qkl.webserver.vo.riskAccount.NetworkAccountAnalysisVO;
-import cn.qkl.webserver.vo.riskAccount.NetworkAccountPanelVO;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-import java.nio.file.Path;
-import java.util.List;
-
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -49,6 +36,7 @@ import java.util.List;
 @RequestMapping("riskaccount")
 @RefreshScope
 @Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
+@ApiRecord(apiType = OperationApiType.class)
 public class RiskAccountController {
 
     //    @LoadBalanced
