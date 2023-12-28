@@ -3,6 +3,8 @@ package cn.qkl.webserver.controller;
 import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.webserver.common.auth.RoleEnum;
+import cn.qkl.webserver.common.log.ApiRecord;
+import cn.qkl.webserver.common.log.OperationApiType;
 import cn.qkl.webserver.dto.settings.MonitorRulesModifyDTO;
 import cn.qkl.webserver.service.MonitorRulesService;
 import cn.qkl.webserver.vo.settings.MonitorRulesInfoVO;
@@ -25,6 +27,7 @@ import java.util.List;
 @RequestMapping("settings")
 @RefreshScope
 @Role(roles = {RoleEnum.AdminBaseRole.class})
+@ApiRecord(apiType = OperationApiType.class)
 public class SettingsController {
 
     @Autowired

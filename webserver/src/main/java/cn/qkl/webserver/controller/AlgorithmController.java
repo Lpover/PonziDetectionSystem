@@ -4,6 +4,8 @@ package cn.qkl.webserver.controller;
 import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.webserver.common.auth.RoleEnum;
+import cn.qkl.webserver.common.log.ApiRecord;
+import cn.qkl.webserver.common.log.OperationApiType;
 import cn.qkl.webserver.dto.algorithm.AlgorithmAddDTO;
 import cn.qkl.webserver.dto.algorithm.AlgorithmListQueryDTO;
 import cn.qkl.webserver.dto.algorithm.AlgorithmModifyDTO;
@@ -35,6 +37,7 @@ import java.util.List;
 @RequestMapping("algorithm")
 @RefreshScope
 @Role(roles = {RoleEnum.AdminBaseRole.class})
+@ApiRecord(apiType = OperationApiType.class)
 public class AlgorithmController {
     @Autowired
     AlgorithmService algorithmService;

@@ -77,7 +77,9 @@ public class UserService {
 
         //生成token
         TokenBean tokenBean = new TokenBean(user.getId()).withRoleType(RoleEnum.RoleTypeEnum.valueOf(UserRoleEnum.valueOf(user.getRole())).getRoleType()).withUuid();
-        return TokenHandler.generateToken(tokenBean);
+        String token = TokenHandler.generateToken(tokenBean);
+        TokenHandler.setTokenBean(tokenBean);
+        return token;
     }
 
     public void test() {

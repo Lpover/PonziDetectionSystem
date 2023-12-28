@@ -4,6 +4,8 @@ import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.common.auth.RoleEnum;
+import cn.qkl.webserver.common.log.ApiRecord;
+import cn.qkl.webserver.common.log.OperationApiType;
 import cn.qkl.webserver.dto.detail.*;
 import cn.qkl.webserver.service.DetailService;
 import cn.qkl.webserver.vo.detail.*;
@@ -33,6 +35,7 @@ import java.security.NoSuchAlgorithmException;
 @RequestMapping("detail")
 @RefreshScope
 @Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
+@ApiRecord(apiType = OperationApiType.class)
 public class DetailedContentController {
     @Autowired
     DetailService detailService;

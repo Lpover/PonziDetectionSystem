@@ -4,6 +4,8 @@ import cn.qkl.common.framework.auth.Role;
 import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.common.auth.RoleEnum;
+import cn.qkl.webserver.common.log.ApiRecord;
+import cn.qkl.webserver.common.log.OperationApiType;
 import cn.qkl.webserver.dto.contenrisk.ContentBatchEvidenceDTO;
 import cn.qkl.webserver.dto.contenrisk.ContentRiskInfoDTO;
 import cn.qkl.webserver.dto.contenrisk.ContentStatisticanInfoDTO;
@@ -36,6 +38,7 @@ import java.security.NoSuchAlgorithmException;
 @RequestMapping("contentrisk")
 @RefreshScope
 @Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
+@ApiRecord(apiType = OperationApiType.class)
 public class ContentRiskController {
 
 //    @LoadBalanced

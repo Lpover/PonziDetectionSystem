@@ -6,6 +6,8 @@ import cn.qkl.common.framework.request.PageDTO;
 import cn.qkl.common.framework.response.BaseResult;
 import cn.qkl.common.framework.response.PageVO;
 import cn.qkl.webserver.common.auth.RoleEnum;
+import cn.qkl.webserver.common.log.ApiRecord;
+import cn.qkl.webserver.common.log.OperationApiType;
 import cn.qkl.webserver.dto.platform.AddPlatformDTO;
 import cn.qkl.webserver.dto.platform.ModifyPlatformDTO;
 import cn.qkl.webserver.dto.platform.ModifySuperviseDTO;
@@ -40,6 +42,7 @@ import java.util.List;
 @RequestMapping("platform")
 @RefreshScope
 @Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
+@ApiRecord(apiType = OperationApiType.class)
 public class PlatformController {
 
     @Autowired
