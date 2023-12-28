@@ -67,15 +67,15 @@ public class ApiResponseBodyAdvice implements ResponseBodyAdvice<Object> {
             apiName = apiOperation.value();
         }
         String clientIp = null;
-        String xff = httpServletRequest.getHeader(ApiRecordConstants.X_FORWARDED_FOR_HEADER);
+        String X_REAL_IP = httpServletRequest.getHeader(ApiRecordConstants.X_REAL_IP);
         Long userId = TokenHandler.getUserId();
 
-        if (xff == null) {
+        if (X_REAL_IP == null) {
             //直接获取 真实ip
             clientIp = httpServletRequest.getRemoteAddr();
         } else {
             //借助xff 获取真实ip
-            clientIp = xff;
+            clientIp = X_REAL_IP;
         }
 
         if (apiRecord.apiType() == LoginApiType.class) {
