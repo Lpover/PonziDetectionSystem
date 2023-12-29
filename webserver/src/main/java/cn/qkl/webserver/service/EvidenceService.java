@@ -137,8 +137,6 @@ public class EvidenceService {
     }
 
 
-
-
     public EvidencePhaseVO webEvidence(WebEvidenceDTO dto) {
         EvidenceWeb evidenceWeb = new EvidenceWeb();
         BeanUtil.copyProperties(dto, evidenceWeb);
@@ -149,11 +147,9 @@ public class EvidenceService {
         evidenceWeb.setUpdateTime(new Date());
         evidenceWeb.setCreateTime(new Date());
         evidenceWeb.setEvidencePhase(0);
-
-        if (dto.getFrequency() != 0) {  // 定时取证就提早返回
-            if (dto.getFrequency() == 1) {
-                evidenceWeb.setNextEvidenceTime(dto.getStartTime());
-            } else {
+        if (dto.getFrequency() != null && dto.getFrequency() != 0 ) {  // 定时取证就提早返回
+//        if (dto.getFrequency() != 0 ) {  // 定时取证就提早返回
+            if (dto.getFrequency() != 1) {
                 Date currentDate = new Date();
                 int dayOfMonth = dto.getDayOfMonth();
                 int dayOfWeek = dto.getDayOfWeek();
@@ -183,6 +179,8 @@ public class EvidenceService {
                     }
                 }
                 evidenceWeb.setNextEvidenceTime(calendar.getTime());
+            } else {
+                evidenceWeb.setNextEvidenceTime(dto.getStartTime());
             }
 
             evidenceWebDao.insert(evidenceWeb);
@@ -420,15 +418,33 @@ public class EvidenceService {
             response.setContentType("application/octet-stream");
 
             // 将文件内容写入响应输出流
-            byte[] buffer = new byte[4096];
-            int length = 0;
             int totalLength = 0;
-            ServletOutputStream outputStream = response.getOutputStream();
-            while ((length = is.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, length);
-                totalLength += length;
+            ServletOutputStream outputStream = null;
+            try {
+                outputStream = response.getOutputStream();
+
+                int length;
+                byte[] buffer = new byte[1024];
+                while ((length = is.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, length);
+                    totalLength += length;
+                }
+
+                outputStream.flush();
+            } catch (IOException e) {
+                // 处理 I/O 异常
+                e.printStackTrace(); // 或者使用其他日志记录方式记录异常信息
+            } finally {
+                try {
+                    // 在 finally 块中关闭输出流
+                    if (outputStream != null) {
+                        outputStream.close();
+                    }
+                } catch (IOException e) {
+                    // 处理关闭输出流时可能发生的异常
+                    e.printStackTrace(); // 或者使用其他日志记录方式记录异常信息
+                }
             }
-            outputStream.flush();
             // 设置文件大小
             response.setContentLength(totalLength);
             log.info(String.valueOf(totalLength));

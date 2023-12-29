@@ -1,5 +1,7 @@
 package cn.qkl.webserver.service;
 
+import cn.hutool.core.util.IdUtil;
+import cn.qkl.webserver.dto.evidence.ReinforceEvidenceDTO;
 import freemarker.template.TemplateException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,4 +56,18 @@ class EvidenceServiceTest {
     void generateEvidencePack() throws IOException {
         evidenceService.generateEvidencePack(1696800792091766784L);
     }
+
+    @Test
+    void reinforceEvidence() {
+        ReinforceEvidenceDTO dto = new ReinforceEvidenceDTO();
+        dto.setId(IdUtil.getSnowflakeNextId());
+        dto.setName("123");
+        dto.setUrl("https://digital-content.obs.cn-east-3.myhuaweicloud.com/file");
+        dto.setPlatformId(1L);
+        dto.setPersonnel("123321");
+        dto.setIntroduction("213");
+        dto.setRiskType("无");
+        evidenceService.reinforceEvidence(dto);
+    }
+
 }
