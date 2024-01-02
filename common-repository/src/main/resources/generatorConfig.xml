@@ -93,7 +93,7 @@
 <!--        </table>-->
         <table tableName="login_log" domainObjectName="LoginLog"></table>
         <table tableName="operation_log" domainObjectName="OperationLog"></table>
-        <table tableName="concern" domainObjectName="Concern">
-        </table>
+        <table tableName="concern" domainObjectName="Concern"></table>
+        <table tableName="miniapp_evidence" domainObjectName="MiniappEvidence"></table>
     </context>
 </generatorConfiguration>

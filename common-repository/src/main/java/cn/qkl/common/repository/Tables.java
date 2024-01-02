@@ -44,4 +44,5 @@ public class Tables {
     public static final LoginLogDynamicSqlSupport.LoginLog loginLog = LoginLogDynamicSqlSupport.loginLog;
 
     public static final OperationLogDynamicSqlSupport.OperationLog operationLog = OperationLogDynamicSqlSupport.operationLog;
+    public static final MiniappEvidenceDynamicSqlSupport.MiniappEvidence miniappEvidence = MiniappEvidenceDynamicSqlSupport.miniappEvidence;
 }
