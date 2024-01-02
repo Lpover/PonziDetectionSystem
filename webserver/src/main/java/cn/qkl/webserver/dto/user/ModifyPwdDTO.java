@@ -13,7 +13,7 @@ public class ModifyPwdDTO {
     @NotNull
     private Long id;
     @ApiModelProperty("密码")
-    @Pattern(regexp = "[A-Za-z0-9]{6,12}", message = "密码格式不正确")
+    //@Pattern(regexp = "[A-Za-z0-9]{6,12}", message = "密码格式不正确")
     @NotNull
     private String pwd;
 }
