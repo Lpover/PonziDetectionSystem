@@ -22,7 +22,6 @@ import cn.qkl.webserver.dto.evidence.ReinforceEvidenceDTO;
 import cn.qkl.webserver.dto.evidence.WebEvidenceDTO;
 import cn.qkl.webserver.vo.evidence.*;
 import com.alibaba.nacos.common.utils.StringUtils;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.entity.ContentType;
@@ -117,10 +116,12 @@ public class EvidenceService {
             String fileName = "web" + id.toString() + ".png";
             String webOssPath = ossUtil.uploadImage(bufferedImage, fileName);
             // 更新webOssPath字段
-
-            evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.webOssPath).equalTo(webOssPath).where(Tables.evidenceWeb.id, isEqualTo(id)));
-            evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.updateTime).equalTo(new Date()).where(Tables.evidenceWeb.id,isEqualTo(id)));
-            evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.evidencePhase).equalTo(1).where(Tables.evidenceWeb.id,isEqualTo(id)));
+            evidenceWebDao.update(c ->
+                    c.set(Tables.evidenceWeb.webOssPath).equalTo(webOssPath)
+                            .set(Tables.evidenceWeb.updateTime).equalTo(new Date())
+                            .set(Tables.evidenceWeb.evidencePhase).equalTo(1)
+                            .where(Tables.evidenceWeb.id, isEqualTo(id))
+            );
             log.info("网页截图完成");
         } catch (Exception e) {
             e.printStackTrace();
@@ -187,50 +188,59 @@ public class EvidenceService {
             EvidencePhaseVO vo = new EvidencePhaseVO();
             vo.setId(evidenceWeb.getId());
             return vo;
+        } else {
+            evidenceWebDao.insert(evidenceWeb);
         }
 
         CountDownLatch latch = new CountDownLatch(2);
 
         // 网页截图，上链
-//        SchedulerUtil.commonScheduler.schedule("generateWebCapture", () -> {
-            webCapture(dto.getUrl(), dto.getName(), evidenceWeb.getId());
-            String webOss = evidenceWebDao.selectOne(c->c
-                    .where(Tables.evidenceWeb.id, isEqualTo(dto.getId()))).get().getWebOssPath();
-            InputStream webStream = null;
-            try {
-                webStream = ossUtil.downloadFileByURL(webOss);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            // 计算hash并上链
-            String digest = null;
-            try {
-                digest = uploadToChainUtil.calculateHash(webStream, "MD5");
-            } catch (NoSuchAlgorithmException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            try {
-                uploadToChainUtil.uploadToChain(digest);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
-            evidenceWeb.setPackageHash(digest);                     // 文件hash
-            evidenceWeb.setHash(uploadToChainUtil.getTxHash());     // 上链hash
-            evidenceWeb.setChainTime(uploadToChainUtil.getTxTime());    // 上链时间
-            evidenceWeb.setChainId(ChainEnum.XINZHENG.getCode());
-            latch.countDown();
-//        });
-        evidenceWebDao.insert(evidenceWeb);
+        webCapture(dto.getUrl(), dto.getName(), evidenceWeb.getId());
+        String webOss = evidenceWebDao.selectOne(c->c
+                .where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId()))).get().getWebOssPath();
+        InputStream webStream = null;
+        try {
+            webStream = ossUtil.downloadFileByURL(webOss);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        // 计算hash并上链
+        String digest = null;
+        try {
+            digest = uploadToChainUtil.calculateHash(webStream, "MD5");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        // todo 上链服务
+//        try {
+//            uploadToChainUtil.uploadToChain(digest);
+//        } catch (JsonProcessingException e) {
+//            throw new RuntimeException(e);
+//        }
 
+        final String digestFinal = digest;
+        evidenceWebDao.update(c ->
+                c.set(Tables.evidenceWeb.packageHash).equalTo(digestFinal)
+                        .set(Tables.evidenceWeb.hash).equalTo("hashtesttesttesttest") //uploadToChainUtil.getTxHash()
+                        .set(Tables.evidenceWeb.chainTime).equalTo(new Date())              //uploadToChainUtil.getTxTime()
+                        .set(Tables.evidenceWeb.chainId).equalTo(ChainEnum.XINZHENG.getCode())
+                        .where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId()))
+        );
+
+
+        latch.countDown();
         // 生成证书并上传oss
 //        SchedulerUtil.commonScheduler.schedule("generateCert", () -> {
             try {
                 String ossPath = generateEvidenceCert(evidenceWeb.getId());
-                evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.certOssPath).equalTo(ossPath).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
-                evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.updateTime).equalTo(new Date()).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
-                evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.evidencePhase).equalTo(2).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
+                evidenceWebDao.update(c ->
+                        c.set(Tables.evidenceWeb.certOssPath).equalTo(ossPath)
+                                .set(Tables.evidenceWeb.updateTime).equalTo(new Date())
+                                .set(Tables.evidenceWeb.evidencePhase).equalTo(2)
+                                .where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId()))
+                );
             } catch (TemplateException | ParserConfigurationException | IOException | SAXException |
                      FontFormatException e) {
                 throw new RuntimeException(e);
@@ -261,8 +271,11 @@ public class EvidenceService {
     }
 
     public void stopRegularEvidence(EvidenceDetailDTO dto) {
-        evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.frequency).equalTo(0).where(Tables.evidenceWeb.id, isEqualTo(dto.getEvidenceID())));
-        evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.updateTime).equalTo(new Date()).where(Tables.evidenceWeb.id, isEqualTo(dto.getEvidenceID())));
+        evidenceWebDao.update(c ->
+                c.set(Tables.evidenceWeb.frequency).equalTo(0)
+                        .set(Tables.evidenceWeb.updateTime).equalTo(new Date())
+                        .where(Tables.evidenceWeb.id, isEqualTo(dto.getEvidenceID()))
+        );
     }
 
     public EvidencePhaseVO reinforceEvidence(ReinforceEvidenceDTO dto) {
@@ -296,35 +309,39 @@ public class EvidenceService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        try {
-            uploadToChainUtil.uploadToChain(digest);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-        evidenceWeb.setPackageHash(digest);                     // 文件hash
-        evidenceWeb.setHash(uploadToChainUtil.getTxHash());     // 上链hash
-        evidenceWeb.setChainTime(uploadToChainUtil.getTxTime());    // 上链时间
-        evidenceWeb.setChainId(ChainEnum.XINZHENG.getCode());
 
+        // todo 上链服务
+//        try {
+//            uploadToChainUtil.uploadToChain(digest);
+//        } catch (JsonProcessingException e) {
+//            throw new RuntimeException(e);
+//        }
+        evidenceWeb.setPackageHash(digest);                     // 文件hash
+//        evidenceWeb.setHash(uploadToChainUtil.getTxHash());     // 上链hash
+//        evidenceWeb.setChainTime(uploadToChainUtil.getTxTime());    // 上链时间
+        evidenceWeb.setHash("hashtesttesttesttest");     // 上链hash
+        evidenceWeb.setChainTime(new Date());    // 上链时间
+        evidenceWeb.setChainId(ChainEnum.XINZHENG.getCode());
         evidenceWebDao.insert(evidenceWeb);
 
         // 需要设置计数器保证先后关系
         CountDownLatch latch = new CountDownLatch(1);
 
         // 生成证书并上传oss
-//        SchedulerUtil.commonScheduler.schedule("generateCert", () -> {
-            try {
-                String ossPath = generateEvidenceCert(evidenceWeb.getId());
-                evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.certOssPath).equalTo(ossPath).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
-                evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.updateTime).equalTo(new Date()).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
-                evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.evidencePhase).equalTo(2).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
-            } catch (TemplateException | ParserConfigurationException | IOException | SAXException |
-                     FontFormatException e) {
-                throw new RuntimeException(e);
-            } finally {
-              latch.countDown();
-            }
-//        });
+        try {
+            String ossPath = generateEvidenceCert(evidenceWeb.getId());
+            evidenceWebDao.update(c ->
+                    c.set(Tables.evidenceWeb.certOssPath).equalTo(ossPath)
+                            .set(Tables.evidenceWeb.updateTime).equalTo(new Date())
+                            .set(Tables.evidenceWeb.evidencePhase).equalTo(2)
+                            .where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId()))
+            );
+        } catch (TemplateException | ParserConfigurationException | IOException | SAXException |
+                 FontFormatException e) {
+            throw new RuntimeException(e);
+        } finally {
+          latch.countDown();
+        }
 
         try {
             latch.await();
@@ -368,26 +385,6 @@ public class EvidenceService {
         );
     }
 
-//    public void downloadEvidencePack1(EvidenceDetailDTO dto, HttpServletResponse response) throws IOException {
-//        Optional<EvidenceWeb> evidenceWeb = evidenceWebDao.selectOne(c -> c
-//                .where(Tables.evidenceWeb.id, isEqualTo(dto.getEvidenceID())));
-//        String packOssPath = evidenceWeb.get().getPackOssPath();
-//        if (packOssPath == null || packOssPath.equals("")) {
-//            log.error("证据包不存在");
-//            return;
-//        }
-//
-//        InputStream inputStream = ossUtil.downloadFileByURL(packOssPath);
-//        String fileName = "evidencePack_" + evidenceWeb.get().getId() + ".zip";
-//
-//        response.setContentType("application/zip");
-//        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-//        StreamUtils.copy(inputStream, response.getOutputStream());
-//        inputStream.close();
-//    }
-
-
-
 
     public void downloadEvidencePack(EvidenceDetailDTO dto, HttpServletResponse response) throws IOException {
         Optional<EvidenceWeb> evidenceWeb = evidenceWebDao.selectOne(c -> c
@@ -409,13 +406,13 @@ public class EvidenceService {
             URLConnection con = url.openConnection();
             // 输入流
             is = con.getInputStream();
-            log.info(is.toString());
             String[] pathSegments = packOssPath.split("/");
             String fileName = pathSegments[pathSegments.length - 1];
 
             // 设置下载文件的响应头信息
-            response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+            response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
             response.setContentType("application/octet-stream");
+            response.setHeader("Access-Control-Allow-Origin", "*");
 
             // 将文件内容写入响应输出流
             int totalLength = 0;
@@ -447,7 +444,6 @@ public class EvidenceService {
             }
             // 设置文件大小
             response.setContentLength(totalLength);
-            log.info(String.valueOf(totalLength));
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
@@ -474,16 +470,35 @@ public class EvidenceService {
             ext = webOssPath.substring(lastDotIndex + 1);
         }
 
-        InputStream webStream = ossUtil.downloadFileByURL(webOssPath);
-        InputStream certStream = ossUtil.downloadFileByURL(certOssPath);
         String zipFilePath = "pack" + id + ".zip";
-        FileOutputStream fos = new FileOutputStream(zipFilePath);
-        ZipOutputStream zipOut = new ZipOutputStream(fos);
-        compressPack(webStream, ext, certStream, zipOut, id);
-        fos.close();
-//        zipOut.close();
-        webStream.close();
-        certStream.close();
+        try {
+            InputStream webStream = ossUtil.downloadFileByURL(webOssPath);
+            InputStream certStream = ossUtil.downloadFileByURL(certOssPath);
+
+
+            try (FileOutputStream fos = new FileOutputStream(zipFilePath);
+                 ZipOutputStream zipOut = new ZipOutputStream(fos)) {
+                compressPack(webStream, ext, certStream, zipOut, id);
+            } catch (IOException e) {
+                // 处理文件操作过程中的 IO 异常
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (webStream != null) {
+                        webStream.close();
+                    }
+                    if (certStream != null) {
+                        certStream.close();
+                    }
+                } catch (IOException e) {
+                    // 处理关闭流时的异常
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            // 处理其他异常
+            e.printStackTrace();
+        }
 
         File zipFile = new File(zipFilePath);
         FileInputStream fileInputStream = null;
@@ -498,9 +513,12 @@ public class EvidenceService {
         String packOssPath = ossUtil.uploadMultipartFile(multipartFile, zipFilePath);
         fileInputStream.close();
         zipFile.delete();
-        evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.packOssPath).equalTo(packOssPath).where(Tables.evidenceWeb.id,isEqualTo(id)));
-        evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.updateTime).equalTo(new Date()).where(Tables.evidenceWeb.id,isEqualTo(id)));
-        evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.evidencePhase).equalTo(2).where(Tables.evidenceWeb.id,isEqualTo(id)));
+        evidenceWebDao.update(c ->
+                c.set(Tables.evidenceWeb.packOssPath).equalTo(packOssPath)
+                        .set(Tables.evidenceWeb.updateTime).equalTo(new Date())
+                        .set(Tables.evidenceWeb.evidencePhase).equalTo(2)
+                        .where(Tables.evidenceWeb.id, isEqualTo(id))
+        );
         log.info("生成证据包完成");
     }
 
