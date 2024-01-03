@@ -19,7 +19,7 @@ public class EvidenceVO {
     private String id;
     @ApiModelProperty("视频证据文件的名称")
     private String name;
-    @ApiModelProperty("视频证据文件的时间")
+    @ApiModelProperty("视频证据文件的创建时间")
     private Date time;
     @ApiModelProperty("视频证据文件的取证人")
     private String userName;
@@ -30,6 +30,10 @@ public class EvidenceVO {
     private Date expiredTime;
     @ApiModelProperty("字符串，表示距离过期时间 minutes:seconds,如果已经过期了则为字符串-1")
     private String expiredIn;
+    @ApiModelProperty("视频的时长，以秒为单位")
+    private Long videoTime;
+    @ApiModelProperty("视频的大小--字节(bytes)")
+    private Long videoSize;
 
     public void calExpiredIn() {
         Date dateFrom = new Date();

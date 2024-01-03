@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface MiniappEvidenceMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, name, time, expiredTime, url, userid, preserved);
+    BasicColumn[] selectList = BasicColumn.columnList(id, name, time, expiredTime, url, userid, preserved, videoTime, videoSize);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -67,7 +67,9 @@ public interface MiniappEvidenceMapper {
         @Result(column="expired_time", property="expiredTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="url", property="url", jdbcType=JdbcType.VARCHAR),
         @Result(column="userId", property="userid", jdbcType=JdbcType.BIGINT),
-        @Result(column="preserved", property="preserved", jdbcType=JdbcType.INTEGER)
+        @Result(column="preserved", property="preserved", jdbcType=JdbcType.INTEGER),
+        @Result(column="video_time", property="videoTime", jdbcType=JdbcType.BIGINT),
+        @Result(column="video_size", property="videoSize", jdbcType=JdbcType.BIGINT)
     })
     List<MiniappEvidence> selectMany(SelectStatementProvider selectStatement);
 
@@ -102,6 +104,8 @@ public interface MiniappEvidenceMapper {
             .map(url).toProperty("url")
             .map(userid).toProperty("userid")
             .map(preserved).toProperty("preserved")
+            .map(videoTime).toProperty("videoTime")
+            .map(videoSize).toProperty("videoSize")
         );
     }
 
@@ -115,6 +119,8 @@ public interface MiniappEvidenceMapper {
             .map(url).toProperty("url")
             .map(userid).toProperty("userid")
             .map(preserved).toProperty("preserved")
+            .map(videoTime).toProperty("videoTime")
+            .map(videoSize).toProperty("videoSize")
         );
     }
 
@@ -128,6 +134,8 @@ public interface MiniappEvidenceMapper {
             .map(url).toPropertyWhenPresent("url", record::getUrl)
             .map(userid).toPropertyWhenPresent("userid", record::getUserid)
             .map(preserved).toPropertyWhenPresent("preserved", record::getPreserved)
+            .map(videoTime).toPropertyWhenPresent("videoTime", record::getVideoTime)
+            .map(videoSize).toPropertyWhenPresent("videoSize", record::getVideoSize)
         );
     }
 
@@ -166,7 +174,9 @@ public interface MiniappEvidenceMapper {
                 .set(expiredTime).equalTo(record::getExpiredTime)
                 .set(url).equalTo(record::getUrl)
                 .set(userid).equalTo(record::getUserid)
-                .set(preserved).equalTo(record::getPreserved);
+                .set(preserved).equalTo(record::getPreserved)
+                .set(videoTime).equalTo(record::getVideoTime)
+                .set(videoSize).equalTo(record::getVideoSize);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -177,7 +187,9 @@ public interface MiniappEvidenceMapper {
                 .set(expiredTime).equalToWhenPresent(record::getExpiredTime)
                 .set(url).equalToWhenPresent(record::getUrl)
                 .set(userid).equalToWhenPresent(record::getUserid)
-                .set(preserved).equalToWhenPresent(record::getPreserved);
+                .set(preserved).equalToWhenPresent(record::getPreserved)
+                .set(videoTime).equalToWhenPresent(record::getVideoTime)
+                .set(videoSize).equalToWhenPresent(record::getVideoSize);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -189,6 +201,8 @@ public interface MiniappEvidenceMapper {
             .set(url).equalTo(record::getUrl)
             .set(userid).equalTo(record::getUserid)
             .set(preserved).equalTo(record::getPreserved)
+            .set(videoTime).equalTo(record::getVideoTime)
+            .set(videoSize).equalTo(record::getVideoSize)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -202,6 +216,8 @@ public interface MiniappEvidenceMapper {
             .set(url).equalToWhenPresent(record::getUrl)
             .set(userid).equalToWhenPresent(record::getUserid)
             .set(preserved).equalToWhenPresent(record::getPreserved)
+            .set(videoTime).equalToWhenPresent(record::getVideoTime)
+            .set(videoSize).equalToWhenPresent(record::getVideoSize)
             .where(id, isEqualTo(record::getId))
         );
     }

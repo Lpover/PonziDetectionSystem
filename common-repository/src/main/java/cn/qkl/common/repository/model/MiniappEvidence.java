@@ -26,6 +26,12 @@ public class MiniappEvidence {
     private Integer preserved;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Long videoTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Long videoSize;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
@@ -137,6 +143,38 @@ public class MiniappEvidence {
         this.preserved = preserved;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Long getVideoTime() {
+        return videoTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public MiniappEvidence withVideoTime(Long videoTime) {
+        this.setVideoTime(videoTime);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setVideoTime(Long videoTime) {
+        this.videoTime = videoTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Long getVideoSize() {
+        return videoSize;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public MiniappEvidence withVideoSize(Long videoSize) {
+        this.setVideoSize(videoSize);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setVideoSize(Long videoSize) {
+        this.videoSize = videoSize;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -151,6 +189,8 @@ public class MiniappEvidence {
         sb.append(", url=").append(url);
         sb.append(", userid=").append(userid);
         sb.append(", preserved=").append(preserved);
+        sb.append(", videoTime=").append(videoTime);
+        sb.append(", videoSize=").append(videoSize);
         sb.append("]");
         return sb.toString();
     }
