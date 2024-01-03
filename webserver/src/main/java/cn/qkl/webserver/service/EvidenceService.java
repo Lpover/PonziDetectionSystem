@@ -22,7 +22,6 @@ import cn.qkl.webserver.dto.evidence.ReinforceEvidenceDTO;
 import cn.qkl.webserver.dto.evidence.WebEvidenceDTO;
 import cn.qkl.webserver.vo.evidence.*;
 import com.alibaba.nacos.common.utils.StringUtils;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.entity.ContentType;
@@ -189,43 +188,49 @@ public class EvidenceService {
             EvidencePhaseVO vo = new EvidencePhaseVO();
             vo.setId(evidenceWeb.getId());
             return vo;
+        } else {
+            evidenceWebDao.insert(evidenceWeb);
         }
 
         CountDownLatch latch = new CountDownLatch(2);
 
         // 网页截图，上链
-//        SchedulerUtil.commonScheduler.schedule("generateWebCapture", () -> {
-            webCapture(dto.getUrl(), dto.getName(), evidenceWeb.getId());
-            String webOss = evidenceWebDao.selectOne(c->c
-                    .where(Tables.evidenceWeb.id, isEqualTo(dto.getId()))).get().getWebOssPath();
-            InputStream webStream = null;
-            try {
-                webStream = ossUtil.downloadFileByURL(webOss);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            // 计算hash并上链
-            String digest = null;
-            try {
-                digest = uploadToChainUtil.calculateHash(webStream, "MD5");
-            } catch (NoSuchAlgorithmException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            try {
-                uploadToChainUtil.uploadToChain(digest);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
-            evidenceWeb.setPackageHash(digest);                     // 文件hash
-            evidenceWeb.setHash(uploadToChainUtil.getTxHash());     // 上链hash
-            evidenceWeb.setChainTime(uploadToChainUtil.getTxTime());    // 上链时间
-            evidenceWeb.setChainId(ChainEnum.XINZHENG.getCode());
-            latch.countDown();
-//        });
-        evidenceWebDao.insert(evidenceWeb);
+        webCapture(dto.getUrl(), dto.getName(), evidenceWeb.getId());
+        String webOss = evidenceWebDao.selectOne(c->c
+                .where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId()))).get().getWebOssPath();
+        InputStream webStream = null;
+        try {
+            webStream = ossUtil.downloadFileByURL(webOss);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        // 计算hash并上链
+        String digest = null;
+        try {
+            digest = uploadToChainUtil.calculateHash(webStream, "MD5");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        // todo 上链服务
+//        try {
+//            uploadToChainUtil.uploadToChain(digest);
+//        } catch (JsonProcessingException e) {
+//            throw new RuntimeException(e);
+//        }
 
+        final String digestFinal = digest;
+        evidenceWebDao.update(c ->
+                c.set(Tables.evidenceWeb.packageHash).equalTo(digestFinal)
+                        .set(Tables.evidenceWeb.hash).equalTo("hashtesttesttesttest") //uploadToChainUtil.getTxHash()
+                        .set(Tables.evidenceWeb.chainTime).equalTo(new Date())              //uploadToChainUtil.getTxTime()
+                        .set(Tables.evidenceWeb.chainId).equalTo(ChainEnum.XINZHENG.getCode())
+                        .where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId()))
+        );
+
+
+        latch.countDown();
         // 生成证书并上传oss
 //        SchedulerUtil.commonScheduler.schedule("generateCert", () -> {
             try {
@@ -304,38 +309,39 @@ public class EvidenceService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        try {
-            uploadToChainUtil.uploadToChain(digest);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-        evidenceWeb.setPackageHash(digest);                     // 文件hash
-        evidenceWeb.setHash(uploadToChainUtil.getTxHash());     // 上链hash
-        evidenceWeb.setChainTime(uploadToChainUtil.getTxTime());    // 上链时间
-        evidenceWeb.setChainId(ChainEnum.XINZHENG.getCode());
 
+        // todo 上链服务
+//        try {
+//            uploadToChainUtil.uploadToChain(digest);
+//        } catch (JsonProcessingException e) {
+//            throw new RuntimeException(e);
+//        }
+        evidenceWeb.setPackageHash(digest);                     // 文件hash
+//        evidenceWeb.setHash(uploadToChainUtil.getTxHash());     // 上链hash
+//        evidenceWeb.setChainTime(uploadToChainUtil.getTxTime());    // 上链时间
+        evidenceWeb.setHash("hashtesttesttesttest");     // 上链hash
+        evidenceWeb.setChainTime(new Date());    // 上链时间
+        evidenceWeb.setChainId(ChainEnum.XINZHENG.getCode());
         evidenceWebDao.insert(evidenceWeb);
 
         // 需要设置计数器保证先后关系
         CountDownLatch latch = new CountDownLatch(1);
 
         // 生成证书并上传oss
-//        SchedulerUtil.commonScheduler.schedule("generateCert", () -> {
-            try {
-                String ossPath = generateEvidenceCert(evidenceWeb.getId());
-                evidenceWebDao.update(c ->
-                        c.set(Tables.evidenceWeb.certOssPath).equalTo(ossPath)
-                                .set(Tables.evidenceWeb.updateTime).equalTo(new Date())
-                                .set(Tables.evidenceWeb.evidencePhase).equalTo(2)
-                                .where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId()))
-                );
-            } catch (TemplateException | ParserConfigurationException | IOException | SAXException |
-                     FontFormatException e) {
-                throw new RuntimeException(e);
-            } finally {
-              latch.countDown();
-            }
-//        });
+        try {
+            String ossPath = generateEvidenceCert(evidenceWeb.getId());
+            evidenceWebDao.update(c ->
+                    c.set(Tables.evidenceWeb.certOssPath).equalTo(ossPath)
+                            .set(Tables.evidenceWeb.updateTime).equalTo(new Date())
+                            .set(Tables.evidenceWeb.evidencePhase).equalTo(2)
+                            .where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId()))
+            );
+        } catch (TemplateException | ParserConfigurationException | IOException | SAXException |
+                 FontFormatException e) {
+            throw new RuntimeException(e);
+        } finally {
+          latch.countDown();
+        }
 
         try {
             latch.await();
@@ -379,27 +385,7 @@ public class EvidenceService {
         );
     }
 
-//    public void downloadEvidencePack1(EvidenceDetailDTO dto, HttpServletResponse response) throws IOException {
-//        Optional<EvidenceWeb> evidenceWeb = evidenceWebDao.selectOne(c -> c
-//                .where(Tables.evidenceWeb.id, isEqualTo(dto.getEvidenceID())));
-//        String packOssPath = evidenceWeb.get().getPackOssPath();
-//        if (packOssPath == null || packOssPath.equals("")) {
-//            log.error("证据包不存在");
-//            return;
-//        }
-//
-//        InputStream inputStream = ossUtil.downloadFileByURL(packOssPath);
-//        String fileName = "evidencePack_" + evidenceWeb.get().getId() + ".zip";
-//
-//        response.setContentType("application/zip");
-//        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-//        StreamUtils.copy(inputStream, response.getOutputStream());
-//        inputStream.close();
-//    }
 
-
-
-    // todo 网页截图文件名问题  压缩包下载问题
     public void downloadEvidencePack(EvidenceDetailDTO dto, HttpServletResponse response) throws IOException {
         Optional<EvidenceWeb> evidenceWeb = evidenceWebDao.selectOne(c -> c
                 .where(Tables.evidenceWeb.id, isEqualTo(dto.getEvidenceID())));
