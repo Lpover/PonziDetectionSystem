@@ -6,7 +6,8 @@ import cn.qkl.common.repository.Tables;
 import cn.qkl.common.repository.model.NotifyRecord;
 import cn.qkl.common.repository.model.Thresholds;
 import cn.qkl.common.repository.model.User;
-import cn.qkl.webserver.backgroundTask.schedule.NotificationScheduleTask;
+import cn.qkl.webserver.backgroundTask.schedule.NotificationScheduleTaskV2;
+import cn.qkl.webserver.common.enums.SwitchEnum;
 import cn.qkl.webserver.dao.NotifyRecordDao;
 import cn.qkl.webserver.dao.SwitchTableDao;
 import cn.qkl.webserver.dao.ThresholdsDao;
@@ -46,7 +47,7 @@ public class NotificationService {
     SwitchTableDao switchTableDao;
 
     @Autowired
-    NotificationScheduleTask notificationScheduleTask;
+    NotificationScheduleTaskV2 notificationScheduleTaskV2;
 
     //遍历通知项，返回全部
     public NotificationNumbersVO getNotificationNumbers() {
@@ -118,7 +119,10 @@ public class NotificationService {
             it.setCreateTime(model.getCreateTime());
             it.setStatus(model.getStatus());
             List<String> userNames = Arrays.stream(model.getUserIds().split(",")).map(Long::valueOf).map(userId2Name::get).collect(Collectors.toList());
-            List<String> notifyNames = Arrays.stream(model.getNotifyItemIds().split(",")).map(Long::valueOf).map(thresholdId2Name::get).collect(Collectors.toList());
+            List<String> notifyNames = null;
+            if (!model.getNotifyItemIds().isEmpty()) {
+                notifyNames = Arrays.stream(model.getNotifyItemIds().split(",")).map(Long::valueOf).map(thresholdId2Name::get).collect(Collectors.toList());
+            }
             it.setUsers(userNames);
             it.setNotifyItems(notifyNames);
         })).collect(Collectors.toList())));
@@ -143,9 +147,13 @@ public class NotificationService {
                     c->c.set(Tables.switchTable.open).equalTo(cvalue)
                             .set(Tables.switchTable.frequency).equalTo(frequency)
             );
-        // 设置cron时间
-        String cron = String.format("0 */%d * * * ?", frequency);
-        notificationScheduleTask.setCron(cron);
+//        // 设置cron时间
+//        String cron = String.format("0 */%d * * * ?", frequency);
+        if (cvalue == SwitchEnum.CLOSE.getCode()) {
+            notificationScheduleTaskV2.stopTask();
+            return;
+        }
+        notificationScheduleTaskV2.changePeriod(frequency* 60L);
     }
 
     //周末预警修改
