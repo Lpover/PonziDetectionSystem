@@ -1,8 +1,12 @@
 package cn.qkl.webserver.service;
 
+import cn.hutool.core.date.DateUtil;
+import cn.qkl.common.framework.auth.TokenHandler;
 import cn.qkl.common.framework.util.FunctionUtil;
 import cn.qkl.common.framework.util.OssUtil;
+import cn.qkl.common.framework.util.SnowflakeIdUtil;
 import cn.qkl.common.repository.Tables;
+import cn.qkl.common.repository.model.MiniappEvidence;
 import cn.qkl.webserver.common.enums.MiniappEvidenceEnum;
 import cn.qkl.webserver.dao.MiniappEvidenceDao;
 import cn.qkl.webserver.dto.miniapp.EvidenceDTO;
@@ -14,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
@@ -34,6 +39,16 @@ public class MiniappService {
 
     public VideoVO videoUpload(VideoUploadDTO dto) throws IOException {
         String ossUrl = ossUtil.uploadMultipartFile(dto.getFile(),dto.getName());
+        MiniappEvidence evidence = new MiniappEvidence();
+        evidence.setId(SnowflakeIdUtil.generateId());
+        evidence.setName(dto.getName());
+        evidence.setUrl(ossUrl);
+        evidence.setPreserved(MiniappEvidenceEnum.NonPreserved.getCode());
+        Date date = new Date();
+        evidence.setTime(date);
+        evidence.setExpiredTime(DateUtil.offsetMinute(date,120));
+        evidence.setUserid(TokenHandler.getUserId());
+        miniappEvidenceDao.insert(evidence);
         return FunctionUtil.apply(new VideoVO(), it -> {
             it.setUrl(ossUrl);
         });
