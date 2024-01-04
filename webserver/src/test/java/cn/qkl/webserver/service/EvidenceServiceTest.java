@@ -70,4 +70,12 @@ class EvidenceServiceTest {
         evidenceService.reinforceEvidence(dto);
     }
 
+    @Test
+    void getWebCapture() {
+        String url = "http://192.168.1.109:6080/evidence/obtain";
+        String name = "123";
+        Long id = 111L;
+        evidenceService.webCapture(url, name, id);
+    }
+
 }

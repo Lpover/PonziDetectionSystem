@@ -10,7 +10,6 @@ import cn.qkl.common.repository.model.EvidenceWeb;
 import cn.qkl.webserver.common.enums.ChainEnum;
 import cn.qkl.webserver.dao.EvidenceWebDao;
 import cn.qkl.webserver.service.EvidenceService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -57,7 +56,6 @@ public class EvidenceRegularBackgroundTask implements BackgroundTask {
         return 1 * 60 * 1000;
     }   // 每一分钟检查一次
 
-    //从第二天开始每天凌晨2点执行
     @Override
     public long getDelay() {
         return 0;
@@ -67,7 +65,6 @@ public class EvidenceRegularBackgroundTask implements BackgroundTask {
     public String getName() {
         return EvidenceRegularBackgroundTask.class.getName();
     }
-
 
     @Override
     public void run() {
@@ -106,59 +103,65 @@ public class EvidenceRegularBackgroundTask implements BackgroundTask {
             }
 
             final Date finalNextTime = nextTime;
-            evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.nextEvidenceTime).equalTo(finalNextTime).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
-            evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.updateTime).equalTo(new Date()).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
+            evidenceWebDao.update(c -> c
+                    .set(Tables.evidenceWeb.nextEvidenceTime).equalTo(finalNextTime)
+                    .set(Tables.evidenceWeb.updateTime).equalTo(new Date())
+                    .where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId()))
+            );
 
             CountDownLatch latch = new CountDownLatch(2);
 
             // 网页截图，上链
-//            SchedulerUtil.commonScheduler.schedule("generateWebCapture", () -> {
-                evidenceService.webCapture(evidenceWeb.getUrl(), evidenceWeb.getName(), evidenceWeb.getId());
-                String webOss = evidenceWebDao.selectOne(c -> c
-                        .where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId()))).get().getWebOssPath();
-                InputStream webStream = null;
-                try {
-                    webStream = ossUtil.downloadFileByURL(webOss);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                // 计算hash并上链
-                String digest = null;
-                try {
-                    digest = uploadToChainUtil.calculateHash(webStream, "MD5");
-                } catch (NoSuchAlgorithmException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                try {
-                    uploadToChainUtil.uploadToChain(digest);
-                } catch (JsonProcessingException e) {
-                    throw new RuntimeException(e);
-                }
-                String finalDigest = digest;
-                evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.packageHash).equalTo(finalDigest).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
-                evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.hash).equalTo(uploadToChainUtil.getTxHash()).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
-                evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.chainTime).equalTo(uploadToChainUtil.getTxTime()).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
-                evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.updateTime).equalTo(new Date()).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
-                evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.chainId).equalTo(ChainEnum.XINZHENG.getCode()).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
-                latch.countDown();
-//            });
+            evidenceService.webCapture(evidenceWeb.getUrl(), evidenceWeb.getName(), evidenceWeb.getId());
+            String webOss = evidenceWebDao.selectOne(c -> c
+                    .where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId()))).get().getWebOssPath();
+            InputStream webStream = null;
+            try {
+                webStream = ossUtil.downloadFileByURL(webOss);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            // 计算hash并上链
+            // todo 上链服务
+            String digest = null;
+            try {
+                digest = uploadToChainUtil.calculateHash(webStream, "MD5");
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+//            try {
+//                uploadToChainUtil.uploadToChain(digest);
+//            } catch (JsonProcessingException e) {
+//                throw new RuntimeException(e);
+//            }
+            String finalDigest = digest;
+            evidenceWebDao.update(c -> c
+                    .set(Tables.evidenceWeb.packageHash).equalTo(finalDigest)
+                    .set(Tables.evidenceWeb.hash).equalTo("hashtesttesttest")       //uploadToChainUtil.getTxHash()
+                    .set(Tables.evidenceWeb.chainTime).equalTo(new Date())              //uploadToChainUtil.getTxTime()
+                    .set(Tables.evidenceWeb.updateTime).equalTo(new Date())
+                    .set(Tables.evidenceWeb.chainId).equalTo(ChainEnum.XINZHENG.getCode())
+                    .where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId()))
+            );
+            latch.countDown();
 
             // 生成证书并上传oss
-//            SchedulerUtil.commonScheduler.schedule("generateCert", () -> {
-                try {
-                    String ossPath = evidenceService.generateEvidenceCert(evidenceWeb.getId());
-                    evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.certOssPath).equalTo(ossPath).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
-                    evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.updateTime).equalTo(new Date()).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
-                    evidenceWebDao.update(c -> c.set(Tables.evidenceWeb.evidencePhase).equalTo(2).where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId())));
-                } catch (TemplateException | ParserConfigurationException | IOException |
-                         FontFormatException | freemarker.template.TemplateException | org.xml.sax.SAXException e) {
-                    throw new RuntimeException(e);
-                } finally {
-                    latch.countDown();
-                }
-//            });
+            try {
+                String ossPath = evidenceService.generateEvidenceCert(evidenceWeb.getId());
+                evidenceWebDao.update(c ->
+                        c.set(Tables.evidenceWeb.certOssPath).equalTo(ossPath)
+                                .set(Tables.evidenceWeb.updateTime).equalTo(new Date())
+                                .set(Tables.evidenceWeb.evidencePhase).equalTo(2)
+                                .where(Tables.evidenceWeb.id, isEqualTo(evidenceWeb.getId()))
+                );
+            } catch (TemplateException | ParserConfigurationException | IOException |
+                     FontFormatException | freemarker.template.TemplateException | org.xml.sax.SAXException e) {
+                throw new RuntimeException(e);
+            } finally {
+                latch.countDown();
+            }
 
             // 等待计数值变为零
             try {
@@ -168,13 +171,11 @@ public class EvidenceRegularBackgroundTask implements BackgroundTask {
             }
 
             // 生成证据包并上传oss
-//            SchedulerUtil.commonScheduler.schedule("generateEvidencePack", () -> {
-                try {
-                    evidenceService.generateEvidencePack(evidenceWeb.getId());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-//            });
+            try {
+                evidenceService.generateEvidencePack(evidenceWeb.getId());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }
