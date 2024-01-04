@@ -13,14 +13,14 @@ import cn.qkl.webserver.dto.miniapp.EvidenceDTO;
 import cn.qkl.webserver.dto.miniapp.VideoUploadDTO;
 import cn.qkl.webserver.vo.miniapp.EvidenceVO;
 import cn.qkl.webserver.vo.miniapp.VideoVO;
+import org.mp4parser.boxes.iso14496.part12.MovieBox;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import net.bramp.ffmpeg.FFprobe;
-import net.bramp.ffmpeg.probe.FFmpegFormat;
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.file.Files;
 import java.util.Date;
 import java.util.HashMap;
@@ -28,6 +28,7 @@ import java.util.List;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Map;
+import org.mp4parser.IsoFile;
 
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
@@ -60,7 +61,7 @@ public class MiniappService {
         //解析视频数据
         Map<String, Long> result = parseVideo(dto.getFile());
         Long fileSize = result.get("fileSize");
-        Long roundedDuration = result.get("roundedDuration");
+        Long roundedDuration = result.get("durationInSeconds");
         evidence.setVideoSize(fileSize);
         evidence.setVideoTime(roundedDuration);
 
@@ -78,23 +79,25 @@ public class MiniappService {
             // 将 MultipartFile 转为临时文件
             Path tempFile = Files.createTempFile("temp-video", ".mp4");
             Files.copy(file.getInputStream(), tempFile, StandardCopyOption.REPLACE_EXISTING);
+            // 创建 IsoFile 对象
+            IsoFile isoFile = new IsoFile(tempFile.toString());
 
-            // 使用 FFprobe 获取视频信息
-            FFprobe ffprobe = new FFprobe();
-            FFmpegFormat format = ffprobe.probe(tempFile.toString()).format;
+            // 获取 MovieBox，它包含有关视频的信息
+            MovieBox movieBox = isoFile.getMovieBox();
 
-            // 获取文件大小和视频时长
-            long fileSize = Files.size(tempFile);
-            double durationInSeconds = format.duration;
-            long roundedDuration = Math.round(durationInSeconds);
+            // 获取文件大小（字节数）
+            long fileSize = new RandomAccessFile(tempFile.toFile(), "r").length();
+
+            // 获取视频时长（以秒为单位）
+            long durationInSeconds = movieBox.getMovieHeaderBox().getDuration() / movieBox.getMovieHeaderBox().getTimescale();
 
             // 存储结果到Map
             result.put("fileSize", fileSize);
-            result.put("roundedDuration", roundedDuration);
+            result.put("durationInSeconds", durationInSeconds);
 
             // 打印信息或将其存储到数据库
-//            System.out.println("文件大小：" + fileSize + " 字节");
-//            System.out.println("视频时长：" + roundedDuration + " 秒");
+            System.out.println("文件大小：" + fileSize + " 字节");
+            System.out.println("视频时长：" + durationInSeconds + " 秒");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -35,7 +35,7 @@ import java.util.List;
 @ApiSupport(author = "lpc,sxe,zz")
 @RequestMapping("miniapp")
 @RefreshScope
-//@Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
+@Role(roles = {RoleEnum.UserBaseRole.class, RoleEnum.AdminBaseRole.class})
 //@ApiRecord(apiType = OperationApiType.class)
 
 public class MiniappController {
