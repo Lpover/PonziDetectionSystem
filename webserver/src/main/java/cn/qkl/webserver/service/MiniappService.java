@@ -23,9 +23,11 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.Map;
 
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
@@ -54,15 +56,24 @@ public class MiniappService {
         evidence.setTime(date);
         evidence.setExpiredTime(DateUtil.offsetMinute(date,120));
         evidence.setUserid(TokenHandler.getUserId());
+
+        //解析视频数据
+        Map<String, Long> result = parseVideo(dto.getFile());
+        Long fileSize = result.get("fileSize");
+        Long roundedDuration = result.get("roundedDuration");
+        evidence.setVideoSize(fileSize);
+        evidence.setVideoTime(roundedDuration);
+
         miniappEvidenceDao.insert(evidence);
-        parseVideo(dto.getFile());
         return FunctionUtil.apply(new VideoVO(), it -> {
             it.setUrl(ossUrl);
         });
     }
 
     //解析视频
-    public void parseVideo(MultipartFile file){
+    public Map<String, Long> parseVideo(MultipartFile file) {
+        Map<String, Long> result = new HashMap<>();
+
         try {
             // 将 MultipartFile 转为临时文件
             Path tempFile = Files.createTempFile("temp-video", ".mp4");
@@ -77,12 +88,18 @@ public class MiniappService {
             double durationInSeconds = format.duration;
             long roundedDuration = Math.round(durationInSeconds);
 
+            // 存储结果到Map
+            result.put("fileSize", fileSize);
+            result.put("roundedDuration", roundedDuration);
+
             // 打印信息或将其存储到数据库
-            System.out.println("File Size: " + fileSize + " bytes");
-            System.out.println("Video Duration: " + roundedDuration + " seconds");
+//            System.out.println("文件大小：" + fileSize + " 字节");
+//            System.out.println("视频时长：" + roundedDuration + " 秒");
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return result;
     }
 
     public List<EvidenceVO> getEvidenceList(EvidenceDTO dto) throws IOException {
