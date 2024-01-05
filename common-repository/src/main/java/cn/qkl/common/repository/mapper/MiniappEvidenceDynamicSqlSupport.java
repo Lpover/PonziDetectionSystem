@@ -38,6 +38,12 @@ public final class MiniappEvidenceDynamicSqlSupport {
     public static final SqlColumn<Long> videoSize = miniappEvidence.videoSize;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> packOssPath = miniappEvidence.packOssPath;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Integer> evidencePhase = miniappEvidence.evidencePhase;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class MiniappEvidence extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -56,6 +62,10 @@ public final class MiniappEvidenceDynamicSqlSupport {
         public final SqlColumn<Long> videoTime = column("video_time", JDBCType.BIGINT);
 
         public final SqlColumn<Long> videoSize = column("video_size", JDBCType.BIGINT);
+
+        public final SqlColumn<String> packOssPath = column("pack_oss_path", JDBCType.VARCHAR);
+
+        public final SqlColumn<Integer> evidencePhase = column("evidence_phase", JDBCType.INTEGER);
 
         public MiniappEvidence() {
             super("miniapp_evidence");

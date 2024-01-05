@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface MiniappEvidenceMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, name, time, expiredTime, url, userid, preserved, videoTime, videoSize);
+    BasicColumn[] selectList = BasicColumn.columnList(id, name, time, expiredTime, url, userid, preserved, videoTime, videoSize, packOssPath, evidencePhase);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -69,7 +69,9 @@ public interface MiniappEvidenceMapper {
         @Result(column="userId", property="userid", jdbcType=JdbcType.BIGINT),
         @Result(column="preserved", property="preserved", jdbcType=JdbcType.INTEGER),
         @Result(column="video_time", property="videoTime", jdbcType=JdbcType.BIGINT),
-        @Result(column="video_size", property="videoSize", jdbcType=JdbcType.BIGINT)
+        @Result(column="video_size", property="videoSize", jdbcType=JdbcType.BIGINT),
+        @Result(column="pack_oss_path", property="packOssPath", jdbcType=JdbcType.VARCHAR),
+        @Result(column="evidence_phase", property="evidencePhase", jdbcType=JdbcType.INTEGER)
     })
     List<MiniappEvidence> selectMany(SelectStatementProvider selectStatement);
 
@@ -106,6 +108,8 @@ public interface MiniappEvidenceMapper {
             .map(preserved).toProperty("preserved")
             .map(videoTime).toProperty("videoTime")
             .map(videoSize).toProperty("videoSize")
+            .map(packOssPath).toProperty("packOssPath")
+            .map(evidencePhase).toProperty("evidencePhase")
         );
     }
 
@@ -121,6 +125,8 @@ public interface MiniappEvidenceMapper {
             .map(preserved).toProperty("preserved")
             .map(videoTime).toProperty("videoTime")
             .map(videoSize).toProperty("videoSize")
+            .map(packOssPath).toProperty("packOssPath")
+            .map(evidencePhase).toProperty("evidencePhase")
         );
     }
 
@@ -136,6 +142,8 @@ public interface MiniappEvidenceMapper {
             .map(preserved).toPropertyWhenPresent("preserved", record::getPreserved)
             .map(videoTime).toPropertyWhenPresent("videoTime", record::getVideoTime)
             .map(videoSize).toPropertyWhenPresent("videoSize", record::getVideoSize)
+            .map(packOssPath).toPropertyWhenPresent("packOssPath", record::getPackOssPath)
+            .map(evidencePhase).toPropertyWhenPresent("evidencePhase", record::getEvidencePhase)
         );
     }
 
@@ -176,7 +184,9 @@ public interface MiniappEvidenceMapper {
                 .set(userid).equalTo(record::getUserid)
                 .set(preserved).equalTo(record::getPreserved)
                 .set(videoTime).equalTo(record::getVideoTime)
-                .set(videoSize).equalTo(record::getVideoSize);
+                .set(videoSize).equalTo(record::getVideoSize)
+                .set(packOssPath).equalTo(record::getPackOssPath)
+                .set(evidencePhase).equalTo(record::getEvidencePhase);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -189,7 +199,9 @@ public interface MiniappEvidenceMapper {
                 .set(userid).equalToWhenPresent(record::getUserid)
                 .set(preserved).equalToWhenPresent(record::getPreserved)
                 .set(videoTime).equalToWhenPresent(record::getVideoTime)
-                .set(videoSize).equalToWhenPresent(record::getVideoSize);
+                .set(videoSize).equalToWhenPresent(record::getVideoSize)
+                .set(packOssPath).equalToWhenPresent(record::getPackOssPath)
+                .set(evidencePhase).equalToWhenPresent(record::getEvidencePhase);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -203,6 +215,8 @@ public interface MiniappEvidenceMapper {
             .set(preserved).equalTo(record::getPreserved)
             .set(videoTime).equalTo(record::getVideoTime)
             .set(videoSize).equalTo(record::getVideoSize)
+            .set(packOssPath).equalTo(record::getPackOssPath)
+            .set(evidencePhase).equalTo(record::getEvidencePhase)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -218,6 +232,8 @@ public interface MiniappEvidenceMapper {
             .set(preserved).equalToWhenPresent(record::getPreserved)
             .set(videoTime).equalToWhenPresent(record::getVideoTime)
             .set(videoSize).equalToWhenPresent(record::getVideoSize)
+            .set(packOssPath).equalToWhenPresent(record::getPackOssPath)
+            .set(evidencePhase).equalToWhenPresent(record::getEvidencePhase)
             .where(id, isEqualTo(record::getId))
         );
     }

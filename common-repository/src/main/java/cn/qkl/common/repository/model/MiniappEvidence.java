@@ -32,6 +32,12 @@ public class MiniappEvidence {
     private Long videoSize;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String packOssPath;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer evidencePhase;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
@@ -175,6 +181,38 @@ public class MiniappEvidence {
         this.videoSize = videoSize;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getPackOssPath() {
+        return packOssPath;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public MiniappEvidence withPackOssPath(String packOssPath) {
+        this.setPackOssPath(packOssPath);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setPackOssPath(String packOssPath) {
+        this.packOssPath = packOssPath;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getEvidencePhase() {
+        return evidencePhase;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public MiniappEvidence withEvidencePhase(Integer evidencePhase) {
+        this.setEvidencePhase(evidencePhase);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setEvidencePhase(Integer evidencePhase) {
+        this.evidencePhase = evidencePhase;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
@@ -191,6 +229,8 @@ public class MiniappEvidence {
         sb.append(", preserved=").append(preserved);
         sb.append(", videoTime=").append(videoTime);
         sb.append(", videoSize=").append(videoSize);
+        sb.append(", packOssPath=").append(packOssPath);
+        sb.append(", evidencePhase=").append(evidencePhase);
         sb.append("]");
         return sb.toString();
     }

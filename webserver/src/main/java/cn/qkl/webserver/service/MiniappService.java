@@ -33,7 +33,6 @@ import java.util.zip.ZipOutputStream;
 
 import org.mp4parser.IsoFile;
 
-import static cn.qkl.common.framework.util.OssUtil.log;
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
 /**
@@ -52,7 +51,7 @@ public class MiniappService {
     MiniappEvidenceDao miniappEvidenceDao;
 
     public VideoVO videoUpload(VideoUploadDTO dto) throws IOException {
-        String ossUrl = ossUtil.uploadMultipartFile(dto.getFile(),dto.getFile().getOriginalFilename());
+        String ossUrl = ossUtil.uploadMultipartFile(dto.getFile(), dto.getName());
         MiniappEvidence evidence = new MiniappEvidence();
         evidence.setId(SnowflakeIdUtil.generateId());
         evidence.setName(dto.getName());
@@ -71,6 +70,8 @@ public class MiniappService {
         evidence.setVideoTime(roundedDuration);
 
         miniappEvidenceDao.insert(evidence);
+        //生成证据包
+        generateEvidencePack(evidence.getId());
         return FunctionUtil.apply(new VideoVO(), it -> {
             it.setUrl(ossUrl);
         });
@@ -133,24 +134,19 @@ public class MiniappService {
         Optional<MiniappEvidence> miniappEvidence = miniappEvidenceDao.selectOne(c->c
                 .where(Tables.miniappEvidence.id, isEqualTo(id)));
         String webOssPath= miniappEvidence.get().getUrl();
+        String vedioName = miniappEvidence.get().getName();
         if (webOssPath == null || webOssPath.isEmpty() ) {
             log.error("缺少OSS地址");
             return;
         }
 
-        String ext = "";
-        int lastDotIndex = webOssPath.lastIndexOf(".");
-        if (lastDotIndex != -1 && lastDotIndex < webOssPath.length() - 1) {
-            ext = webOssPath.substring(lastDotIndex + 1);
-        }
-
-        String zipFilePath = "pack" + id + ".zip";
+        String zipFilePath = "视频证据包-" + vedioName + ".zip";
         try {
             InputStream webStream = ossUtil.downloadFileByURL(webOssPath);
 
             try (FileOutputStream fos = new FileOutputStream(zipFilePath);
                  ZipOutputStream zipOut = new ZipOutputStream(fos)) {
-                compressPack(webStream, ext, zipOut, id);
+                compressPack(webStream, vedioName, zipOut, id);
             } catch (IOException e) {
                 // 处理文件操作过程中的 IO 异常
                 e.printStackTrace();
@@ -182,17 +178,16 @@ public class MiniappService {
         String packOssPath = ossUtil.uploadMultipartFile(multipartFile, zipFilePath);
         fileInputStream.close();
         zipFile.delete();
-        evidenceWebDao.update(c ->
-                c.set(Tables.evidenceWeb.packOssPath).equalTo(packOssPath)
-                        .set(Tables.evidenceWeb.updateTime).equalTo(new Date())
-                        .set(Tables.evidenceWeb.evidencePhase).equalTo(2)
-                        .where(Tables.evidenceWeb.id, isEqualTo(id))
+        miniappEvidenceDao.update(c ->
+                c.set(Tables.miniappEvidence.packOssPath).equalTo(packOssPath)
+                        .set(Tables.miniappEvidence.evidencePhase).equalTo(2)
+                        .where(Tables.miniappEvidence.id, isEqualTo(id))
         );
         log.info("生成证据包完成");
     }
 
-    private void compressPack(InputStream webStream, String ext, ZipOutputStream zipOut, Long id) throws IOException {
-        zipOut.putNextEntry(new ZipEntry("Vedio" + ext + ".mp4"));
+    private void compressPack(InputStream webStream, String vedioName, ZipOutputStream zipOut, Long id) throws IOException {
+        zipOut.putNextEntry(new ZipEntry( vedioName + ".mp4"));
         byte[] buffer = new byte[1024];
         int len;
         while ((len = webStream.read(buffer)) > 0) {
