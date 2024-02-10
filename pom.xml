@@ -10,7 +10,7 @@
     </parent>
     <groupId>cn.qkl</groupId>
     <artifactId>qkl</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -34,7 +34,7 @@
         <druid.version>1.1.20</druid.version>
         <jakarta.validation-api.version>2.0.2</jakarta.validation-api.version>
         <hutool-all.version>5.8.3</hutool-all.version>
-        <lombok.version>1.18.22</lombok.version>
+        <lombok.version>1.18.30</lombok.version>
         <spring-boot-starter-mail.version>2.4.9</spring-boot-starter-mail.version>
         <easyexcel.version>3.1.0</easyexcel.version>
     </properties>
